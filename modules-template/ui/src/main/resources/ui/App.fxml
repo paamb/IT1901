@@ -8,13 +8,11 @@
 <GridPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController"
          alignment="CENTER" hgap="10.0" vgap="10.0" >
 
-   <ListView fx:id="operandsView" prefHeight="80.0"
-      GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="4"/>
-   <Label text="" fx:id="operandView"
+   <Label text="PMDB" fx:id="pmdbTitle"
       GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="4"/>
 
    <!-- multi-line button label with XML entity for newline -->
-   <Button text="E&#10;n&#10;t&#10;e&#10;r"
+   <Button text="Test :D"
       GridPane.rowIndex="2" GridPane.columnIndex="3" GridPane.rowSpan="3"/>
 
 </GridPane>
