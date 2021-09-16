@@ -2,6 +2,6 @@
 
 # Javafx template
 
-- compile with `mvn compile` (after `cd javafx-template` of course)
-- test with `mvn test` (it should fail until you complete the RPN calculator)
-- run with `mvn javafx:run` (it should open, but not work properly)
+- compile with `mvn compile`
+- test with `mvn test`
+- run with `mvn javafx:run` (cd into ui first)
