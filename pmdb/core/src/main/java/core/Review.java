@@ -64,6 +64,7 @@ public class Review implements IReview {
             "Watched: " + whenWatched.toString());
     }
 
+    //TODO: Move testing to seperate test-class
     public static void main(String[] args) {
         LocalDate date1 = LocalDate.of(2020, 06, 14);
         String comment1 = "This is a comment";
