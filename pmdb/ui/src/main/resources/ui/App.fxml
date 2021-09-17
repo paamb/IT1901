@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController"
+         alignment="CENTER" hgap="10.0" vgap="10.0" >
+
+   <Label text="PMDB" fx:id="pmdbTitle"
+      GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="4"/>
+
+   <!-- multi-line button label with XML entity for newline -->
+   <Button text="Test :D"
+      GridPane.rowIndex="2" GridPane.columnIndex="3" GridPane.rowSpan="3"/>
+
+</GridPane>
