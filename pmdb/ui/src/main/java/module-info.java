@@ -1,5 +1,5 @@
-module calc.ui {
-    requires calc.core;
+module pmdb.ui {
+    requires pmdb.core;
     requires javafx.controls;
     requires javafx.fxml;
 
