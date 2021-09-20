@@ -12,7 +12,7 @@ public class Movie implements IMovie{
     private boolean watched;
     private Collection<Label> labels;
 
-    public Movie(String title, String description, LocalTime duration, Collection<Label> lables){
+    public Movie(String title, String description, LocalTime duration, Collection<Label> labels){
         if (!validMovieTitle(title)){
             throw new IllegalArgumentException("Movie title contains illegal characters");
         }
