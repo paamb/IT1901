@@ -58,10 +58,12 @@ public class Movie implements IMovie{
         labels.removeIf(x -> x.getLabel().equals(label));
     }
 
+    //TODO error handling if labels == null
     public Collection<Label> getLabels(){
         if(labels != null){
             return new ArrayList<>(labels);
         }
+        return new ArrayList<>();
     }
 
     public String getDescription(){

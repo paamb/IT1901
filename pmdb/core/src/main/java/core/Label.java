@@ -29,7 +29,7 @@ public class Label {
         return label.matches("[A-Za-z]+");
     }
 
-    public String (){
+    public String getLabel(){
         return label;
     }
 
