@@ -20,8 +20,8 @@ public class AppController {
 
     @FXML
     public void addMovieToWatchList(){
+        //TODO remove next line after testing is finished
         Movie randomMovie = exampleMovies.get((int) (exampleMovies.size() * Math.random()));
         watchList.addMovie(randomMovie);
     }
-    
 }
