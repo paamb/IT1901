@@ -19,7 +19,7 @@ public class Movie {
         this.title = title;
         this.description = description;
         this.duration = duration;
-        labels = new ArrayList<>();
+        labels = new ArrayList<>(labels);
     }
 
     /**
