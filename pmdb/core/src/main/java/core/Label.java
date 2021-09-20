@@ -4,20 +4,20 @@ import java.util.ArrayList;
 
 public class Label {
 
-    private final String label;
+    private String label;
     private String color;
     private String description;
     private Collection<Movie> movies;
 
+    public Label(String label){
+        setLabel(label);
+    }
+
     public Label(String label, String color, String description, Collection<Movie> movies){
-        
-        if (!validLabel(label)){
-            throw new IllegalArgumentException("Invalid label name, can only contain letters");
-        }
-        this.label = label;
-        this.color = color;
-        this.description = description; 
-        this.movies = new ArrayList<>(movies);
+        setLabel(label);
+        setColor(color);
+        setDescription(description); 
+        setMovies(movies);
     }
 
     /**
@@ -29,6 +29,13 @@ public class Label {
         return label.matches("[A-Za-z]+");
     }
 
+    public void setLabel(String label){
+        if (!validLabel(label)){
+            throw new IllegalArgumentException("Invalid label name, can only contain letters");
+        }
+        this.label = label;
+    }
+    
     public String getLabel(){
         return label;
     }
@@ -47,6 +54,10 @@ public class Label {
 
     public void setDescription(String description){
         this.description = description;
+    }
+
+    public Collection<Movie> setMovies(Collection<Movie> movies){
+        return new ArrayList<>(movies);
     }
 
     public Collection<Movie> getMovies(){
