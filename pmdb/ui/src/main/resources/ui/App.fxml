@@ -12,6 +12,6 @@
       GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="4"/>
 
    <!-- multi-line button label with XML entity for newline -->
-   <Button text="Test :D" fx:id="saveBtn" onAction="#saveMovie" GridPane.rowIndex="2" GridPane.columnIndex="3" GridPane.rowSpan="3"/>
+   <Button text="Add" fx:id="saveBtn" onAction="#addMovieToWatchList" GridPane.rowIndex="2" GridPane.columnIndex="3" GridPane.rowSpan="3"/>
 
 </GridPane>
