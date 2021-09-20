@@ -63,36 +63,4 @@ public class Review implements IReview {
             "Comment: " + comment + "\n" + 
             "Watched: " + whenWatched.toString());
     }
-
-    //TODO: Move testing to seperate test-class
-    public static void main(String[] args) {
-        LocalDate date1 = LocalDate.of(2020, 06, 14);
-        String comment1 = "This is a comment";
-        int rating1 = 3;
-
-        Review review = new Review(new Movie(), comment1, rating1, date1);
-        System.out.println(review.toString());
-
-        LocalDate illegalDate = LocalDate.of(2022, 01, 01);
-        int illegalRating1 = 0;
-        int illegalRating2 = 15;
-
-        try{
-            review.setWhenWatched(illegalDate);
-        } catch (IllegalStateException e) {
-            System.out.println("Action failed successfully: " + e);
-        }
-
-        try{
-            review.setRating(illegalRating1);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Action failed successfully: " + e);
-        }
-
-        try{
-            review.setRating(illegalRating2);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Action failed successfully: " + e);
-        }
-    }
 }
