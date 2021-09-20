@@ -2,13 +2,9 @@ package ui;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
-
 import core.Movie;
 import core.WatchList;
 import javafx.fxml.FXML;
-import json.Storage;
 
 public class AppController {
     private WatchList watchList;
