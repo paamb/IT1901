@@ -21,6 +21,14 @@ public class Movie implements IMovie{
         this.duration = duration;
         labels = new ArrayList<>(labels);
     }
+    public Movie(String title, String description, LocalTime duration){
+        if (!validMovieTitle(title)){
+            throw new IllegalArgumentException("Movie title contains illegal characters");
+        }
+        this.title = title;
+        this.description = description;
+        this.duration = duration;
+    }
 
     /**
      * @param title of the movie
@@ -51,7 +59,9 @@ public class Movie implements IMovie{
     }
 
     public Collection<Label> getLabels(){
-        return new ArrayList<>(labels);
+        if(labels != null){
+            return new ArrayList<>(labels);
+        }
     }
 
     public String getDescription(){
