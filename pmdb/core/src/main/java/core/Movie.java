@@ -13,9 +13,6 @@ public class Movie implements IMovie{
     private Collection<Label> labels;
 
     public Movie(String title, String description, LocalTime duration, Collection<Label> lables){
-        if (!validMovieTitle(title)){
-            throw new IllegalArgumentException("Movie title contains illegal characters");
-        }
         setTitle(title);
         setDescription(description);
         setDuration(duration);
@@ -47,6 +44,9 @@ public class Movie implements IMovie{
     }
 
     public void setTitle(String title){
+        if (!validMovieTitle(title)){
+            throw new IllegalArgumentException("Movie title contains illegal characters");
+        }
         this.title = title;
     }
 
@@ -69,10 +69,6 @@ public class Movie implements IMovie{
         labels.remove(label);
     }
 
-    public void removeLabel(String label){
-        labels.removeIf(x -> x.getLabel().equals(label));
-    }
-
     public void setLabels(Collection<Label> labels){
         this.labels = new ArrayList<>(labels);
     }
@@ -83,10 +79,10 @@ public class Movie implements IMovie{
 
     @Override
     public String toString() {
-        String s = String.format("Movie: " + getTitle() + "\n" + 
-                                "Description: " + getDescription() + "\n"+
-                                "Duration: " + getDuration().toString() + "\n"+
-                                "Watched: " + (isWatched() ? "Yes" : "No"));
+        String s = "Movie: " + getTitle() + "\n" + 
+                    "Description: " + getDescription() + "\n"+
+                    "Duration: " + getDuration().toString() + "\n"+
+                    "Watched: " + (isWatched() ? "Yes" : "No");
         
         if (labels.size() == 0){
             return s;
@@ -100,15 +96,5 @@ public class Movie implements IMovie{
         }
         
         return s.substring(0, s.length()-2);
-    }
-    public static void main(String[] args) {
-        LocalTime time = LocalTime.of(2, 30);
-        Collection<Label> labels = new ArrayList<>();
-        Movie movie = new Movie("Interstellar", "Mann paa planet", time, labels);
-        Label mlabel = new Label("Ai");
-        Label xlabel = new Label("Au");
-        movie.addLabel(mlabel);
-        movie.addLabel(xlabel);
-        System.out.println(movie);
     }
 }
