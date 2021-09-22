@@ -86,6 +86,7 @@ public class MovieTest {
         movie.addLabel(labelOne);
         movie.addLabel(labelTwo);
         assertEquals(newLabels, movie.getLabels());
+        assertThrows(IllegalStateException.class, () -> movie.addLabel(labelTwo));        
     }
 
     @Test
@@ -107,5 +108,21 @@ public class MovieTest {
         assertEquals(newLabels, movie.getLabels());
         movie.removeLabel(new Label("notAddedLabel"));
         assertEquals(newLabels, movie.getLabels());
+    }
+
+    @Test
+    public void testSetLabels() {
+        Label labelOne = new Label("labelOne");
+        Label labelTwo = new Label("labelTwo");
+        Collection<Label> newLabels = new ArrayList<Label>(initLabels);
+        newLabels.add(labelOne);
+
+        assertEquals(initLabels, movie.getLabels());
+        movie.setLabels(newLabels);
+        assertEquals(newLabels, movie.getLabels());
+        newLabels = new ArrayList<Label>(Arrays.asList(labelOne, labelTwo));
+        movie.setLabels(newLabels);
+        assertEquals(newLabels, movie.getLabels());
+        assertThrows(IllegalArgumentException.class, () -> movie.setLabels(new ArrayList<Label>(Arrays.asList(labelOne, labelTwo, labelOne))));
     }
 }
