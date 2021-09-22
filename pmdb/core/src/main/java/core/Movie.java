@@ -24,7 +24,7 @@ public class Movie implements IMovie{
      * @return whether movie title is valid. Can only contain letters, numbers, and special characters "?", "." and "!".
      */
     private boolean validMovieTitle(String title){
-        return title.matches("[A-Za-z0-9?.!]+");
+        return title.length() > 0 && title.length() < 50;
     }
 
     public void setWatched(){
