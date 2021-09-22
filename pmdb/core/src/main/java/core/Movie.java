@@ -21,7 +21,7 @@ public class Movie implements IMovie{
 
     /**
      * @param title of the movie
-     * @return whether movie title is valid. Can only contain letters, numbers, and special characters "?", "." and "!".
+     * @return wheter at movie title is longer than 1 and shorter than 50.
      */
     private boolean validMovieTitle(String title){
         return title.length() > 0 && title.length() < 50;
