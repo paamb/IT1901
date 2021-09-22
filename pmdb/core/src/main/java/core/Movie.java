@@ -12,11 +12,11 @@ public class Movie implements IMovie{
     private boolean watched;
     private Collection<Label> labels;
 
-    public Movie(String title, String description, LocalTime duration, Collection<Label> lables){
+    public Movie(String title, String description, LocalTime duration, Collection<Label> labels){
         setTitle(title);
         setDescription(description);
         setDuration(duration);
-        setLabels(lables);
+        setLabels(labels);
     }
 
     /**
@@ -62,7 +62,10 @@ public class Movie implements IMovie{
         return duration;
     }
     public void addLabel(Label label){
-        this.labels.add(label);
+        if(labels.contains(label)) {
+            throw new IllegalStateException("Duplicate labels not allowed");
+        }
+        labels.add(label);
     }
 
     public void removeLabel(Label label){
@@ -70,7 +73,19 @@ public class Movie implements IMovie{
     }
 
     public void setLabels(Collection<Label> labels){
-        this.labels = new ArrayList<>(labels);
+        for (Label label1 : labels) {
+            int count = 0;
+            for (Label label2 : labels) {
+                if(label1 == label2) {
+                    count++;
+                }
+                if(count > 1) {
+                    throw new IllegalArgumentException("Duplicate labels not allowed");
+                }
+            }
+        }
+    
+        this.labels = new ArrayList<Label>(labels);
     }
 
     public Collection<Label> getLabels(){
