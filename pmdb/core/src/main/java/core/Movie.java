@@ -12,11 +12,11 @@ public class Movie implements IMovie{
     private boolean watched;
     private Collection<Label> labels;
 
-    public Movie(String title, String description, LocalTime duration, Collection<Label> lables){
+    public Movie(String title, String description, LocalTime duration, Collection<Label> labels){
         setTitle(title);
         setDescription(description);
         setDuration(duration);
-        setLabels(lables);
+        setLabels(labels);
     }
 
     /**

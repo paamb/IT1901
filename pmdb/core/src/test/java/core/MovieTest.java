@@ -36,5 +36,12 @@ public class MovieTest {
         assertThrows(IllegalArgumentException.class, () -> new Movie(illegalMovieTitle, description, duration, labels));
     }
 
-    //TODO: more testing after updated Movie.java is merged (!10)
+    @BeforeEach
+    public void setUp() {
+        String title = "initTitle";
+        String description = "initDescription";
+        LocalTime duration = LocalTime.of(02, 00);
+        Collection<Label> labels = new ArrayList<Label>(Arrays.asList(new Label("initLabel")));
+        Movie movie = new Movie(title, description, duration, labels);
+    }
 }
