@@ -21,7 +21,7 @@ public class Movie implements IMovie{
 
     /**
      * @param title of the movie
-     * @return wheter at movie title is longer than 1 and shorter than 50.
+     * @return wheter a movie title is longer than 1 and shorter than 50 characters.
      */
     private boolean validMovieTitle(String title){
         return title.length() > 0 && title.length() < 50;
