@@ -41,8 +41,8 @@ public class MovieTest {
     @Test
     public void testSetTitle() {
         String legalTitle = "Title1.!?";
-        String illegalTitle1 = "title:";
-        String illegalTitle2 = "title,";
+        String illegalTitle1 = "";
+        String illegalTitle2 = "ThisTitleIsTooLongBecauseItContainsOver50Characters";
 
         assertEquals(initTitle, movie.getTitle(), "Movie title is not correct.");
         movie.setTitle(legalTitle);
