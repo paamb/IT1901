@@ -125,4 +125,11 @@ public class MovieTest {
         assertEquals(newLabels, movie.getLabels());
         assertThrows(IllegalArgumentException.class, () -> movie.setLabels(new ArrayList<Label>(Arrays.asList(labelOne, labelTwo, labelOne))));
     }
+
+    @Test
+    public void testSetWatched() {
+        assertEquals(false, movie.isWatched());
+        movie.setWatched();
+        assertEquals(true, movie.isWatched());
+    }
 }
