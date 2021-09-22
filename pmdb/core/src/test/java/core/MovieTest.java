@@ -27,10 +27,10 @@ public class MovieTest {
         Collection<Label> labels = new ArrayList<Label>(Arrays.asList(new Label("label")));
         Movie movie = new Movie(title, description, duration, labels);
 
-        assertEquals(title, movie.getTitle());
-        assertEquals(description, movie.getDescription());
-        assertEquals(duration, movie.getDuration());
-        assertEquals(labels, movie.getLabels());
+        assertEquals(title, movie.getTitle(), "Movie title is not correct.");
+        assertEquals(description, movie.getDescription(), "Description is not correct.");
+        assertEquals(duration, movie.getDuration(), "Duration is not correct.");
+        assertEquals(labels, movie.getLabels(), "Labels is not correct.");
     }
 
     @BeforeEach
@@ -44,29 +44,29 @@ public class MovieTest {
         String illegalTitle1 = "title:";
         String illegalTitle2 = "title,";
 
-        assertEquals(initTitle, movie.getTitle());
+        assertEquals(initTitle, movie.getTitle(), "Movie title is not correct.");
         movie.setTitle(legalTitle);
-        assertEquals(legalTitle, movie.getTitle());
-        assertThrows(IllegalArgumentException.class, () -> movie.setTitle(illegalTitle1));
-        assertThrows(IllegalArgumentException.class, () -> movie.setTitle(illegalTitle2));
+        assertEquals(legalTitle, movie.getTitle(), "Movie title is not correct.");
+        assertThrows(IllegalArgumentException.class, () -> movie.setTitle(illegalTitle1), "Did not throw exception on illegal title: " + illegalTitle1);
+        assertThrows(IllegalArgumentException.class, () -> movie.setTitle(illegalTitle2),  "Did not throw exception on illegal title: " + illegalTitle2);
     }
 
     @Test
     public void testSetDescription() {
         String newDescription = "newDescription";
 
-        assertEquals(initDescription, movie.getDescription());
+        assertEquals(initDescription, movie.getDescription(), "Description is not correct");
         movie.setDescription(newDescription);
-        assertEquals(newDescription, movie.getDescription());
+        assertEquals(newDescription, movie.getDescription(), "Description is not correct");
     }
 
     @Test
     public void testSetDuration() {
         LocalTime newDuration = LocalTime.of(3, 30);
 
-        assertEquals(initDuration, movie.getDuration());
+        assertEquals(initDuration, movie.getDuration(), "Duration is not correct");
         movie.setDuration(newDuration);
-        assertEquals(newDuration, movie.getDuration());
+        assertEquals(newDuration, movie.getDuration(), "Duration is not correct");
     }
 
     @Test
@@ -77,11 +77,11 @@ public class MovieTest {
         newLabels.add(labelOne);
         newLabels.add(labelTwo);
 
-        assertEquals(initLabels, movie.getLabels());
+        assertEquals(initLabels, movie.getLabels(), "Labels is not correct");
         movie.addLabel(labelOne);
         movie.addLabel(labelTwo);
-        assertEquals(newLabels, movie.getLabels());
-        assertThrows(IllegalStateException.class, () -> movie.addLabel(labelTwo));        
+        assertEquals(newLabels, movie.getLabels(), "Labels is not correct");
+        assertThrows(IllegalStateException.class, () -> movie.addLabel(labelTwo), "Failed to throw exception on adding duplicate label");        
     }
 
     @Test
@@ -94,15 +94,15 @@ public class MovieTest {
         movie.addLabel(labelOne);
         movie.addLabel(labelTwo);
 
-        assertEquals(newLabels, movie.getLabels());
+        assertEquals(newLabels, movie.getLabels(), "Labels is not correct");
         movie.removeLabel(labelTwo);
         newLabels.remove(labelTwo);
-        assertEquals(newLabels, movie.getLabels());
+        assertEquals(newLabels, movie.getLabels(), "Failed to remove label");
         movie.removeLabel(initLabel);
         newLabels.remove(initLabel);
-        assertEquals(newLabels, movie.getLabels());
+        assertEquals(newLabels, movie.getLabels(), "Failed to remove label");
         movie.removeLabel(new Label("notAddedLabel"));
-        assertEquals(newLabels, movie.getLabels());
+        assertEquals(newLabels, movie.getLabels(), "Failed on removing non-added label");
     }
 
     @Test
@@ -112,21 +112,21 @@ public class MovieTest {
         Collection<Label> newLabels = new ArrayList<Label>(initLabels);
         newLabels.add(labelOne);
 
-        assertEquals(initLabels, movie.getLabels());
+        assertEquals(initLabels, movie.getLabels(), "Labels is not correct");
         movie.setLabels(newLabels);
-        assertEquals(newLabels, movie.getLabels());
+        assertEquals(newLabels, movie.getLabels(), "Failed on setting collection of labels");
         newLabels = new ArrayList<Label>(Arrays.asList(labelOne, labelTwo));
         movie.setLabels(newLabels);
-        assertEquals(newLabels, movie.getLabels());
-        assertThrows(IllegalArgumentException.class, () -> movie.setLabels(new ArrayList<Label>(Arrays.asList(labelOne, labelTwo, labelOne))));
+        assertEquals(newLabels, movie.getLabels(), "Failed on setting collection of labels");
+        assertThrows(IllegalArgumentException.class, () -> movie.setLabels(new ArrayList<Label>(Arrays.asList(labelOne, labelTwo, labelOne))), "Did not throw exception when adding duplicate labels");
     }
 
     @Test
     public void testSetWatched() {
-        assertEquals(false, movie.isWatched());
+        assertEquals(false, movie.isWatched(), "Wacthed is not correct");
         movie.setWatched();
-        assertEquals(true, movie.isWatched());
+        assertEquals(true, movie.isWatched(), "Failed to set watched true");
         movie.setWatched();
-        assertEquals(true, movie.isWatched());
+        assertEquals(true, movie.isWatched(), "Failed on setWatched() when movie is watched");
     }
 }
