@@ -2,7 +2,6 @@ package core;
 
 import java.time.LocalTime;
 import java.util.Collection;
-import java.util.stream.Collectors;
 import java.util.ArrayList;
 
 public class Movie implements IMovie{

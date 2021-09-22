@@ -126,5 +126,7 @@ public class MovieTest {
         assertEquals(false, movie.isWatched());
         movie.setWatched();
         assertEquals(true, movie.isWatched());
+        movie.setWatched();
+        assertEquals(true, movie.isWatched());
     }
 }
