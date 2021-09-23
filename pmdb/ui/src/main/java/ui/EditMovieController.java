@@ -11,6 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class EditMovieController {
+    //TODO: Initialize this field in AppController and refere to that field in this controller
     private WatchList watchList;
     
     @FXML
