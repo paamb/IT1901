@@ -12,10 +12,11 @@ public class Movie implements IMovie{
     private boolean watched;
     private Collection<Label> labels;
 
-    public Movie(String title, String description, LocalTime duration, Collection<Label> labels){
+    public Movie(String title, String description, LocalTime duration, boolean watched, Collection<Label> labels){
         setTitle(title);
         setDescription(description);
         setDuration(duration);
+        setWatched(watched);
         setLabels(labels);
     }
 
@@ -27,8 +28,8 @@ public class Movie implements IMovie{
         return title.length() > 0 && title.length() < 50;
     }
 
-    public void setWatched(){
-        this.watched = true;
+    public void setWatched(boolean watched){
+        this.watched = watched;
     }
 
     public boolean isWatched(){
@@ -45,7 +46,7 @@ public class Movie implements IMovie{
 
     public void setTitle(String title){
         if (!validMovieTitle(title)){
-            throw new IllegalArgumentException("Movie title contains illegal characters");
+            throw new IllegalArgumentException("Illegal movie title");
         }
         this.title = title;
     }
@@ -85,7 +86,7 @@ public class Movie implements IMovie{
             }
         }
     
-        this.labels = new ArrayList<Label>(labels);
+        this.labels = new ArrayList<>(labels);
     }
 
     public Collection<Label> getLabels(){
