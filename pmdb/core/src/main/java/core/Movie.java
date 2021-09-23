@@ -6,20 +6,17 @@ import java.util.ArrayList;
 
 public class Movie implements IMovie{
 
-    private final String title;
-    private final String description;
-    private final LocalTime duration;
+    private String title;
+    private String description;
+    private LocalTime duration;
     private boolean watched;
     private Collection<Label> labels;
 
-    public Movie(String title, String description, LocalTime duration, Collection<Label> lables){
-        if (!validMovieTitle(title)){
-            throw new IllegalArgumentException("Movie title contains illegal characters");
-        }
-        this.title = title;
-        this.description = description;
-        this.duration = duration;
-        labels = new ArrayList<>(labels);
+    public Movie(String title, String description, LocalTime duration, Collection<Label> labels){
+        setTitle(title);
+        setDescription(description);
+        setDuration(duration);
+        setLabels(labels);
     }
     public Movie(String title, String description, LocalTime duration){
         if (!validMovieTitle(title)){
@@ -32,10 +29,10 @@ public class Movie implements IMovie{
 
     /**
      * @param title of the movie
-     * @return whether movie title is valid. Can only contain letters, numbers, and special characters "?", "." and "!".
+     * @return whether a movie title is longer than 1 and shorter than 50 characters.
      */
     private boolean validMovieTitle(String title){
-        return title.matches("[A-Za-z0-9?.!]+");
+        return title.length() > 0 && title.length() < 50;
     }
 
     public void setWatched(){
@@ -46,46 +43,81 @@ public class Movie implements IMovie{
         return watched;
     }
 
-    public void addLabel(Label label){
-        this.labels.add(label);
-    }
-
-    public void removeLabel(Label label){
-        labels.remove(label);
-    }
-
-    public void removeLabel(String label){
-        labels.removeIf(x -> x.getLabel().equals(label));
-    }
-
-    //TODO error handling if labels == null
-    public Collection<Label> getLabels(){
-        if(labels != null){
-            return new ArrayList<>(labels);
-        }
-        return new ArrayList<>();
+    public void setDescription(String description){
+        this.description = description;
     }
 
     public String getDescription(){
         return description;
     }
 
+    public void setTitle(String title){
+        if (!validMovieTitle(title)){
+            throw new IllegalArgumentException("Movie title contains illegal characters");
+        }
+        this.title = title;
+    }
+
     public String getTitle(){
         return title;
+    }
+
+    public void setDuration(LocalTime duration){
+        this.duration = duration;
     }
 
     public LocalTime getDuration(){
         return duration;
     }
+    public void addLabel(Label label){
+        if(labels.contains(label)) {
+            throw new IllegalStateException("Duplicate labels not allowed");
+        }
+        labels.add(label);
+    }
+
+    public void removeLabel(Label label){
+        labels.remove(label);
+    }
+
+    public void setLabels(Collection<Label> labels){
+        for (Label label1 : labels) {
+            int count = 0;
+            for (Label label2 : labels) {
+                if(label1 == label2) {
+                    count++;
+                }
+                if(count > 1) {
+                    throw new IllegalArgumentException("Duplicate labels not allowed");
+                }
+            }
+        }
+    
+        this.labels = new ArrayList<Label>(labels);
+    }
+
+    public Collection<Label> getLabels(){
+        return new ArrayList<>(labels);
+    }
 
     @Override
     public String toString() {
-        String s = String.format("Movie: %1$s\nDescription: %2$s\nDuration: %3$s\nWatched: %4$s\nLabels: "
-                                ,getTitle(),getDescription(),getDuration().toString(),isWatched() ? "Yes" : "No");
+        String s = "Movie: " + getTitle() + "\n" + 
+                    "Description: " + getDescription() + "\n"+
+                    "Duration: " + getDuration().toString() + "\n"+
+                    "Watched: " + (isWatched() ? "Yes" : "No");
         
-        for (Label label : labels) {
-            s += label.getLabel() + ", ";
+        if (labels.size() == 0){
+            return s;
         }
+
+        else{
+            s += "\nLabels: ";
+            for (Label label : labels) {
+                s += label.getLabel() + ", ";
+            }
+        }
+        
         return s.substring(0, s.length()-2);
     }
 }
