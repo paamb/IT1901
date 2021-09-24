@@ -28,8 +28,7 @@ public class EditMovieController {
 
     @FXML
     Text errorField;
-    
-    @FXML 
+     
     private AppController appController;
 
     @FXML
