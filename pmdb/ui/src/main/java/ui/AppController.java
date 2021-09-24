@@ -36,7 +36,7 @@ public class AppController {
     @FXML
     private void addMovie() throws IOException {
         Stage newWindow = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("AddMovie.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("EditMovie.fxml"));
         Parent addMovieWindow = fxmlLoader.load();
         newWindow.setScene(new Scene(addMovieWindow));
 

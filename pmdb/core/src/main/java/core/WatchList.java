@@ -15,9 +15,15 @@ public class WatchList {
         movieList = new ArrayList<>(deserializedMovieList);
     }
 
+        
     public void addMovie(Movie movie){
-        movieList.add(movie);
-        storage.save(this);
+        if(getMovie(movie.getTitle()) == null){
+            movieList.add(movie);
+            storage.save(this);
+    } else {
+        throw new IllegalStateException("This movie-title is already in use.");
+    }
+    
     }
     public void removeMovie(Movie movie){
         movieList.remove(movie);
@@ -27,5 +33,16 @@ public class WatchList {
     }
     public void clearMovieList(){
         movieList.clear();
+    }
+    /**
+     * 
+     * @param title
+     * @return Movie with matching title, if there is no such movie, return null
+     */
+    public Movie getMovie(String title){
+        return movieList.stream()
+            .filter(m -> m.getTitle().equals(title))
+            .findFirst()
+            .orElse(null);
     }
 }
