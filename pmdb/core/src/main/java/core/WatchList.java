@@ -8,9 +8,9 @@ import json.Storage;
 public class WatchList {
 
     String fileName = "WatchList.json";
-    private Collection<Movie> movieList;
+    private Collection<IMovie> movieList;
     private Storage storage;
-    private Collection<Movie> deserializedMovieList;
+    private Collection<IMovie> deserializedMovieList;
 
     public WatchList(){
         storage = new Storage(fileName);
@@ -18,7 +18,7 @@ public class WatchList {
         movieList = new ArrayList<>(deserializedMovieList);
     }
 
-    public void addMovie(Movie movie){
+    public void addMovie(IMovie movie){
         if(getMovie(movie.getTitle()) == null){
             movieList.add(movie);
             storage.save(getMovies());
@@ -27,10 +27,10 @@ public class WatchList {
     }
     
     }
-    public void removeMovie(Movie movie){
+    public void removeMovie(IMovie movie){
         movieList.remove(movie);
     }
-    public Collection<Movie> getMovies(){
+    public Collection<IMovie> getMovies(){
         return new ArrayList<>(movieList);
     }
     public void clearMovieList(){
@@ -41,7 +41,7 @@ public class WatchList {
      * @param title
      * @return Movie with matching title, if there is no such movie, return null
      */
-    public Movie getMovie(String title){
+    public IMovie getMovie(String title){
         return movieList.stream()
             .filter(m -> m.getTitle().equals(title))
             .findFirst()
@@ -51,7 +51,7 @@ public class WatchList {
     @Override
     public String toString() {
         String returnString = "";
-        for (Movie movie : movieList) {
+        for (IMovie movie : movieList) {
             returnString += movie.getTitle() + "\n";
         }
         return returnString;
