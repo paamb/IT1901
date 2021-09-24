@@ -30,6 +30,12 @@ public class Storage {
         this.fileName = fileName;
         file = new File(fileName);
     }
+
+    /**
+      * 
+     * 
+     * @param movieList
+     */
     public void save(Collection<Movie> movieList){
         try {
             ObjectMapper mapper = new ObjectMapper();
