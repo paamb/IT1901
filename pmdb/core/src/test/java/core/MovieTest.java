@@ -25,7 +25,7 @@ public class MovieTest {
         String description = "Dette er film nummer 1.";
         LocalTime duration = LocalTime.of(2, 10);
         Collection<Label> labels = new ArrayList<Label>(Arrays.asList(new Label("label")));
-        Movie movie = new Movie(title, description, duration, labels);
+        Movie movie = new Movie(title, description, duration, false, labels);
 
         assertEquals(title, movie.getTitle(), "Movie title is not correct.");
         assertEquals(description, movie.getDescription(), "Description is not correct.");
@@ -35,7 +35,7 @@ public class MovieTest {
 
     @BeforeEach
     public void setUp() {
-        movie = new Movie(initTitle, initDescription, initDuration, initLabels);
+        movie = new Movie(initTitle, initDescription, initDuration,false, initLabels);
     }
 
     @Test
@@ -124,9 +124,9 @@ public class MovieTest {
     @Test
     public void testSetWatched() {
         assertEquals(false, movie.isWatched(), "Wacthed is not correct");
-        movie.setWatched();
+        movie.setWatched(true);
         assertEquals(true, movie.isWatched(), "Failed to set watched true");
-        movie.setWatched();
+        movie.setWatched(true);
         assertEquals(true, movie.isWatched(), "Failed on setWatched() when movie is watched");
     }
 }
