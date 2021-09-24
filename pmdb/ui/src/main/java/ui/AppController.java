@@ -1,5 +1,8 @@
 package ui;
 
+import core.WatchList;
+import ui.EditMovieController;
+
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -13,35 +16,38 @@ import core.Movie;
 import core.WatchList;
 import javafx.stage.Modality;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import core.WatchList;
 
 
 public class AppController {
-    private WatchList watchList;
-    private ArrayList<Movie> exampleMovies;
-        
-    public AppController() {
-        watchList = new WatchList();
-        exampleMovies = new ArrayList<>();
-        exampleMovies.add(new Movie("Tenet", "Wtf", LocalTime.of(10,10,10), true));
-        exampleMovies.add(new Movie("Detregnerkjottboller", "En rimelig alreit film", LocalTime.of(10,10,10), false));
-        exampleMovies.add(new Movie("Simpsonsthemovie", "Spider pig, spider pig", LocalTime.of(10,10,10), false));
-    }
-    @FXML private Button addMovieButton;
+
+    private WatchList watchList = new WatchList();
+
+    @FXML
+    private EditMovieController editMovieController;
+
+    @FXML
+    private Button addMovieButton;
+
+    @FXML
+    VBox addMovieWindow;
 
     @FXML
     private void initialize() {
-
+        editMovieController.setAppController(this);
     }
 
     @FXML
-    private void addMovie() throws IOException {
-        Stage newWindow = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("EditMovie.fxml"));
-        Parent addMovieWindow = fxmlLoader.load();
-        newWindow.setScene(new Scene(addMovieWindow));
+    private void openEditMovie() {
+        addMovieWindow.setVisible(true);
+    }
 
-        newWindow.initModality(Modality.WINDOW_MODAL);
-        newWindow.initOwner(App.parentStage);
-        newWindow.show();
+    public void hideEditMovie() {
+        addMovieWindow.setVisible(false);
+    }
+
+    public WatchList getWatchList() {
+        return watchList;
     }
 }
