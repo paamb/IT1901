@@ -7,6 +7,5 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController">
    <children>
       <Button fx:id="addMovieButton" layoutX="526.0" layoutY="347.0" mnemonicParsing="false" onAction="#addMovie" text="+" />
-      <Button text="Add" fx:id="saveBtn" onAction="#addMovieToWatchList" GridPane.rowIndex="2" GridPane.columnIndex="3" GridPane.rowSpan="3"/>
    </children>
 </AnchorPane>

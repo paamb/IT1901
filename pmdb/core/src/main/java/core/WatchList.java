@@ -6,21 +6,26 @@ import java.util.Collection;
 import json.Storage;
 
 public class WatchList {
-    private Collection<Movie> movies;
+
+    private Collection<Movie> movieList;
     private Storage storage;
     public WatchList(){
         storage = new Storage();
-        movies = new ArrayList<>();
+        Collection<Movie> deserializedMovieList = storage.load(this);
+        movieList = new ArrayList<>(deserializedMovieList);
     }
 
     public void addMovie(Movie movie){
-        movies.add(movie);
-        storage.save(movie);
+        movieList.add(movie);
+        storage.save(this);
     }
     public void removeMovie(Movie movie){
-        movies.remove(movie);
+        movieList.remove(movie);
     }
     public Collection<Movie> getMovies(){
-        return new ArrayList<>(movies);
+        return new ArrayList<>(movieList);
+    }
+    public void clearMovieList(){
+        movieList.clear();
     }
 }
