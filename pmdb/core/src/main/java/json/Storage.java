@@ -24,9 +24,7 @@ public class Storage {
     public Storage(){
         file = new File("movies.json");
     }
-    public void save(WatchList watchList){
-        movieList = watchList.getMovies();
-
+    public void save(Collection<Movie> movieList){
         try {
             ObjectMapper mapper = new ObjectMapper();
             FileWriter fileWriter = new FileWriter(file, false);
@@ -42,7 +40,11 @@ public class Storage {
         }
     }
 
-    public Collection<Movie> load(WatchList watchList){
+    /**
+     * 
+     * @return ArrayList with movies from .json file
+     */
+    public Collection<Movie> load(){
         movieList = new ArrayList<>();
 
         if(file.length() != 0){
@@ -75,7 +77,7 @@ public class Storage {
                     if(watchedNode instanceof JsonNode){
                         newMovie.setWatched(watchedNode.booleanValue());
                     }
-                    
+
                     movieList.add(newMovie);
                 }
             }catch(Exception e){

@@ -11,15 +11,16 @@ public class WatchList {
     private Storage storage;
     public WatchList(){
         storage = new Storage();
-        Collection<Movie> deserializedMovieList = storage.load(this);
+        Collection<Movie> deserializedMovieList = storage.load();
         movieList = new ArrayList<>(deserializedMovieList);
+        System.out.println(movieList);
     }
 
         
     public void addMovie(Movie movie){
         if(getMovie(movie.getTitle()) == null){
             movieList.add(movie);
-            storage.save(this);
+            storage.save(getMovies());
     } else {
         throw new IllegalStateException("This movie-title is already in use.");
     }
