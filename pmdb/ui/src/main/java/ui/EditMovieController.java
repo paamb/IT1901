@@ -33,11 +33,6 @@ public class EditMovieController {
     private AppController appController;
 
     @FXML
-    private void initialize() {
-        System.out.println("editMovieController initialized");
-    }
-
-    @FXML
     private void submit(){
         try {
             boolean watched = watchedCheckBox.isSelected();

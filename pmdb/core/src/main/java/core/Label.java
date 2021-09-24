@@ -23,8 +23,6 @@ public class Label {
         setMovies(movies);
     }
 
-
-
     /**
      * 
      * @return A random hexcolor #FFFFFF
