@@ -3,21 +3,38 @@ package core;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import json.Storage;
+
 public class WatchList {
-    private Collection<Movie> movies = new ArrayList<Movie>();
+
+    String fileName = "WatchList.json";
+    private Collection<Movie> movieList;
+    private Storage storage;
+    private Collection<Movie> deserializedMovieList;
+
+    public WatchList(){
+        storage = new Storage(fileName);
+        deserializedMovieList = storage.load();
+        movieList = new ArrayList<>(deserializedMovieList);
+    }
 
     public void addMovie(Movie movie){
         if(getMovie(movie.getTitle()) == null){
-            movies.add(movie);
-        } else {
-            throw new IllegalStateException("This movie-title is already in use.");
-        }
+            movieList.add(movie);
+            storage.save(getMovies());
+    } else {
+        throw new IllegalStateException("This movie-title is already in use.");
+    }
+    
     }
     public void removeMovie(Movie movie){
-        movies.remove(movie);
+        movieList.remove(movie);
     }
     public Collection<Movie> getMovies(){
-        return new ArrayList<Movie>(movies);
+        return new ArrayList<>(movieList);
+    }
+    public void clearMovieList(){
+        movieList.clear();
     }
     /**
      * 
@@ -25,9 +42,18 @@ public class WatchList {
      * @return Movie with matching title, if there is no such movie, return null
      */
     public Movie getMovie(String title){
-        return movies.stream()
+        return movieList.stream()
             .filter(m -> m.getTitle().equals(title))
             .findFirst()
             .orElse(null);
+    }
+
+    @Override
+    public String toString() {
+        String returnString = "";
+        for (Movie movie : movieList) {
+            returnString += movie.getTitle() + "\n";
+        }
+        return returnString;
     }
 }
