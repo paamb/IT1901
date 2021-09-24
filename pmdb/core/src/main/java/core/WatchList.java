@@ -49,7 +49,7 @@ public class WatchList {
     @Override
     public String toString() {
         String returnString = "";
-        for (Movie movie : movies) {
+        for (Movie movie : movieList) {
             returnString += movie.getTitle() + "\n";
         }
         return returnString;
