@@ -1,6 +1,6 @@
 # Brukerhistorier
 
-### Watchlist (us-1)
+## Watchlist (us-1)
 
 Som buker av pmdb ønsker jeg å kunne lagre filmer jeg vil se senere på en enkel måte.
 
