@@ -1,5 +1,8 @@
 package ui;
 
+import core.WatchList;
+import ui.EditMovieController;
+
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -10,26 +13,28 @@ import javafx.scene.Parent;
 import java.io.IOException;
 import javafx.stage.Modality;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 
 
 public class AppController {
 
+    private WatchList watchList;
+    private EditMovieController editMovieController;
+
     @FXML private Button addMovieButton;
+    @FXML VBox addMovieWindow;
 
     @FXML
     private void initialize() {
-
+        watchList = new WatchList();
     }
 
     @FXML
-    private void addMovie() throws IOException {
-        Stage newWindow = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("EditMovie.fxml"));
-        Parent addMovieWindow = fxmlLoader.load();
-        newWindow.setScene(new Scene(addMovieWindow));
+    private void openEditMovie() {
+        addMovieWindow.setVisible(true);
+    }
 
-        newWindow.initModality(Modality.WINDOW_MODAL);
-        newWindow.initOwner(App.parentStage);
-        newWindow.show();
+    public void hideEditMovie() {
+        addMovieWindow.setVisible(false);
     }
 }
