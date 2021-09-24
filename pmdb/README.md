@@ -27,6 +27,7 @@ mvn clean install
 For å kjøre prosjektet, kjør:
 
 ```
+cd ui
 mvn javafx:run
 ```
 
