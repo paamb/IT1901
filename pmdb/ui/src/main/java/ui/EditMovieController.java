@@ -28,17 +28,22 @@ public class EditMovieController {
 
     @FXML
     private void submit(){
-        boolean watched = watchedCheckBox.isSelected();
-        String title = titleField.getText();
-        int hours = Integer.parseInt(hoursField.getText());
-        int minutes = Integer.parseInt(minutesField.getText());
-        String description = descriptionField.getText();
-        LocalTime duration = LocalTime.of(hours,minutes);
-
-        Movie movie = new Movie(title, description, duration, watched, new ArrayList<>());
-
-        appController.getWatchList().addMovie(movie);
-        appController.hideEditMovie();
+        try {
+            boolean watched = watchedCheckBox.isSelected();
+            String title = titleField.getText();
+            int hours = Integer.parseInt(hoursField.getText());
+            int minutes = Integer.parseInt(minutesField.getText());
+            String description = descriptionField.getText();
+            LocalTime duration = LocalTime.of(hours,minutes);
+    
+            Movie movie = new Movie(title, description, duration, watched, new ArrayList<>());
+    
+            appController.getWatchList().addMovie(movie);
+            appController.hideEditMovie();
+            System.out.println(appController.getWatchList().toString());
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
     }
 
     public void setAppController(AppController appController){

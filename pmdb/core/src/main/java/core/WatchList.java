@@ -45,4 +45,13 @@ public class WatchList {
             .findFirst()
             .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        String returnString = "";
+        for (Movie movie : movies) {
+            returnString += movie.getTitle() + "\n";
+        }
+        return returnString;
+    }
 }
