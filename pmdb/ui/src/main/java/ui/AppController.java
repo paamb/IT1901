@@ -26,7 +26,7 @@ public class AppController {
     Text watchListMovies;
 
     @FXML
-    private void initialize() {
+    void initialize() {
         watchList = new WatchList();
         editMovieController.setAppController(this);
         printWatchList();
@@ -45,10 +45,9 @@ public class AppController {
         return watchList;
     }
 
-    @FXML
     protected void printWatchList() {
         String moviesWatchList = "";
-
+        
         for (IMovie movie : getWatchList().getMovies()) {
             moviesWatchList += movie.getTitle() + "\n";
         }

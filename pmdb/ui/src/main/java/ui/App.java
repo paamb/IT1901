@@ -13,8 +13,6 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    // TODO: se på hvodan refering til stage-varabler er 
-
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("App.fxml"));
