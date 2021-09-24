@@ -39,7 +39,7 @@ public class Movie implements IMovie{
      * @return whether a movie title is longer than 1 and shorter than 50 characters.
      */
     private boolean validMovieTitle(String title){
-        return title.length() > 0 && title.length() < 50;
+        return title.length() >= IMovie.minTitleLength && title.length() <= IMovie.maxTitleLength;
     }
 
     public void setWatched(boolean watched){

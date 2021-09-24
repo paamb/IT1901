@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import core.IMovie;
 import core.Movie;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -18,7 +19,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Storage {
     String fileName;
-    private Collection<Movie> movieList;
+    private Collection<IMovie> movieList;
     private File file;
 
      /**
@@ -36,13 +37,13 @@ public class Storage {
      * 
      * @param movieList
      */
-    public void save(Collection<Movie> movieList){
+    public void save(Collection<IMovie> movieList){
         try {
             ObjectMapper mapper = new ObjectMapper();
             FileWriter fileWriter = new FileWriter(file, false);
             SequenceWriter seqWriter = mapper.writer().writeValuesAsArray(fileWriter);
 
-            for(Movie storedMovie : movieList){
+            for(IMovie storedMovie : movieList){
                 seqWriter.write(storedMovie);
             }
 
@@ -56,7 +57,7 @@ public class Storage {
      * 
      * @return ArrayList with movies from .json file
      */
-    public Collection<Movie> load(){
+    public Collection<IMovie> load(){
         movieList = new ArrayList<>();
 
         if(file.length() != 0){
@@ -65,7 +66,7 @@ public class Storage {
                 List<ObjectNode> deserializedMovies = mapper.readValue(Paths.get(fileName).toFile(), new TypeReference<List<ObjectNode>>(){});
                 
                 for (ObjectNode m : deserializedMovies) {
-                    Movie newMovie = new Movie();
+                    IMovie newMovie = new Movie();
 
                     JsonNode durationText = m.get("duration");
                     if (durationText instanceof JsonNode){

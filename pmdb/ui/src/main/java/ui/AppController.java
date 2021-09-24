@@ -1,7 +1,7 @@
 package ui;
 
 import core.WatchList;
-import core.Movie;
+import core.IMovie;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -49,7 +49,7 @@ public class AppController {
     protected void printWatchList() {
         String moviesWatchList = "";
 
-        for (Movie movie : getWatchList().getMovies()) {
+        for (IMovie movie : getWatchList().getMovies()) {
             moviesWatchList += movie.getTitle() + "\n";
         }
         watchListMovies.setText(moviesWatchList);

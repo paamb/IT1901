@@ -7,7 +7,7 @@ public class Label {
     private String label;
     private String color;
     private String description;
-    private Collection<Movie> movies;
+    private Collection<IMovie> movies;
 
     public Label(String label){
         setLabel(label);
@@ -16,7 +16,7 @@ public class Label {
         setMovies(new ArrayList<>());
     }
 
-    public Label(String label, String color, String description, Collection<Movie> movies){
+    public Label(String label, String color, String description, Collection<IMovie> movies){
         setLabel(label);
         setColor(color);
         setDescription(description);
@@ -79,19 +79,19 @@ public class Label {
         return description;
     }
 
-    public void setMovies(Collection<Movie> movies){
+    public void setMovies(Collection<IMovie> movies){
         this.movies = new ArrayList<>(movies);
     }
 
-    public Collection<Movie> getMovies(){
+    public Collection<IMovie> getMovies(){
         return new ArrayList<>(movies);
     }
 
-    public void removeMovie(Movie movie){
+    public void removeMovie(IMovie movie){
         movies.remove(movie);
     }
 
-    public void addMovie(Movie movie){
+    public void addMovie(IMovie movie){
         movies.add(movie);
     }
 
@@ -107,7 +107,7 @@ public class Label {
         
         else{
             s += "\nMovies: ";
-            for (Movie movie : getMovies()){
+            for (IMovie movie : getMovies()){
                 s += movie.getTitle() + ", ";
                 
             }
