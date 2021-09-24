@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.List;
 
 import core.Movie;
-import core.WatchList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
