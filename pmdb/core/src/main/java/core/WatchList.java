@@ -12,30 +12,33 @@ public class WatchList {
     private Storage storage;
     private Collection<IMovie> deserializedMovieList;
 
-    public WatchList(){
+    public WatchList() {
         storage = new Storage(fileName);
         deserializedMovieList = storage.load();
         movieList = new ArrayList<>(deserializedMovieList);
     }
 
-    public void addMovie(IMovie movie){
+    public void addMovie(IMovie movie) {
         if(getMovie(movie.getTitle()) == null){
             movieList.add(movie);
             storage.save(getMovies());
     } else {
         throw new IllegalStateException("This movie-title is already in use.");
     }
-    
     }
+
     public void removeMovie(IMovie movie){
         movieList.remove(movie);
     }
+
     public Collection<IMovie> getMovies(){
         return new ArrayList<>(movieList);
     }
+
     public void clearMovieList(){
         movieList.clear();
     }
+    
     /**
      * 
      * @param title

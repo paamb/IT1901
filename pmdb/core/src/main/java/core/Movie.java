@@ -98,10 +98,7 @@ public class Movie implements IMovie{
     }
 
     public Collection<Label> getLabels(){
-        if(labels != null){
-            return new ArrayList<>(labels);
-        }
-        return new ArrayList<>();
+        return new ArrayList<>(labels);
     }
 
     @Override
