@@ -72,8 +72,7 @@ public class Storage {
                     if (durationText instanceof JsonNode){
                         int hour = durationText.get("hour").asInt();
                         int minute = durationText.get("minute").asInt();
-                        int second = durationText.get("second").asInt();
-                        newMovie.setDuration(LocalTime.of(hour, minute, second));
+                        newMovie.setDuration(LocalTime.of(hour, minute));
                     }
 
                     JsonNode titleNode = m.get("title");
