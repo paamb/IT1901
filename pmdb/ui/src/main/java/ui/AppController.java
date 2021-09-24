@@ -1,23 +1,10 @@
 package ui;
 
 import core.WatchList;
-import ui.EditMovieController;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import java.io.IOException;
-import java.time.LocalTime;
-import java.util.ArrayList;
-
-import core.Movie;
-import core.WatchList;
-import javafx.stage.Modality;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import core.WatchList;
 
 
 public class AppController {

@@ -4,7 +4,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 import core.Movie;
-import core.WatchList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
