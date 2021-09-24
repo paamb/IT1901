@@ -1,7 +1,7 @@
 package ui;
 
 import core.WatchList;
-import ui.EditMovieController;
+import core.Movie;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -13,25 +13,30 @@ import javafx.scene.Parent;
 import java.io.IOException;
 import javafx.stage.Modality;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.scene.layout.VBox;
 import core.WatchList;
 
 
 public class AppController {
 
-    private WatchList watchList = new WatchList();
+    private WatchList watchList;
 
     @FXML
-    private EditMovieController editMovieController;
+    EditMovieController editMovieController;
 
     @FXML
-    private Button addMovieButton;
+    Button addMovieButton;
 
     @FXML
     VBox addMovieWindow;
 
     @FXML
+    Text watchListMovies;
+
+    @FXML
     private void initialize() {
+        watchList = new WatchList();
         editMovieController.setAppController(this);
     }
 
@@ -40,11 +45,21 @@ public class AppController {
         addMovieWindow.setVisible(true);
     }
 
-    public void hideEditMovie() {
+    protected void hideEditMovie() {
         addMovieWindow.setVisible(false);
     }
 
-    public WatchList getWatchList() {
+    protected WatchList getWatchList() {
         return watchList;
+    }
+
+    @FXML
+    protected void printWatchList() {
+        String moviesWatchList = "";
+
+        for (Movie movie : getWatchList().getMovies()) {
+            moviesWatchList += movie.getTitle() + "\n";
+        }
+        watchListMovies.setText(moviesWatchList);
     }
 }

@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="app" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController">
+<AnchorPane fx:id="app" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController">
    <children>
       <Button fx:id="addMovieButton" layoutX="526.0" layoutY="347.0" mnemonicParsing="false" onAction="#openEditMovie" text="+" />
-      <VBox fx:id="addMovieWindow" layoutX="175.0" layoutY="10.0" prefHeight="385.0" prefWidth="322.0" visible="false">
+      <TitledPane animated="false" layoutX="14.0" layoutY="14.0" text="Watchlist">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="147.0">
+               <children>
+                  <Text fx:id="watchListMovies" layoutX="14.0" layoutY="14.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Watchlist*" wrappingWidth="124.22900390625" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <VBox fx:id="addMovieWindow" layoutX="133.0" layoutY="22.0" prefHeight="400.0" prefWidth="334.0" style="-fx-border-color: #000000; -fx-background-color: #FFFFFF;" visible="false">
           <fx:include fx:id="editMovie" source="EditMovie.fxml" />
       </VBox>
    </children>
