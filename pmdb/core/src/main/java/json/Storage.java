@@ -26,7 +26,7 @@ public class Storage {
     }
     public void save(WatchList watchList){
         movieList = watchList.getMovies();
-        
+
         try {
             ObjectMapper mapper = new ObjectMapper();
             FileWriter fileWriter = new FileWriter(file, false);
@@ -73,9 +73,9 @@ public class Storage {
 
                     JsonNode watchedNode = m.get("watched");
                     if(watchedNode instanceof JsonNode){
-                        if (watchedNode.booleanValue()) newMovie.setWatched();
+                        newMovie.setWatched(watchedNode.booleanValue());
                     }
-
+                    
                     movieList.add(newMovie);
                 }
             }catch(Exception e){
