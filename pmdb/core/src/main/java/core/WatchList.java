@@ -25,6 +25,9 @@ public class WatchList {
      * @return Movie with matching title, if there is no such movie, return null
      */
     public Movie getMovie(String title){
-        return movies.stream().filter(m -> m.getTitle().equals(title)).findFirst().orElse(null);
+        return movies.stream()
+            .filter(m -> m.getTitle().equals(title))
+            .findFirst()
+            .orElse(null);
     }
 }
