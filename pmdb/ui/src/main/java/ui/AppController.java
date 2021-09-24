@@ -44,10 +44,4 @@ public class AppController {
         newWindow.initOwner(App.parentStage);
         newWindow.show();
     }
-
-    @FXML
-    public void saveMovie(){
-        Movie randomMovie = exampleMovies.get((int) (exampleMovies.size() * Math.random()));
-        watchList.addMovie(randomMovie);
-    }
 }

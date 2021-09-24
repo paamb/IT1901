@@ -16,7 +16,6 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="addMovieButton" layoutX="23.0" layoutY="325.0" mnemonicParsing="false" text="Save" prefHeight="14.0" prefWidth="40.0" onAction="#saveMovie"/>
       <CheckBox id="watchedCheckBox" layoutX="23.0" layoutY="294.0" mnemonicParsing="false" text="Watched" />
       <Label layoutX="23.0" layoutY="53.0" text="Title:" />
       <TextField id="titleField" layoutX="87.0" layoutY="48.0" prefHeight="27.0" prefWidth="202.0" />
