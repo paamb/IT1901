@@ -7,16 +7,17 @@ import json.Storage;
 
 public class WatchList {
 
+    String fileName = "WatchList.json";
     private Collection<Movie> movieList;
     private Storage storage;
+    private Collection<Movie> deserializedMovieList;
+
     public WatchList(){
-        storage = new Storage();
-        Collection<Movie> deserializedMovieList = storage.load();
+        storage = new Storage(fileName);
+        deserializedMovieList = storage.load();
         movieList = new ArrayList<>(deserializedMovieList);
-        System.out.println(movieList);
     }
 
-        
     public void addMovie(Movie movie){
         if(getMovie(movie.getTitle()) == null){
             movieList.add(movie);

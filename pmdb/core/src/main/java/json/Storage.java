@@ -17,11 +17,18 @@ import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Storage {
+    String fileName;
     private Collection<Movie> movieList;
     private File file;
 
-    public Storage(){
-        file = new File("movies.json");
+     /**
+      * 
+     * 
+     * @param fileName The name the file you want to save/load from.
+     */
+    public Storage(String fileName){
+        this.fileName = fileName;
+        file = new File(fileName);
     }
     public void save(Collection<Movie> movieList){
         try {
@@ -49,7 +56,7 @@ public class Storage {
         if(file.length() != 0){
             try{
                 ObjectMapper mapper = new ObjectMapper();
-                List<ObjectNode> deserializedMovies = mapper.readValue(Paths.get("movies.json").toFile(), new TypeReference<List<ObjectNode>>(){});
+                List<ObjectNode> deserializedMovies = mapper.readValue(Paths.get(fileName).toFile(), new TypeReference<List<ObjectNode>>(){});
                 
                 for (ObjectNode m : deserializedMovies) {
                     Movie newMovie = new Movie();
