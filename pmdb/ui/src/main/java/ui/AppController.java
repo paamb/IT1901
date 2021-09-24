@@ -29,6 +29,7 @@ public class AppController {
     private void initialize() {
         watchList = new WatchList();
         editMovieController.setAppController(this);
+        printWatchList();
     }
 
     @FXML
