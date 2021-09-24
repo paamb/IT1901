@@ -15,19 +15,19 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <CheckBox id="watchedCheckBox" layoutX="23.0" layoutY="294.0" mnemonicParsing="false" text="Watched" />
+      <CheckBox fx:id="watchedCheckBox" layoutX="23.0" layoutY="294.0" mnemonicParsing="false" text="Watched" />
       <Label layoutX="23.0" layoutY="53.0" text="Title:" />
-      <TextField id="titleField" layoutX="87.0" layoutY="48.0" prefHeight="27.0" prefWidth="202.0" />
+      <TextField fx:id="titleField" layoutX="87.0" layoutY="48.0" prefHeight="27.0" prefWidth="202.0" />
       <Label layoutX="11.0" layoutY="98.0" prefHeight="17.0" prefWidth="79.0" text="Description:" />
-      <TextArea id="descriptionField" layoutX="87.0" layoutY="98.0" prefHeight="140.0" prefWidth="202.0" />
+      <TextArea fx:id="descriptionField" layoutX="87.0" layoutY="98.0" prefHeight="140.0" prefWidth="202.0" />
       <Label layoutX="22.0" layoutY="263.0" text="Duration h:m:" />
-      <TextField id="hoursField" layoutX="118.0" layoutY="258.0" prefHeight="27.0" prefWidth="38.0" />
+      <TextField fx:id="hoursField" layoutX="118.0" layoutY="258.0" prefHeight="27.0" prefWidth="38.0" />
       <Label layoutX="165.0" layoutY="260.0" prefHeight="23.0" prefWidth="0.0" text=":">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField id="minutesField" layoutX="176.0" layoutY="258.0" prefHeight="27.0" prefWidth="38.0" />
+      <TextField fx:id="minutesField" layoutX="176.0" layoutY="258.0" prefHeight="27.0" prefWidth="38.0" />
       <Button fx:id="addTheMovie" layoutX="269.0" layoutY="359.0" mnemonicParsing="false" onAction="#submit" text="Add" />
    </children>
 </AnchorPane>

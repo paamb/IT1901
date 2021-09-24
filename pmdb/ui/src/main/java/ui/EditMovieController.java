@@ -13,8 +13,6 @@ import javafx.scene.control.Button;
 
 
 public class EditMovieController {
-    //TODO: Initialize this field in AppController and refere to that field in this controller
-    private WatchList watchList;
     
     @FXML CheckBox watchedCheckBox;
     @FXML TextField titleField, hoursField, minutesField;
@@ -23,9 +21,9 @@ public class EditMovieController {
     
     @FXML private AppController appController;
 
-    @FXML 
+    @FXML
     private void initialize() {
-        
+        System.out.println("editMovieController initialized");
     }
 
     @FXML
@@ -38,8 +36,12 @@ public class EditMovieController {
         // LocalTime duration = LocalTime.of(hours,minutes);
 
         // Movie movie = new Movie(title, description, duration, watched, new ArrayList<>());
-        // watchList.addMovie(movie);
 
+        // appController.getWatchList().addMovie(movie);
         appController.hideEditMovie();
+    }
+
+    public void setAppController(AppController appController){
+        this.appController = appController;
     }
 }

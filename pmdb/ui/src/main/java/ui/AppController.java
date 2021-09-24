@@ -14,19 +14,25 @@ import java.io.IOException;
 import javafx.stage.Modality;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import core.WatchList;
 
 
 public class AppController {
 
-    private WatchList watchList;
+    private WatchList watchList = new WatchList();
+
+    @FXML
     private EditMovieController editMovieController;
 
-    @FXML private Button addMovieButton;
-    @FXML VBox addMovieWindow;
+    @FXML
+    private Button addMovieButton;
+
+    @FXML
+    VBox addMovieWindow;
 
     @FXML
     private void initialize() {
-        watchList = new WatchList();
+        editMovieController.setAppController(this);
     }
 
     @FXML
@@ -36,5 +42,9 @@ public class AppController {
 
     public void hideEditMovie() {
         addMovieWindow.setVisible(false);
+    }
+
+    public WatchList getWatchList() {
+        return watchList;
     }
 }

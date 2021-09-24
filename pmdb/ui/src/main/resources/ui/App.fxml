@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController">
+<AnchorPane fx:id="app" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController">
    <children>
       <Button fx:id="addMovieButton" layoutX="526.0" layoutY="347.0" mnemonicParsing="false" onAction="#openEditMovie" text="+" />
       <VBox fx:id="addMovieWindow" layoutX="175.0" layoutY="10.0" prefHeight="385.0" prefWidth="322.0" visible="false">
-          <fx:include fx:id="EditMovie" source="EditMovie.fxml" />
+          <fx:include fx:id="editMovie" source="EditMovie.fxml" />
       </VBox>
    </children>
 </AnchorPane>
