@@ -16,7 +16,7 @@
           <Tab text="Alle filmer">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
-                <fx:include source="MovieList.fxml" />
+                <fx:include fx:id="movieList" source="MovieList.fxml" />
               </AnchorPane>
             </content>
           </Tab>

@@ -29,24 +29,24 @@ public class EditMovieController {
     @FXML
     Text errorField;
      
-    private AppController appController;
+    private MovieListController movieListController;
 
     @FXML
     private void submit(){
         try {
-            boolean watched = watchedCheckBox.isSelected();
-            String title = titleField.getText();
-            int hours = Integer.parseInt(hoursField.getText());
-            int minutes = Integer.parseInt(minutesField.getText());
-            String description = descriptionField.getText();
-            LocalTime duration = LocalTime.of(hours,minutes);
+            // boolean watched = watchedCheckBox.isSelected();
+            // String title = titleField.getText();
+            // int hours = Integer.parseInt(hoursField.getText());
+            // int minutes = Integer.parseInt(minutesField.getText());
+            // String description = descriptionField.getText();
+            // LocalTime duration = LocalTime.of(hours,minutes);
     
-            Movie movie = new Movie(title, description, duration, watched, new ArrayList<>());
+            // Movie movie = new Movie(title, description, duration, watched, new ArrayList<>());
     
-            appController.getWatchList().addMovie(movie);
-            appController.hideEditMovie();
-            appController.printWatchList();
-            clearFields();
+            // movieListController.getWatchList().addMovie(movie);
+            // movieListController.hideEditMovie();
+            // movieListController.printWatchList();
+            // clearFields();
         } catch (Exception e) {
             System.out.println("Error: " + e);
             // TODO: Fiks error-melding
@@ -56,12 +56,12 @@ public class EditMovieController {
 
     @FXML
     private void cancelEditMovie() {
-        appController.hideEditMovie();
+        movieListController.hideEditMovie();
         clearFields();
     }
 
-    protected void setAppController(AppController appController){
-        this.appController = appController;
+    protected void injectMovieListController(MovieListController movieListController){
+        this.movieListController = movieListController;
     }
 
     private void clearFields() {

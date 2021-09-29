@@ -1,56 +1,40 @@
 package ui;
 
-import core.WatchList;
-import core.IMovie;
-
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.text.Text;
-import javafx.scene.layout.VBox;
-
 
 public class AppController {
 
-    private WatchList watchList;
+    @FXML
+    MovieListController movieListController;
 
     @FXML
-    EditMovieController editMovieController;
-
-    @FXML
-    Button addMovieButton;
-
-    @FXML
-    VBox addMovieWindow;
-
-    @FXML
-    Text watchListMovies;
+    ReviewListController reviewListController;
 
     @FXML
     void initialize() {
-        watchList = new WatchList();
-        editMovieController.setAppController(this);
-        printWatchList();
+        movieListController.setAppController(this);
+        // reviewListController.setAppController(this);
     }
 
-    @FXML
-    private void openEditMovie() {
-        addMovieWindow.setVisible(true);
-    }
+    // @FXML
+    // private void openEditMovie() {
+    //     addMovieWindow.setVisible(true);
+    // }
 
-    protected void hideEditMovie() {
-        addMovieWindow.setVisible(false);
-    }
+    // protected void hideEditMovie() {
+    //     addMovieWindow.setVisible(false);
+    // }
 
-    protected WatchList getWatchList() {
-        return watchList;
-    }
+    // protected WatchList getWatchList() {
+    //     return watchList;
+    // }
 
-    protected void printWatchList() {
-        String moviesWatchList = "";
+    // protected void printWatchList() {
+    //     String moviesWatchList = "";
         
-        for (IMovie movie : getWatchList().getMovies()) {
-            moviesWatchList += movie.getTitle() + "\n";
-        }
-        //watchListMovies.setText(moviesWatchList);
-    }
+    //     for (IMovie movie : getWatchList().getMovies()) {
+    //         moviesWatchList += movie.getTitle() + "\n";
+    //     }
+    //     //watchListMovies.setText(moviesWatchList);
+    // }
 }
