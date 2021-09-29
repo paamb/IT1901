@@ -51,6 +51,6 @@ public class AppController {
         for (IMovie movie : getWatchList().getMovies()) {
             moviesWatchList += movie.getTitle() + "\n";
         }
-        watchListMovies.setText(moviesWatchList);
+        //watchListMovies.setText(moviesWatchList);
     }
 }
