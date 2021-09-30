@@ -65,7 +65,4 @@ public class MovieListController {
         }
         moviesDisplay.setText(moviesWatchList);
     }
-
-    
-    
 }
