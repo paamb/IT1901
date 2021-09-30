@@ -31,7 +31,7 @@ public class MovieListController {
         movieList = new MovieList();
         editMovieController.injectMovieListController(this);
         hideEditMovie();
-        printMovieList();
+        displayMovieList();
     }
 
     protected void setAppController(AppController appController) {
@@ -45,7 +45,7 @@ public class MovieListController {
 
     protected void addMovie(IMovie movie) {
         movieList.addMovie(movie);
-        printMovieList();
+        displayMovieList();
         hideEditMovie();
     }
 
@@ -57,7 +57,7 @@ public class MovieListController {
         editMovieWindow.setVisible(false);
     }
 
-    private void printMovieList(){
+    private void displayMovieList(){
         String moviesWatchList = "";
         
         for (IMovie movie : getMovieList().getMovies()) {

@@ -6,4 +6,4 @@ target/
 .classpath
 org.eclipse.*.prefs
 movies.json
-WatchList.json
+MovieList.json
