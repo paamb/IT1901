@@ -1,7 +1,6 @@
 package ui;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 import core.Movie;
 import javafx.fxml.FXML;
@@ -11,13 +10,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
-
 public class EditMovieController {
-    
-    @FXML 
+
+    @FXML
     CheckBox watchedCheckBox;
 
-    @FXML 
+    @FXML
     TextField titleField, hoursField, minutesField;
 
     @FXML
@@ -28,29 +26,39 @@ public class EditMovieController {
 
     @FXML
     Text errorField;
-     
+
     private AppController appController;
 
     @FXML
-    private void submit(){
+    private void submit() {
+        Movie movie = new Movie();
         try {
-            boolean watched = watchedCheckBox.isSelected();
             String title = titleField.getText();
-            int hours = Integer.parseInt(hoursField.getText());
-            int minutes = Integer.parseInt(minutesField.getText());
-            String description = descriptionField.getText();
-            LocalTime duration = LocalTime.of(hours,minutes);
-    
-            Movie movie = new Movie(title, description, duration, watched, new ArrayList<>());
-    
-            appController.getWatchList().addMovie(movie);
-            appController.hideEditMovie();
-            appController.printWatchList();
-            clearFields();
+            movie.setTitle(title);
+            try {
+                int hours = Integer.parseInt(hoursField.getText());
+                int minutes = Integer.parseInt(minutesField.getText());
+                LocalTime duration = LocalTime.of(hours, minutes);
+                movie.setDuration(duration);
+                try {
+                    String description = descriptionField.getText();
+                    boolean watched = watchedCheckBox.isSelected();
+                    movie.setDescription(description);
+                    movie.setWatched(watched);
+
+                    appController.getWatchList().addMovie(movie);
+                    appController.hideEditMovie();
+                    appController.printWatchList();
+                    clearFields();
+                } catch (Exception e) {
+                    System.err.println(e);
+                    errorField.setText("Sjekk at filmnavnet ikke er brukt fra før.");
+                }
+            } catch (Exception e) {
+                errorField.setText("Ugylidg filmvarighet.");
+            }
         } catch (Exception e) {
-            System.out.println("Error: " + e);
-            // TODO: Fiks error-melding
-            errorField.setText("Error: Se terminal");
+            errorField.setText("Tittel er ugyldig.");
         }
     }
 
@@ -60,7 +68,7 @@ public class EditMovieController {
         clearFields();
     }
 
-    protected void setAppController(AppController appController){
+    protected void setAppController(AppController appController) {
         this.appController = appController;
     }
 
