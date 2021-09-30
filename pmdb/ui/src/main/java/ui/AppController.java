@@ -12,7 +12,7 @@ public class AppController {
 
     @FXML
     void initialize() {
-        movieListController.setAppController(this);
+        movieListController.injectAppController(this);
         // reviewListController.setAppController(this);
     }
 }

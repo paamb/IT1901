@@ -34,7 +34,7 @@ public class MovieListController {
         displayMovieList();
     }
 
-    protected void setAppController(AppController appController) {
+    protected void injectAppController(AppController appController) {
         this.appController = appController;
     }
 
@@ -65,7 +65,4 @@ public class MovieListController {
         }
         moviesDisplay.setText(moviesWatchList);
     }
-
-    
-    
 }
