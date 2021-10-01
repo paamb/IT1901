@@ -27,7 +27,7 @@ public class EditMovieController {
     @FXML
     Text errorField;
 
-    private AppController appController;
+    private MovieListController movieListController;
 
     @FXML
     private void submit() {
@@ -46,9 +46,7 @@ public class EditMovieController {
                     movie.setDescription(description);
                     movie.setWatched(watched);
 
-                    appController.getWatchList().addMovie(movie);
-                    appController.hideEditMovie();
-                    appController.printWatchList();
+                    movieListController.addMovie(movie);
                     clearFields();
                 } catch (Exception e) {
                     System.err.println(e);
@@ -64,12 +62,12 @@ public class EditMovieController {
 
     @FXML
     private void cancelEditMovie() {
-        appController.hideEditMovie();
+        movieListController.hideEditMovie();
         clearFields();
     }
 
-    protected void setAppController(AppController appController) {
-        this.appController = appController;
+    protected void injectMovieListController(MovieListController movieListController) {
+        this.movieListController = movieListController;
     }
 
     private void clearFields() {
