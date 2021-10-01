@@ -2,10 +2,11 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import json.Storage;
 
-public class MovieList {
+public class MovieList implements Iterable<IMovie>{
 
     String fileName = "MovieList.json";
     private Collection<IMovie> movieList;
@@ -58,5 +59,10 @@ public class MovieList {
             returnString += movie.getTitle() + "\n";
         }
         return returnString;
+    }
+
+    @Override
+    public Iterator<IMovie> iterator() {
+        return movieList.iterator();
     }
 }
