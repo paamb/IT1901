@@ -52,7 +52,7 @@ public class EditMovieController {
                     clearFields();
                 } catch (Exception e) {
                     System.err.println(e);
-                    errorField.setText("Sjekk at filmnavnet ikke er brukt fra før.");
+                    errorField.setText("Sjekk navnet ikke finnes fra før.");
                 }
             } catch (Exception e) {
                 errorField.setText("Ugylidg filmvarighet.");
