@@ -38,22 +38,6 @@ public class Storage {
      * 
      * @param movieList
      */
-    // public void save(Collection<IMovie> movieList){
-    //     try {
-    //         ObjectMapper mapper = new ObjectMapper();
-    //         FileWriter fileWriter = new FileWriter(file, false);
-    //         SequenceWriter seqWriter = mapper.writer().writeValuesAsArray(fileWriter);
-
-    //         for(IMovie storedMovie : movieList){
-    //             seqWriter.write(storedMovie);
-    //         }
-
-    //         seqWriter.close();
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    // }
-
     public void saveMovies(MovieList movieList) throws IOException{
         try{
             FileWriter fileWriter = new FileWriter(Paths.get(fileName).toFile(), StandardCharsets.UTF_8);
