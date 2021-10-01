@@ -64,7 +64,7 @@ public class Storage {
 
     }
     public MovieList loadMovies() throws IOException{
-        if(file.exists()){
+        if(file.exists() && file.length() != 0){
             try(Reader fileReader = new FileReader(Paths.get(fileName).toFile(), StandardCharsets.UTF_8)){
                 return (MovieList) mapper.readValue(fileReader, MovieList.class);
             }

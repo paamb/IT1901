@@ -14,9 +14,15 @@ public class MovieListSerializer extends JsonSerializer<MovieList> {
     @Override
     public void serialize(MovieList movieList, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
-        for(IMovie movie : movieList){
-            gen.writeObject(movie);
-        }   
+        gen.writeArrayFieldStart("movies");
+
+        if (movieList != null){
+            for(IMovie movie : movieList){
+                gen.writeObject(movie);
+            }
+            gen.writeEndArray();
+        }
+        
         gen.writeEndObject();
     }
 }
