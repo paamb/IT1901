@@ -14,7 +14,7 @@ public class MovieList {
 
     public MovieList() {
         storage = new Storage(fileName);
-        deserializedMovieList = storage.load();
+        // deserializedMovieList = storage.load();
         movieList = new ArrayList<>(deserializedMovieList);
     }
 

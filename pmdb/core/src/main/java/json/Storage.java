@@ -1,26 +1,24 @@
 package json;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import core.IMovie;
-import core.Movie;
+import core.MovieList;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Storage {
     String fileName;
-    private Collection<IMovie> movieList;
     private File file;
+    private ObjectMapper mapper;
 
      /**
       * 
@@ -30,6 +28,7 @@ public class Storage {
     public Storage(String fileName){
         this.fileName = fileName;
         file = new File(fileName);
+        createObjectMapper();
     }
 
     /**
@@ -53,49 +52,20 @@ public class Storage {
         }
     }
 
-    /**
-     * 
-     * @return ArrayList with movies from .json file
-     */
-    public Collection<IMovie> load(){
-        movieList = new ArrayList<>();
+    
+    public MovieList loadMovies() throws IOException{
+        //TODO
+        // List<ObjectNode> deserializedMovies = mapper.readValue(Paths.get(fileName).toFile(), new TypeReference<List<ObjectNode>>(){});
+        Reader fileReader = new FileReader(Paths.get(fileName).toFile(), StandardCharsets.UTF_8);
+        return mapper.readValue(fileReader, MovieList.class);
 
-        if(file.length() != 0){
-            try{
-                ObjectMapper mapper = new ObjectMapper();
-                List<ObjectNode> deserializedMovies = mapper.readValue(Paths.get(fileName).toFile(), new TypeReference<List<ObjectNode>>(){});
-                
-                for (ObjectNode m : deserializedMovies) {
-                    IMovie newMovie = new Movie();
+    }
 
-                    JsonNode durationText = m.get("duration");
-                    if (durationText instanceof JsonNode){
-                        int hour = durationText.get("hour").asInt();
-                        int minute = durationText.get("minute").asInt();
-                        newMovie.setDuration(LocalTime.of(hour, minute));
-                    }
+    private void createObjectMapper(){
+        mapper = new ObjectMapper();
+    }
 
-                    JsonNode titleNode = m.get("title");
-                    if(titleNode instanceof JsonNode){
-                        newMovie.setTitle(titleNode.asText());
-                    }
-
-                    JsonNode descriptionNode = m.get("description");
-                    if(descriptionNode instanceof JsonNode){
-                        newMovie.setDescription(descriptionNode.textValue());
-                    }
-
-                    JsonNode watchedNode = m.get("watched");
-                    if(watchedNode instanceof JsonNode){
-                        newMovie.setWatched(watchedNode.booleanValue());
-                    }
-
-                    movieList.add(newMovie);
-                }
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-        return movieList;
+    public ObjectMapper getObjectMapper(){
+        return mapper;
     }
 }
