@@ -5,14 +5,14 @@ import java.util.Collection;
 
 import json.Storage;
 
-public class WatchList {
+public class MovieList {
 
-    String fileName = "WatchList.json";
+    String fileName = "MovieList.json";
     private Collection<IMovie> movieList;
     private Storage storage;
     private Collection<IMovie> deserializedMovieList;
 
-    public WatchList() {
+    public MovieList() {
         storage = new Storage(fileName);
         deserializedMovieList = storage.load();
         movieList = new ArrayList<>(deserializedMovieList);

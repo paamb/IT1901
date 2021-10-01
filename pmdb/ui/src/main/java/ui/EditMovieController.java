@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
-
 public class EditMovieController {
     
     @FXML 
@@ -29,7 +28,7 @@ public class EditMovieController {
     @FXML
     Text errorField;
      
-    private AppController appController;
+    private MovieListController movieListController;
 
     @FXML
     private void submit(){
@@ -43,9 +42,7 @@ public class EditMovieController {
     
             Movie movie = new Movie(title, description, duration, watched, new ArrayList<>());
     
-            appController.getWatchList().addMovie(movie);
-            appController.hideEditMovie();
-            appController.printWatchList();
+            movieListController.addMovie(movie);
             clearFields();
         } catch (Exception e) {
             System.out.println("Error: " + e);
@@ -56,12 +53,12 @@ public class EditMovieController {
 
     @FXML
     private void cancelEditMovie() {
-        appController.hideEditMovie();
+        movieListController.hideEditMovie();
         clearFields();
     }
 
-    protected void setAppController(AppController appController){
-        this.appController = appController;
+    protected void injectMovieListController(MovieListController movieListController){
+        this.movieListController = movieListController;
     }
 
     private void clearFields() {
