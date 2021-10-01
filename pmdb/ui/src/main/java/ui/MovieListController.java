@@ -45,9 +45,14 @@ public class MovieListController {
         this.appController = appController;
     }
 
-    @FXML
-    private void openEditMovie(){
+    protected void editMovie(IMovie movie){
+        editMovieController.editMovie(movie);
         editMovieWindow.setVisible(true);
+    }
+
+    @FXML
+    private void editNewMovie(){
+        editMovie(null);
     }
 
     protected void addMovie(IMovie movie) {
@@ -62,6 +67,12 @@ public class MovieListController {
 
     protected void hideEditMovie(){
         editMovieWindow.setVisible(false);
+    }
+
+    protected void movieListIsEdited(){
+        hideEditMovie();
+        displayMovieList();
+        // Implement saving of movielist here
     }
 
     private void displayMovieList(){

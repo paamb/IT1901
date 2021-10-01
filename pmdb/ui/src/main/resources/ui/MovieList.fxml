@@ -40,7 +40,7 @@
                   <fx:include fx:id="editMovie" source="EditMovie.fxml" />
                </children>
             </VBox>
-            <Button fx:id="openEditMovie" layoutX="513.0" layoutY="525.0" mnemonicParsing="false" onAction="#openEditMovie" text="+">
+            <Button fx:id="openEditMovie" layoutX="513.0" layoutY="525.0" mnemonicParsing="false" onAction="#editNewMovie" text="+">
                <font>
                   <Font size="14.0" />
                </font>

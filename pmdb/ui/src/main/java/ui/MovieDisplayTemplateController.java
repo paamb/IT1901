@@ -45,7 +45,7 @@ public class MovieDisplayTemplateController {
     }
 
     public void editMovie() {
-        System.out.println("Editing movie...");
+        movieListController.editMovie(movie);
     }
     
 }
