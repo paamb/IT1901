@@ -15,7 +15,7 @@ public class MovieList implements Iterable<IMovie>{
 
     public MovieList() {
         storage = new Storage(fileName);
-        deserializedMovieList = storage.load();
+        // deserializedMovieList = storage.load();
         movieList = new ArrayList<>(deserializedMovieList);
     }
 
