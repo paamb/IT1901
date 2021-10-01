@@ -28,6 +28,11 @@ public class MovieStorage {
         createObjectMapper();
     }
 
+    /**
+      * 
+     * 
+     * @param movieList
+     */
     public void saveMovies(MovieList movieList) throws IOException{
         try{
             FileWriter fileWriter = new FileWriter(Paths.get(fileName).toFile(), StandardCharsets.UTF_8);
