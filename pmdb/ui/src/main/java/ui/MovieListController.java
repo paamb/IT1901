@@ -4,13 +4,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
+import json.Storage;
 import core.MovieList;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 import core.IMovie;
 
 public class MovieListController {
 
     private MovieList movieList;
+    private Storage storage;
 
     @FXML
     Button openEditMovie;
@@ -27,8 +32,10 @@ public class MovieListController {
     private AppController appController;
 
     @FXML
-    void initialize() {
-        movieList = new MovieList();
+    void initialize() throws IOException {
+        movieList = new MovieList(new ArrayList<>());
+        storage = new Storage("MovieList.json");
+        this.movieList = storage.loadMovies();
         editMovieController.injectMovieListController(this);
         hideEditMovie();
         displayMovieList();
@@ -43,8 +50,9 @@ public class MovieListController {
         editMovieWindow.setVisible(true);
     }
 
-    protected void addMovie(IMovie movie) {
+    protected void addMovie(IMovie movie) throws IOException {
         movieList.addMovie(movie);
+        storage.saveMovies(movieList);
         displayMovieList();
         hideEditMovie();
     }

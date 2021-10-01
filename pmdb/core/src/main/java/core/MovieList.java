@@ -4,25 +4,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import json.Storage;
-
 public class MovieList implements Iterable<IMovie>{
 
     String fileName = "MovieList.json";
     private Collection<IMovie> movieList;
-    private Storage storage;
-    private Collection<IMovie> deserializedMovieList;
 
-    public MovieList() {
-        storage = new Storage(fileName);
-        // deserializedMovieList = storage.load();
-        movieList = new ArrayList<>(deserializedMovieList);
+    public MovieList(Collection<IMovie> movieList) {
+        this.movieList = new ArrayList<>(movieList);
     }
 
     public void addMovie(IMovie movie) {
         if(getMovie(movie.getTitle()) == null){
             movieList.add(movie);
-            storage.save(getMovies());
     } else {
         throw new IllegalStateException("This movie-title is already in use.");
     }

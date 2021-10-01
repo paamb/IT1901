@@ -5,8 +5,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import core.IMovie;
@@ -16,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 
 public class Storage {
-    String fileName;
+    private String fileName;
     private File file;
     private ObjectMapper mapper;
 
@@ -36,33 +38,44 @@ public class Storage {
      * 
      * @param movieList
      */
-    public void save(Collection<IMovie> movieList){
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            FileWriter fileWriter = new FileWriter(file, false);
-            SequenceWriter seqWriter = mapper.writer().writeValuesAsArray(fileWriter);
+    // public void save(Collection<IMovie> movieList){
+    //     try {
+    //         ObjectMapper mapper = new ObjectMapper();
+    //         FileWriter fileWriter = new FileWriter(file, false);
+    //         SequenceWriter seqWriter = mapper.writer().writeValuesAsArray(fileWriter);
 
-            for(IMovie storedMovie : movieList){
-                seqWriter.write(storedMovie);
-            }
+    //         for(IMovie storedMovie : movieList){
+    //             seqWriter.write(storedMovie);
+    //         }
 
-            seqWriter.close();
-        } catch (Exception e) {
+    //         seqWriter.close();
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
+
+    public void saveMovies(MovieList movieList) throws IOException{
+        try{
+            FileWriter fileWriter = new FileWriter(Paths.get(fileName).toFile(), StandardCharsets.UTF_8);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, movieList);
+        }catch(Exception e ){
             e.printStackTrace();
+        }
+
+    }
+    public MovieList loadMovies() throws IOException{
+        if(file.exists()){
+            try(Reader fileReader = new FileReader(Paths.get(fileName).toFile(), StandardCharsets.UTF_8)){
+                return mapper.readValue(fileReader, MovieList.class);
+            }
+        }else{
+            //TODO
+            return new MovieList(new ArrayList<>());
         }
     }
 
-    
-    public MovieList loadMovies() throws IOException{
-        //TODO
-        // List<ObjectNode> deserializedMovies = mapper.readValue(Paths.get(fileName).toFile(), new TypeReference<List<ObjectNode>>(){});
-        Reader fileReader = new FileReader(Paths.get(fileName).toFile(), StandardCharsets.UTF_8);
-        return mapper.readValue(fileReader, MovieList.class);
-
-    }
-
     private void createObjectMapper(){
-        mapper = new ObjectMapper();
+        mapper = new ObjectMapper().registerModule(new MovieModule());
     }
 
     public ObjectMapper getObjectMapper(){
