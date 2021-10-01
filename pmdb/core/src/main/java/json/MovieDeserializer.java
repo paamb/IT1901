@@ -27,7 +27,7 @@ public class MovieDeserializer extends JsonDeserializer<IMovie>{
         try{
             IMovie newMovie = new Movie();
             JsonNode durationText = movieNode.get("duration");
-            if (durationText instanceof TextNode){
+            if (durationText instanceof ObjectNode){
                 int hour = durationText.get("hour").asInt();
                 int minute = durationText.get("minute").asInt();
                 newMovie.setDuration(LocalTime.of(hour, minute));

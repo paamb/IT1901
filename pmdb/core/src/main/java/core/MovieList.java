@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class MovieList implements Iterable<IMovie>{
 
     String fileName = "MovieList.json";
     private Collection<IMovie> movieList;
 
-    public MovieList(Collection<IMovie> movieList) {
-        this.movieList = new ArrayList<>(movieList);
+    
+    public MovieList() {
+        movieList = new ArrayList<>();
     }
 
     public void addMovie(IMovie movie) {

@@ -16,7 +16,7 @@ public class MovieSerializer extends JsonSerializer<IMovie>{
 
         gen.writeStringField("title", movie.getTitle());
         gen.writeStringField("description", movie.getDescription());
-        gen.writeStringField("duration", movie.getDuration().toString());
+        gen.writeObjectField("duration", movie.getDuration());
         gen.writeBooleanField("watched", movie.isWatched());
 
         gen.writeEndObject();      

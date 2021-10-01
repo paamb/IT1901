@@ -18,7 +18,7 @@ import core.MovieList;
 
 public class MovieListDeserializer extends JsonDeserializer<MovieList>{
     private MovieDeserializer movieDeserializer = new MovieDeserializer();
-    private Collection<IMovie> movieList = new ArrayList<>();
+    private MovieList movieList = new MovieList();
     @Override
     public MovieList deserialize(JsonParser p, DeserializationContext ctxt)
             throws IOException, JsonProcessingException {
@@ -29,11 +29,11 @@ public class MovieListDeserializer extends JsonDeserializer<MovieList>{
             if(hasMovies){
                 for(JsonNode movieNode : ((ArrayNode) movieListNode)){
                     IMovie movie = movieDeserializer.deserialize(movieNode);
-                    movieList.add(movie);
+                    movieList.addMovie(movie);
                 }
             }
         }
-        return new MovieList(movieList);
+        return movieList;
     }
     
 }

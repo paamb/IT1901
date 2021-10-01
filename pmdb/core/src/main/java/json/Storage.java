@@ -66,11 +66,11 @@ public class Storage {
     public MovieList loadMovies() throws IOException{
         if(file.exists()){
             try(Reader fileReader = new FileReader(Paths.get(fileName).toFile(), StandardCharsets.UTF_8)){
-                return mapper.readValue(fileReader, MovieList.class);
+                return (MovieList) mapper.readValue(fileReader, MovieList.class);
             }
         }else{
             //TODO
-            return new MovieList(new ArrayList<>());
+            return new MovieList();
         }
     }
 

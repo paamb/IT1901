@@ -33,7 +33,6 @@ public class MovieListController {
 
     @FXML
     void initialize() throws IOException {
-        movieList = new MovieList(new ArrayList<>());
         storage = new Storage("MovieList.json");
         this.movieList = storage.loadMovies();
         editMovieController.injectMovieListController(this);
