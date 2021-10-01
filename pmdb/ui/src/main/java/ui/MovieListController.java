@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import json.Storage;
+import json.moviepersistance.MovieStorage;
 import core.MovieList;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import core.IMovie;
 public class MovieListController {
 
     private MovieList movieList;
-    private Storage storage;
+    private MovieStorage storage;
 
     @FXML
     Button openEditMovie;
@@ -33,8 +33,8 @@ public class MovieListController {
 
     @FXML
     void initialize() throws IOException {
-        storage = new Storage("MovieList.json");
-        this.movieList = storage.loadMovies();
+        storage = new MovieStorage("MovieList.json");
+        movieList = storage.loadMovies();
         editMovieController.injectMovieListController(this);
         hideEditMovie();
         displayMovieList();

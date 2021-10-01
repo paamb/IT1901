@@ -1,4 +1,4 @@
-package json;
+package json.moviepersistance;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class MovieList implements Iterable<IMovie>{
 
     String fileName = "MovieList.json";

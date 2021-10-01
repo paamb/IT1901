@@ -1,8 +1,6 @@
-package json;
+package json.moviepersistance;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
