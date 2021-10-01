@@ -21,7 +21,6 @@ public class MovieDeserializer extends JsonDeserializer<IMovie>{
     public IMovie deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         ObjectNode movieNode = p.getCodec().readTree(p);
         try{
-
             IMovie newMovie = new Movie();
             JsonNode durationText = movieNode.get("duration");
             if (durationText instanceof TextNode){
