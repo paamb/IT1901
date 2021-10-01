@@ -11,9 +11,15 @@ import core.IMovie;
 public class MovieSerializer extends JsonSerializer<IMovie>{
 
     @Override
-    public void serialize(IMovie value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        // TODO Auto-generated method stub
+    public void serialize(IMovie movie, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        gen.writeStartObject();
+
+        gen.writeStringField("title", movie.getTitle());
+        gen.writeStringField("description", movie.getDescription());
+        gen.writeStringField("time", movie.getDuration().toString());
+        gen.writeBooleanField("seen", movie.isWatched());
         
+        gen.writeEndObject();      
     }
 
 
