@@ -1,16 +1,14 @@
 package ui;
 
+import java.io.IOException;
+
+import core.IMovie;
+import core.MovieList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import json.moviepersistance.MovieStorage;
-import core.MovieList;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
-import core.IMovie;
 
 public class MovieListController {
 

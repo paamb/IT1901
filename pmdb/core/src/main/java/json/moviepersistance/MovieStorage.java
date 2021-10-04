@@ -8,9 +8,9 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 
-import core.MovieList;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import core.MovieList;
 
 public class MovieStorage {
     private String fileName = "MovieList.json";
