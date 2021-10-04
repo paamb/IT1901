@@ -17,6 +17,9 @@ public class Review implements IReview {
     }
 
     public void setMovie(IMovie movie) {
+        if (movie == null) {
+            throw new IllegalStateException("Movie cannot be null");
+        }
         this.movie = movie;
     }
 
@@ -25,8 +28,9 @@ public class Review implements IReview {
     }
 
     public void setComment(String comment) {
-        if(comment.length() > IReview.maxCommentLength) {
-            throw new IllegalArgumentException("Comment is too long, max comment lengt: " + String.valueOf(Review.maxCommentLength));
+        if (comment.length() > IReview.maxCommentLength) {
+            throw new IllegalArgumentException(
+                    "Comment is too long, max comment lengt: " + String.valueOf(IReview.maxCommentLength));
         }
         this.comment = comment;
     }
@@ -36,8 +40,8 @@ public class Review implements IReview {
     }
 
     public void setRating(int rating) {
-        if(rating > IReview.maxRating || rating < IReview.minRating) {
-            throw new IllegalArgumentException("Rating mut be more than 0 and less than 11.");
+        if (rating > IReview.maxRating || rating < IReview.minRating) {
+            throw new IllegalArgumentException("Rating must be more than 0 and less than 11.");
         }
         this.rating = rating;
     }
@@ -47,7 +51,7 @@ public class Review implements IReview {
     }
 
     public void setWhenWatched(LocalDate whenWatched) {
-        if(whenWatched.isAfter(LocalDate.now())) {
+        if (whenWatched.isAfter(LocalDate.now())) {
             throw new IllegalStateException("You cannot set 'when watched' to in the future.");
         }
         this.whenWatched = whenWatched;
@@ -58,7 +62,7 @@ public class Review implements IReview {
     }
 
     public String toString() {
-        return("Movie: " + movie.toString() + "\n" + 
+        return ("Movie: " + movie.toString() + "\n" + 
             "Rating: " + String.valueOf(rating) + "\n" + 
             "Comment: " + comment + "\n" + 
             "Watched: " + whenWatched.toString());
