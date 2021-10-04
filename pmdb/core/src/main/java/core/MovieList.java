@@ -6,7 +6,6 @@ import java.util.Iterator;
 
 public class MovieList implements Iterable<IMovie>{
 
-    String fileName = "MovieList.json";
     private Collection<IMovie> movieList;
 
     

@@ -13,7 +13,7 @@ import core.MovieList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MovieStorage {
-    private String fileName;
+    private String fileName = "MovieList.json";
     private File file;
     private ObjectMapper mapper;
 
@@ -22,8 +22,7 @@ public class MovieStorage {
      * 
      * @param fileName The name the file you want to save/load from.
      */
-    public MovieStorage(String fileName){
-        this.fileName = fileName;
+    public MovieStorage(){
         file = new File(fileName);
         createObjectMapper();
     }
@@ -49,7 +48,6 @@ public class MovieStorage {
                 return (MovieList) mapper.readValue(fileReader, MovieList.class);
             }
         }else{
-            //TODO
             return new MovieList();
         }
     }
