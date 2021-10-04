@@ -132,10 +132,11 @@ public class ReviewTest {
         int year = LocalDate.now().getYear();
 
         review.setWhenWatched(LocalDate.of(year, month, dayToday));
-        assertEquals(LocalDate.now().toString(), review.getWhenWatched().toString(), "The dates do not match.");
+        assertEquals(LocalDate.now(), review.getWhenWatched(), "The dates do not match.");
 
-        review.setWhenWatched(LocalDate.of(0, 12, 30));
-        assertEquals("0000-12-30", review.getWhenWatched().toString(), "The dates do not match.");
+        LocalDate newDate = LocalDate.of(0, 12, 30);
+        review.setWhenWatched(newDate);
+        assertEquals(newDate, review.getWhenWatched(), "The dates do not match.");
     }
 
     @Test
