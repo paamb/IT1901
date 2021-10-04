@@ -1,20 +1,21 @@
 package ui;
 
+import java.io.IOException;
+
+import core.IMovie;
+import core.MovieList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.fxml.FXMLLoader;
-
-import core.MovieList;
-
-import core.IMovie;
+import json.moviepersistance.MovieStorage;
 
 public class MovieListController {
 
     private MovieList movieList;
+    private MovieStorage storage;
 
     @FXML
     Button openEditMovie;
@@ -34,8 +35,9 @@ public class MovieListController {
     private AppController appController;
 
     @FXML
-    void initialize() {
-        movieList = new MovieList();
+    void initialize() throws IOException {
+        storage = new MovieStorage();
+        movieList = storage.loadMovies();
         editMovieController.injectMovieListController(this);
         hideEditMovie();
         displayMovieList();
@@ -55,24 +57,22 @@ public class MovieListController {
         editMovie(null);
     }
 
-    protected void addMovie(IMovie movie) {
+    protected void addMovie(IMovie movie){
         movieList.addMovie(movie);
-        displayMovieList();
-        hideEditMovie();
     }
-
+    
     protected MovieList getMovieList() {
         return movieList;
     }
-
+    
     protected void hideEditMovie(){
         editMovieWindow.setVisible(false);
     }
-
-    protected void movieListIsEdited(){
+    
+    protected void movieListIsEdited() throws IOException{
         hideEditMovie();
         displayMovieList();
-        // Implement saving of movielist here
+        storage.saveMovies(movieList);
     }
 
     private void displayMovieList(){
