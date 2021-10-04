@@ -38,8 +38,7 @@ public class MovieDisplayTemplateController {
 
     public void setContent() {
         movieTitle.setText(movie.getTitle());
-        String durationAsString =  String.valueOf(movie.getDuration().getHour()) + ":" + String.valueOf(movie.getDuration().getMinute());
-        movieDuration.setText(durationAsString);
+        movieDuration.setText(movie.getDuration().toString());
         movieDescription.setText(movie.getDescription());
         movieWatched.setSelected(movie.isWatched());
     }
