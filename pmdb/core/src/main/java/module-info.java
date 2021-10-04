@@ -5,5 +5,5 @@ module pmdb.core {
     opens core to com.fasterxml.jackson.databind;
     
     exports core;
-    exports json;
+    exports json.moviepersistance;
 }
