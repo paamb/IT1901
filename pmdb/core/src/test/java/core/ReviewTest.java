@@ -15,7 +15,6 @@ public class ReviewTest {
 
     private Review review;
 
-    private Movie movie;
     private String comment;
     private int rating;
     private LocalDate localDate;
@@ -23,10 +22,9 @@ public class ReviewTest {
     @BeforeEach
     public void setUp() {
         localDate = LocalDate.of(2002, 4, 17);
-        movie = new Movie();
         comment = "Inital verdi";
         rating = 2;
-        review = new Review(movie, comment, rating, localDate);
+        review = new Review(comment, rating, localDate);
     }
 
     @Test
@@ -35,28 +33,6 @@ public class ReviewTest {
         assertEquals("Inital verdi", review.getComment(), "The comments do not match.");
         assertEquals("2002-04-17", review.getWhenWatched().toString(), "The dates do not match.");
         assertTrue(review.getRating() == 2, "The ratings do not match.");
-        assertSame(movie, review.getMovie(), "The movies do not match.");
-    }
-
-    @Test
-    @DisplayName("Testing setMovie method")
-    public void testSetMovie() {
-        Movie newMovie = new Movie();
-        Movie newMovie2 = new Movie();
-
-        review.setMovie(newMovie);
-        assertSame(newMovie, review.getMovie(), "The two Movie objects are not the same.");
-        review.setMovie(newMovie2);
-        assertSame(newMovie2, review.getMovie(), "The two Movie objects are not the same.");
-    }
-
-    @Test
-    @DisplayName("Testing if movie can be null")
-    public void testSetMovie_null() {
-        assertThrows(IllegalStateException.class, () -> review.setMovie(null), "Cannot set movie to be null.");
-        Movie newMovie = new Movie();
-        review.setMovie(newMovie);
-        assertSame(newMovie, review.getMovie());
     }
 
     @Test
@@ -64,8 +40,7 @@ public class ReviewTest {
     public void testSetComment_valid() {
         String str = "Hei dette er en ny k";
         String newCommentEdge = str.repeat(24) + "Hei dette er en ny k";
-
-        assertTrue(newCommentEdge.length() == 500);
+        assertEquals(500, newCommentEdge.length());
         review.setComment(newCommentEdge);
         assertEquals(newCommentEdge, review.getComment(), "The new comment does not match comment.");
     }
@@ -93,7 +68,7 @@ public class ReviewTest {
         String str = "Hei dette er en ny k";
         String newCommentEdge = str.repeat(24) + "Hei dette er en ny kk";
 
-        assertTrue(newCommentEdge.length() == 501);
+        assertEquals(501, newCommentEdge.length());
         assertThrows(IllegalArgumentException.class, () -> review.setComment(newCommentEdge),
                 "The comment is longer than 500 chr.");
     }

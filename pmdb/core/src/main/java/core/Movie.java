@@ -2,7 +2,11 @@ package core;
 
 import java.time.LocalTime;
 import java.util.Collection;
+
+import com.fasterxml.jackson.databind.ObjectReader;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Movie implements IMovie{
 
@@ -11,22 +15,25 @@ public class Movie implements IMovie{
     private LocalTime duration;
     private boolean watched;
     private Collection<Label> labels;
+    private Collection<Review> reviews;
 
     public Movie(){
         this.labels = new ArrayList<>();
     }
 
-    public Movie(String title, String description, LocalTime duration, boolean watched){
-        this(title, description, duration, watched, new ArrayList<>());
+    public Movie(String title, String description, LocalTime duration, boolean watched, Collection<Review> reviews){
+        this(title, description, duration, watched, new ArrayList<>(), reviews);
     }
 
-    public Movie(String title, String description, LocalTime duration, boolean watched, Collection<Label> labels){
+    public Movie(String title, String description, LocalTime duration, boolean watched, Collection<Label> labels, Collection<Review> reviews){
         setTitle(title);
         setDescription(description);
         setDuration(duration);
         setWatched(watched);
         setLabels(labels);
+        setReviews(reviews);
     }
+
 
     /**
      * @param title of the movie
@@ -70,6 +77,22 @@ public class Movie implements IMovie{
     public LocalTime getDuration(){
         return duration;
     }
+
+    public void setLabels(Collection<Label> labels){
+        for (Label label : labels){
+            int count = 0;
+            for (Label label2 : labels){
+                if (label == label2){
+                    count++;
+                }
+                if (count > 1){
+                    throw new IllegalArgumentException("Duplicate labels not allowed");
+                }
+            }
+        }
+        this.labels = new ArrayList<>(labels);
+    }
+
     public void addLabel(Label label){
         if(labels.contains(label)) {
             throw new IllegalStateException("Duplicate labels not allowed");
@@ -81,25 +104,40 @@ public class Movie implements IMovie{
         labels.remove(label);
     }
 
-    public void setLabels(Collection<Label> labels){
-        for (Label label1 : labels) {
-            int count = 0;
-            for (Label label2 : labels) {
-                if(label1 == label2) {
-                    count++;
-                }
-                if(count > 1) {
-                    throw new IllegalArgumentException("Duplicate labels not allowed");
-                }
-            }
-        }
-    
-        this.labels = new ArrayList<>(labels);
-    }
-
     public Collection<Label> getLabels(){
         return new ArrayList<>(labels);
     }
+
+    public void setReviews(Collection<Review> reviews) {
+        for(Review review : reviews){
+            int count = 0;
+            for(Review review2 : reviews){
+                if(review == review2){
+                    count++;
+                }
+                if (count > 1){
+                    throw new IllegalArgumentException("Duplicate reviews not allowed");
+                }
+            }
+        }
+        this.reviews = new ArrayList<>(reviews);
+    }
+
+    public void addReview(Review review){
+        if(reviews.contains(review)){
+            throw new IllegalStateException("Duplicate review not allowed");
+       }
+       reviews.add(review);
+    }
+
+    public void removeReview(Review review){
+        reviews.remove(review);
+    }
+
+    public Collection<Review> getReviews(){
+        return new ArrayList<>(reviews);
+    }
+
 
     @Override
     public String toString() {
