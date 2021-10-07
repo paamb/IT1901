@@ -70,7 +70,6 @@ public class MovieListController {
     }
     
     protected void movieListIsEdited() throws IOException{
-        hideEditMovie();
         displayMovieList();
         storage.saveMovies(movieList);
     }

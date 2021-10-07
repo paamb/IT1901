@@ -56,6 +56,7 @@ public class EditMovieController {
                         editingMovie = null;
                     }
                     movieListController.movieListIsEdited();
+                    movieListController.hideEditMovie();
                     clearFields();
                 } catch (Exception e) {
                     System.err.println(e);
