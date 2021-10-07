@@ -39,7 +39,6 @@ public class MovieStorage {
         }catch(Exception e ){
             e.printStackTrace();
         }
-
     }
 
     public MovieList loadMovies() throws IOException{
