@@ -1,7 +1,6 @@
 package ui;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Button;
@@ -23,7 +22,7 @@ public class MovieDisplayTemplateController {
     TextArea movieDescription;
     
     @FXML
-    CheckBox movieWatched;
+    Label movieWatched;
 
     @FXML
     Button editMovie;
@@ -40,7 +39,7 @@ public class MovieDisplayTemplateController {
         movieTitle.setText(movie.getTitle());
         movieDuration.setText(movie.getDuration().toString());
         movieDescription.setText(movie.getDescription());
-        movieWatched.setSelected(movie.isWatched());
+        movieWatched.setText(movie.isWatched() ? "Watched" : "Not watched");
     }
 
     public void editMovie() {
