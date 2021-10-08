@@ -4,27 +4,14 @@ import java.time.LocalDate;
 
 public class Review implements IReview {
 
-    private IMovie movie;
     private String comment;
     private int rating;
     private LocalDate whenWatched;
 
-    public Review(IMovie movie, String comment, int rating, LocalDate whenWatched) {
-        setMovie(movie);
+    public Review(String comment, int rating, LocalDate whenWatched) {
         setComment(comment);
         setRating(rating);
         setWhenWatched(whenWatched);
-    }
-
-    public void setMovie(IMovie movie) {
-        if (movie == null) {
-            throw new IllegalStateException("Movie cannot be null");
-        }
-        this.movie = movie;
-    }
-
-    public IMovie getMovie() {
-        return movie;
     }
 
     public void setComment(String comment) {
@@ -62,8 +49,7 @@ public class Review implements IReview {
     }
 
     public String toString() {
-        return ("Movie: " + movie.toString() + "\n" + 
-            "Rating: " + String.valueOf(rating) + "\n" + 
+        return ("Rating: " + String.valueOf(rating) + "\n" + 
             "Comment: " + comment + "\n" + 
             "Watched: " + whenWatched.toString());
     }

@@ -21,19 +21,6 @@ public interface IReview {
 
     /**
      * 
-     * @return  The movie of this review
-     */
-    public IMovie getMovie();
-
-    /**
-     * Sets this reviews movie
-     * 
-     * @param movie
-     */
-    public void setMovie(IMovie movie);
-
-    /**
-     * 
      * @return  This reviews comment
      */
     public String getComment();

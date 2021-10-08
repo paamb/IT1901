@@ -2,6 +2,8 @@ package core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +20,7 @@ public class MovieTest {
     LocalTime initDuration = LocalTime.of(02, 00);
     Label initLabel = new Label("initLabel");
     Collection<Label> initLabels = new ArrayList<Label>(Arrays.asList(initLabel));
+    Collection<Review> initReview = new ArrayList<Review>(Arrays.asList(new Review("", 1, LocalDate.now())));
 
     @Test
     public void testConstructor() {
@@ -25,7 +28,8 @@ public class MovieTest {
         String description = "Dette er film nummer 1.";
         LocalTime duration = LocalTime.of(2, 10);
         Collection<Label> labels = new ArrayList<Label>(Arrays.asList(new Label("label")));
-        Movie movie = new Movie(title, description, duration, false, labels);
+        Collection<Review> reviews = new ArrayList<Review>(Arrays.asList(new Review("", 1, LocalDate.now())));
+        Movie movie = new Movie(title, description, duration, false, labels, reviews);
 
         assertEquals(title, movie.getTitle(), "Movie title is not correct.");
         assertEquals(description, movie.getDescription(), "Description is not correct.");
@@ -35,7 +39,7 @@ public class MovieTest {
 
     @BeforeEach
     public void setUp() {
-        movie = new Movie(initTitle, initDescription, initDuration,false, initLabels);
+        movie = new Movie(initTitle, initDescription, initDuration,false, initLabels, initReview);
     }
 
     @Test
