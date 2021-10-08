@@ -13,19 +13,13 @@ public class MovieDisplayTemplateController {
     private MovieListController movieListController;
     
     @FXML
-    Label movieTitle;
-
-    @FXML
-    Label movieDuration;
+    Label movieTitle, movieDuration, movieWatched;
     
     @FXML
     TextArea movieDescription;
-    
-    @FXML
-    Label movieWatched;
 
     @FXML
-    Button editMovie;
+    Button editMovie, deleteMovie;
 
     public void injectMovieListController(MovieListController movieListController) {
         this.movieListController = movieListController;
@@ -42,8 +36,14 @@ public class MovieDisplayTemplateController {
         movieWatched.setText(movie.isWatched() ? "Watched" : "Not watched");
     }
 
+    @FXML
     public void editMovie() {
         movieListController.editMovie(movie);
     }
+
+    @FXML
+    public void deleteMovie() {
+        movieListController.deleteMovie(movie);
+    }    
     
 }
