@@ -27,10 +27,10 @@ public class MovieListController {
     Text moviesDisplay;
 
     @FXML
-    EditMovieController editMovieController;
+    Pane movieDisplay;
 
     @FXML
-    Pane movieDisplay;
+    EditMovieController editMovieController;
 
     private ReviewListController reviewListController;
 
