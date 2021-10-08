@@ -3,7 +3,11 @@ package ui;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import core.IReview;
+import core.IMovie;
 import javafx.fxml.FXML;
 
 public class ReviewListController {
@@ -39,7 +43,9 @@ public class ReviewListController {
         editReviewWindow.setVisible(false);
     }
 
-    
+    protected Collection<IMovie> getMovies(){
+        return new ArrayList<IMovie>(movieListController.getMovieList().getMovies());
+    }
 
     protected void injectMovieListController(MovieListController movieListController){
         this.movieListController = movieListController;
