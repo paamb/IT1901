@@ -10,6 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import core.IMovie;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -26,10 +27,10 @@ public class EditReviewController {
     TextArea commentField;
 
     @FXML
-    Text errorField;
+    DatePicker dateField;
 
     @FXML
-    DatePicker dateField;
+    Text errorField;
 
     @FXML
     Button cancelButton, addReviewButton;
@@ -43,6 +44,34 @@ public class EditReviewController {
     @FXML
     void initialize(){
         ratingComboBox.getItems().addAll(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)));
+    }
+
+    @FXML
+    void submit(){
+        if(editingReview == null){
+            try {
+                int rating = ratingComboBox.getSelectionModel().getSelectedItem();
+                String comment = commentField.getText();
+                LocalDate whenWatched = dateField.getValue();
+
+                IReview review = new Review(comment, rating, whenWatched);
+                IMovie movie = availableMovies.get(moviesComboBox.getSelectionModel().getSelectedIndex());
+                
+                movie.addReview(review);           
+            } catch (Exception e) {
+                //TODO: handle exception
+            }
+        } else {
+            //TODO: edit review
+        }
+    }
+
+    @FXML
+    void cancelEditReview(){
+        reviewListController.hideEditReview();
+        editingReview = null;
+        availableMovies = null;
+        clearFields();
     }
 
     protected void injectReviewListController(ReviewListController reviewListController){
