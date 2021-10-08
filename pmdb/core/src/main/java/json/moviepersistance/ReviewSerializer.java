@@ -16,7 +16,7 @@ public class ReviewSerializer extends JsonSerializer<IReview>{
 
         gen.writeStringField("comment", review.getComment());
         gen.writeNumberField("rating", review.getRating());
-        gen.writeObjectField("whenWatched", review.getWhenWatched());
+        gen.writeStringField("whenWatched", review.getWhenWatched().toString());
 
         gen.writeEndObject();
     }

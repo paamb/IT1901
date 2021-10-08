@@ -30,7 +30,7 @@ public class ReviewDeserializer extends JsonDeserializer<IReview>{
                 comment = commentNode.asText();
             }
             JsonNode ratingNode = reviewNode.get("rating");
-            int rating = 0;
+            int rating = 1;
             if(ratingNode instanceof ObjectNode){
                 rating = ratingNode.asInt();
             }
@@ -42,6 +42,7 @@ public class ReviewDeserializer extends JsonDeserializer<IReview>{
                 int dayOfMonth = whenWatchedNode.get("day").asInt();
                 whenWatched = LocalDate.of(year, month, dayOfMonth);
             }
+            System.out.println(rating);
             return new Review(comment, rating, whenWatched);
 
         }catch(Exception e){
