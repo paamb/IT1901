@@ -69,12 +69,22 @@ public class MovieListController {
         editMovieWindow.setVisible(false);
     }
     
-    protected void movieListIsEdited() throws IOException{
+    protected void movieListIsEdited(){
         displayMovieList();
-        storage.saveMovies(movieList);
+        try{
+            storage.saveMovies(movieList);
+        } catch (IOException e){
+            System.out.println(e.getStackTrace());
+        }
+    }
+
+    protected void deleteMovie(IMovie movie){
+        movieList.removeMovie(movie);
+        movieListIsEdited();
     }
 
     private void displayMovieList(){
+        movieDisplay.getChildren().clear();
         try {
             int counter = 0;
             double offsetX = movieDisplay.getPrefWidth()/2;

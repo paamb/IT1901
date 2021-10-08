@@ -28,6 +28,7 @@
             </Label>
             <Button layoutX="209.0" layoutY="15.0" mnemonicParsing="false" onAction="#editMovie" text="Edit" />
             <TextArea fx:id="movieDescription" editable="false" layoutX="20.0" layoutY="107.0" prefHeight="176.0" prefWidth="224.0" wrapText="true" />
+            <Button fx:id="deleteMovie" layoutX="148.0" layoutY="15.0" mnemonicParsing="false" onAction="#deleteMovie" style="-fx-background-color: db5151;" text="Delete" textFill="WHITE" />
          </children>
       </AnchorPane>
    </children>
