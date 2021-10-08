@@ -32,7 +32,7 @@ public class MovieListController {
     @FXML
     Pane movieDisplay;
 
-    private AppController appController;
+    private ReviewListController reviewListController;
 
     @FXML
     void initialize() throws IOException {
@@ -43,8 +43,8 @@ public class MovieListController {
         displayMovieList();
     }
 
-    protected void injectAppController(AppController appController) {
-        this.appController = appController;
+    protected void injectReviewListController(ReviewListController reviewListController) {
+        this.reviewListController = reviewListController;
     }
 
     protected void editMovie(IMovie movie){
