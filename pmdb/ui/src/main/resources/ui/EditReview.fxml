@@ -22,10 +22,10 @@
       <TextArea fx:id="commentField" layoutX="7.0" layoutY="137.0" prefHeight="114.0" prefWidth="309.0" wrapText="true" />
       <Label layoutX="15.0" layoutY="280.0" text="Give the movie a rating: " />
       <Label layoutX="15.0" layoutY="317.0" prefHeight="17.0" prefWidth="264.0" text="When did you watch this movie?" />
-      <Button fx:id="addReviewButton" layoutX="279.0" layoutY="361.0" mnemonicParsing="false" text="Add" />
-      <Button fx:id="cancelButton" layoutX="216.0" layoutY="361.0" mnemonicParsing="false" text="Cancel" />
       <Text fx:id="errorField" layoutX="14.0" layoutY="392.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="6.0" />
-      <ComboBox fx:id="movieRating" layoutX="147.0" layoutY="276.0" prefHeight="27.0" prefWidth="76.0" />
-      <DatePicker layoutX="14.0" layoutY="335.0" />
+      <ComboBox fx:id="ratingComboBox" layoutX="147.0" layoutY="276.0" prefHeight="27.0" prefWidth="76.0" />
+      <DatePicker fx:id="dateField" layoutX="14.0" layoutY="335.0" />
+      <Button fx:id="cancelButton" layoutX="216.0" layoutY="361.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="addReviewButton" layoutX="279.0" layoutY="361.0" mnemonicParsing="false" text="Add" />
    </children>
 </AnchorPane>
