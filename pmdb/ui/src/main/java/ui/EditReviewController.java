@@ -67,7 +67,7 @@ public class EditReviewController {
             reviewListController.hideEditReview();
             clearFields();
         } catch (Exception e) {
-            errorField.setText("Error");
+            errorField.setText("Ugyldig input");
             System.out.println(e);
         }
     }

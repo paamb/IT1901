@@ -3,14 +3,12 @@ package ui;
 import java.io.IOException;
 
 import core.IMovie;
-import core.IReview;
 import core.MovieList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import json.moviepersistance.MovieStorage;
 
 public class MovieListController {
@@ -23,8 +21,6 @@ public class MovieListController {
 
     @FXML
     VBox editMovieWindow;
-
-
 
     @FXML
     Pane movieDisplay;
