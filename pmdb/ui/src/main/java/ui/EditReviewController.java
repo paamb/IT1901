@@ -91,21 +91,20 @@ public class EditReviewController {
             availableMovies = null;
             fillFields();
         }
+        errorField.setText("");
     }
 
     private void clearFields(){
         setMoviesComboBox();
         ratingComboBox.getSelectionModel().select(0);
         commentField.clear();
-        errorField.setText("");
-        dateField.setValue(null);
+        dateField.setValue(LocalDate.now());
     }
 
     private void fillFields(){
         setMoviesComboBox();
         ratingComboBox.getSelectionModel().select(editingReview.getRating()-1);
         commentField.setText(editingReview.getComment());
-        errorField.setText("");
         dateField.setValue(editingReview.getWhenWatched());
     }
 
