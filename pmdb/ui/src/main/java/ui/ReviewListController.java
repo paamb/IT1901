@@ -60,6 +60,11 @@ public class ReviewListController {
         this.movieListController = movieListController;
     }
 
+    protected void deleteReview(IMovie movie, IReview review){
+        movie.removeReview(review);
+        reviewListIsEdited();
+    }
+
     protected void displayReviewList() {
         reviewDisplay.getChildren().clear();
         try {

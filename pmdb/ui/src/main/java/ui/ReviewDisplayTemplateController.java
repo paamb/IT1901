@@ -49,6 +49,6 @@ public class ReviewDisplayTemplateController {
 
     @FXML
     public void deleteReview() {
-        //TODO: delete review
+        reviewListController.deleteReview(movie, review);
     }
 }
