@@ -23,8 +23,7 @@ public class MovieListController {
     @FXML
     VBox editMovieWindow;
 
-    @FXML
-    Text moviesDisplay;
+
 
     @FXML
     Pane movieDisplay;
@@ -71,6 +70,11 @@ public class MovieListController {
     
     protected void movieListIsEdited(){
         displayMovieList();
+        reviewListController.displayReviewList();
+        saveMovieList();
+    }
+    
+    protected void saveMovieList(){
         try{
             storage.saveMovies(movieList);
         } catch (IOException e){

@@ -48,21 +48,25 @@ public class EditReviewController {
 
     @FXML
     void submit(){
-        if(editingReview == null){
-            try {
-                int rating = ratingComboBox.getSelectionModel().getSelectedItem();
-                String comment = commentField.getText();
-                LocalDate whenWatched = dateField.getValue();
-
+        try {
+            int rating = ratingComboBox.getSelectionModel().getSelectedItem();
+            String comment = commentField.getText();
+            LocalDate whenWatched = dateField.getValue();
+            if(editingReview == null){
                 IReview review = new Review(comment, rating, whenWatched);
                 IMovie movie = availableMovies.get(moviesComboBox.getSelectionModel().getSelectedIndex());
-                
-                movie.addReview(review);           
-            } catch (Exception e) {
-                //TODO: handle exception
+                movie.addReview(review);
+            } else {
+                editingReview.setRating(rating);
+                editingReview.setComment(comment);
+                editingReview.setWhenWatched(whenWatched);
             }
-        } else {
-            //TODO: edit review
+            reviewListController.reviewListIsEdited();
+            reviewListController.hideEditReview();
+            clearFields();
+        } catch (Exception e) {
+            errorField.setText("Error");
+            System.out.println(e);
         }
     }
 

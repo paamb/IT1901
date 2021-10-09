@@ -18,7 +18,8 @@ public class Movie implements IMovie{
     private Collection<IReview> reviews;
 
     public Movie(){
-        this.labels = new ArrayList<>();
+        this.labels = new ArrayList<Label>();
+        this.reviews = new ArrayList<IReview>();
     }
 
     public Movie(String title, String description, LocalTime duration, boolean watched, Collection<IReview> reviews){
