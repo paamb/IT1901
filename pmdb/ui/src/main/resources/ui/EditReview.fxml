@@ -11,21 +11,21 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="334.0" style="-fx-border-color: #000000; -fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.EditReviewController">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" text="Add a review:">
+      <Label layoutX="14.0" layoutY="14.0" text="Endre anmeldelse:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <ComboBox fx:id="moviesComboBox" layoutX="14.0" layoutY="77.0" prefWidth="150.0" />
-      <Label layoutX="14.0" layoutY="54.0" prefHeight="17.0" prefWidth="221.0" text="Choose a movie do you want to review:" />
-      <Label layoutX="14.0" layoutY="119.0" text="Add a comment: " />
-      <TextArea fx:id="commentField" layoutX="7.0" layoutY="137.0" prefHeight="114.0" prefWidth="309.0" wrapText="true" />
-      <Label layoutX="15.0" layoutY="280.0" text="Give the movie a rating: " />
-      <Label layoutX="15.0" layoutY="317.0" prefHeight="17.0" prefWidth="264.0" text="When did you watch this movie?" />
+      <ComboBox fx:id="moviesComboBox" layoutX="45.0" layoutY="59.0" prefWidth="150.0" />
+      <Label layoutX="14.0" layoutY="63.0" prefHeight="17.0" prefWidth="38.0" text="Film:" />
+      <Label layoutX="14.0" layoutY="104.0" text="Kommentar til filmen:" />
+      <TextArea fx:id="commentField" layoutX="7.0" layoutY="125.0" prefHeight="126.0" prefWidth="309.0" wrapText="true" />
+      <Label layoutX="15.0" layoutY="280.0" text="Gi filmen en rangering (1-10):" />
+      <Label layoutX="15.0" layoutY="317.0" prefHeight="17.0" prefWidth="264.0" text="Når så du filmen?" />
       <Text fx:id="errorField" layoutX="14.0" layoutY="379.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="106.0" />
-      <ComboBox fx:id="ratingComboBox" layoutX="147.0" layoutY="276.0" prefHeight="27.0" prefWidth="76.0" />
+      <ComboBox fx:id="ratingComboBox" layoutX="178.0" layoutY="275.0" prefHeight="27.0" prefWidth="76.0" />
       <DatePicker fx:id="dateField" layoutX="14.0" layoutY="335.0" />
-      <Button fx:id="cancelButton" layoutX="216.0" layoutY="361.0" mnemonicParsing="false" onAction="#cancelEditReview" text="Cancel" />
-      <Button fx:id="addReviewButton" layoutX="279.0" layoutY="361.0" mnemonicParsing="false" onAction="#submit" text="Add" />
+      <Button fx:id="cancelButton" layoutX="216.0" layoutY="361.0" mnemonicParsing="false" onAction="#cancelEditReview" text="Avbryt" />
+      <Button fx:id="addReviewButton" layoutX="274.0" layoutY="361.0" mnemonicParsing="false" onAction="#submit" text="Lagre" />
    </children>
 </AnchorPane>
