@@ -38,6 +38,8 @@ public class EditReviewController {
     private ReviewListController reviewListController;
 
     private IReview editingReview;
+
+    private IMovie activeReviewsMovie;
     
     private ArrayList<IMovie> availableMovies;
 
@@ -94,6 +96,10 @@ public class EditReviewController {
         errorField.setText("");
     }
 
+    protected void setActiveReviewsMovie(IMovie movie){
+        activeReviewsMovie = movie;
+    }
+
     private void clearFields(){
         setMoviesComboBox();
         ratingComboBox.getSelectionModel().select(0);
@@ -111,13 +117,16 @@ public class EditReviewController {
     private void setMoviesComboBox(){
         moviesComboBox.getItems().clear();
         if (availableMovies == null){
-
+            moviesComboBox.getItems().add(activeReviewsMovie.getTitle());
             moviesComboBox.setDisable(true);
         } else {
             for(IMovie movie : availableMovies){
                 moviesComboBox.getItems().add(movie.getTitle());
             }
             moviesComboBox.setDisable(false);
+        }
+        if(!moviesComboBox.getItems().isEmpty()){
+            moviesComboBox.getSelectionModel().select(0);
         }
     }
 

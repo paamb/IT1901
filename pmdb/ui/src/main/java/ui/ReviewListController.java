@@ -36,10 +36,11 @@ public class ReviewListController {
 
     @FXML
     public void editNewReview(){
-        editReview(null);
+        editReview(null, null);
     }
 
-    protected void editReview(IReview review){
+    protected void editReview(IMovie movie, IReview review){
+        editReviewController.setActiveReviewsMovie(movie);
         editReviewController.editReview(review);
         editReviewWindow.setVisible(true);
     }

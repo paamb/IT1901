@@ -3,6 +3,7 @@ package ui;
 import java.io.IOException;
 
 import core.IMovie;
+import core.IReview;
 import core.MovieList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -44,7 +44,7 @@ public class ReviewDisplayTemplateController {
 
     @FXML
     public void editReview() {
-        reviewListController.editReview(review);
+        reviewListController.editReview(movie, review);
     }
 
     @FXML
