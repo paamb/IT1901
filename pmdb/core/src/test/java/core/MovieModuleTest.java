@@ -1,7 +1,6 @@
 package core;
 
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -29,29 +28,39 @@ public class MovieModuleTest {
         mapper.registerModule(new MovieModule());
     }
     private final static String movieListString = """
-    {"movies":[
-        {
-            "title":"Up",
-            "description":"Komedie",
-            "duration":{"hour":1,"minute":2,"second":3,"nano":0},
-            "watched":true,
-            "reviews":[
-                {
-                    "comment":"Teit",
-                    "rating":1,
-                    "whenWatched":"2000-01-01"}]},
-                        
-        {
-            "title":"Batman",
-            "description":"Action",
-            "duration":{"hour":2,"minute":3,"second":4,"nano":0},
-            "watched":false,
-            "reviews":[
-                {
-                    "comment":"Bra",
-                    "rating":8,
-                    "whenWatched":"2001-02-02"}]}
-        ]}
+    {
+      "movies" : [ {
+        "title" : "Up",
+        "description" : "Komedie",
+        "duration" : {
+          "hour" : 1,
+          "minute" : 2,
+          "second" : 3,
+          "nano" : 0
+        },
+        "watched" : true,
+        "reviews" : [ {
+          "comment" : "Teit",
+          "rating" : 1,
+          "whenWatched" : "2000-01-01"
+        } ]
+      }, {
+        "title" : "Batman",
+        "description" : "Action",
+        "duration" : {
+          "hour" : 2,
+          "minute" : 3,
+          "second" : 4,
+          "nano" : 0
+        },
+        "watched" : false,
+        "reviews" : [ {
+          "comment" : "Bra",
+          "rating" : 8,
+          "whenWatched" : "2001-02-02"
+        } ]
+      } ]
+    }
     """;
     @Test
     public void testSerializers(){
@@ -72,20 +81,27 @@ public class MovieModuleTest {
     public void testDeserializer(){
         try{
             MovieList movieList = mapper.readValue(movieListString, MovieList.class);
-            
-            ArrayList<IMovie> movies = (ArrayList<IMovie>)movieList.iterator();
+            List<IMovie> movies = new ArrayList<>();
+            movieList.iterator().forEachRemaining(movies::add);
             IMovie movie1 = movies.get(0);
             IMovie movie2 = movies.get(1);
+            IReview review1 = movie1.getReviews().iterator().next();
+            IReview review2 = movie2.getReviews().iterator().next();
             assertEquals(movie1.getTitle(), "Up");
             assertEquals(movie2.getTitle(), "Batman");
-            // assertEquals(movie1.getDescription(), "Teit");
-            // assertEquals(movie2.getDescription(), "Kul");
-            // assertEquals(movie1.getDuration(), LocalTime.of(1, 2, 3));
-            // assertEquals(movie1.getDuration(), LocalTime.of(2, 3, 4));
-            // assertTrue(movie1.isWatched());
-            // assertFalse(movie2.isWatched());
+            assertEquals(movie1.getDuration(), LocalTime.of(1, 2));
+            assertEquals(movie2.getDuration(), LocalTime.of(2, 3));
+            assertTrue(movie1.isWatched());
+            assertFalse(movie2.isWatched());
+            assertEquals("Teit", review1.getComment());
+            assertEquals(1, review1.getRating());
+            assertEquals(LocalDate.of(2000, 1, 1).toString(), review1.getWhenWatched().toString());
+            assertEquals("Bra", review2.getComment());
+            assertEquals(8, review2.getRating());
+            assertEquals(LocalDate.of(2001, 2, 2).toString(), review2.getWhenWatched().toString());
+            
         }catch(Exception e){
-            fail();
+          fail();
         }
 
     }
