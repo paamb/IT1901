@@ -78,11 +78,10 @@ public class EditMovieController {
     }
 
     protected void editMovie(IMovie movie){
+        editingMovie = movie;
         if(movie == null){
-            editingMovie = null;
             clearFields();
         } else {
-            editingMovie = movie;
             fillFields();
         }
     }
