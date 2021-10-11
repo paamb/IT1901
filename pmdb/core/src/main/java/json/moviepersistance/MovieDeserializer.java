@@ -8,15 +8,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.BooleanNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 
 import core.IMovie;
+import core.IReview;
 import core.Movie;
 
 public class MovieDeserializer extends JsonDeserializer<IMovie>{
-    
+    ReviewDeserializer reviewDeserializer = new ReviewDeserializer();
     @Override
     public IMovie deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         ObjectNode movieNode = p.getCodec().readTree(p);
@@ -47,7 +49,16 @@ public class MovieDeserializer extends JsonDeserializer<IMovie>{
             if(watchedNode instanceof BooleanNode){
                 newMovie.setWatched(watchedNode.booleanValue());
             }
+
+            JsonNode reviewsNode = movieNode.get("reviews");
+            if (reviewsNode instanceof ArrayNode){
+                for(JsonNode reviewNode : ((ArrayNode) reviewsNode)){
+                    IReview review = reviewDeserializer.deserialize(reviewNode);
+                    newMovie.addReview(review);
+                }
+            }
             return newMovie;
+
         }catch(Exception e){
             e.printStackTrace();
             return null;

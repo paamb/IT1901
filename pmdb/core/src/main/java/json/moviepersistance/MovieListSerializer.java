@@ -20,9 +20,8 @@ public class MovieListSerializer extends JsonSerializer<MovieList> {
             for(IMovie movie : movieList){
                 gen.writeObject(movie);
             }
-            gen.writeEndArray();
         }
-        
+        gen.writeEndArray();
         gen.writeEndObject();
     }
 }

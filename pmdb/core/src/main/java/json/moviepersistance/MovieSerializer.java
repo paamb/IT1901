@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import core.IMovie;
-
+import core.IReview;
 public class MovieSerializer extends JsonSerializer<IMovie>{
 
     @Override
@@ -19,9 +19,14 @@ public class MovieSerializer extends JsonSerializer<IMovie>{
         gen.writeObjectField("duration", movie.getDuration());
         gen.writeBooleanField("watched", movie.isWatched());
 
-        gen.writeEndObject();      
+        gen.writeArrayFieldStart("reviews");
+
+        if(movie.getReviews() != null){
+            for (IReview review : movie.getReviews()){
+                    gen.writeObject(review);
+            }
+        }
+        gen.writeEndArray();
+        gen.writeEndObject();    
     }
-
-
-    
-}
+}   

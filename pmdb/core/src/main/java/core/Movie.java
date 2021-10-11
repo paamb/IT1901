@@ -2,11 +2,7 @@ package core;
 
 import java.time.LocalTime;
 import java.util.Collection;
-
-import com.fasterxml.jackson.databind.ObjectReader;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Movie implements IMovie{
 
@@ -18,8 +14,8 @@ public class Movie implements IMovie{
     private Collection<IReview> reviews;
 
     public Movie(){
-        this.labels = new ArrayList<Label>();
-        this.reviews = new ArrayList<IReview>();
+        this.labels = new ArrayList<>();
+        this.reviews = new ArrayList<>();
     }
 
     public Movie(String title, String description, LocalTime duration, boolean watched, Collection<IReview> reviews){
@@ -136,7 +132,7 @@ public class Movie implements IMovie{
     }
 
     public Collection<IReview> getReviews(){
-        return new ArrayList<IReview>(reviews);
+        return new ArrayList<>(reviews);
     }
 
 
