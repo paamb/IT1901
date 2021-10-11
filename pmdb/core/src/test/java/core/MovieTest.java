@@ -20,7 +20,7 @@ public class MovieTest {
     LocalTime initDuration = LocalTime.of(02, 00);
     Label initLabel = new Label("initLabel");
     Collection<Label> initLabels = new ArrayList<Label>(Arrays.asList(initLabel));
-    Collection<Review> initReview = new ArrayList<Review>(Arrays.asList(new Review("", 1, LocalDate.now())));
+    Collection<IReview> initReview = new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
 
     @Test
     public void testConstructor() {
@@ -28,7 +28,7 @@ public class MovieTest {
         String description = "Dette er film nummer 1.";
         LocalTime duration = LocalTime.of(2, 10);
         Collection<Label> labels = new ArrayList<Label>(Arrays.asList(new Label("label")));
-        Collection<Review> reviews = new ArrayList<Review>(Arrays.asList(new Review("", 1, LocalDate.now())));
+        Collection<IReview> reviews = new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
         Movie movie = new Movie(title, description, duration, false, labels, reviews);
 
         assertEquals(title, movie.getTitle(), "Movie title is not correct.");

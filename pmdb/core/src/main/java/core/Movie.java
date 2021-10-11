@@ -15,17 +15,18 @@ public class Movie implements IMovie{
     private LocalTime duration;
     private boolean watched;
     private Collection<Label> labels;
-    private Collection<Review> reviews;
+    private Collection<IReview> reviews;
 
     public Movie(){
-        this.labels = new ArrayList<>();
+        this.labels = new ArrayList<Label>();
+        this.reviews = new ArrayList<IReview>();
     }
 
-    public Movie(String title, String description, LocalTime duration, boolean watched, Collection<Review> reviews){
+    public Movie(String title, String description, LocalTime duration, boolean watched, Collection<IReview> reviews){
         this(title, description, duration, watched, new ArrayList<>(), reviews);
     }
 
-    public Movie(String title, String description, LocalTime duration, boolean watched, Collection<Label> labels, Collection<Review> reviews){
+    public Movie(String title, String description, LocalTime duration, boolean watched, Collection<Label> labels, Collection<IReview> reviews){
         setTitle(title);
         setDescription(description);
         setDuration(duration);
@@ -108,10 +109,10 @@ public class Movie implements IMovie{
         return new ArrayList<>(labels);
     }
 
-    public void setReviews(Collection<Review> reviews) {
-        for(Review review : reviews){
+    public void setReviews(Collection<IReview> reviews) {
+        for(IReview review : reviews){
             int count = 0;
-            for(Review review2 : reviews){
+            for(IReview review2 : reviews){
                 if(review == review2){
                     count++;
                 }
@@ -123,19 +124,19 @@ public class Movie implements IMovie{
         this.reviews = new ArrayList<>(reviews);
     }
 
-    public void addReview(Review review){
+    public void addReview(IReview review){
         if(reviews.contains(review)){
             throw new IllegalStateException("Duplicate review not allowed");
        }
        reviews.add(review);
     }
 
-    public void removeReview(Review review){
+    public void removeReview(IReview review){
         reviews.remove(review);
     }
 
-    public Collection<Review> getReviews(){
-        return new ArrayList<>(reviews);
+    public Collection<IReview> getReviews(){
+        return new ArrayList<IReview>(reviews);
     }
 
 

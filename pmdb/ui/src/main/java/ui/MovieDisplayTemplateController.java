@@ -33,7 +33,7 @@ public class MovieDisplayTemplateController {
         movieTitle.setText(movie.getTitle());
         movieDuration.setText(movie.getDuration().toString());
         movieDescription.setText(movie.getDescription());
-        movieWatched.setText(movie.isWatched() ? "Watched" : "Not watched");
+        movieWatched.setText(movie.isWatched() ? "Sett" : "Ikke sett");
     }
 
     @FXML

@@ -94,4 +94,31 @@ public interface IMovie {
      * @return a Collection of this movies labels
      */
     public Collection<Label> getLabels();
+
+    /**
+     * Sets a Collection of reviews
+     * 
+     * @param reviews
+     */
+    public void setReviews(Collection<IReview> reviews);
+
+    /**
+     * Adds a review to this movie
+     * 
+     * @param review
+     */
+    public void addReview(IReview review);
+
+    /**
+     * Removes a review
+     * 
+     * @param review
+     */
+    public void removeReview(IReview review);
+
+    /**
+     * 
+     * @return a collection of this movies reviews
+     */
+    public Collection<IReview> getReviews();
 }

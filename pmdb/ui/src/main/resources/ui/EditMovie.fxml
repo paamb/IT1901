@@ -11,17 +11,17 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="334.0" style="-fx-border-color: #000000; -fx-background-color: #F0F0F0;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.EditMovieController">
    <children>
-      <Label layoutX="23.0" layoutY="14.0" prefHeight="29.0" prefWidth="172.0" text="Edit movie:">
+      <Label layoutX="23.0" layoutY="14.0" prefHeight="29.0" prefWidth="172.0" text="Endre film:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <CheckBox fx:id="watchedCheckBox" layoutX="23.0" layoutY="294.0" mnemonicParsing="false" text="Watched" />
-      <Label layoutX="23.0" layoutY="53.0" text="Title:" />
+      <CheckBox fx:id="watchedCheckBox" layoutX="23.0" layoutY="294.0" mnemonicParsing="false" text="Sett" />
+      <Label layoutX="23.0" layoutY="53.0" text="Tittel:" />
       <TextField fx:id="titleField" layoutX="87.0" layoutY="48.0" prefHeight="27.0" prefWidth="202.0" />
-      <Label layoutX="11.0" layoutY="98.0" prefHeight="17.0" prefWidth="79.0" text="Description:" />
+      <Label layoutX="11.0" layoutY="98.0" prefHeight="17.0" prefWidth="79.0" text="Beskrivelse:" />
       <TextArea fx:id="descriptionField" layoutX="87.0" layoutY="98.0" prefHeight="140.0" prefWidth="202.0" wrapText="true" />
-      <Label layoutX="22.0" layoutY="263.0" text="Duration h:m:" />
+      <Label layoutX="22.0" layoutY="263.0" text="Varighet (tt:mm):" />
       <TextField fx:id="hoursField" layoutX="118.0" layoutY="258.0" prefHeight="27.0" prefWidth="38.0" />
       <Label layoutX="165.0" layoutY="260.0" prefHeight="23.0" prefWidth="0.0" text=":">
          <font>
@@ -29,8 +29,8 @@
          </font>
       </Label>
       <TextField fx:id="minutesField" layoutX="176.0" layoutY="258.0" prefHeight="27.0" prefWidth="38.0" />
-      <Button fx:id="addTheMovie" layoutX="269.0" layoutY="359.0" mnemonicParsing="false" onAction="#submit" text="Submit" />
+      <Button fx:id="addTheMovie" layoutX="269.0" layoutY="359.0" mnemonicParsing="false" onAction="#submit" text="Lagre" />
       <Text fx:id="errorField" fill="#dd0606" layoutX="17.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="184.0" />
-      <Button fx:id="cancelButton" layoutX="208.0" layoutY="359.0" mnemonicParsing="false" onAction="#cancelEditMovie" text="Cancel" />
+      <Button fx:id="cancelButton" layoutX="208.0" layoutY="359.0" mnemonicParsing="false" onAction="#cancelEditMovie" text="Avbryt" />
    </children>
 </AnchorPane>

@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import json.moviepersistance.MovieStorage;
 
 public class MovieListController {
@@ -24,15 +23,12 @@ public class MovieListController {
     VBox editMovieWindow;
 
     @FXML
-    Text moviesDisplay;
+    Pane movieDisplay;
 
     @FXML
     EditMovieController editMovieController;
 
-    @FXML
-    Pane movieDisplay;
-
-    private AppController appController;
+    private ReviewListController reviewListController;
 
     @FXML
     void initialize() throws IOException {
@@ -43,8 +39,8 @@ public class MovieListController {
         displayMovieList();
     }
 
-    protected void injectAppController(AppController appController) {
-        this.appController = appController;
+    protected void injectReviewListController(ReviewListController reviewListController) {
+        this.reviewListController = reviewListController;
     }
 
     protected void editMovie(IMovie movie){
@@ -71,6 +67,11 @@ public class MovieListController {
     
     protected void movieListIsEdited(){
         displayMovieList();
+        reviewListController.displayReviewList();
+        saveMovieList();
+    }
+    
+    protected void saveMovieList(){
         try{
             storage.saveMovies(movieList);
         } catch (IOException e){
