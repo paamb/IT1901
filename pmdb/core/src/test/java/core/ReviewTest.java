@@ -62,17 +62,6 @@ public class ReviewTest {
     }
 
     @Test
-    @DisplayName("Testing setComment when comment is not valid, too long")
-    public void testSetComment_invalid() {
-        String str = "Hei dette er en ny k";
-        String newCommentEdge = str.repeat(24) + "Hei dette er en ny kk";
-
-        assertEquals(501, newCommentEdge.length());
-        assertThrows(IllegalArgumentException.class, () -> review.setComment(newCommentEdge),
-                "The comment is longer than 500 chr.");
-    }
-
-    @Test
     @DisplayName("Testing if the rating is less than 1, invalid")
     public void testSetRating_lessThanMin() {
         assertThrows(IllegalArgumentException.class, () -> review.setRating(0), "The rating is less than 1.");
