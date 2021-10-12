@@ -4,17 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import java.util.Iterator;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import core.IMovie;
@@ -22,11 +18,6 @@ import core.Movie;
 import core.MovieList;
 
 public class MovieSeenComparatorTest {
-    
-    @BeforeAll
-    public static void setUp(){
-        
-    }
 
     @Test
     public void testMovieTitleSort(){
