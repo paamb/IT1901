@@ -28,27 +28,21 @@ public class MovieDeserializer extends JsonDeserializer<IMovie>{
 
     IMovie deserialize(JsonNode movieNode){
         try{
-            IMovie newMovie;
-            String title;
-            String description;
-            LocalTime duration;
-            boolean watched;
-
             TextNode titleNode = (TextNode) movieNode.get("title");
-            title = titleNode.asText();
+            String title = titleNode.asText();
 
             TextNode descriptionNode = (TextNode) movieNode.get("description");
-            description = descriptionNode.asText();
+            String description = descriptionNode.asText();
 
             ObjectNode durationText = (ObjectNode) movieNode.get("duration");
             int hour = durationText.get("hour").asInt();
             int minute = durationText.get("minute").asInt();
-            duration = LocalTime.of(hour, minute);
+            LocalTime duration = LocalTime.of(hour, minute);
 
             BooleanNode watchedNode = (BooleanNode) movieNode.get("watched");
-            watched = watchedNode.booleanValue();
+            boolean watched = watchedNode.booleanValue();
 
-            newMovie = new Movie(title, description, duration, watched, new ArrayList<>());
+            IMovie newMovie = new Movie(title, description, duration, watched, new ArrayList<>());
 
             ArrayNode reviewsNode = (ArrayNode) movieNode.get("reviews");
             ReviewDeserializer reviewDeserializer = new ReviewDeserializer();

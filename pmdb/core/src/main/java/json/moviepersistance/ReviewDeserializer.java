@@ -25,27 +25,20 @@ public class ReviewDeserializer extends JsonDeserializer<IReview>{
 
     IReview deserialize(JsonNode reviewNode){
         try{
-            JsonNode commentNode = reviewNode.get("comment");
-            String comment = "";
-            if (commentNode instanceof TextNode){
-                comment = commentNode.asText();
-            }
-            JsonNode ratingNode = reviewNode.get("rating");
-            int rating = 1;
-            if(ratingNode instanceof IntNode){
-                rating = ratingNode.asInt();
-            }
-            JsonNode whenWatchedNode = reviewNode.get("whenWatched");
-            LocalDate whenWatched = null;
-            if(whenWatchedNode instanceof TextNode){
-                String[] whenWatchedArray = whenWatchedNode.asText().split("-");
-                int year = Integer.valueOf(whenWatchedArray[0]);
-                int month = Integer.valueOf(whenWatchedArray[1]);
-                int day = Integer.valueOf(whenWatchedArray[2]);
-                whenWatched = LocalDate.of(year, month, day);
-            }
-            return new Review(comment, rating, whenWatched);
+            TextNode commentNode = (TextNode) reviewNode.get("comment");
+            String comment = commentNode.asText();
 
+            IntNode ratingNode = (IntNode) reviewNode.get("rating");
+            int rating = ratingNode.asInt();
+            
+            TextNode whenWatchedNode = (TextNode) reviewNode.get("whenWatched");
+            String[] whenWatchedArray = whenWatchedNode.asText().split("-");
+            int year = Integer.valueOf(whenWatchedArray[0]);
+            int month = Integer.valueOf(whenWatchedArray[1]);
+            int day = Integer.valueOf(whenWatchedArray[2]);
+            LocalDate whenWatched = LocalDate.of(year, month, day);
+
+            return new Review(comment, rating, whenWatched);
         }catch(Exception e){
             e.printStackTrace();
             return null;
