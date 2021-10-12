@@ -17,9 +17,12 @@ public class MovieListController {
 
     private MovieList movieList;
     private MovieStorage storage;
-    
+
     @FXML
     CheckBox sortOnTitleCheckbox;
+    
+    @FXML
+    CheckBox sortOnSeenCheckbox;
 
     @FXML
     Button openEditMovie;
@@ -66,8 +69,12 @@ public class MovieListController {
         return movieList.getMovies();
     }
 
-    protected Collection<IMovie> getSortedMoviesByTitle(){
-        return movieList.getSortedMoviesByTitle();
+    protected Collection<IMovie> getSortedMoviesByTitle(Collection<IMovie> movies){
+        return movieList.getSortedMoviesByTitle(movies);
+    }
+
+    protected Collection<IMovie> getSortedMoviesOnSeen(Collection<IMovie> movies){
+        return movieList.getSortedMoviesOnSeen(movies);
     }
 
     protected MovieList getMovieList() {
@@ -108,7 +115,11 @@ public class MovieListController {
             Collection<IMovie> movies = getMovies();
 
             if (sortOnTitleCheckbox.isSelected()){
-                movies = getSortedMoviesByTitle();
+                movies = getSortedMoviesByTitle(movies);
+            }
+            
+            if (sortOnSeenCheckbox.isSelected()){
+                movies = getSortedMoviesOnSeen(movies);
             }
 
             for (IMovie movie : movies) {

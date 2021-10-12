@@ -46,9 +46,15 @@ public class MovieList implements Iterable<IMovie>{
             .orElse(null);
     }
 
-    public Collection<IMovie> getSortedMoviesByTitle(){
-        List<IMovie> sortedMovieList = new ArrayList<>(movieList);
+    public Collection<IMovie> getSortedMoviesByTitle(Collection<IMovie> movies){
+        List<IMovie> sortedMovieList = new ArrayList<>(movies);
         Collections.sort(sortedMovieList, new MovieTitleComparator());
+        return sortedMovieList;
+    }
+    
+    public Collection<IMovie> getSortedMoviesOnSeen(Collection<IMovie> movies){
+        List<IMovie> sortedMovieList = new ArrayList<>(movies);
+        Collections.sort(sortedMovieList, new MovieSeenComparator());
         return sortedMovieList;
     }
 
