@@ -1,12 +1,14 @@
 package ui;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import core.IMovie;
 import core.MovieList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import json.moviepersistance.MovieStorage;
@@ -15,6 +17,12 @@ public class MovieListController {
 
     private MovieList movieList;
     private MovieStorage storage;
+
+    @FXML
+    CheckBox sortOnTitleCheckbox;
+    
+    @FXML
+    CheckBox sortOnSeenCheckbox;
 
     @FXML
     Button openEditMovie;
@@ -56,7 +64,19 @@ public class MovieListController {
     protected void addMovie(IMovie movie){
         movieList.addMovie(movie);
     }
-    
+
+    protected Collection<IMovie> getMovies(){
+        return movieList.getMovies();
+    }
+
+    protected Collection<IMovie> getSortedMoviesByTitle(Collection<IMovie> movies){
+        return movieList.getSortedMoviesByTitle(movies);
+    }
+
+    protected Collection<IMovie> getSortedMoviesOnSeen(Collection<IMovie> movies){
+        return movieList.getSortedMoviesOnSeen(movies);
+    }
+
     protected MovieList getMovieList() {
         return movieList;
     }
@@ -83,14 +103,26 @@ public class MovieListController {
         movieList.removeMovie(movie);
         movieListIsEdited();
     }
-
+    
+    @FXML
     private void displayMovieList(){
         movieDisplay.getChildren().clear();
         try {
             int counter = 0;
             double offsetX = movieDisplay.getPrefWidth()/2;
             double offsetY = ((Pane) new FXMLLoader(this.getClass().getResource("movieDisplayTemplate.fxml")).load()).getPrefHeight();
-            for (IMovie movie : getMovieList().getMovies()) {
+            
+            Collection<IMovie> movies = getMovies();
+
+            if (sortOnTitleCheckbox.isSelected()){
+                movies = getSortedMoviesByTitle(movies);
+            }
+            
+            if (sortOnSeenCheckbox.isSelected()){
+                movies = getSortedMoviesOnSeen(movies);
+            }
+
+            for (IMovie movie : movies) {
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("movieDisplayTemplate.fxml"));
                 Pane moviePane = fxmlLoader.load();
                 moviePane.setLayoutX(offsetX * (counter % 2));
