@@ -70,42 +70,7 @@ public class EditMovieController {
             }
         } else {
             errorField.setText("Tittel må ha lengde mellom 1 og 50 tegn");
-        }
-
-        // Movie movie = new Movie();
-        // try {
-        //     String title = titleField.getText();
-        //     movie.setTitle(title);
-        //     try {
-        //         int hours = Integer.parseInt(hoursField.getText());
-        //         int minutes = Integer.parseInt(minutesField.getText());
-        //         LocalTime duration = LocalTime.of(hours, minutes);
-        //         movie.setDuration(duration);
-        //         try {
-        //             String description = descriptionField.getText();
-        //             boolean watched = watchedCheckBox.isSelected();
-        //             movie.setDescription(description);
-        //             movie.setWatched(watched);
-
-        //             if(editingMovie == null){
-        //                 movieListController.addMovie(movie);
-        //             } else {
-        //                 updateExistingMovie(movie);
-        //                 editingMovie = null;
-        //             }
-        //             movieListController.movieListIsEdited();
-        //             movieListController.hideEditMovie();
-        //             clearFields();
-        //         } catch (Exception e) {
-        //             System.err.println(e);
-        //             errorField.setText("Sjekk navnet ikke finnes fra før.");
-        //         }
-        //     } catch (Exception e) {
-        //         errorField.setText("Ugylidg filmvarighet.");
-        //     }
-        // } catch (Exception e) {
-        //     errorField.setText("Tittel er ugyldig.");
-        // }        
+        }     
     }
 
     @FXML
