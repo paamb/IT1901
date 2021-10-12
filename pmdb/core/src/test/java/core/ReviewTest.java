@@ -56,20 +56,9 @@ public class ReviewTest {
     @Test
     @DisplayName("Testing if comment can be null")
     public void testSetComment_null() {
-        assertThrows(NullPointerException.class, () -> review.setComment(null), "A comment cannot be null.");
+        assertThrows(IllegalArgumentException.class, () -> review.setComment(null), "A comment cannot be null.");
         review.setComment("New comment12345.");
         assertEquals("New comment12345.", review.getComment(), "The comments do not match.");
-    }
-
-    @Test
-    @DisplayName("Testing setComment when comment is not valid, too long")
-    public void testSetComment_invalid() {
-        String str = "Hei dette er en ny k";
-        String newCommentEdge = str.repeat(24) + "Hei dette er en ny kk";
-
-        assertEquals(501, newCommentEdge.length());
-        assertThrows(IllegalArgumentException.class, () -> review.setComment(newCommentEdge),
-                "The comment is longer than 500 chr.");
     }
 
     @Test
@@ -120,7 +109,7 @@ public class ReviewTest {
         int month = LocalDate.now().getMonthValue();
         int year = LocalDate.now().getYear();
 
-        assertThrows(IllegalStateException.class, () -> review.setWhenWatched(LocalDate.of(year, month, dayAfterNow)),
+        assertThrows(IllegalArgumentException.class, () -> review.setWhenWatched(LocalDate.of(year, month, dayAfterNow)),
                 "You can not set whenWatched in the future.");
         review.setWhenWatched(LocalDate.of(year, month, dayAfterNow - 1));
         assertEquals(LocalDate.now().toString(), review.getWhenWatched().toString(), "The dates do not match.");
@@ -129,7 +118,7 @@ public class ReviewTest {
     @Test
     @DisplayName("Testing if whenWatched can be null")
     public void testSetWhenWatched_null() {
-        assertThrows(NullPointerException.class, () -> review.setWhenWatched(null), "whenWatched cannot be null.");
+        assertThrows(IllegalArgumentException.class, () -> review.setWhenWatched(null), "whenWatched cannot be null.");
         review.setWhenWatched(LocalDate.of(2021, 1, 1));
         assertEquals("2021-01-01", review.getWhenWatched().toString(), "The dates do not match.");
     }

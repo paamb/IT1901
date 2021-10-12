@@ -50,25 +50,34 @@ public class EditReviewController {
 
     @FXML
     void submit(){
-        try {
-            int rating = ratingComboBox.getSelectionModel().getSelectedItem();
+        int rating = ratingComboBox.getSelectionModel().getSelectedItem();
+        if(IReview.isValidRating(rating)){
             String comment = commentField.getText();
-            LocalDate whenWatched = dateField.getValue();
-            if(editingReview == null){
-                IReview review = new Review(comment, rating, whenWatched);
-                IMovie movie = availableMovies.get(moviesComboBox.getSelectionModel().getSelectedIndex());
-                movie.addReview(review);
-            } else {
-                editingReview.setRating(rating);
-                editingReview.setComment(comment);
-                editingReview.setWhenWatched(whenWatched);
+            if(IReview.isValidComment(comment)){
+                LocalDate whenWatched = dateField.getValue();
+                if(IReview.isValidWhenWatched(whenWatched)){
+                    if(editingReview == null){
+                        IReview review = new Review(comment, rating, whenWatched);
+                        IMovie movie = availableMovies.get(moviesComboBox.getSelectionModel().getSelectedIndex());
+                        movie.addReview(review);
+                    } else {
+                        editingReview.setRating(rating);
+                        editingReview.setComment(comment);
+                        editingReview.setWhenWatched(whenWatched);
+                    }
+                    reviewListController.reviewListIsEdited();
+                    reviewListController.hideEditReview();
+                    editingReview = null;
+                    availableMovies = null;
+                    clearFields(); 
+                } else {
+                    errorField.setText("Sett-dato kan ikke være i fremtiden");
+                }
+            }else{
+                errorField.setText("Ugyldig kommentar");
             }
-            reviewListController.reviewListIsEdited();
-            reviewListController.hideEditReview();
-            clearFields();
-        } catch (Exception e) {
-            errorField.setText("Ugyldig input");
-            System.out.println(e);
+        } else {
+            errorField.setText("Vurdering må være mellom 1 og 10");
         }
     }
 
@@ -116,18 +125,19 @@ public class EditReviewController {
 
     private void setMoviesComboBox(){
         moviesComboBox.getItems().clear();
-        if (availableMovies == null){
+        if (editingReview != null){
             moviesComboBox.getItems().add(activeReviewsMovie.getTitle());
             moviesComboBox.setDisable(true);
-        } else {
+        } else if (availableMovies != null) {
             for(IMovie movie : availableMovies){
                 moviesComboBox.getItems().add(movie.getTitle());
             }
             moviesComboBox.setDisable(false);
+        } else {
+            moviesComboBox.setDisable(true);
         }
         if(!moviesComboBox.getItems().isEmpty()){
             moviesComboBox.getSelectionModel().select(0);
         }
     }
-
 }

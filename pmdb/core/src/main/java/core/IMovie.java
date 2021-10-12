@@ -4,15 +4,34 @@ import java.time.LocalTime;
 import java.util.Collection;
 
 public interface IMovie {
-    /**
-     * Minimum title length
-     */
-    public final static int minTitleLength = 1;
 
     /**
-     * Maximum title length
+     * 
+     * @param title
+     * @return true if title is valid
      */
-    public final static int maxTitleLength = 50;
+    public static boolean isValidTitle(String title){
+        return (title.length() >= 1 && title.length() <= 50)
+            && (title != null);
+    }
+
+    /**
+     * 
+     * @param description
+     * @return true if description is valid
+     */
+    public static boolean isValidDescription(String description){
+        return description != null;
+    }
+
+    /**
+     * 
+     * @param duration
+     * @return true if duration is valid
+     */
+    public static boolean isValidDuration(LocalTime duration){
+        return duration != null;
+    }    
 
     /**
      * Sets if movie is watched or not

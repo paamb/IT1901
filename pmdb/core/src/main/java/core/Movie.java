@@ -13,11 +13,6 @@ public class Movie implements IMovie{
     private Collection<Label> labels;
     private Collection<IReview> reviews;
 
-    public Movie(){
-        this.labels = new ArrayList<>();
-        this.reviews = new ArrayList<>();
-    }
-
     public Movie(String title, String description, LocalTime duration, boolean watched, Collection<IReview> reviews){
         this(title, description, duration, watched, new ArrayList<>(), reviews);
     }
@@ -31,15 +26,6 @@ public class Movie implements IMovie{
         setReviews(reviews);
     }
 
-
-    /**
-     * @param title of the movie
-     * @return whether a movie title is longer than 1 and shorter than 50 characters.
-     */
-    private boolean validMovieTitle(String title){
-        return title.length() >= IMovie.minTitleLength && title.length() <= IMovie.maxTitleLength;
-    }
-
     public void setWatched(boolean watched){
         this.watched = watched;
     }
@@ -49,6 +35,9 @@ public class Movie implements IMovie{
     }
 
     public void setDescription(String description){
+        if(!IMovie.isValidDescription(description)){
+            throw new IllegalArgumentException("Illegal movie description");
+        }
         this.description = description;
     }
 
@@ -57,7 +46,7 @@ public class Movie implements IMovie{
     }
 
     public void setTitle(String title){
-        if (!validMovieTitle(title)){
+        if (!IMovie.isValidTitle(title)){
             throw new IllegalArgumentException("Illegal movie title");
         }
         this.title = title;
@@ -68,6 +57,9 @@ public class Movie implements IMovie{
     }
 
     public void setDuration(LocalTime duration){
+        if(!IMovie.isValidDuration(duration)){
+            throw new IllegalArgumentException("Illegal movie duration");
+        }
         this.duration = duration;
     }
 
@@ -121,10 +113,13 @@ public class Movie implements IMovie{
     }
 
     public void addReview(IReview review){
+        if(review == null){
+            throw new IllegalArgumentException("Review cannot be null");
+        }
         if(reviews.contains(review)){
             throw new IllegalStateException("Duplicate review not allowed");
-       }
-       reviews.add(review);
+        }
+        reviews.add(review);
     }
 
     public void removeReview(IReview review){
@@ -134,7 +129,6 @@ public class Movie implements IMovie{
     public Collection<IReview> getReviews(){
         return new ArrayList<>(reviews);
     }
-
 
     @Override
     public String toString() {

@@ -1,6 +1,7 @@
 package ui;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import core.Movie;
 import core.IMovie;
@@ -34,40 +35,42 @@ public class EditMovieController {
 
     @FXML
     private void submit() {
-        Movie movie = new Movie();
-        try {
-            String title = titleField.getText();
-            movie.setTitle(title);
-            try {
-                int hours = Integer.parseInt(hoursField.getText());
-                int minutes = Integer.parseInt(minutesField.getText());
-                LocalTime duration = LocalTime.of(hours, minutes);
-                movie.setDuration(duration);
+        String title = titleField.getText();
+        if(IMovie.isValidTitle(title)){
+            if(thisTitleIsAvailable(title)){
                 try {
-                    String description = descriptionField.getText();
-                    boolean watched = watchedCheckBox.isSelected();
-                    movie.setDescription(description);
-                    movie.setWatched(watched);
-
-                    if(editingMovie == null){
-                        movieListController.addMovie(movie);
+                    int hours = Integer.parseInt(hoursField.getText());
+                    int minutes = Integer.parseInt(minutesField.getText());
+                    LocalTime duration = LocalTime.of(hours, minutes);
+                    if(IMovie.isValidDuration(duration)){
+                        String description = descriptionField.getText();
+                        if(IMovie.isValidDescription(description)){
+                            boolean watched = watchedCheckBox.isSelected();
+                            if(editingMovie == null){
+                                IMovie movie = new Movie(title, description, duration, watched, new ArrayList<>());
+                                movieListController.addMovie(movie);
+                            } else {
+                                updateExistingMovie(title, description, duration, watched);
+                                editingMovie = null;
+                            }
+                            movieListController.movieListIsEdited();
+                            movieListController.hideEditMovie();
+                            clearFields();
+                        } else {
+                            errorField.setText("Beskrivelse kan ikke være 'null'");;
+                        }
                     } else {
-                        updateExistingMovie(movie);
-                        editingMovie = null;
+                        errorField.setText("Ugyldig varighet");
                     }
-                    movieListController.movieListIsEdited();
-                    movieListController.hideEditMovie();
-                    clearFields();
                 } catch (Exception e) {
-                    System.err.println(e);
-                    errorField.setText("Sjekk navnet ikke finnes fra før.");
+                    errorField.setText("Varighet-feltet må være mer enn 00:00 og mindre enn 23:59");
                 }
-            } catch (Exception e) {
-                errorField.setText("Ugylidg filmvarighet.");
+            } else{
+                errorField.setText("Denne tittelen er allerede i bruk");
             }
-        } catch (Exception e) {
-            errorField.setText("Tittel er ugyldig.");
-        }        
+        } else {
+            errorField.setText("Tittel må ha lengde mellom 1 og 50 tegn");
+        }     
     }
 
     @FXML
@@ -90,14 +93,17 @@ public class EditMovieController {
         this.movieListController = movieListController;
     }
 
-    private void updateExistingMovie(IMovie movie){
+    private void updateExistingMovie(String title, String description, LocalTime duration, boolean watched){
         if(editingMovie == null){
             throw new IllegalStateException("Cant update movie if editingMovie is not set.");
         }
-        editingMovie.setTitle(movie.getTitle());
-        editingMovie.setDescription(movie.getDescription());
-        editingMovie.setDuration(movie.getDuration());
-        editingMovie.setWatched(movie.isWatched());
+        if(!thisTitleIsAvailable(title)){
+            throw new IllegalStateException("This title is already in use");
+        }
+        editingMovie.setTitle(title);
+        editingMovie.setDescription(description);
+        editingMovie.setDuration(duration);
+        editingMovie.setWatched(watched);
     }
 
     private void clearFields() {
@@ -119,5 +125,10 @@ public class EditMovieController {
         descriptionField.setText(editingMovie.getDescription());
         hoursField.setText(String.valueOf(editingMovie.getDuration().getHour()));
         minutesField.setText(String.valueOf(editingMovie.getDuration().getMinute()));
+    }
+
+    private boolean thisTitleIsAvailable(String title){
+        IMovie movie = movieListController.getMovieList().getMovie(title);
+        return (movie == null) || (movie == editingMovie);
     }
 }

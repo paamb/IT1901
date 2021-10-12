@@ -16,9 +16,9 @@ public class MovieList implements Iterable<IMovie>{
     public void addMovie(IMovie movie) {
         if(getMovie(movie.getTitle()) == null){
             movieList.add(movie);
-    } else {
-        throw new IllegalStateException("This movie-title is already in use.");
-    }
+        } else {
+            throw new IllegalStateException("This movie-title is already in use.");
+        }
     }
 
     public void removeMovie(IMovie movie){
