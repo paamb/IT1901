@@ -59,6 +59,7 @@ public class ReviewListController {
 
     protected void injectMovieListController(MovieListController movieListController){
         this.movieListController = movieListController;
+        displayReviewList();
     }
 
     protected void deleteReview(IMovie movie, IReview review){
