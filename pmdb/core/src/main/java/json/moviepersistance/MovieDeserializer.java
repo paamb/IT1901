@@ -40,7 +40,7 @@ public class MovieDeserializer extends JsonDeserializer<IMovie>{
             LocalTime duration = LocalTime.of(hour, minute);
 
             BooleanNode watchedNode = (BooleanNode) movieNode.get("watched");
-            boolean watched = watchedNode.booleanValue();
+            boolean watched = watchedNode.asBoolean();
 
             IMovie newMovie = new Movie(title, description, duration, watched, new ArrayList<>());
 

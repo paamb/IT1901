@@ -79,27 +79,6 @@ public class EditReviewController {
         } else {
             errorField.setText("Vurdering må være mellom 1 og 10");
         }
-    
-        // try {
-        //     int rating = ratingComboBox.getSelectionModel().getSelectedItem();
-        //     String comment = commentField.getText();
-        //     LocalDate whenWatched = dateField.getValue();
-        //     if(editingReview == null){
-        //         IReview review = new Review(comment, rating, whenWatched);
-        //         IMovie movie = availableMovies.get(moviesComboBox.getSelectionModel().getSelectedIndex());
-        //         movie.addReview(review);
-        //     } else {
-        //         editingReview.setRating(rating);
-        //         editingReview.setComment(comment);
-        //         editingReview.setWhenWatched(whenWatched);
-        //     }
-        //     reviewListController.reviewListIsEdited();
-        //     reviewListController.hideEditReview();
-        //     clearFields();
-        // } catch (Exception e) {
-        //     errorField.setText("Ugyldig input");
-        //     System.out.println(e);
-        // }
     }
 
     @FXML
