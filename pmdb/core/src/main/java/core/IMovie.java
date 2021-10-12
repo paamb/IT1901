@@ -15,6 +15,34 @@ public interface IMovie {
     public final static int maxTitleLength = 50;
 
     /**
+     * 
+     * @param title
+     * @return true if title is valid
+     */
+    public static boolean isValidTitle(String title){
+        return (title.length() >= 1 && title.length() <= 50)
+            && (title != null);
+    }
+
+    /**
+     * 
+     * @param description
+     * @return true if description is valid
+     */
+    public static boolean isValidDescription(String description){
+        return description != null;
+    }
+
+    /**
+     * 
+     * @param duration
+     * @return true if duration is valid
+     */
+    public static boolean isValidDuration(LocalTime duration){
+        return duration != null;
+    }    
+
+    /**
      * Sets if movie is watched or not
      * 
      * @param watched
