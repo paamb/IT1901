@@ -10,7 +10,7 @@ public interface IReview {
      * @return true if comment is valid
      */
     public static boolean isValidComment(String comment){
-        return (comment != null) && (comment.length() <= 500);
+        return comment != null;
     }
 
     /**

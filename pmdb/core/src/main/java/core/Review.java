@@ -16,7 +16,7 @@ public class Review implements IReview {
 
     public void setComment(String comment) {
         if (!IReview.isValidComment(comment)) {
-            throw new IllegalArgumentException("Invalid comment. Cannot be null or longer than 500 characters");
+            throw new IllegalArgumentException("Comment cannot be null");
         }
         this.comment = comment;
     }
