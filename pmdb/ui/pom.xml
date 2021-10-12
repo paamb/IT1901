@@ -93,6 +93,12 @@
                     <mainClass>pmdb.ui/ui.App</mainClass>
                 </configuration>
             </plugin>
+
+            <!-- Configure jacoco code coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 </project>
