@@ -2,6 +2,7 @@ package json.moviepersistance;
 
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,7 +19,7 @@ import core.IReview;
 import core.Movie;
 
 public class MovieDeserializer extends JsonDeserializer<IMovie>{
-    ReviewDeserializer reviewDeserializer = new ReviewDeserializer();
+
     @Override
     public IMovie deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         ObjectNode movieNode = p.getCodec().readTree(p);
@@ -27,38 +28,36 @@ public class MovieDeserializer extends JsonDeserializer<IMovie>{
 
     IMovie deserialize(JsonNode movieNode){
         try{
-            IMovie newMovie = new Movie();
-            JsonNode durationText = movieNode.get("duration");
-            if (durationText instanceof ObjectNode){
-                int hour = durationText.get("hour").asInt();
-                int minute = durationText.get("minute").asInt();
-                newMovie.setDuration(LocalTime.of(hour, minute));
-            }
-            
-            JsonNode titleNode = movieNode.get("title");
-            if(titleNode instanceof TextNode){
-                newMovie.setTitle(titleNode.asText());
-            }
-            
-            JsonNode descriptionNode = movieNode.get("description");
-            if(descriptionNode instanceof TextNode){
-                newMovie.setDescription(descriptionNode.textValue());
-            }
-            
-            JsonNode watchedNode = movieNode.get("watched");
-            if(watchedNode instanceof BooleanNode){
-                newMovie.setWatched(watchedNode.booleanValue());
+            IMovie newMovie;
+            String title;
+            String description;
+            LocalTime duration;
+            boolean watched;
+
+            TextNode titleNode = (TextNode) movieNode.get("title");
+            title = titleNode.asText();
+
+            TextNode descriptionNode = (TextNode) movieNode.get("description");
+            description = descriptionNode.asText();
+
+            ObjectNode durationText = (ObjectNode) movieNode.get("duration");
+            int hour = durationText.get("hour").asInt();
+            int minute = durationText.get("minute").asInt();
+            duration = LocalTime.of(hour, minute);
+
+            BooleanNode watchedNode = (BooleanNode) movieNode.get("watched");
+            watched = watchedNode.booleanValue();
+
+            newMovie = new Movie(title, description, duration, watched, new ArrayList<>());
+
+            ArrayNode reviewsNode = (ArrayNode) movieNode.get("reviews");
+            ReviewDeserializer reviewDeserializer = new ReviewDeserializer();
+            for(JsonNode reviewNode : reviewsNode){
+                IReview review = reviewDeserializer.deserialize(reviewNode);
+                newMovie.addReview(review);
             }
 
-            JsonNode reviewsNode = movieNode.get("reviews");
-            if (reviewsNode instanceof ArrayNode){
-                for(JsonNode reviewNode : ((ArrayNode) reviewsNode)){
-                    IReview review = reviewDeserializer.deserialize(reviewNode);
-                    newMovie.addReview(review);
-                }
-            }
             return newMovie;
-
         }catch(Exception e){
             e.printStackTrace();
             return null;

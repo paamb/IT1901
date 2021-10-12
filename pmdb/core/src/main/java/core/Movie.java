@@ -13,11 +13,6 @@ public class Movie implements IMovie{
     private Collection<Label> labels;
     private Collection<IReview> reviews;
 
-    public Movie(){
-        this.labels = new ArrayList<>();
-        this.reviews = new ArrayList<>();
-    }
-
     public Movie(String title, String description, LocalTime duration, boolean watched, Collection<IReview> reviews){
         this(title, description, duration, watched, new ArrayList<>(), reviews);
     }
