@@ -1,13 +1,16 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 public class MovieList implements Iterable<IMovie>{
 
     private Collection<IMovie> movieList;
-
     
     public MovieList() {
         movieList = new ArrayList<>();
@@ -43,6 +46,12 @@ public class MovieList implements Iterable<IMovie>{
             .filter(m -> m.getTitle().equals(title))
             .findFirst()
             .orElse(null);
+    }
+
+    public Collection<IMovie> getSortedMoviesByTitle(){
+        List<IMovie> sortedMovieList = new ArrayList<>(movieList);
+        Collections.sort(sortedMovieList, new MovieTitleComparator());
+        return sortedMovieList;
     }
 
     @Override
