@@ -15,9 +15,8 @@ public class Review implements IReview {
     }
 
     public void setComment(String comment) {
-        if (comment.length() > IReview.maxCommentLength) {
-            throw new IllegalArgumentException(
-                    "Comment is too long, max comment lengt: " + String.valueOf(IReview.maxCommentLength));
+        if (!IReview.isValidComment(comment)) {
+            throw new IllegalArgumentException("Invalid comment. Cannot be null or longer than 500 characters");
         }
         this.comment = comment;
     }
@@ -27,8 +26,8 @@ public class Review implements IReview {
     }
 
     public void setRating(int rating) {
-        if (rating > IReview.maxRating || rating < IReview.minRating) {
-            throw new IllegalArgumentException("Rating must be more than 0 and less than 11.");
+        if (!IReview.isValidRating(rating)) {
+            throw new IllegalArgumentException("Rating must be at least 1 and at most 10.");
         }
         this.rating = rating;
     }
@@ -38,8 +37,8 @@ public class Review implements IReview {
     }
 
     public void setWhenWatched(LocalDate whenWatched) {
-        if (whenWatched.isAfter(LocalDate.now())) {
-            throw new IllegalStateException("You cannot set 'when watched' to in the future.");
+        if (!IReview.isValidWhenWatched(whenWatched)) {
+            throw new IllegalArgumentException("When Watched cannot be null or in the future.");
         }
         this.whenWatched = whenWatched;
     }

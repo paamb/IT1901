@@ -5,19 +5,31 @@ import java.time.LocalDate;
 public interface IReview {
 
     /**
-     * A reviews comments max length, used in setComment(String comment)
+     * 
+     * @param comment
+     * @return true if comment is valid
      */
-    public final static int maxCommentLength = 500;
+    public static boolean isValidComment(String comment){
+        return (comment != null) && (comment.length() <= 500);
+    }
 
     /**
-     * Minimum rating, used in setRating(int rating)
+     * 
+     * @param rating
+     * @return true if rating is valid
      */
-    public final static int minRating = 1;
-    
+    public static boolean isValidRating(int rating){
+        return (rating <= 10) && (rating >= 1);
+    }
+
     /**
-     * Max rating, used in setRating
+     * 
+     * @param whenWatched
+     * @return true if whenWatched is valid
      */
-    public final static int maxRating = 10;
+    public static boolean isValidWhenWatched(LocalDate whenWatched){
+        return (whenWatched != null) && (!whenWatched.isAfter(LocalDate.now()));
+    }
 
     /**
      * 

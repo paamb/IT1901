@@ -4,15 +4,6 @@ import java.time.LocalTime;
 import java.util.Collection;
 
 public interface IMovie {
-    /**
-     * Minimum title length
-     */
-    public final static int minTitleLength = 1;
-
-    /**
-     * Maximum title length
-     */
-    public final static int maxTitleLength = 50;
 
     /**
      * 
