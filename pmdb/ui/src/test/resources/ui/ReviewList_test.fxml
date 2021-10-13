@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ReviewListController">
+    <Pane fx:id="reviewDisplay" />
+    <VBox fx:id="editReviewWindow" >
+        <children>
+            <fx:include fx:id="editReview" source="EditReview_test.fxml" />
+        </children>
+    </VBox>
+    <Button fx:id="openEditReview" mnemonicParsing="false" onAction="#editNewReview" text="+" />
+</VBox>

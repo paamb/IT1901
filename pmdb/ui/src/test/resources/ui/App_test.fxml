@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController">
+    <fx:include fx:id="movieList" source="MovieList_test.fxml" />
+    <fx:include fx:id="reviewList" source="ReviewList_test.fxml" />
+</HBox>

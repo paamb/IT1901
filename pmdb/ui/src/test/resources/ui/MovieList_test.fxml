@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MovieListController">
+    <CheckBox fx:id="sortOnTitleCheckbox" mnemonicParsing="false" onAction="#displayMovieList" />
+    <CheckBox fx:id="sortOnSeenCheckbox" mnemonicParsing="false" onAction="#displayMovieList"/>
+    <Pane fx:id="movieDisplay" />
+    <VBox fx:id="editMovieWindow" >
+        <children>
+            <fx:include fx:id="editMovie" source="EditMovie_test.fxml" />
+        </children>
+    </VBox>
+    <Button fx:id="openEditMovie" mnemonicParsing="false" onAction="#editNewMovie" text="+" />
+</VBox>
