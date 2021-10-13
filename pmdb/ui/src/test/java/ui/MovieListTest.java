@@ -2,6 +2,7 @@ package ui;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -24,6 +25,8 @@ import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
+import core.IMovie;
+
 public class MovieListTest extends ApplicationTest{
     
     private MovieListController movieListController;
@@ -32,9 +35,11 @@ public class MovieListTest extends ApplicationTest{
 
     @Override
     public void start(final Stage stage) throws Exception{
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("MovieList_test.fxml"));
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("App.fxml"));
         final Parent root = loader.load();
-        movieListController = loader.getController();
+        AppController appController = loader.getController();
+        movieListController = appController.getMovieListController();
+        // reviewListController = appController.getReviewListController();
         stage.setScene(new Scene(root));
         stage.show();
 
@@ -45,6 +50,11 @@ public class MovieListTest extends ApplicationTest{
         // reviewListController = reviewListLoader.getController();
     }
 
+    @BeforeEach
+    public void setup(){
+        clickOn("#movieListTab");
+    }
+
     @Test
     public void test_initialize(){
         assertNotNull(movieListController);
@@ -53,16 +63,41 @@ public class MovieListTest extends ApplicationTest{
     @Test
     public void testOpenEditMovie(){
         clickOn("#openEditMovie");
-        assertTrue(movieListController.editMovieWindow.isVisible());
+        assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
         clickOn("#openEditMovie");
-        assertTrue(movieListController.editMovieWindow.isVisible());
+        assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
     }
     
     @Test
     public void testCloseEditMovie(){
         clickOn("#openEditMovie");
-        assertTrue(movieListController.editMovieWindow.isVisible());
+        assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
         clickOn("#cancelButton");
-        assertFalse(movieListController.editMovieWindow.isVisible());
+        assertFalse(movieListController.editMovieWindow.isVisible(), "EditMovie-window should not be visible.");
+    }
+    
+    @Test
+    public void testAddMovie_valid(){
+        String title = "title";
+        String description = "This is a movie";
+        LocalTime duration = LocalTime.of(2, 30);
+        boolean watched = true;
+
+        clickOn("#openEditMovie");
+        clickOn("#titleField").write(title);
+        clickOn("#descriptionField").write(description);
+        clickOn("#hoursField").write(String.valueOf(duration.getHour()));
+        clickOn("#minutesField").write(String.valueOf(duration.getMinute()));
+        if(watched){clickOn("#watchedCheckBox");}
+        clickOn("#addTheMovie");
+
+        assertEquals(1, movieListController.getMovieList().getMovies().size());
+
+        IMovie movie = movieListController.getMovies().stream().findFirst().get();
+        
+        assertEquals(title, movie.getTitle());
+        assertEquals(description, movie.getDescription());
+        assertEquals(duration, movie.getDuration());
+        assertEquals(watched, movie.isWatched());
     }
 }

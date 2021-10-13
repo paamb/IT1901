@@ -8,14 +8,14 @@
    <children>
       <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Vurderte filmer">
+          <Tab text="Vurderte filmer" fx:id="reviewListTab">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
                 <fx:include fx:id="reviewList" source="ReviewList.fxml" />
               </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Alle filmer">
+          <Tab text="Alle filmer" fx:id="movieListTab">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
                 <fx:include fx:id="movieList" source="MovieList.fxml" />

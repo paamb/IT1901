@@ -10,19 +10,24 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 public class AppTest extends ApplicationTest {
 
-    private AppController appController;
+    private MovieListController movieListController;
+
+    private ReviewListController reviewListController;
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("App_test.fxml"));
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("App.fxml"));
         final Parent root = loader.load();
-        appController = loader.getController();
+        AppController appController = loader.getController();
+        movieListController = appController.getMovieListController();
+        reviewListController = appController.getReviewListController();
         stage.setScene(new Scene(root));
         stage.show();
     }
 
     @Test
     public void testAppController_initial() {
-        assertNotNull(appController);
+        assertNotNull(movieListController);
+        assertNotNull(reviewListController);
     }
 }
