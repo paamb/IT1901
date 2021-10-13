@@ -15,6 +15,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.robot.Robot;
 import javafx.stage.Stage;
 import json.moviepersistance.MovieStorage;
 
@@ -47,7 +50,8 @@ public class MovieListTest extends ApplicationTest{
 
     String title = "title";
     String description = "description";
-    LocalTime duration = LocalTime.of(2, 30);
+    String hours = "2";
+    String minutes = "30";
     boolean watched = false;
 
     @Override
@@ -59,6 +63,14 @@ public class MovieListTest extends ApplicationTest{
         editMovieController = movieListController.editMovieController;
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    private void deleteInput(TextField text){
+        while(text.getText().length() != 0){
+            Platform.runLater(() -> {
+                (new Robot()).keyPress(KeyCode.BACK_SPACE);
+            });
+        }
     }
 
     private void enterMovieValues(String title, String description, String hours, String minutes, boolean watched){
@@ -121,7 +133,7 @@ public class MovieListTest extends ApplicationTest{
     @Test
     public void testAddMovie_valid(){
         clickOn("#openEditMovie");
-        enterMovieValues(title, description, String.valueOf(duration.getHour()), String.valueOf(duration.getMinute()), watched);
+        enterMovieValues(title, description, hours, minutes, watched);
         clickOn("#submitMovie");
 
         assertEquals(2, movieListController.getMovieList().getMovies().size());
@@ -131,7 +143,8 @@ public class MovieListTest extends ApplicationTest{
         
         assertEquals(title, movie.getTitle());
         assertEquals(description, movie.getDescription());
-        assertEquals(duration, movie.getDuration());
+        assertEquals(hours, String.valueOf(movie.getDuration().getHour()));
+        assertEquals(minutes, String.valueOf(movie.getDuration().getMinute()));
         assertEquals(watched, movie.isWatched());
     }
 
@@ -139,7 +152,7 @@ public class MovieListTest extends ApplicationTest{
     public void testAddMovie_titleInUse(){
         String title = "test movie";
         clickOn("#openEditMovie");
-        enterMovieValues(title, description, String.valueOf(duration.getHour()), String.valueOf(duration.getMinute()), watched);
+        enterMovieValues(title, description, hours, minutes, watched);
         clickOn("#submitMovie");
         assertNotEquals("", editMovieController.errorField.getText());
         assertEquals(1, movieListSize());
@@ -148,12 +161,10 @@ public class MovieListTest extends ApplicationTest{
 
     @Test
     public void testAddMovie_invalidDuration(){
-        String validHours = "2";
-        String validMinutes = "30";
 
         String nonInteger = "1o";
         clickOn("#openEditMovie");
-        enterMovieValues(title, description, nonInteger, validMinutes, watched);
+        enterMovieValues(title, description, nonInteger, minutes, watched);
         clickOn("#submitMovie");
         assertEquals(1, movieListSize());
         assertTrue(movieListController.editMovieWindow.isVisible());
@@ -161,14 +172,63 @@ public class MovieListTest extends ApplicationTest{
 
         String hoursOutOfRange = "30";
         clickOn("#openEditMovie");
-        enterMovieValues(title, description, hoursOutOfRange, validMinutes, watched);
+        enterMovieValues(title, description, hoursOutOfRange, minutes, watched);
         clickOn("#submitMovie");
         assertEquals(1, movieListSize());
         
         String minutesOutOfRange = "-30";
         clickOn("#openEditMovie");
-        enterMovieValues(title, description, validHours, minutesOutOfRange, watched);
+        enterMovieValues(title, description, hours, minutesOutOfRange, watched);
         clickOn("#submitMovie");
         assertEquals(1, movieListSize());
+    }
+
+    @Test
+    public void testDeleteMovie(){
+        clickOn("#openEditMovie");
+        enterMovieValues(title, description, hours, minutes, watched);
+        clickOn("#submitMovie");
+        clickOn(movieListController.movieDisplay.lookup("#1").lookup("#deleteMovie"));
+        assertEquals(1, movieListSize());
+    }
+
+    @Test
+    public void testEditMovie_valid(){
+        clickOn("#openEditMovie");
+        enterMovieValues(title, description, hours, minutes, watched);
+        clickOn("#submitMovie");
+        clickOn(movieListController.movieDisplay.lookup("#1").lookup("#editMovie"));
+
+        String newTitle = "new title";
+        clickOn("#titleField");
+        deleteInput(editMovieController.titleField);
+        clickOn("#titleField").write(newTitle);
+        clickOn("#submitMovie");
+        assertFalse(movieListController.editMovieWindow.isVisible());
+        assertEquals(newTitle, movieListController.getMovieList().getMovie(newTitle).getTitle());
+        assertEquals(2, movieListSize());
+        
+        clickOn(movieListController.movieDisplay.lookup("#1").lookup("#editMovie"));
+        clickOn("#submitMovie");
+        assertFalse(movieListController.editMovieWindow.isVisible());
+        assertEquals(newTitle, movieListController.getMovieList().getMovie(newTitle).getTitle());
+        assertEquals(2, movieListSize());
+    }
+    
+    @Test
+    public void testEditMovie_titleInUse(){
+        clickOn("#openEditMovie");
+        enterMovieValues(title, description, hours, minutes, watched);
+        clickOn("#submitMovie");
+        
+        String invalidTitle = "test movie";
+        clickOn(movieListController.movieDisplay.lookup("#1").lookup("#editMovie"));
+        clickOn("#titleField");
+        deleteInput(editMovieController.titleField);
+        clickOn("#titleField").write(invalidTitle);
+        clickOn("#submitMovie");
+        assertTrue(movieListController.editMovieWindow.isVisible());
+        assertEquals(title, movieListController.getMovieList().getMovie(title).getTitle());
+        assertEquals(2, movieListSize());
     }
 }

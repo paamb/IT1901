@@ -1,7 +1,9 @@
 package ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.io.File;
 
 import core.IMovie;
@@ -145,6 +147,7 @@ public class MovieListController {
                 Pane moviePane = fxmlLoader.load();
                 moviePane.setLayoutX(offsetX * (counter % 2));
                 moviePane.setLayoutY(offsetY * ((int) counter / 2));
+                moviePane.setId(String.valueOf(counter));
                 
                 MovieDisplayTemplateController movieDisplayTemplateController = fxmlLoader.getController();
                 movieDisplayTemplateController.injectMovieListController(this);
