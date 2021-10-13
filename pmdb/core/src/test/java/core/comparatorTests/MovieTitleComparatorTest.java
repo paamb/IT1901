@@ -27,7 +27,6 @@ public class MovieTitleComparatorTest {
         IMovie movie4 = new Movie("ddd", "Action", LocalTime.of(2,3,4), false, Arrays.asList());
 
         Collection<IMovie>movies = new ArrayList<IMovie>(Arrays.asList(movie2,movie3,movie4,movie1));
-
         Collection<IMovie> sortedMovies = movieList.getSortedMoviesByTitle(movies);
         Iterator<IMovie> sortedMoviesIterator = sortedMovies.iterator();
 

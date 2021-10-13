@@ -26,12 +26,11 @@ public class MovieSeenComparatorTest {
         IMovie movie2 = new Movie("ddd", "Action", LocalTime.of(2,3,4), false, Arrays.asList());
         IMovie movie3 = new Movie("aaa", "Komedie", LocalTime.of(1, 2, 3), true, Arrays.asList());
         IMovie movie4 = new Movie("ccc", "Action", LocalTime.of(2,3,4), true, Arrays.asList());
-        
-
+    
         Collection<IMovie>movies = new ArrayList<IMovie>(Arrays.asList(movie2,movie3,movie4,movie1));
-
         Collection<IMovie> sortedMovies = movieList.getSortedMoviesOnSeen(movies);
         Iterator<IMovie> sortedMoviesIterator = sortedMovies.iterator();
+
         assertTrue(sortedMoviesIterator.hasNext(), "The movieIterator should have more elements");
         assertEquals(movie2, sortedMoviesIterator.next(), "First movie should be movie2 because seen = false");
 

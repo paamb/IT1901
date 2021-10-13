@@ -26,6 +26,7 @@ public class CombinedComparatorSortTest {
 
     private MovieList movieList;
     private List<IMovie> movies;
+    
     @BeforeEach
     public void setUp(){
         movieList = new MovieList();
@@ -74,7 +75,6 @@ public class CombinedComparatorSortTest {
     public void testFirstSortOnTitleThenSeen(){
         Collection<IMovie> sortedMoviesOnTitle = movieList.getSortedMoviesByTitle(movies);
         Collection<IMovie> sortedMovies = movieList.getSortedMoviesOnSeen(sortedMoviesOnTitle);
-        
         Iterator<IMovie> sortedMoviesIterator = sortedMovies.iterator();
         
         assertTrue(sortedMoviesIterator.hasNext(), "The movieIterator should have more elements");
