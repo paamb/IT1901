@@ -1,5 +1,6 @@
 package ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalTime;
@@ -31,6 +32,8 @@ public class MovieListTest extends ApplicationTest{
     
     private MovieListController movieListController;
 
+    private final File testFile = new File("src\\test\\resources\\ui", "MovieList_test.json");
+
     // private ReviewListController reviewListController;
 
     @Override
@@ -51,7 +54,12 @@ public class MovieListTest extends ApplicationTest{
     }
 
     @BeforeEach
-    public void setup(){
+    public void setup() throws IOException{
+        try {
+            movieListController.loadMovieListFile(testFile);
+        } catch (Exception e) {
+            fail(e);
+        }
         clickOn("#movieListTab");
     }
 
@@ -91,7 +99,7 @@ public class MovieListTest extends ApplicationTest{
         if(watched){clickOn("#watchedCheckBox");}
         clickOn("#addTheMovie");
 
-        assertEquals(1, movieListController.getMovieList().getMovies().size());
+        assertEquals(2, movieListController.getMovieList().getMovies().size());
 
         IMovie movie = movieListController.getMovies().stream().findFirst().get();
         

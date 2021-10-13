@@ -1,0 +1,29 @@
+{
+  "movies" : [ {
+    "title" : "test movie",
+    "description" : "This is a test movie",
+    "duration" : {
+      "hour" : 2,
+      "minute" : 30,
+      "second" : 0,
+      "nano" : 0
+    },
+    "watched" : true,
+    "reviews" : [ {
+      "comment" : "This is good movie.",
+      "rating" : 1,
+      "whenWatched" : "2021-10-10"
+    } ]
+  }, {
+    "title" : "title",
+    "description" : "This is a movie",
+    "duration" : {
+      "hour" : 2,
+      "minute" : 30,
+      "second" : 0,
+      "nano" : 0
+    },
+    "watched" : true,
+    "reviews" : [ ]
+  } ]
+}
