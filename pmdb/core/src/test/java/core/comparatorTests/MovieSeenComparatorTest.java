@@ -1,7 +1,6 @@
 package core.comparatorTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalTime;
@@ -33,20 +32,24 @@ public class MovieSeenComparatorTest {
         Collection<IMovie> sortedMovies = movieList.getSortedMoviesOnSeen(movies);
         Iterator<IMovie> sortedMoviesIterator = sortedMovies.iterator();
         try{
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movie2, sortedMoviesIterator.next());
+                assertEquals(movie2, sortedMoviesIterator.next(), "First movie should be movie2 because seen = false");
             }
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movie1, sortedMoviesIterator.next());
+                assertEquals(movie1, sortedMoviesIterator.next(), "Second movie should be movie1 because seen = false");
             }
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movie3, sortedMoviesIterator.next());
+                assertEquals(movie3, sortedMoviesIterator.next(), "Third movie should be movie3 because seen = true");
             }
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movie4, sortedMoviesIterator.next());
+                assertEquals(movie4, sortedMoviesIterator.next(), "Fourth movie should be movie4 because seen = true");
             } 
         }catch(Exception e){
-            fail();
+            fail("Something went wrong when reading the movies");
         }
     }
 }

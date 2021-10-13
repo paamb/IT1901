@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import core.moviecomparators.MovieSeenComparator;
+import core.moviecomparators.MovieTitleComparator;
+
 public class MovieList implements Iterable<IMovie>{
 
     private Collection<IMovie> movieList;

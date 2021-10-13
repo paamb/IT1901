@@ -1,8 +1,10 @@
-package core;
+package core.moviecomparators;
 
 import java.util.Comparator;
 
-class MovieTitleComparator implements Comparator<IMovie>{
+import core.IMovie;
+
+public class MovieTitleComparator implements Comparator<IMovie>{
 
     @Override
     public int compare(IMovie o1, IMovie o2) {

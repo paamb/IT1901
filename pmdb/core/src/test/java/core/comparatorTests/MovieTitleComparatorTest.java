@@ -37,20 +37,24 @@ public class MovieTitleComparatorTest {
         Collection<IMovie> sortedMovies = movieList.getSortedMoviesByTitle(movies);
         Iterator<IMovie> sortedMoviesIterator = sortedMovies.iterator();
         try{
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movie1, sortedMoviesIterator.next());
+                assertEquals(movie1, sortedMoviesIterator.next(), "First movie should be movie1 because title = aaa");
             }
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movie2, sortedMoviesIterator.next());
+                assertEquals(movie2, sortedMoviesIterator.next(), "Second movie should be movie2 because title = bbb");
             }
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movie3, sortedMoviesIterator.next());
+                assertEquals(movie3, sortedMoviesIterator.next(), "Third movie should be movie3 because title = ccc");
             }
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movie4, sortedMoviesIterator.next());
+                assertEquals(movie4, sortedMoviesIterator.next(), "Fourth movie should be movie4 because title = ddd");
             } 
         }catch(Exception e){
-            fail();
+            fail("Something went reading the movies");
         }
     }
 }

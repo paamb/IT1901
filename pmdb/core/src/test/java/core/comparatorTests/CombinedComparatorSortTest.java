@@ -17,8 +17,9 @@ import org.junit.jupiter.api.Test;
 import core.IMovie;
 import core.Movie;
 import core.MovieList;
+
 /**
-* Important note is that the SeenComparator should trumf the TitleComparator in the running app
+* Important note is that the SeenComparator should trumf the TitleComparator in the running app. The test FirstSortOnTitleThenSeen() is testing how it works in the app.
 */
 public class CombinedComparatorSortTest {
 
@@ -35,6 +36,9 @@ public class CombinedComparatorSortTest {
         IMovie movie6 = new Movie("fff", "Action", LocalTime.of(2,3,4), true, Arrays.asList());
         movies = new ArrayList<>(Arrays.asList(movie1,movie2,movie5,movie6,movie3,movie4));
     }
+    /**
+     * First sorted on Seen then on Title. Every movie with lexicograpically lower movieTitle will come first.
+     */
     @Test
     public void testFirstSortOnSeenThenTitle(){
         Collection<IMovie> sortedMoviesOnSeen = movieList.getSortedMoviesOnSeen(movies);
@@ -43,69 +47,72 @@ public class CombinedComparatorSortTest {
 
 
         try{
-            // First is movie2 because its false and aaa
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movies.get(1), sortedMoviesIterator.next());
+                assertEquals(movies.get(1), sortedMoviesIterator.next(), "First movie should be movie2 because its title = aaa and seen = false");
             }
-            // Second is movie1 because its true and aaa
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movies.get(0), sortedMoviesIterator.next());
+                assertEquals(movies.get(0), sortedMoviesIterator.next(), "Second movie should be movie1 because its title = aaa and seen = true");
             }
-            // Third is movie3 because its ccc
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movies.get(4), sortedMoviesIterator.next());
+                assertEquals(movies.get(4), sortedMoviesIterator.next(), "Third movie should be movie3 because its title = ccc and seen = true");
             }
-            // Fourth is movie4 because its ddd
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movies.get(5), sortedMoviesIterator.next());
+                assertEquals(movies.get(5), sortedMoviesIterator.next(), "Fourth movie should be movie4 because its title = ddd and seen = false");
             }
-            // Fifth is movie5 because its eee
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movies.get(2), sortedMoviesIterator.next());
+                assertEquals(movies.get(2), sortedMoviesIterator.next(), "Fifth movie should be movie5 because its title = eee and seen = false");
             }
-            // Sixth is movie6 because its fff
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movies.get(3), sortedMoviesIterator.next());
+                assertEquals(movies.get(3), sortedMoviesIterator.next(), "Sixth movie should be movie6 because its title = fff and seen = true");
             }
         }catch(Exception e){
             fail();
         }
     }
+
+    /**
+     * First sorted on Title, then on Seen. Every unseen movie will come before a seen movie
+     */
     @Test
     public void testFirstSortOnTitleThenSeen(){
         Collection<IMovie> sortedMoviesOnTitle = movieList.getSortedMoviesByTitle(movies);
         Collection<IMovie> sortedMovies = movieList.getSortedMoviesOnSeen(sortedMoviesOnTitle);
         
         Iterator<IMovie> sortedMoviesIterator = sortedMovies.iterator();
-
-
+        
         try{
-            // First is movie2 because its false and aaa
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movies.get(1), sortedMoviesIterator.next());
+                assertEquals(movies.get(1), sortedMoviesIterator.next(), "First movie should be movie2 because seen = false and title = aaa");
             }
-            // Second is movie4 because its false and ddd
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movies.get(5), sortedMoviesIterator.next());
+                assertEquals(movies.get(5), sortedMoviesIterator.next(), "Second movie should be movie4 because seen = false and title = ddd");
             }
-            // Third is movie5 because its false and eee 
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movies.get(2), sortedMoviesIterator.next());
+                assertEquals(movies.get(2), sortedMoviesIterator.next(), "Third movie should be movie5 because seen = false and title = eee");
             }
-            // Fourth is movie1 because its true and aaa
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movies.get(0), sortedMoviesIterator.next());
+                assertEquals(movies.get(0), sortedMoviesIterator.next(), "Fourth movie should be movie1 because seen = true and title = aaa");
             }
-            // Fifth is movie3 because its true and ccc
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movies.get(4), sortedMoviesIterator.next());
+                assertEquals(movies.get(4), sortedMoviesIterator.next(), "Fifth movie should be movie3 because seen = true and title = ccc");
             }
-            // Sixth is movie6 because its true and fff
+
             if (sortedMoviesIterator.hasNext()){
-                assertEquals(movies.get(3), sortedMoviesIterator.next());
+                assertEquals(movies.get(3), sortedMoviesIterator.next(), "Sixth movie should be movie2 because seen = true and title = fff");
             }
         }catch(Exception e){
-            fail();
+            fail("Something went wrong when reading the movies");
         }
     }
 }
