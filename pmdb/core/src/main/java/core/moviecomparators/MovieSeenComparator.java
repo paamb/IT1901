@@ -1,6 +1,8 @@
-package core;
+package core.moviecomparators;
 
 import java.util.Comparator;
+
+import core.IMovie;
 
 public class MovieSeenComparator implements Comparator<IMovie>{
 
