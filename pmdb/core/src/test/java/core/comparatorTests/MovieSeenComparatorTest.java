@@ -1,7 +1,8 @@
 package core.comparatorTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -31,25 +32,19 @@ public class MovieSeenComparatorTest {
 
         Collection<IMovie> sortedMovies = movieList.getSortedMoviesOnSeen(movies);
         Iterator<IMovie> sortedMoviesIterator = sortedMovies.iterator();
-        try{
+        assertTrue(sortedMoviesIterator.hasNext(), "The movieIterator should have more elements");
+        assertEquals(movie2, sortedMoviesIterator.next(), "First movie should be movie2 because seen = false");
 
-            if (sortedMoviesIterator.hasNext()){
-                assertEquals(movie2, sortedMoviesIterator.next(), "First movie should be movie2 because seen = false");
-            }
+        assertTrue(sortedMoviesIterator.hasNext(), "The movieIterator should have more elements");
+        assertEquals(movie1, sortedMoviesIterator.next(), "Second movie should be movie1 because seen = false");
 
-            if (sortedMoviesIterator.hasNext()){
-                assertEquals(movie1, sortedMoviesIterator.next(), "Second movie should be movie1 because seen = false");
-            }
+        assertTrue(sortedMoviesIterator.hasNext(), "The movieIterator should have more elements");
+        assertEquals(movie3, sortedMoviesIterator.next(), "Third movie should be movie3 because seen = true");
 
-            if (sortedMoviesIterator.hasNext()){
-                assertEquals(movie3, sortedMoviesIterator.next(), "Third movie should be movie3 because seen = true");
-            }
+        assertTrue(sortedMoviesIterator.hasNext(), "The movieIterator should have more elements");
+        assertEquals(movie4, sortedMoviesIterator.next(), "Fourth movie should be movie4 because seen = true");
 
-            if (sortedMoviesIterator.hasNext()){
-                assertEquals(movie4, sortedMoviesIterator.next(), "Fourth movie should be movie4 because seen = true");
-            } 
-        }catch(Exception e){
-            fail("Something went wrong when reading the movies");
-        }
+        assertFalse(sortedMoviesIterator.hasNext(), "The movieIterator should not have more elements");
+
     }
 }
