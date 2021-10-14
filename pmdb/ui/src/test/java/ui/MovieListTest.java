@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -109,93 +110,93 @@ public class MovieListTest extends ApplicationTest{
         storage.saveMovies(movieList);
     }
 
-    // @Test
-    // public void test_initialize(){
-    //     assertNotNull(movieListController);
-    // }
+    @Test
+    public void test_initialize(){
+        assertNotNull(movieListController);
+    }
 
-    // @Test
-    // public void testOpenEditMovie(){
-    //     clickOn("#openEditMovie");
-    //     assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
-    //     clickOn("#openEditMovie");
-    //     assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
-    // }
+    @Test
+    public void testOpenEditMovie(){
+        clickOn("#openEditMovie");
+        assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
+        clickOn("#openEditMovie");
+        assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
+    }
     
-    // @Test
-    // public void testCloseEditMovie(){
-    //     clickOn("#openEditMovie");
-    //     assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
-    //     clickOn("#cancelButton");
-    //     assertFalse(movieListController.editMovieWindow.isVisible(), "EditMovie-window should not be visible.");
-    // }
+    @Test
+    public void testCloseEditMovie(){
+        clickOn("#openEditMovie");
+        assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
+        clickOn("#cancelButton");
+        assertFalse(movieListController.editMovieWindow.isVisible(), "EditMovie-window should not be visible.");
+    }
     
-    // @Test
-    // public void testAddMovie_valid(){
-    //     clickOn("#openEditMovie");
-    //     enterMovieValues(title, description, hours, minutes, watched);
-    //     clickOn("#submitMovie");
+    @Test
+    public void testAddMovie_valid(){
+        clickOn("#openEditMovie");
+        enterMovieValues(title, description, hours, minutes, watched);
+        clickOn("#submitMovie");
 
-    //     assertEquals(2, movieListController.getMovieList().getMovies().size());
-    //     assertEquals(false, movieListController.editMovieWindow.isVisible());
+        assertEquals(2, movieListController.getMovieList().getMovies().size());
+        assertEquals(false, movieListController.editMovieWindow.isVisible());
 
-    //     IMovie movie = movieListController.getMovieList().getMovie(title);
+        IMovie movie = movieListController.getMovieList().getMovie(title);
         
-    //     assertEquals(title, movie.getTitle());
-    //     assertEquals(description, movie.getDescription());
-    //     assertEquals(hours, String.valueOf(movie.getDuration().getHour()));
-    //     assertEquals(minutes, String.valueOf(movie.getDuration().getMinute()));
-    //     assertEquals(watched, movie.isWatched());
-    // }
+        assertEquals(title, movie.getTitle());
+        assertEquals(description, movie.getDescription());
+        assertEquals(hours, String.valueOf(movie.getDuration().getHour()));
+        assertEquals(minutes, String.valueOf(movie.getDuration().getMinute()));
+        assertEquals(watched, movie.isWatched());
+    }
 
-    // @Test 
-    // public void testAddMovie_titleInUse(){
-    //     String title = "test movie";
-    //     clickOn("#openEditMovie");
-    //     enterMovieValues(title, description, hours, minutes, watched);
-    //     clickOn("#submitMovie");
-    //     assertNotEquals("", editMovieController.errorField.getText());
-    //     assertEquals(1, movieListSize());
-    //     assertEquals(true, movieListController.editMovieWindow.isVisible());
-    // }
+    @Test 
+    public void testAddMovie_titleInUse(){
+        String title = "test movie";
+        clickOn("#openEditMovie");
+        enterMovieValues(title, description, hours, minutes, watched);
+        clickOn("#submitMovie");
+        assertNotEquals("", editMovieController.errorField.getText());
+        assertEquals(1, movieListSize());
+        assertEquals(true, movieListController.editMovieWindow.isVisible());
+    }
 
-    // @Test
-    // public void testAddMovie_invalidDuration(){
+    @Test
+    public void testAddMovie_invalidDuration(){
 
-    //     String nonInteger = "1o";
-    //     clickOn("#openEditMovie");
-    //     enterMovieValues(title, description, nonInteger, minutes, watched);
-    //     clickOn("#submitMovie");
-    //     assertEquals(1, movieListSize());
-    //     assertTrue(movieListController.editMovieWindow.isVisible());
-    //     assertNotEquals("", editMovieController.errorField.getText());
+        String nonInteger = "1o";
+        clickOn("#openEditMovie");
+        enterMovieValues(title, description, nonInteger, minutes, watched);
+        clickOn("#submitMovie");
+        assertEquals(1, movieListSize());
+        assertTrue(movieListController.editMovieWindow.isVisible());
+        assertNotEquals("", editMovieController.errorField.getText());
 
-    //     String hoursOutOfRange = "30";
-    //     clickOn("#hoursField");
-    //     deleteInput(editMovieController.hoursField);
-    //     clickOn("#hoursField").write(hoursOutOfRange);
-    //     clickOn("#submitMovie");
-    //     assertEquals(1, movieListSize());
+        String hoursOutOfRange = "30";
+        clickOn("#hoursField");
+        deleteInput(editMovieController.hoursField);
+        clickOn("#hoursField").write(hoursOutOfRange);
+        clickOn("#submitMovie");
+        assertEquals(1, movieListSize());
         
-    //     String minutesOutOfRange = "-30";
-    //     clickOn("#hoursField");
-    //     deleteInput(editMovieController.hoursField);
-    //     clickOn("#hoursField").write(hours);
-    //     clickOn("#minutesField");
-    //     deleteInput(editMovieController.minutesField);
-    //     clickOn("#minutesField").write(minutesOutOfRange);
-    //     clickOn("#submitMovie");
-    //     assertEquals(1, movieListSize());
-    // }
+        String minutesOutOfRange = "-30";
+        clickOn("#hoursField");
+        deleteInput(editMovieController.hoursField);
+        clickOn("#hoursField").write(hours);
+        clickOn("#minutesField");
+        deleteInput(editMovieController.minutesField);
+        clickOn("#minutesField").write(minutesOutOfRange);
+        clickOn("#submitMovie");
+        assertEquals(1, movieListSize());
+    }
 
-    // @Test
-    // public void testDeleteMovie(){
-    //     clickOn("#openEditMovie");
-    //     enterMovieValues(title, description, hours, minutes, watched);
-    //     clickOn("#submitMovie");
-    //     clickOn(movieListController.movieDisplay.lookup("#1").lookup("#deleteMovie"));
-    //     assertEquals(1, movieListSize());
-    // }
+    @Test
+    public void testDeleteMovie(){
+        clickOn("#openEditMovie");
+        enterMovieValues(title, description, hours, minutes, watched);
+        clickOn("#submitMovie");
+        clickOn(movieListController.movieDisplay.lookup("#1").lookup("#deleteMovie"));
+        assertEquals(1, movieListSize());
+    }
 
     @Test
     public void testEditMovie_valid(){
@@ -220,20 +221,37 @@ public class MovieListTest extends ApplicationTest{
         assertEquals(2, movieListSize());
     }
     
-    // @Test
-    // public void testEditMovie_titleInUse(){
-    //     clickOn("#openEditMovie");
-    //     enterMovieValues(title, description, hours, minutes, watched);
-    //     clickOn("#submitMovie");
+    @Test
+    public void testEditMovie_titleInUse(){
+        clickOn("#openEditMovie");
+        enterMovieValues(title, description, hours, minutes, watched);
+        clickOn("#submitMovie");
         
-    //     String invalidTitle = "test movie";
-    //     clickOn(movieListController.movieDisplay.lookup("#1").lookup("#editMovie"));
-    //     clickOn("#titleField");
-    //     deleteInput(editMovieController.titleField);
-    //     clickOn("#titleField").write(invalidTitle);
-    //     clickOn("#submitMovie");
-    //     assertTrue(movieListController.editMovieWindow.isVisible());
-    //     assertEquals(title, movieListController.getMovieList().getMovie(title).getTitle());
-    //     assertEquals(2, movieListSize());
-    // }
+        String invalidTitle = "test movie";
+        clickOn(movieListController.movieDisplay.lookup("#1").lookup("#editMovie"));
+        clickOn("#titleField");
+        deleteInput(editMovieController.titleField);
+        clickOn("#titleField").write(invalidTitle);
+        clickOn("#submitMovie");
+        assertTrue(movieListController.editMovieWindow.isVisible());
+        assertEquals(title, movieListController.getMovieList().getMovie(title).getTitle());
+        assertEquals(2, movieListSize());
+    }
+
+    @Test
+    public void testSortMovies(){
+        String title1 = "test movie";
+        String title2 = "aaa";
+
+        clickOn("#openEditMovie");
+        enterMovieValues(title2, description, hours, minutes, watched);
+        clickOn("#submitMovie");
+        assertEquals(title1, ((Label) movieListController.movieDisplay.lookup("#0").lookup("#movieTitle")).getText());
+
+        clickOn("#sortOnTitleCheckbox");
+        assertEquals(title2, ((Label) movieListController.movieDisplay.lookup("#0").lookup("#movieTitle")).getText());
+        
+        clickOn("#sortOnSeenCheckbox");
+        assertEquals(title2, ((Label) movieListController.movieDisplay.lookup("#0").lookup("#movieTitle")).getText());
+    }
 }
