@@ -113,10 +113,10 @@ public class MovieModuleTest {
   @Test
   public void testSerializersDeserializers() {
     MovieList movieList = new MovieList();
-    ArrayList<IReview> reviews = new ArrayList<IReview>(
-        Arrays.asList(new Review("Teit", 1, LocalDate.of(2000, 1, 1)), new Review("Bra", 8, LocalDate.of(2001, 2, 2))));
-    Movie movie1 = new Movie("Up", "Komedie", LocalTime.of(1, 2, 3), true, Arrays.asList(reviews.get(0)));
-    Movie movie2 = new Movie("Batman", "Action", LocalTime.of(2, 3, 4), false, Arrays.asList(reviews.get(1)));
+    ArrayList<IReview> reviews = new ArrayList<IReview>(Arrays.asList(new Review("Dust", 1, LocalDate.of(2000, 1, 1)),
+        new Review("Utrolig bra", 8, LocalDate.of(2001, 2, 2))));
+    Movie movie1 = new Movie("Spiderman", "Action", LocalTime.of(1, 2, 3), true, Arrays.asList(reviews.get(0)));
+    Movie movie2 = new Movie("Shutter Island", "Thriller", LocalTime.of(2, 3, 4), false, Arrays.asList(reviews.get(1)));
     movieList.addMovie(movie1);
     movieList.addMovie(movie2);
     try {
@@ -128,16 +128,16 @@ public class MovieModuleTest {
       IMovie movie4 = movies.get(1);
       IReview review1 = movie1.getReviews().iterator().next();
       IReview review2 = movie2.getReviews().iterator().next();
-      assertEquals(movie3.getTitle(), "Up");
-      assertEquals(movie4.getTitle(), "Batman");
+      assertEquals(movie3.getTitle(), "Spiderman");
+      assertEquals(movie4.getTitle(), "Shutter Island");
       assertEquals(movie3.getDuration(), LocalTime.of(1, 2));
       assertEquals(movie4.getDuration(), LocalTime.of(2, 3));
       assertTrue(movie3.isWatched());
       assertFalse(movie4.isWatched());
-      assertEquals("Teit", review1.getComment());
+      assertEquals("Dust", review1.getComment());
       assertEquals(1, review1.getRating());
       assertEquals(LocalDate.of(2000, 1, 1).toString(), review1.getWhenWatched().toString());
-      assertEquals("Bra", review2.getComment());
+      assertEquals("Utrolig bra", review2.getComment());
       assertEquals(8, review2.getRating());
       assertEquals(LocalDate.of(2001, 2, 2).toString(), review2.getWhenWatched().toString());
     } catch (JsonProcessingException e) {
