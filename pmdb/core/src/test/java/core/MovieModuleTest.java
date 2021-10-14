@@ -77,7 +77,7 @@ public class MovieModuleTest {
     try {
       assertEquals(movieListString.replaceAll("\\s+", ""), mapper.writeValueAsString(movieList));
     } catch (Exception e) {
-      fail();
+      fail(e.getMessage());
     }
   }
 
@@ -105,7 +105,7 @@ public class MovieModuleTest {
       assertEquals(LocalDate.of(2001, 2, 2).toString(), review2.getWhenWatched().toString());
 
     } catch (Exception e) {
-      fail();
+      fail(e.getMessage());
     }
 
   }
