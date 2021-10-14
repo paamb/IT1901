@@ -9,10 +9,6 @@
       "nano" : 0
     },
     "watched" : true,
-    "reviews" : [ {
-      "comment" : "This is a movie",
-      "rating" : 1,
-      "whenWatched" : "2021-10-13"
-    } ]
+    "reviews" : [ ]
   } ]
 }

@@ -15,11 +15,4 @@ public class AppController {
         movieListController.injectReviewListController(reviewListController);
         reviewListController.injectMovieListController(movieListController);
     }
-
-    public MovieListController getMovieListController(){
-        return movieListController;
-    }
-    public ReviewListController getReviewListController(){
-        return reviewListController;
-    }
 }

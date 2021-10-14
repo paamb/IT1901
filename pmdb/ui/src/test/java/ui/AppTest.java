@@ -29,8 +29,8 @@ public class AppTest extends ApplicationTest {
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("App.fxml"));
         final Parent root = loader.load();
         AppController appController = loader.getController();
-        movieListController = appController.getMovieListController();
-        reviewListController = appController.getReviewListController();
+        movieListController = appController.movieListController;
+        reviewListController = appController.reviewListController;
         stage.setScene(new Scene(root));
         stage.show();
     }
