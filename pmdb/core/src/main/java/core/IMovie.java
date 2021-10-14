@@ -87,34 +87,6 @@ public interface IMovie {
     public LocalTime getDuration();
 
     /**
-     * Adds a label to this movie
-     * 
-     * @param label
-     * @throws IllegalStateException if label already is added
-     */
-    public void addLabel(Label label) throws IllegalStateException;
-
-    /**
-     * Removes a label from this movie, if the label is added
-     * 
-     * @param label
-     */
-    public void removeLabel(Label label);
-
-    /**
-     * Sets a Collection of this movies labels, overrides existing labels
-     * 
-     * @param labels
-     */
-    public void setLabels(Collection<Label> labels);
-
-    /**
-     * 
-     * @return a Collection of this movies labels
-     */
-    public Collection<Label> getLabels();
-
-    /**
      * Sets a Collection of reviews
      * 
      * @param reviews
