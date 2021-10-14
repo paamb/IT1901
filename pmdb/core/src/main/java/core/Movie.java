@@ -10,19 +10,13 @@ public class Movie implements IMovie{
     private String description;
     private LocalTime duration;
     private boolean watched;
-    private Collection<Label> labels;
     private Collection<IReview> reviews;
 
     public Movie(String title, String description, LocalTime duration, boolean watched, Collection<IReview> reviews){
-        this(title, description, duration, watched, new ArrayList<>(), reviews);
-    }
-
-    public Movie(String title, String description, LocalTime duration, boolean watched, Collection<Label> labels, Collection<IReview> reviews){
         setTitle(title);
         setDescription(description);
         setDuration(duration);
         setWatched(watched);
-        setLabels(labels);
         setReviews(reviews);
     }
 
@@ -67,36 +61,6 @@ public class Movie implements IMovie{
         return duration;
     }
 
-    public void setLabels(Collection<Label> labels){
-        for (Label label : labels){
-            int count = 0;
-            for (Label label2 : labels){
-                if (label == label2){
-                    count++;
-                }
-                if (count > 1){
-                    throw new IllegalArgumentException("Duplicate labels not allowed");
-                }
-            }
-        }
-        this.labels = new ArrayList<>(labels);
-    }
-
-    public void addLabel(Label label){
-        if(labels.contains(label)) {
-            throw new IllegalStateException("Duplicate labels not allowed");
-        }
-        labels.add(label);
-    }
-
-    public void removeLabel(Label label){
-        labels.remove(label);
-    }
-
-    public Collection<Label> getLabels(){
-        return new ArrayList<>(labels);
-    }
-
     public void setReviews(Collection<IReview> reviews) {
         for(IReview review : reviews){
             int count = 0;
@@ -137,14 +101,14 @@ public class Movie implements IMovie{
                     "Duration: " + getDuration().toString() + "\n"+
                     "Watched: " + (isWatched() ? "Yes" : "No");
         
-        if (labels.size() == 0){
+        if (reviews.size() == 0){
             return s;
         }
 
         else{
-            s += "\nLabels: ";
-            for (Label label : labels) {
-                s += label.getLabel() + ", ";
+            s += "\nRating from reviews: ";
+            for (IReview review : reviews) {
+                s += review.getRating() + ", ";
             }
         }
         
