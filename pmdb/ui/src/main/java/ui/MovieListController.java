@@ -1,10 +1,14 @@
 package ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.io.File;
 
 import core.IMovie;
 import core.MovieList;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -36,15 +40,31 @@ public class MovieListController {
     @FXML
     EditMovieController editMovieController;
 
+    @FXML
+    String userMovieListPath;
+
     private ReviewListController reviewListController;
 
     @FXML
     void initialize() throws IOException {
-        storage = new MovieStorage();
-        movieList = storage.loadMovies();
+        loadMovieListFile(new File(userMovieListPath));
         editMovieController.injectMovieListController(this);
-        hideEditMovie();
-        displayMovieList();
+        Platform.runLater(() -> {
+                hideEditMovie();
+                displayMovieList();
+            }
+        );
+    }
+
+    public void loadMovieListFile(File file) throws IOException {
+        storage = new MovieStorage();
+        storage.setFile(file);
+        movieList = storage.loadMovies();
+        Platform.runLater(() -> {
+                hideEditMovie();
+                displayMovieList();
+            }
+        );
     }
 
     protected void injectReviewListController(ReviewListController reviewListController) {
@@ -127,6 +147,7 @@ public class MovieListController {
                 Pane moviePane = fxmlLoader.load();
                 moviePane.setLayoutX(offsetX * (counter % 2));
                 moviePane.setLayoutY(offsetY * ((int) counter / 2));
+                moviePane.setId(String.valueOf(counter));
                 
                 MovieDisplayTemplateController movieDisplayTemplateController = fxmlLoader.getController();
                 movieDisplayTemplateController.injectMovieListController(this);

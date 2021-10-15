@@ -28,6 +28,19 @@ public class MovieStorage {
     }
 
     /**
+     * Sets the storagefile, for loading and saving
+     * 
+     * @param fileName
+     */
+    public void setFile(File file){
+        if(file == null || file.length() == 0){
+            throw new IllegalArgumentException("FileName cannot be null or empty.");
+        }
+        this.file = file;
+        this.fileName = file.getPath(); 
+    }
+
+    /**
       * 
      * 
      * @param movieList

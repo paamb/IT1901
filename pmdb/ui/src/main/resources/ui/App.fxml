@@ -5,24 +5,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="app" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController">
-   <children>
-      <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Vurderte filmer">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
-                <fx:include fx:id="reviewList" source="ReviewList.fxml" />
-              </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Alle filmer">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
-                <fx:include fx:id="movieList" source="MovieList.fxml" />
-              </AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
-   </children>
+  <children>
+    <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+      <tabs>
+        <Tab text="Vurderte filmer" fx:id="reviewListTab">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
+              <fx:include fx:id="reviewList" source="ReviewList.fxml" />
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Alle filmer" fx:id="movieListTab">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
+              <fx:include fx:id="movieList" source="MovieList.fxml" />
+            </AnchorPane>
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+  </children>
 </AnchorPane>

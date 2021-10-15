@@ -2,6 +2,7 @@ package core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,7 +19,9 @@ public class MovieTest {
     private String initTitle = "initTitle";
     private String initDescription = "initDescription";
     private LocalTime initDuration = LocalTime.of(02, 00);
-    private Collection<IReview> initReview = new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
+    private Collection<IReview> initReview = new ArrayList<IReview>(Arrays.asList());
+    private Review review1 = new Review("Bra film", 8, LocalDate.of(2000, 1, 1));
+    private Review review2 = new Review("Teit film", 1, LocalDate.of(2001, 2, 2));
 
     @Test
     public void testConstructor() {
@@ -31,11 +34,13 @@ public class MovieTest {
         assertEquals(title, movie.getTitle(), "Movie title is not correct.");
         assertEquals(description, movie.getDescription(), "Description is not correct.");
         assertEquals(duration, movie.getDuration(), "Duration is not correct.");
+        assertEquals(1, reviews.size(), "This movie should have 1 review");
     }
 
     @BeforeEach
     public void setUp() {
         movie = new Movie(initTitle, initDescription, initDuration,false, initReview);
+
     }
 
     @Test
@@ -75,5 +80,30 @@ public class MovieTest {
         assertEquals(true, movie.isWatched(), "Failed to set watched true");
         movie.setWatched(true);
         assertEquals(true, movie.isWatched(), "Failed on setWatched() when movie is watched");
+    }
+
+    @Test
+    public void testAddReview(){
+        movie.addReview(review1);
+        movie.addReview(review2);
+
+        assertEquals(2, movie.getReviews().size(), "This movie should have 2 reviews");
+        assertTrue(movie.getReviews().contains(review1), "Movie should contain review1");
+        assertTrue(movie.getReviews().contains(review2), "Movie should contain reivew2");
+        assertThrows(IllegalStateException.class, () -> movie.addReview(review1), "Failed to throw exception on adding duplicate review");
+        assertThrows(IllegalArgumentException.class, () -> movie.addReview(null), "Failed to throw exception on adding null");
+    }
+
+    @Test
+    public void testSetReviews(){
+        movie.addReview(review1);
+        movie.addReview(review2);
+        movie.setReviews(Arrays.asList(review1, review2));
+        
+        assertEquals(2, movie.getReviews().size(), "This movie should have 2 reviews");
+        assertTrue(movie.getReviews().contains(review1), "Movie should contain review1");
+        assertTrue(movie.getReviews().contains(review2), "Movie should contain reivew2");
+
+        assertThrows(IllegalArgumentException.class, () -> movie.setReviews(Arrays.asList(review1, review1)), "Cannot add a list with duplicate reviews");
     }
 }

@@ -1,0 +1,14 @@
+{
+  "movies" : [ {
+    "title" : "test movie",
+    "description" : "This is a movie",
+    "duration" : {
+      "hour" : 2,
+      "minute" : 30,
+      "second" : 0,
+      "nano" : 0
+    },
+    "watched" : true,
+    "reviews" : [ ]
+  } ]
+}
