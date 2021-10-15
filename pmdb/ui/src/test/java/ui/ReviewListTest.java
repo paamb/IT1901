@@ -55,13 +55,7 @@ public class ReviewListTest extends ApplicationTest{
     }
     
     private void deleteInput(TextArea text){
-        System.out.println(editReviewController.commentField.getText());
-        String comment = text.getText();
-        for(int i = 0; i < comment.length(); i++){
-            Platform.runLater(() -> {
-                (new Robot()).keyPress(KeyCode.BACK_SPACE);
-            });
-        }
+        text.setText("");
     }
 
     private int reviewListSize() {
