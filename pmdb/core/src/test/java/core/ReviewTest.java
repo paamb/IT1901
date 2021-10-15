@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 public class ReviewTest {
 
   private Review review;
-
   private String comment;
   private int rating;
   private LocalDate localDate;
