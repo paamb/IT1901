@@ -24,7 +24,7 @@ public class EditMovieController {
     TextArea descriptionField;
 
     @FXML
-    Button submitMovie, cancelButton;
+    Button addTheMovie, cancelButton;
 
     @FXML
     Text errorField;

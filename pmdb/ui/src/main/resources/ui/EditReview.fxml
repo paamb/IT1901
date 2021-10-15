@@ -26,6 +26,6 @@
       <ComboBox fx:id="ratingComboBox" layoutX="178.0" layoutY="275.0" prefHeight="27.0" prefWidth="76.0" />
       <DatePicker fx:id="dateField" layoutX="14.0" layoutY="325.0" />
       <Button fx:id="cancelButton" layoutX="216.0" layoutY="361.0" mnemonicParsing="false" onAction="#cancelEditReview" text="Avbryt" />
-      <Button fx:id="submitReview" layoutX="274.0" layoutY="361.0" mnemonicParsing="false" onAction="#submit" text="Lagre" />
+      <Button fx:id="addReviewButton" layoutX="274.0" layoutY="361.0" mnemonicParsing="false" onAction="#submit" text="Lagre" />
    </children>
 </AnchorPane>
