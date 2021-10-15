@@ -1,8 +1,8 @@
 package core;
 
 import java.time.LocalTime;
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Movie implements IMovie {
 
@@ -12,6 +12,11 @@ public class Movie implements IMovie {
   private boolean watched;
   private Collection<IReview> reviews;
 
+  /**
+   * Movie constructor.
+   * 
+   * 
+   */
   public Movie(String title, String description, LocalTime duration, boolean watched,
       Collection<IReview> reviews) {
     setTitle(title);
@@ -29,6 +34,11 @@ public class Movie implements IMovie {
     return watched;
   }
 
+  /**
+   * Sets the description of the movie.
+   * 
+   * @param description The description of the movie
+   */
   public void setDescription(String description) {
     if (!IMovie.isValidDescription(description)) {
       throw new IllegalArgumentException("Illegal movie description");
@@ -40,6 +50,11 @@ public class Movie implements IMovie {
     return description;
   }
 
+  /**
+   * Sets the title of the movie.
+   * 
+   * @param title The title of the movie
+   */
   public void setTitle(String title) {
     if (!IMovie.isValidTitle(title)) {
       throw new IllegalArgumentException("Illegal movie title");
@@ -51,6 +66,11 @@ public class Movie implements IMovie {
     return title;
   }
 
+  /**
+   * Sets the duration of the movie.
+   * 
+   * @param duration The duration of the movie
+   */
   public void setDuration(LocalTime duration) {
     if (!IMovie.isValidDuration(duration)) {
       throw new IllegalArgumentException("Illegal movie duration");
@@ -62,6 +82,11 @@ public class Movie implements IMovie {
     return duration;
   }
 
+  /**
+   * Sets the reviews for the movie.
+   * 
+   * @param reviews Collection of reviews
+   */
   public void setReviews(Collection<IReview> reviews) {
     for (IReview review : reviews) {
       int count = 0;
@@ -77,6 +102,11 @@ public class Movie implements IMovie {
     this.reviews = new ArrayList<>(reviews);
   }
 
+  /**
+   * Adds a review to the movie.
+   * 
+   * @param review The review to be added
+   */
   public void addReview(IReview review) {
     if (review == null) {
       throw new IllegalArgumentException("Review cannot be null");
@@ -103,9 +133,7 @@ public class Movie implements IMovie {
 
     if (reviews.size() == 0) {
       return s;
-    }
-
-    else {
+    } else {
       s += "\nRating from reviews: ";
       for (IReview review : reviews) {
         s += review.getRating() + ", ";
