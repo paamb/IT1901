@@ -80,7 +80,6 @@ public class ReviewListController {
                     Pane reviewPane = fxmlLoader.load();
                     reviewPane.setLayoutX(offsetX * (counter % 2));
                     reviewPane.setLayoutY(offsetY * ((int) counter / 2));
-                    reviewPane.setId(String.valueOf(counter));
 
                     ReviewDisplayTemplateController reviewDisplayTemplateController = fxmlLoader.getController();
                     reviewDisplayTemplateController.injectReviewListController(this);
