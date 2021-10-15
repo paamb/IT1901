@@ -2,7 +2,6 @@ package core;
 
 import core.moviecomparators.MovieSeenComparator;
 import core.moviecomparators.MovieTitleComparator;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
