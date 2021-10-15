@@ -14,24 +14,25 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import core.IMovie;
 import core.MovieList;
 
-public class MovieListDeserializer extends JsonDeserializer<MovieList>{
-    private MovieDeserializer movieDeserializer = new MovieDeserializer();
-    private MovieList movieList = new MovieList();
-    @Override
-    public MovieList deserialize(JsonParser p, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
-        TreeNode treeNode = p.getCodec().readTree(p);
-        if(treeNode instanceof ObjectNode objectNode){
-            JsonNode movieListNode = objectNode.get("movies");
-            boolean hasMovies = movieListNode instanceof ArrayNode;
-            if(hasMovies){
-                for(JsonNode movieNode : ((ArrayNode) movieListNode)){
-                    IMovie movie = movieDeserializer.deserialize(movieNode);
-                    movieList.addMovie(movie);
-                }
-            }
+public class MovieListDeserializer extends JsonDeserializer<MovieList> {
+  private MovieDeserializer movieDeserializer = new MovieDeserializer();
+  private MovieList movieList = new MovieList();
+
+  @Override
+  public MovieList deserialize(JsonParser p, DeserializationContext ctxt)
+      throws IOException, JsonProcessingException {
+    TreeNode treeNode = p.getCodec().readTree(p);
+    if (treeNode instanceof ObjectNode objectNode) {
+      JsonNode movieListNode = objectNode.get("movies");
+      boolean hasMovies = movieListNode instanceof ArrayNode;
+      if (hasMovies) {
+        for (JsonNode movieNode : ((ArrayNode) movieListNode)) {
+          IMovie movie = movieDeserializer.deserialize(movieNode);
+          movieList.addMovie(movie);
         }
-        return movieList;
+      }
     }
-    
+    return movieList;
+  }
+
 }
