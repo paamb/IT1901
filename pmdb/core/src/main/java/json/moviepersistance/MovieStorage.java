@@ -1,9 +1,7 @@
 package json.moviepersistance;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import core.MovieList;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;

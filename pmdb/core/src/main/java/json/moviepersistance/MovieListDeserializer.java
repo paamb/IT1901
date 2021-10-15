@@ -1,7 +1,5 @@
 package json.moviepersistance;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.TreeNode;
@@ -10,9 +8,9 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import core.IMovie;
 import core.MovieList;
+import java.io.IOException;
 
 public class MovieListDeserializer extends JsonDeserializer<MovieList> {
   private MovieDeserializer movieDeserializer = new MovieDeserializer();

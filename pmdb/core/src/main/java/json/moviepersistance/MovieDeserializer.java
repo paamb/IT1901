@@ -9,11 +9,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.BooleanNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-
 import core.IMovie;
 import core.IReview;
 import core.Movie;
-
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;

@@ -3,6 +3,10 @@ package core;
 import java.time.LocalTime;
 import java.util.Collection;
 
+/**
+ * Interface for movie.
+ * 
+ */
 public interface IMovie {
 
   /**

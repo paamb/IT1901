@@ -2,6 +2,10 @@ package core;
 
 import java.time.LocalDate;
 
+/**
+ * Reviewclass.
+ * 
+ */
 public class Review implements IReview {
 
   private String comment;

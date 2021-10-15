@@ -3,9 +3,7 @@ package json.moviepersistance;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-
 import core.IReview;
-
 import java.io.IOException;
 
 public class ReviewSerializer extends JsonSerializer<IReview> {

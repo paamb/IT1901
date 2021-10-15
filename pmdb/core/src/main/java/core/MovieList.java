@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-
 public class MovieList implements Iterable<IMovie> {
 
   private Collection<IMovie> movieList;
