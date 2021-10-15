@@ -18,6 +18,11 @@ public class MovieList implements Iterable<IMovie> {
     movieList = new ArrayList<>();
   }
 
+  /**
+   * Adds the provided movie.
+   * 
+   * @param movie the movie to add
+   */
   public void addMovie(IMovie movie) {
     if (getMovie(movie.getTitle()) == null) {
       movieList.add(movie);
@@ -39,20 +44,33 @@ public class MovieList implements Iterable<IMovie> {
   }
 
   /**
+   * Finds the movie with the provided title and returns it.
    * 
-   * @param title
+   * @param title The title of the movie to find
    * @return Movie with matching title, if there is no such movie, return null
    */
   public IMovie getMovie(String title) {
     return movieList.stream().filter(m -> m.getTitle().equals(title)).findFirst().orElse(null);
   }
 
+  /**
+   * Sorts movielist by title and returns it.
+   * 
+   * @param movies the movieList to sort
+   * @return returns a collection of movies sorted on title
+   */
   public Collection<IMovie> getSortedMoviesByTitle(Collection<IMovie> movies) {
     List<IMovie> sortedMovieList = new ArrayList<>(movies);
     Collections.sort(sortedMovieList, new MovieTitleComparator());
     return sortedMovieList;
   }
 
+  /**
+   * Sorts movielist by seen and returns it.
+   * 
+   * @param movies the movieList to sort
+   * @return returns a collection of movies sorted on seen
+   */
   public Collection<IMovie> getSortedMoviesOnSeen(Collection<IMovie> movies) {
     List<IMovie> sortedMovieList = new ArrayList<>(movies);
     Collections.sort(sortedMovieList, new MovieSeenComparator());
