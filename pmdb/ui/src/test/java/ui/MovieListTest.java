@@ -35,7 +35,7 @@ public class MovieListTest extends ApplicationTest{
 
     private EditMovieController editMovieController;
 
-    private final File testFile = new File("src\\test\\resources\\ui", "MovieList_test.json");
+    private final File testFile = new File("src/test/resources/ui/MovieList_test.json");
 
     private String title = "title";
     private String description = "description";
