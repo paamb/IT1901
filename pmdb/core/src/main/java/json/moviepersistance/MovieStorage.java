@@ -33,8 +33,8 @@ public class MovieStorage {
      * @param fileName
      */
     public void setFile(File file){
-        if(file == null || file.length() == 0){
-            throw new IllegalArgumentException("FileName cannot be null or empty.");
+        if(file == null){
+            throw new IllegalArgumentException("FileName cannot be null.");
         }
         this.file = file;
         this.fileName = file.getPath(); 
