@@ -1,10 +1,8 @@
 {
   "java.configuration.updateBuildConfiguration": "automatic",
-  "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
-  "java.format.settings.profile": "GoogleStyle",
+  "java.checkstyle.configuration": "/google_checks.xml",
   "[java]": {
     "editor.tabSize": 2,
     "editor.detectIndentation": false
-  },
-  "java.checkstyle.configuration": "/google_checks.xml"
+  }
 }
