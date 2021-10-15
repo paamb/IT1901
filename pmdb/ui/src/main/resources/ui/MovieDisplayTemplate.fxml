@@ -11,7 +11,7 @@
    <children>
       <AnchorPane layoutX="8.0" layoutY="8.0" prefHeight="305.0" prefWidth="260.0" style="-fx-background-color: #E8E8E8; -fx-border-color: #000000;">
          <children>
-            <Label fx:id="movieTitle" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="235.0" text="Tittel">
+            <Label fx:id="movieTitle" id="movieTitle" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="235.0" text="Tittel">
                <font>
                   <Font size="18.0" />
                </font>
@@ -26,9 +26,9 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button layoutX="199.0" layoutY="15.0" mnemonicParsing="false" onAction="#editMovie" text="Endre" />
+            <Button layoutX="199.0" layoutY="15.0" mnemonicParsing="false" onAction="#editMovie" text="Endre"  id="editMovie" />
             <TextArea fx:id="movieDescription" editable="false" layoutX="20.0" layoutY="107.0" prefHeight="176.0" prefWidth="224.0" wrapText="true" />
-            <Button fx:id="deleteMovie" layoutX="153.0" layoutY="15.0" mnemonicParsing="false" onAction="#deleteMovie" style="-fx-background-color: db5151;" text="Slett" textFill="WHITE" />
+            <Button fx:id="deleteMovie" id="deleteMovie" layoutX="153.0" layoutY="15.0" mnemonicParsing="false" onAction="#deleteMovie" style="-fx-background-color: db5151;" text="Slett" textFill="WHITE" />
          </children>
       </AnchorPane>
    </children>
