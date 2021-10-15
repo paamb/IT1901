@@ -37,7 +37,7 @@ public class ReviewListTest extends ApplicationTest{
 
     private EditReviewController editReviewController;
 
-    private final File testFile = new File("src\\test\\resources\\ui", "MovieList_test.json");
+    private final File testFile = new File("src/test/resources/ui/MovieList_test.json");
 
     private String comment = "comment";
     private LocalDate whenWatched = LocalDate.of(2021, 10, 10);
