@@ -109,7 +109,8 @@ public class ReviewTest {
         int month = LocalDate.now().getMonthValue();
         int year = LocalDate.now().getYear();
 
-        assertThrows(IllegalArgumentException.class, () -> review.setWhenWatched(LocalDate.of(year, month, dayAfterNow)),
+        assertThrows(IllegalArgumentException.class,
+                () -> review.setWhenWatched(LocalDate.of(year, month, dayAfterNow)),
                 "You can not set whenWatched in the future.");
         review.setWhenWatched(LocalDate.of(year, month, dayAfterNow - 1));
         assertEquals(LocalDate.now().toString(), review.getWhenWatched().toString(), "The dates do not match.");

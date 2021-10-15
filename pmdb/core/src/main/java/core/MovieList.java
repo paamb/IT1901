@@ -1,77 +1,75 @@
 package core;
 
+import core.moviecomparators.MovieSeenComparator;
+import core.moviecomparators.MovieTitleComparator;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import core.moviecomparators.MovieSeenComparator;
-import core.moviecomparators.MovieTitleComparator;
 
-public class MovieList implements Iterable<IMovie>{
+public class MovieList implements Iterable<IMovie> {
 
-    private Collection<IMovie> movieList;
-    
-    public MovieList() {
-        movieList = new ArrayList<>();
-    }
+  private Collection<IMovie> movieList;
 
-    public void addMovie(IMovie movie) {
-        if(getMovie(movie.getTitle()) == null){
-            movieList.add(movie);
-        } else {
-            throw new IllegalStateException("This movie-title is already in use.");
-        }
-    }
+  public MovieList() {
+    movieList = new ArrayList<>();
+  }
 
-    public void removeMovie(IMovie movie){
-        movieList.remove(movie);
+  public void addMovie(IMovie movie) {
+    if (getMovie(movie.getTitle()) == null) {
+      movieList.add(movie);
+    } else {
+      throw new IllegalStateException("This movie-title is already in use.");
     }
+  }
 
-    public Collection<IMovie> getMovies(){
-        return new ArrayList<>(movieList);
-    }
+  public void removeMovie(IMovie movie) {
+    movieList.remove(movie);
+  }
 
-    public void clearMovieList(){
-        movieList.clear();
-    }
-    
-    /**
-     * 
-     * @param title
-     * @return Movie with matching title, if there is no such movie, return null
-     */
-    public IMovie getMovie(String title){
-        return movieList.stream()
-            .filter(m -> m.getTitle().equals(title))
-            .findFirst()
-            .orElse(null);
-    }
+  public Collection<IMovie> getMovies() {
+    return new ArrayList<>(movieList);
+  }
 
-    public Collection<IMovie> getSortedMoviesByTitle(Collection<IMovie> movies){
-        List<IMovie> sortedMovieList = new ArrayList<>(movies);
-        Collections.sort(sortedMovieList, new MovieTitleComparator());
-        return sortedMovieList;
-    }
-    
-    public Collection<IMovie> getSortedMoviesOnSeen(Collection<IMovie> movies){
-        List<IMovie> sortedMovieList = new ArrayList<>(movies);
-        Collections.sort(sortedMovieList, new MovieSeenComparator());
-        return sortedMovieList;
-    }
+  public void clearMovieList() {
+    movieList.clear();
+  }
 
-    @Override
-    public String toString() {
-        String returnString = "";
-        for (IMovie movie : movieList) {
-            returnString += movie.getTitle() + "\n";
-        }
-        return returnString;
-    }
+  /**
+   * 
+   * @param title
+   * @return Movie with matching title, if there is no such movie, return null
+   */
+  public IMovie getMovie(String title) {
+    return movieList.stream().filter(m -> m.getTitle().equals(title)).findFirst().orElse(null);
+  }
 
-    @Override
-    public Iterator<IMovie> iterator() {
-        return movieList.iterator();
+  public Collection<IMovie> getSortedMoviesByTitle(Collection<IMovie> movies) {
+    List<IMovie> sortedMovieList = new ArrayList<>(movies);
+    Collections.sort(sortedMovieList, new MovieTitleComparator());
+    return sortedMovieList;
+  }
+
+  public Collection<IMovie> getSortedMoviesOnSeen(Collection<IMovie> movies) {
+    List<IMovie> sortedMovieList = new ArrayList<>(movies);
+    Collections.sort(sortedMovieList, new MovieSeenComparator());
+    return sortedMovieList;
+  }
+
+  @Override
+  public String toString() {
+    String returnString = "";
+    for (IMovie movie : movieList) {
+      returnString += movie.getTitle() + "\n";
     }
+    return returnString;
+  }
+
+  @Override
+  public Iterator<IMovie> iterator() {
+    return movieList.iterator();
+  }
 }

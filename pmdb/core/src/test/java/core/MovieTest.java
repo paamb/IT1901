@@ -28,7 +28,8 @@ public class MovieTest {
         String title = "Film1";
         String description = "Dette er film nummer 1.";
         LocalTime duration = LocalTime.of(2, 10);
-        Collection<IReview> reviews = new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
+        Collection<IReview> reviews =
+                new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
         Movie movie = new Movie(title, description, duration, false, reviews);
 
         assertEquals(title, movie.getTitle(), "Movie title is not correct.");
@@ -39,7 +40,7 @@ public class MovieTest {
 
     @BeforeEach
     public void setUp() {
-        movie = new Movie(initTitle, initDescription, initDuration,false, initReview);
+        movie = new Movie(initTitle, initDescription, initDuration, false, initReview);
 
     }
 
@@ -52,8 +53,10 @@ public class MovieTest {
         assertEquals(initTitle, movie.getTitle(), "Movie title is not correct.");
         movie.setTitle(legalTitle);
         assertEquals(legalTitle, movie.getTitle(), "Movie title is not correct.");
-        assertThrows(IllegalArgumentException.class, () -> movie.setTitle(illegalTitle1), "Did not throw exception on illegal title: " + illegalTitle1);
-        assertThrows(IllegalArgumentException.class, () -> movie.setTitle(illegalTitle2),  "Did not throw exception on illegal title: " + illegalTitle2);
+        assertThrows(IllegalArgumentException.class, () -> movie.setTitle(illegalTitle1),
+                "Did not throw exception on illegal title: " + illegalTitle1);
+        assertThrows(IllegalArgumentException.class, () -> movie.setTitle(illegalTitle2),
+                "Did not throw exception on illegal title: " + illegalTitle2);
     }
 
     @Test
@@ -83,27 +86,31 @@ public class MovieTest {
     }
 
     @Test
-    public void testAddReview(){
+    public void testAddReview() {
         movie.addReview(review1);
         movie.addReview(review2);
 
         assertEquals(2, movie.getReviews().size(), "This movie should have 2 reviews");
         assertTrue(movie.getReviews().contains(review1), "Movie should contain review1");
         assertTrue(movie.getReviews().contains(review2), "Movie should contain reivew2");
-        assertThrows(IllegalStateException.class, () -> movie.addReview(review1), "Failed to throw exception on adding duplicate review");
-        assertThrows(IllegalArgumentException.class, () -> movie.addReview(null), "Failed to throw exception on adding null");
+        assertThrows(IllegalStateException.class, () -> movie.addReview(review1),
+                "Failed to throw exception on adding duplicate review");
+        assertThrows(IllegalArgumentException.class, () -> movie.addReview(null),
+                "Failed to throw exception on adding null");
     }
 
     @Test
-    public void testSetReviews(){
+    public void testSetReviews() {
         movie.addReview(review1);
         movie.addReview(review2);
         movie.setReviews(Arrays.asList(review1, review2));
-        
+
         assertEquals(2, movie.getReviews().size(), "This movie should have 2 reviews");
         assertTrue(movie.getReviews().contains(review1), "Movie should contain review1");
         assertTrue(movie.getReviews().contains(review2), "Movie should contain reivew2");
 
-        assertThrows(IllegalArgumentException.class, () -> movie.setReviews(Arrays.asList(review1, review1)), "Cannot add a list with duplicate reviews");
+        assertThrows(IllegalArgumentException.class,
+                () -> movie.setReviews(Arrays.asList(review1, review1)),
+                "Cannot add a list with duplicate reviews");
     }
 }
