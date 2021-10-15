@@ -100,60 +100,60 @@ public class ReviewListTest extends ApplicationTest{
         assertNotNull(movieListController);
     }
 
-    @Test
-    public void addReview_valid(){
-        clickOn("#openEditReview");
-        clickOn("#commentField").write(comment);
-        clickOn("#dateField");
-        editReviewController.dateField.setValue(whenWatched);
-        clickOn("#submitReview");
-        assertEquals(1, reviewListSize());
-        assertFalse(reviewListController.editReviewWindow.isVisible());
-    }
+    // @Test
+    // public void addReview_valid(){
+    //     clickOn("#openEditReview");
+    //     clickOn("#commentField").write(comment);
+    //     clickOn("#dateField");
+    //     editReviewController.dateField.setValue(whenWatched);
+    //     clickOn("#submitReview");
+    //     assertEquals(1, reviewListSize());
+    //     assertFalse(reviewListController.editReviewWindow.isVisible());
+    // }
 
-    @Test
-    public void addReview_invalidDate(){
-        LocalDate invalidDate = LocalDate.now().plusDays(30);
-        clickOn("#openEditReview");
-        clickOn("#dateField");
-        editReviewController.dateField.setValue(invalidDate);
-        clickOn("#submitReview");
-        assertEquals(0, reviewListSize());
-        assertTrue(reviewListController.editReviewWindow.isVisible());
-    }
+    // @Test
+    // public void addReview_invalidDate(){
+    //     LocalDate invalidDate = LocalDate.now().plusDays(30);
+    //     clickOn("#openEditReview");
+    //     clickOn("#dateField");
+    //     editReviewController.dateField.setValue(invalidDate);
+    //     clickOn("#submitReview");
+    //     assertEquals(0, reviewListSize());
+    //     assertTrue(reviewListController.editReviewWindow.isVisible());
+    // }
     
-    @Test
-    public void editReview(){
-        String newComment = "new comment";
+    // @Test
+    // public void editReview(){
+    //     String newComment = "new comment";
 
-        clickOn("#openEditReview");
-        clickOn("#commentField").write(comment);
-        clickOn("#dateField");
-        editReviewController.dateField.setValue(whenWatched);
-        clickOn("#submitReview");
-        assertEquals(1, reviewListSize());
+    //     clickOn("#openEditReview");
+    //     clickOn("#commentField").write(comment);
+    //     clickOn("#dateField");
+    //     editReviewController.dateField.setValue(whenWatched);
+    //     clickOn("#submitReview");
+    //     assertEquals(1, reviewListSize());
         
-        clickOn(reviewListController.reviewDisplay.lookup("#0").lookup("#editReview"));
-        clickOn("#commentField");
-        deleteInput(editReviewController.commentField);
-        clickOn("#commentField").write(newComment);
-        clickOn("#submitReview");
+    //     clickOn(reviewListController.reviewDisplay.lookup("#0").lookup("#editReview"));
+    //     clickOn("#commentField");
+    //     deleteInput(editReviewController.commentField);
+    //     clickOn("#commentField").write(newComment);
+    //     clickOn("#submitReview");
         
-        assertEquals(1, reviewListSize());
-        IReview review = movieListController.getMovieList().getMovie("test movie").getReviews().stream().findFirst().get();
-        assertEquals(newComment, review.getComment());
-    }
+    //     assertEquals(1, reviewListSize());
+    //     IReview review = movieListController.getMovieList().getMovie("test movie").getReviews().stream().findFirst().get();
+    //     assertEquals(newComment, review.getComment());
+    // }
     
-    @Test
-    public void deleteReview(){
-        clickOn("#openEditReview");
-        clickOn("#commentField").write(comment);
-        clickOn("#dateField");
-        editReviewController.dateField.setValue(whenWatched);
-        clickOn("#submitReview");
-        assertEquals(1, reviewListSize());
+    // @Test
+    // public void deleteReview(){
+    //     clickOn("#openEditReview");
+    //     clickOn("#commentField").write(comment);
+    //     clickOn("#dateField");
+    //     editReviewController.dateField.setValue(whenWatched);
+    //     clickOn("#submitReview");
+    //     assertEquals(1, reviewListSize());
         
-        clickOn(reviewListController.reviewDisplay.lookup("#0").lookup("#deleteReview"));
-        assertEquals(0, reviewListSize());
-    }
+    //     clickOn(reviewListController.reviewDisplay.lookup("#0").lookup("#deleteReview"));
+    //     assertEquals(0, reviewListSize());
+    // }
 }
