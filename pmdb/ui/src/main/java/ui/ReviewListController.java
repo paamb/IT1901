@@ -1,100 +1,102 @@
 package ui;
 
+import core.IMovie;
+import core.IReview;
+import java.util.ArrayList;
+import java.util.Collection;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import core.IReview;
-import core.IMovie;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-
 public class ReviewListController {
 
-    @FXML
-    VBox editReviewWindow;
+  @FXML
+  VBox editReviewWindow;
 
-    @FXML
-    Button openEditReview;
+  @FXML
+  Button openEditReview;
 
-    @FXML
-    Pane reviewDisplay;
-    
-    private MovieListController movieListController;
+  @FXML
+  Pane reviewDisplay;
 
-    @FXML
-    EditReviewController editReviewController;
+  private MovieListController movieListController;
 
-    @FXML
-    void initialize() {
-        editReviewController.injectReviewListController(this);
-        hideEditReview();
-    }
+  @FXML
+  EditReviewController editReviewController;
 
-    @FXML
-    public void editNewReview(){
-        editReview(null, null);
-    }
+  @FXML
+  void initialize() {
+    editReviewController.injectReviewListController(this);
+    hideEditReview();
+  }
 
-    protected void editReview(IMovie movie, IReview review){
-        editReviewController.setActiveReviewsMovie(movie);
-        editReviewController.editReview(review);
-        editReviewWindow.setVisible(true);
-    }
+  @FXML
+  public void editNewReview() {
+    editReview(null, null);
+  }
 
-    protected void hideEditReview(){
-        editReviewWindow.setVisible(false);
-    }
+  protected void editReview(IMovie movie, IReview review) {
+    editReviewController.setActiveReviewsMovie(movie);
+    editReviewController.editReview(review);
+    editReviewWindow.setVisible(true);
+  }
 
-    protected void reviewListIsEdited() {
-        movieListController.movieListIsEdited();
-    }
+  protected void hideEditReview() {
+    editReviewWindow.setVisible(false);
+  }
 
-    protected Collection<IMovie> getMovies(){
-        return new ArrayList<IMovie>(movieListController.getMovieList().getMovies());
-    }
+  protected void reviewListIsEdited() {
+    movieListController.movieListIsEdited();
+  }
 
-    protected void injectMovieListController(MovieListController movieListController){
-        this.movieListController = movieListController;
-        displayReviewList();
-    }
+  protected Collection<IMovie> getMovies() {
+    return new ArrayList<IMovie>(movieListController.getMovieList().getMovies());
+  }
 
-    protected void deleteReview(IMovie movie, IReview review){
-        movie.removeReview(review);
-        reviewListIsEdited();
-    }
+  protected void injectMovieListController(MovieListController movieListController) {
+    this.movieListController = movieListController;
+    displayReviewList();
+  }
 
-    protected void displayReviewList() {
-        reviewDisplay.getChildren().clear();
-        try {
-            int counter = 0;
-            double offsetX = reviewDisplay.getPrefWidth()/2;
-            double offsetY = ((Pane) new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml")).load()).getPrefHeight();
-            Collection<IMovie> movies = getMovies();
-            for(IMovie movie : movies){
-                for(IReview review : movie.getReviews()){
-                    FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml"));
-                    Pane reviewPane = fxmlLoader.load();
-                    reviewPane.setLayoutX(offsetX * (counter % 2));
-                    reviewPane.setLayoutY(offsetY * ((int) counter / 2));
+  protected void deleteReview(IMovie movie, IReview review) {
+    movie.removeReview(review);
+    reviewListIsEdited();
+  }
 
-                    ReviewDisplayTemplateController reviewDisplayTemplateController = fxmlLoader.getController();
-                    reviewDisplayTemplateController.injectReviewListController(this);
-                    reviewDisplayTemplateController.setReview(review);
-                    reviewDisplayTemplateController.setMovie(movie);
-                    reviewDisplayTemplateController.setContent();
+  protected void displayReviewList() {
+    reviewDisplay.getChildren().clear();
+    try {
+      int counter = 0;
+      double offsetX = reviewDisplay.getPrefWidth() / 2;
+      double offsetY =
+          ((Pane) new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml")).load())
+              .getPrefHeight();
+      Collection<IMovie> movies = getMovies();
+      for (IMovie movie : movies) {
+        for (IReview review : movie.getReviews()) {
+          FXMLLoader fxmlLoader =
+              new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml"));
+          Pane reviewPane = fxmlLoader.load();
+          reviewPane.setLayoutX(offsetX * (counter % 2));
+          reviewPane.setLayoutY(offsetY * ((int) counter / 2));
 
-                    reviewDisplay.getChildren().add(reviewPane);
-                    counter++;
-                }
-                reviewDisplay.setLayoutY((int) counter / 2);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
+          ReviewDisplayTemplateController reviewDisplayTemplateController =
+              fxmlLoader.getController();
+          reviewDisplayTemplateController.injectReviewListController(this);
+          reviewDisplayTemplateController.setReview(review);
+          reviewDisplayTemplateController.setMovie(movie);
+          reviewDisplayTemplateController.setContent();
+
+          reviewDisplay.getChildren().add(reviewPane);
+          counter++;
         }
+        reviewDisplay.setLayoutY((int) counter / 2);
+      }
+    } catch (Exception e) {
+      System.out.println(e);
     }
+  }
 
 }

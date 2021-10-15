@@ -2,53 +2,66 @@ package ui;
 
 import core.IMovie;
 import core.IReview;
-import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class ReviewDisplayTemplateController {
-    
-    private IReview review;
 
-    private IMovie movie;
+  private IReview review;
 
-    private ReviewListController reviewListController;
+  private IMovie movie;
 
-    @FXML
-    Label movieTitle, whenWatched, rating;
+  private ReviewListController reviewListController;
 
-    @FXML
-    TextArea comment;
+  @FXML
+  Label movieTitle;
 
-    @FXML
-    Button editReview, deleteReview;
+  @FXML
+  Label whenWatched;
 
-    public void injectReviewListController(ReviewListController reviewListController){
-        this.reviewListController = reviewListController;
-    }
+  @FXML
+  Label rating;
 
-    public void setReview(IReview review){
-        this.review = review;
-    }
-    public void setMovie(IMovie movie){
-        this.movie = movie;
-    }
+  @FXML
+  TextArea comment;
 
-    public void setContent(){
-        movieTitle.setText(movie.getTitle());
-        whenWatched.setText(review.getWhenWatched().toString());
-        rating.setText(String.valueOf(review.getRating()));
-        comment.setText(review.getComment());
-    }
+  @FXML
+  Button editReview;
 
-    @FXML
-    public void editReview() {
-        reviewListController.editReview(movie, review);
-    }
+  @FXML
+  Button deleteReview;
 
-    @FXML
-    public void deleteReview() {
-        reviewListController.deleteReview(movie, review);
-    }
+  public void injectReviewListController(ReviewListController reviewListController) {
+    this.reviewListController = reviewListController;
+  }
+
+  public void setReview(IReview review) {
+    this.review = review;
+  }
+
+  public void setMovie(IMovie movie) {
+    this.movie = movie;
+  }
+
+  /**
+   * Sets the content of the review in UI.
+   */
+  public void setContent() {
+    movieTitle.setText(movie.getTitle());
+    whenWatched.setText(review.getWhenWatched().toString());
+    rating.setText(String.valueOf(review.getRating()));
+    comment.setText(review.getComment());
+  }
+
+  @FXML
+  public void editReview() {
+    reviewListController.editReview(movie, review);
+  }
+
+  @FXML
+  public void deleteReview() {
+    reviewListController.deleteReview(movie, review);
+  }
 }
