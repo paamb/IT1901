@@ -3,113 +3,124 @@ package core;
 import java.time.LocalTime;
 import java.util.Collection;
 
+/**
+ * Interface for movie.
+ * 
+ */
 public interface IMovie {
 
-    /**
-     * 
-     * @param title
-     * @return true if title is valid
-     */
-    public static boolean isValidTitle(String title){
-        return (title.length() >= 1 && title.length() <= 50)
-            && (title != null);
-    }
+  /**
+   * Checks if the movie title is valid.
+   * 
+   * @param title Movie title
+   * @return true if title is valid
+   */
+  public static boolean isValidTitle(String title) {
+    return (title.length() >= 1 && title.length() <= 50) && (title != null);
+  }
 
-    /**
-     * 
-     * @param description
-     * @return true if description is valid
-     */
-    public static boolean isValidDescription(String description){
-        return description != null;
-    }
+  /**
+   * Checks if the description is valid.
+   * 
+   * @param description Movie description
+   * @return true if description is valid
+   */
+  public static boolean isValidDescription(String description) {
+    return description != null;
+  }
 
-    /**
-     * 
-     * @param duration
-     * @return true if duration is valid
-     */
-    public static boolean isValidDuration(LocalTime duration){
-        return duration != null;
-    }    
+  /**
+   * Checks if the movie duration is valid.
+   * 
+   * @param duration Movie duration
+   * @return true if duration is valid
+   */
+  public static boolean isValidDuration(LocalTime duration) {
+    return duration != null;
+  }
 
-    /**
-     * Sets if movie is watched or not
-     * 
-     * @param watched
-     */
-    public void setWatched(boolean watched);
+  /**
+   * Sets if movie is watched or not.
+   * 
+   * @param watched Sets if the movie is watched or not
+   */
+  public void setWatched(boolean watched);
 
-    /**
-     * 
-     * @return whether movie is watched or not
-     */
-    public boolean isWatched();
+  /**
+   * Whether movie is watched or not.
+   * 
+   * @return whether movie is watched or not
+   */
+  public boolean isWatched();
 
-    /**
-     * Sets this movies description
-     * 
-     * @param description
-     */
-    public void setDescription(String description);
+  /**
+   * Sets this movies description.
+   * 
+   * @param description Movie description
+   */
+  public void setDescription(String description);
 
-    /**
-     * 
-     * @return this movies description
-     */
-    public String getDescription();
+  /**
+   * Gets this movies description.
+   * 
+   * @return this movies description
+   */
+  public String getDescription();
 
-    /**
-     * Sets this movies title
-     * 
-     * @param title
-     * @throws IllegalArgumentException if illegal title
-     */
-    public void setTitle(String title) throws IllegalArgumentException;
+  /**
+   * Sets this movies title.
+   * 
+   * @param title Movie title
+   * @throws IllegalArgumentException if illegal title
+   */
+  public void setTitle(String title) throws IllegalArgumentException;
 
-    /**
-     * 
-     * @return this movies title
-     */
-    public String getTitle();
+  /**
+   * Get the title of this movie.
+   * 
+   * @return this movies title
+   */
+  public String getTitle();
 
-    /**
-     * sets this movies duration
-     * 
-     * @param duration
-     */
-    public void setDuration(LocalTime duration);
+  /**
+   * sets this movies duration.
+   * 
+   * @param duration Movie duration
+   */
+  public void setDuration(LocalTime duration);
 
-    /**
-     * 
-     * @return this movies duration
-     */
-    public LocalTime getDuration();
+  /**
+   * Get the duration of this movie.
+   * 
+   * @return this movies duration
+   */
+  public LocalTime getDuration();
 
-    /**
-     * Sets a Collection of reviews
-     * 
-     * @param reviews
-     */
-    public void setReviews(Collection<IReview> reviews);
+  /**
+   * Sets a Collection of reviews.
+   * 
+   * @param reviews Collection of reviews
+   */
+  public void setReviews(Collection<IReview> reviews);
 
-    /**
-     * Adds a review to this movie
-     * 
-     * @param review
-     */
-    public void addReview(IReview review);
+  /**
+   * Adds a review to this movie.
+   * 
+   * @param review A single review
+   */
+  public void addReview(IReview review);
 
-    /**
-     * Removes a review
-     * 
-     * @param review
-     */
-    public void removeReview(IReview review);
+  /**
+   * Removes a review from this movie.
+   * 
+   * @param review A single review
+   */
+  public void removeReview(IReview review);
 
-    /**
-     * 
-     * @return a collection of this movies reviews
-     */
-    public Collection<IReview> getReviews();
+  /**
+   * Get all reviews for this movie.
+   * 
+   * @return a collection of this movies reviews
+   */
+  public Collection<IReview> getReviews();
 }
