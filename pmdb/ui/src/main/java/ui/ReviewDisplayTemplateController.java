@@ -2,9 +2,9 @@ package ui;
 
 import core.IMovie;
 import core.IReview;
-import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class ReviewDisplayTemplateController {
@@ -16,13 +16,22 @@ public class ReviewDisplayTemplateController {
   private ReviewListController reviewListController;
 
   @FXML
-  Label movieTitle, whenWatched, rating;
+  Label movieTitle;
+
+  @FXML
+  Label whenWatched;
+
+  @FXML
+  Label rating;
 
   @FXML
   TextArea comment;
 
   @FXML
-  Button editReview, deleteReview;
+  Button editReview;
+
+  @FXML
+  Button deleteReview;
 
   public void injectReviewListController(ReviewListController reviewListController) {
     this.reviewListController = reviewListController;
@@ -36,6 +45,9 @@ public class ReviewDisplayTemplateController {
     this.movie = movie;
   }
 
+  /**
+   * Sets the content of the review in UI.
+   */
   public void setContent() {
     movieTitle.setText(movie.getTitle());
     whenWatched.setText(review.getWhenWatched().toString());

@@ -1,32 +1,32 @@
 package json.moviepersistance;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-
 import core.IMovie;
 import core.IReview;
-public class MovieSerializer extends JsonSerializer<IMovie>{
+import java.io.IOException;
 
-    @Override
-    public void serialize(IMovie movie, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        gen.writeStartObject();
+public class MovieSerializer extends JsonSerializer<IMovie> {
 
-        gen.writeStringField("title", movie.getTitle());
-        gen.writeStringField("description", movie.getDescription());
-        gen.writeObjectField("duration", movie.getDuration());
-        gen.writeBooleanField("watched", movie.isWatched());
+  @Override
+  public void serialize(IMovie movie, JsonGenerator gen, SerializerProvider serializers)
+      throws IOException {
+    gen.writeStartObject();
 
-        gen.writeArrayFieldStart("reviews");
+    gen.writeStringField("title", movie.getTitle());
+    gen.writeStringField("description", movie.getDescription());
+    gen.writeObjectField("duration", movie.getDuration());
+    gen.writeBooleanField("watched", movie.isWatched());
 
-        if(movie.getReviews() != null){
-            for (IReview review : movie.getReviews()){
-                    gen.writeObject(review);
-            }
-        }
-        gen.writeEndArray();
-        gen.writeEndObject();    
+    gen.writeArrayFieldStart("reviews");
+
+    if (movie.getReviews() != null) {
+      for (IReview review : movie.getReviews()) {
+        gen.writeObject(review);
+      }
     }
-}   
+    gen.writeEndArray();
+    gen.writeEndObject();
+  }
+}

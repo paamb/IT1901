@@ -16,7 +16,7 @@
     <fx:define>
       <String fx:id="userMovieListPath" fx:value="MovieList.json" />
     </fx:define>
-  </VBox>
+   </VBox>
    <children>
       <AnchorPane minHeight="0.0" minWidth="0.0">
          <children>

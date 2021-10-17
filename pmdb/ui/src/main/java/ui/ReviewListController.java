@@ -1,16 +1,14 @@
 package ui;
 
+import core.IMovie;
+import core.IReview;
+import java.util.ArrayList;
+import java.util.Collection;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
-import java.util.Collection;
-
-import core.IReview;
-import core.IMovie;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 
 public class ReviewListController {
 
@@ -72,18 +70,21 @@ public class ReviewListController {
     try {
       int counter = 0;
       double offsetX = reviewDisplay.getPrefWidth() / 2;
-      double offsetY = ((Pane) new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml")).load())
-          .getPrefHeight();
+      double offsetY =
+          ((Pane) new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml")).load())
+              .getPrefHeight();
       Collection<IMovie> movies = getMovies();
       for (IMovie movie : movies) {
         for (IReview review : movie.getReviews()) {
-          FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml"));
+          FXMLLoader fxmlLoader =
+              new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml"));
           Pane reviewPane = fxmlLoader.load();
           reviewPane.setLayoutX(offsetX * (counter % 2));
           reviewPane.setLayoutY(offsetY * ((int) counter / 2));
           reviewPane.setId(String.valueOf(counter));
 
-          ReviewDisplayTemplateController reviewDisplayTemplateController = fxmlLoader.getController();
+          ReviewDisplayTemplateController reviewDisplayTemplateController =
+              fxmlLoader.getController();
           reviewDisplayTemplateController.injectReviewListController(this);
           reviewDisplayTemplateController.setReview(review);
           reviewDisplayTemplateController.setMovie(movie);

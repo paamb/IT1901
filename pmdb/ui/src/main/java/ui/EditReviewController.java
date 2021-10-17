@@ -1,18 +1,17 @@
 package ui;
 
+import core.IMovie;
 import core.IReview;
 import core.Review;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
-import core.IMovie;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class EditReviewController {
 
@@ -32,7 +31,9 @@ public class EditReviewController {
   Text errorField;
 
   @FXML
-  Button cancelButton, addReviewButton;
+  Button cancelButton;
+  
+  Button submitReview;
 
   private ReviewListController reviewListController;
 
@@ -44,7 +45,8 @@ public class EditReviewController {
 
   @FXML
   void initialize() {
-    ratingComboBox.getItems().addAll(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)));
+    ratingComboBox.getItems()
+        .addAll(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)));
   }
 
   @FXML
@@ -57,7 +59,8 @@ public class EditReviewController {
         if (IReview.isValidWhenWatched(whenWatched)) {
           if (editingReview == null) {
             IReview review = new Review(comment, rating, whenWatched);
-            IMovie movie = availableMovies.get(moviesComboBox.getSelectionModel().getSelectedIndex());
+            IMovie movie =
+                availableMovies.get(moviesComboBox.getSelectionModel().getSelectedIndex());
             movie.addReview(review);
           } else {
             editingReview.setRating(rating);

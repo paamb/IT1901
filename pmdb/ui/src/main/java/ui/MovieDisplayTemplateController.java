@@ -1,10 +1,10 @@
 package ui;
 
+import core.IMovie;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.Button;
-import core.IMovie;
 
 public class MovieDisplayTemplateController {
 
@@ -13,13 +13,22 @@ public class MovieDisplayTemplateController {
   private MovieListController movieListController;
 
   @FXML
-  Label movieTitle, movieDuration, movieWatched;
+  Label movieTitle;
+
+  @FXML
+  Label movieDuration;
+
+  @FXML
+  Label movieWatched;
 
   @FXML
   TextArea movieDescription;
 
   @FXML
-  Button editMovie, deleteMovie;
+  Button editMovie;
+
+  @FXML
+  Button deleteMovie;
 
   public void injectMovieListController(MovieListController movieListController) {
     this.movieListController = movieListController;
@@ -29,6 +38,9 @@ public class MovieDisplayTemplateController {
     this.movie = movie;
   }
 
+  /**
+   * Sets the content of the movie on the UI.
+   */
   public void setContent() {
     movieTitle.setText(movie.getTitle());
     movieDuration.setText(movie.getDuration().toString());
@@ -45,5 +57,4 @@ public class MovieDisplayTemplateController {
   public void deleteMovie() {
     movieListController.deleteMovie(movie);
   }
-
 }

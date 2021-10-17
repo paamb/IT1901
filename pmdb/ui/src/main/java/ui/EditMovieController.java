@@ -1,15 +1,14 @@
 package ui;
 
+import core.IMovie;
+import core.Movie;
 import java.time.LocalTime;
 import java.util.ArrayList;
-
-import core.Movie;
-import core.IMovie;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 public class EditMovieController {
@@ -18,13 +17,21 @@ public class EditMovieController {
   CheckBox watchedCheckBox;
 
   @FXML
-  TextField titleField, hoursField, minutesField;
+  TextField titleField;
+
+  @FXML
+  TextField hoursField;
+
+  @FXML
+  TextField minutesField;
 
   @FXML
   TextArea descriptionField;
 
   @FXML
-  Button submitMovie, cancelButton;
+  Button submitMovie;
+  
+  Button cancelButton;
 
   @FXML
   Text errorField;
@@ -58,7 +65,6 @@ public class EditMovieController {
               clearFields();
             } else {
               errorField.setText("Beskrivelse kan ikke være 'null'");
-              ;
             }
           } else {
             errorField.setText("Ugyldig varighet");
@@ -94,7 +100,8 @@ public class EditMovieController {
     this.movieListController = movieListController;
   }
 
-  private void updateExistingMovie(String title, String description, LocalTime duration, boolean watched) {
+  private void updateExistingMovie(String title, String description, LocalTime duration,
+      boolean watched) {
     if (editingMovie == null) {
       throw new IllegalStateException("Cant update movie if editingMovie is not set.");
     }

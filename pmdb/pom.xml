@@ -69,7 +69,7 @@
                         </dependency>
                     </dependencies>
                     <configuration>
-                        <configLocation>google_checks.xml</configLocation>
+                        <configLocation>config\checkstyle\google-checkstyle.xml</configLocation>
                         <encoding>UTF-8</encoding>
                         <consoleOutput>true</consoleOutput>
                         <failsOnError>true</failsOnError>
@@ -85,6 +85,36 @@
                         </execution>
                     </executions>
                 </plugin>
+
+                <!-- Run the spotbugs code quality tool -->
+                <!-- <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>4.4.1</version>
+                    <configuration>
+                        <xmlOutput>false</xmlOutput>
+                        <htmlOutput>true</htmlOutput>
+                        <excludeFilterFile>config/spotbugs/exclude-spotbugs.xml</excludeFilterFile>
+                    </configuration>
+                    
+                    <executions>
+                        <execution>
+                        <id>spotbugs-check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        </execution>
+                    </executions>
+
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.github.spotbugs</groupId>
+                            <artifactId>spotbugs</artifactId>
+                            <version>4.4.2</version>
+                        </dependency>
+                    </dependencies>
+                </plugin> -->
 
                 <!-- Configure jacoco code coverage -->
                 <plugin>
