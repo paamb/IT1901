@@ -1,5 +1,15 @@
 package ui;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import core.IMovie;
+import core.MovieList;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -14,20 +24,11 @@ import javafx.scene.robot.Robot;
 import javafx.stage.Stage;
 import json.moviepersistance.MovieStorage;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import core.IMovie;
-import core.MovieList;
 
 public class MovieListTest extends ApplicationTest {
 
@@ -62,7 +63,8 @@ public class MovieListTest extends ApplicationTest {
     }
   }
 
-  private void enterMovieValues(String title, String description, String hours, String minutes, boolean watched) {
+  private void enterMovieValues(
+      String title, String description, String hours, String minutes, boolean watched) {
     clickOn("#titleField").write(title);
     clickOn("#descriptionField").write(description);
     clickOn("#hoursField").write(hours);
@@ -76,8 +78,11 @@ public class MovieListTest extends ApplicationTest {
     return movieListController.getMovies().size();
   }
 
+  /**
+   * Done before each test.
+   */
   @BeforeEach
-  public void setup() throws IOException {
+  public void setup() {
     try {
       movieListController.loadMovieListFile(testFile);
     } catch (Exception e) {
@@ -87,17 +92,24 @@ public class MovieListTest extends ApplicationTest {
     clickOn("#movieListTab");
   }
 
+  /**
+   * Done after each test.
+   */
   @AfterEach
   public void tearDown() throws IOException {
-    MovieStorage storage = new MovieStorage();
-    storage.setFile(testFile);
-    MovieList movieList = storage.loadMovieList();
-    movieList.getMovies().stream().forEach(movie -> {
-      if (!movie.getTitle().equals("test movie")) {
-        movieList.removeMovie(movie);
-      }
-    });
-    storage.saveMovieList(movieList);
+    try {
+      MovieStorage storage = new MovieStorage();
+      storage.setFile(testFile);
+      MovieList movieList = storage.loadMovieList();
+      movieList.getMovies().stream().forEach(movie -> {
+        if (!movie.getTitle().equals("test movie")) {
+          movieList.removeMovie(movie);
+        }
+      });
+      storage.saveMovieList(movieList); 
+    } catch (Exception e) {
+      fail(e);
+    }
   }
 
   @Test
@@ -109,17 +121,21 @@ public class MovieListTest extends ApplicationTest {
   @Test
   public void testOpenEditMovie() {
     clickOn("#openEditMovie");
-    assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
+    assertTrue(movieListController.editMovieWindow.isVisible(), 
+        "EditMovie-window should be visible.");
     clickOn("#openEditMovie");
-    assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
+    assertTrue(movieListController.editMovieWindow.isVisible(), 
+        "EditMovie-window should be visible.");
   }
 
   @Test
   public void testCloseEditMovie() {
     clickOn("#openEditMovie");
-    assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
+    assertTrue(movieListController.editMovieWindow.isVisible(), 
+        "EditMovie-window should be visible.");
     clickOn("#cancelButton");
-    assertFalse(movieListController.editMovieWindow.isVisible(), "EditMovie-window should not be visible.");
+    assertFalse(movieListController.editMovieWindow.isVisible(), 
+        "EditMovie-window should not be visible.");
   }
 
   @Test
@@ -154,27 +170,27 @@ public class MovieListTest extends ApplicationTest {
   @Test
   public void testAddMovie_invalidDuration() {
 
-    String nonInteger = "1o";
     clickOn("#openEditMovie");
+    String nonInteger = "1o";
     enterMovieValues(title, description, nonInteger, minutes, watched);
     clickOn("#submitMovie");
     assertEquals(1, movieListSize());
     assertTrue(movieListController.editMovieWindow.isVisible());
     assertNotEquals("", editMovieController.errorField.getText());
 
-    String hoursOutOfRange = "30";
     clickOn("#hoursField");
     deleteInput(editMovieController.hoursField);
+    String hoursOutOfRange = "30";
     clickOn("#hoursField").write(hoursOutOfRange);
     clickOn("#submitMovie");
     assertEquals(1, movieListSize());
 
-    String minutesOutOfRange = "-30";
     clickOn("#hoursField");
     deleteInput(editMovieController.hoursField);
     clickOn("#hoursField").write(hours);
     clickOn("#minutesField");
     deleteInput(editMovieController.minutesField);
+    String minutesOutOfRange = "-30";
     clickOn("#minutesField").write(minutesOutOfRange);
     clickOn("#submitMovie");
     assertEquals(1, movieListSize());
@@ -218,10 +234,10 @@ public class MovieListTest extends ApplicationTest {
     enterMovieValues(title, description, hours, minutes, watched);
     clickOn("#submitMovie");
 
-    String invalidTitle = "test movie";
     clickOn(movieListController.movieDisplay.lookup("#1").lookup("#editMovie"));
     clickOn("#titleField");
     deleteInput(editMovieController.titleField);
+    String invalidTitle = "test movie";
     clickOn("#titleField").write(invalidTitle);
     clickOn("#submitMovie");
     assertTrue(movieListController.editMovieWindow.isVisible());
@@ -231,18 +247,21 @@ public class MovieListTest extends ApplicationTest {
 
   @Test
   public void testSortMovies() {
-    String title1 = "test movie";
-    String title2 = "aaa";
-
+    
     clickOn("#openEditMovie");
+    String title2 = "aaa";
     enterMovieValues(title2, description, hours, minutes, watched);
     clickOn("#submitMovie");
-    assertEquals(title1, ((Label) movieListController.movieDisplay.lookup("#0").lookup("#movieTitle")).getText());
+    String title1 = "test movie";
+    assertEquals(title1, 
+        ((Label) movieListController.movieDisplay.lookup("#0").lookup("#movieTitle")).getText());
 
     clickOn("#sortOnTitleCheckbox");
-    assertEquals(title2, ((Label) movieListController.movieDisplay.lookup("#0").lookup("#movieTitle")).getText());
+    assertEquals(title2, 
+        ((Label) movieListController.movieDisplay.lookup("#0").lookup("#movieTitle")).getText());
 
     clickOn("#sortOnSeenCheckbox");
-    assertEquals(title2, ((Label) movieListController.movieDisplay.lookup("#0").lookup("#movieTitle")).getText());
+    assertEquals(title2, 
+        ((Label) movieListController.movieDisplay.lookup("#0").lookup("#movieTitle")).getText());
   }
 }

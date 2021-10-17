@@ -1,33 +1,29 @@
 package ui;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import core.IMovie;
+import core.IReview;
+import core.MovieList;
+
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyCode;
-import javafx.scene.robot.Robot;
 import javafx.stage.Stage;
 import json.moviepersistance.MovieStorage;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-
-import core.IMovie;
-import core.IReview;
-import core.MovieList;
 
 public class ReviewListTest extends ApplicationTest {
 
@@ -66,8 +62,11 @@ public class ReviewListTest extends ApplicationTest {
     return counter;
   }
 
+  /**
+   * Done before each test.
+   */
   @BeforeEach
-  public void setup() throws IOException {
+  public void setup() {
     try {
       movieListController.loadMovieListFile(testFile);
     } catch (Exception e) {
@@ -76,21 +75,28 @@ public class ReviewListTest extends ApplicationTest {
     assertEquals(0, reviewListSize());
   }
 
+  /**
+   * Done after each test.
+   */
   @AfterEach
-  public void tearDown() throws IOException {
-    MovieStorage storage = new MovieStorage();
-    storage.setFile(testFile);
-    MovieList movieList = storage.loadMovieList();
-    movieList.getMovies().stream().forEach(movie -> {
-      if (!movie.getTitle().equals("test movie")) {
-        movieList.removeMovie(movie);
-      }
-    });
-    IMovie movie = movieList.getMovie("test movie");
-    movie.getReviews().stream().forEach(review -> {
-      movie.removeReview(review);
-    });
-    storage.saveMovieList(movieList);
+  public void tearDown() {
+    try {
+      MovieStorage storage = new MovieStorage();
+      storage.setFile(testFile);
+      MovieList movieList = storage.loadMovieList();
+      movieList.getMovies().stream().forEach(movie -> {
+        if (!movie.getTitle().equals("test movie")) {
+          movieList.removeMovie(movie);
+        }
+      });
+      IMovie movie = movieList.getMovie("test movie");
+      movie.getReviews().stream().forEach(review -> {
+        movie.removeReview(review);
+      });
+      storage.saveMovieList(movieList);
+    } catch (Exception e) {
+      fail(e);
+    }
   }
 
   @Test
@@ -124,23 +130,24 @@ public class ReviewListTest extends ApplicationTest {
 
   @Test
   public void editReview() {
-    String newComment = "new comment";
-
+    
     clickOn("#openEditReview");
     clickOn("#commentField").write(comment);
     clickOn("#dateField");
     editReviewController.dateField.setValue(whenWatched);
     clickOn("#submitReview");
     assertEquals(1, reviewListSize());
-
+    
     clickOn(reviewListController.reviewDisplay.lookup("#0").lookup("#editReview"));
     clickOn("#commentField");
     deleteInput(editReviewController.commentField);
+    String newComment = "new comment";
     clickOn("#commentField").write(newComment);
     clickOn("#submitReview");
 
     assertEquals(1, reviewListSize());
-    IReview review = movieListController.getMovieList().getMovie("test movie").getReviews().stream().findFirst().get();
+    IReview review = movieListController.getMovieList().getMovie("test movie")
+        .getReviews().stream().findFirst().get();
     assertEquals(newComment, review.getComment());
   }
 

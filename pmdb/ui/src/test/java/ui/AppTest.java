@@ -1,20 +1,19 @@
 package ui;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import java.io.File;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import core.IMovie;
+import java.io.File;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-
-import core.IMovie;
 
 public class AppTest extends ApplicationTest {
 
@@ -35,6 +34,9 @@ public class AppTest extends ApplicationTest {
     stage.show();
   }
 
+  /**
+   * Done before each test.
+   */
   @BeforeEach
   public void setup() {
     try {
