@@ -71,13 +71,13 @@ public class ReviewListController {
       int counter = 0;
       double offsetX = reviewDisplay.getPrefWidth() / 2;
       double offsetY =
-          ((Pane) new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml")).load())
+          ((Pane) new FXMLLoader(this.getClass().getResource("ReviewDisplayTemplate.fxml")).load())
               .getPrefHeight();
       Collection<IMovie> movies = getMovies();
       for (IMovie movie : movies) {
         for (IReview review : movie.getReviews()) {
           FXMLLoader fxmlLoader =
-              new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml"));
+              new FXMLLoader(this.getClass().getResource("ReviewDisplayTemplate.fxml"));
           Pane reviewPane = fxmlLoader.load();
           int counterCalc = (int) counter / 2;
           reviewPane.setLayoutX(offsetX * (counter % 2));
@@ -98,8 +98,7 @@ public class ReviewListController {
         reviewDisplay.setLayoutY(counterCalc);
       }
     } catch (Exception e) {
-      System.out.println(e);
+      e.printStackTrace();
     }
   }
-
 }
