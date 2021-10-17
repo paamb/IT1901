@@ -79,8 +79,9 @@ public class ReviewListController {
           FXMLLoader fxmlLoader =
               new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml"));
           Pane reviewPane = fxmlLoader.load();
+          int counterCalc = (int) counter / 2;
           reviewPane.setLayoutX(offsetX * (counter % 2));
-          reviewPane.setLayoutY(offsetY * ((int) counter / 2));
+          reviewPane.setLayoutY(offsetY * counterCalc);
 
           ReviewDisplayTemplateController reviewDisplayTemplateController =
               fxmlLoader.getController();
@@ -92,7 +93,8 @@ public class ReviewListController {
           reviewDisplay.getChildren().add(reviewPane);
           counter++;
         }
-        reviewDisplay.setLayoutY((int) counter / 2);
+        int counterCalc = (int) counter / 2;
+        reviewDisplay.setLayoutY(counterCalc);
       }
     } catch (Exception e) {
       System.out.println(e);
