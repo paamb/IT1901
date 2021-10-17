@@ -70,17 +70,20 @@ public class ReviewListController {
     try {
       double counter = 0;
       double offsetX = reviewDisplay.getPrefWidth() / 2;
-      double offsetY = ((Pane) new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml")).load())
-          .getPrefHeight();
+      double offsetY =
+          ((Pane) new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml")).load())
+              .getPrefHeight();
       Collection<IMovie> movies = getMovies();
       for (IMovie movie : movies) {
         for (IReview review : movie.getReviews()) {
-          FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml"));
+          FXMLLoader fxmlLoader =
+              new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml"));
           Pane reviewPane = fxmlLoader.load();
           reviewPane.setLayoutX(offsetX * (counter % 2));
           reviewPane.setLayoutY(offsetY * (counter / 2));
 
-          ReviewDisplayTemplateController reviewDisplayTemplateController = fxmlLoader.getController();
+          ReviewDisplayTemplateController reviewDisplayTemplateController =
+              fxmlLoader.getController();
           reviewDisplayTemplateController.injectReviewListController(this);
           reviewDisplayTemplateController.setReview(review);
           reviewDisplayTemplateController.setMovie(movie);
