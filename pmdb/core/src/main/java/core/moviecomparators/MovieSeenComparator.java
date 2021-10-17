@@ -1,7 +1,6 @@
 package core.moviecomparators;
 
 import core.IMovie;
-
 import java.io.Serializable;
 import java.util.Comparator;
 

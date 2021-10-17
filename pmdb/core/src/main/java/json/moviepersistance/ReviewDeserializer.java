@@ -16,7 +16,8 @@ import java.time.LocalDate;
 public class ReviewDeserializer extends JsonDeserializer<IReview> {
 
   @Override
-  public IReview deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+  public IReview deserialize(JsonParser p, DeserializationContext ctxt)
+      throws IOException, JsonProcessingException {
     ObjectNode reviewNode = p.getCodec().readTree(p);
     return deserialize((JsonNode) reviewNode);
   }

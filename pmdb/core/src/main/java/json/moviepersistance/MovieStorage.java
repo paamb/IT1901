@@ -16,8 +16,7 @@ public class MovieStorage {
   private ObjectMapper mapper;
 
   /**
-   * The movie storage initialization. Creating a new file and creating the object
-   * mapper.
+   * The movie storage initialization. Creating a new file and creating the object mapper.
    */
   public MovieStorage() {
     file = new File(fileName);
@@ -30,7 +29,8 @@ public class MovieStorage {
    * @param movieList the movielist object to be saved.
    */
   public void saveMovieList(MovieList movieList) throws IOException {
-    try (FileWriter fileWriter = new FileWriter(Paths.get(fileName).toFile(), StandardCharsets.UTF_8)) {
+    try (FileWriter fileWriter =
+        new FileWriter(Paths.get(fileName).toFile(), StandardCharsets.UTF_8)) {
       mapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, movieList);
     }
   }
@@ -43,7 +43,8 @@ public class MovieStorage {
    */
   public MovieList loadMovieList() throws IOException {
     if (file.exists() && file.length() != 0) {
-      try (Reader fileReader = new FileReader(Paths.get(fileName).toFile(), StandardCharsets.UTF_8)) {
+      try (Reader fileReader =
+          new FileReader(Paths.get(fileName).toFile(), StandardCharsets.UTF_8)) {
         return (MovieList) mapper.readValue(fileReader, MovieList.class);
       }
     } else {
