@@ -68,22 +68,19 @@ public class ReviewListController {
   protected void displayReviewList() {
     reviewDisplay.getChildren().clear();
     try {
-      int counter = 0;
+      double counter = 0;
       double offsetX = reviewDisplay.getPrefWidth() / 2;
-      double offsetY =
-          ((Pane) new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml")).load())
-              .getPrefHeight();
+      double offsetY = ((Pane) new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml")).load())
+          .getPrefHeight();
       Collection<IMovie> movies = getMovies();
       for (IMovie movie : movies) {
         for (IReview review : movie.getReviews()) {
-          FXMLLoader fxmlLoader =
-              new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml"));
+          FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("reviewDisplayTemplate.fxml"));
           Pane reviewPane = fxmlLoader.load();
           reviewPane.setLayoutX(offsetX * (counter % 2));
-          reviewPane.setLayoutY(offsetY * ((int) counter / 2));
+          reviewPane.setLayoutY(offsetY * (counter / 2));
 
-          ReviewDisplayTemplateController reviewDisplayTemplateController =
-              fxmlLoader.getController();
+          ReviewDisplayTemplateController reviewDisplayTemplateController = fxmlLoader.getController();
           reviewDisplayTemplateController.injectReviewListController(this);
           reviewDisplayTemplateController.setReview(review);
           reviewDisplayTemplateController.setMovie(movie);
@@ -92,7 +89,7 @@ public class ReviewListController {
           reviewDisplay.getChildren().add(reviewPane);
           counter++;
         }
-        reviewDisplay.setLayoutY((int) counter / 2);
+        reviewDisplay.setLayoutY(counter / 2);
       }
     } catch (Exception e) {
       System.out.println(e);
