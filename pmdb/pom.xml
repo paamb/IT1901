@@ -69,7 +69,7 @@
                         </dependency>
                     </dependencies>
                     <configuration>
-                        <configLocation>config\checkstyle\google-checkstyle.xml</configLocation>
+                        <configLocation>config/checkstyle/google-checkstyle.xml</configLocation>
                         <encoding>UTF-8</encoding>
                         <consoleOutput>true</consoleOutput>
                         <failsOnError>true</failsOnError>
