@@ -20,6 +20,9 @@ public class MovieListTest {
   private Movie movie2;
   private Movie movie3;
 
+  /**
+   * Done before each test.
+   */
   @BeforeEach
   public void setUp() {
     movieList = new MovieList();
@@ -39,14 +42,17 @@ public class MovieListTest {
     movieList.addMovie(movie3);
     assertEquals(2, movieList.getMovies().size());
 
-    assertSame(movie1, movieList.getMovie(movie1.getTitle()), "The movies should have same reference.");
-    assertSame(movie3, movieList.getMovie(movie3.getTitle()), "The movies should have same reference.");
+    assertSame(movie1, movieList.getMovie(movie1.getTitle()), 
+        "The movies should have same reference.");
+    assertSame(movie3, movieList.getMovie(movie3.getTitle()), 
+        "The movies should have same reference.");
   }
 
   @Test
   public void testAddMovieUnvalid() {
     movieList.addMovie(movie1);
-    assertThrows(IllegalStateException.class, () -> movieList.addMovie(movie2), "The movies have the same title.");
+    assertThrows(IllegalStateException.class, () -> movieList.addMovie(movie2), 
+        "The movies have the same title.");
     movieList.addMovie(movie3);
     assertEquals(2, movieList.getMovies().size(), "The length of the list should be 2.");
   }
@@ -74,7 +80,8 @@ public class MovieListTest {
   @Test
   public void testGetMovie_validOption() {
     movieList.addMovie(movie1);
-    assertSame(movie1, movieList.getMovie(movie1.getTitle()), "The movies should have the same title.");
+    assertSame(movie1, movieList.getMovie(movie1.getTitle()), 
+        "The movies should have the same title.");
   }
 
   @Test
@@ -84,32 +91,35 @@ public class MovieListTest {
   }
 
   @Test
-  @DisplayName("Help-metod to check the iterator")
-  static void checkIterator(Iterator<IMovie> it, IMovie... movies) {
-    int i = 0;
-    while (it.hasNext()) {
-      assertTrue(i < movies.length);
-      assertSame(movies[i], it.next());
-      i++;
-    }
-    assertTrue(i == movies.length);
+  @DisplayName("Tests if addind and removing with iterator is working")
+  public void testIterator_AddAndRemove() {
+    movieList.addMovie(movie1);
+    testIterator_helper(movieList.iterator(), movie1);
+    movieList.addMovie(movie3);
+    testIterator_helper(movieList.iterator(), movie1, movie3);
+    movieList.removeMovie(movie1);
+    testIterator_helper(movieList.iterator(), movie3);
+    movieList.addMovie(movie1);
+
+    Movie movie4 = new Movie("title", "description", LocalTime.of(3, 3), true, new ArrayList<>());
+    movieList.addMovie(movie4);
+    testIterator_helper(movieList.iterator(), movie3, movie1, movie4);
+    movieList.removeMovie(movie1);
+    testIterator_helper(movieList.iterator(), movie3, movie4);
+    movieList.removeMovie(movie4);
+    movieList.removeMovie(movie3);
+    testIterator_helper(movieList.iterator());
   }
 
   @Test
-  @DisplayName("Tests if addind and removing with iterator is working")
-  public void testIterator_AddAndRemove() {
-    Movie movie4 = new Movie("hei", "sd", LocalTime.of(3, 3, 1), true, new ArrayList<>());
-    movieList.addMovie(movie1);
-    checkIterator(movieList.iterator(), movie1);
-    movieList.addMovie(movie3);
-    checkIterator(movieList.iterator(), movie1, movie3);
-    movieList.addMovie(movie4);
-    checkIterator(movieList.iterator(), movie1, movie3, movie4);
-    movieList.removeMovie(movie1);
-    checkIterator(movieList.iterator(), movie3, movie4);
-    movieList.removeMovie(movie3);
-    checkIterator(movieList.iterator(), movie4);
-    movieList.removeMovie(movie4);
-    checkIterator(movieList.iterator());
+  @DisplayName("Helper-metod to check the iterator")
+  static void testIterator_helper(Iterator<IMovie> it, IMovie... movies) {
+    int movieCounter = 0;
+    while (it.hasNext()) {
+      assertTrue(movieCounter < movies.length);
+      assertSame(movies[movieCounter], it.next());
+      movieCounter++;
+    }
+    assertTrue(movieCounter == movies.length);
   }
 }
