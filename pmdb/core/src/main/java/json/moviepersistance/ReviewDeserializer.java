@@ -16,8 +16,7 @@ import java.time.LocalDate;
 public class ReviewDeserializer extends JsonDeserializer<IReview> {
 
   @Override
-  public IReview deserialize(JsonParser p, DeserializationContext ctxt)
-      throws IOException, JsonProcessingException {
+  public IReview deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
     ObjectNode reviewNode = p.getCodec().readTree(p);
     return deserialize((JsonNode) reviewNode);
   }
@@ -32,9 +31,9 @@ public class ReviewDeserializer extends JsonDeserializer<IReview> {
 
       TextNode whenWatchedNode = (TextNode) reviewNode.get("whenWatched");
       String[] whenWatchedArray = whenWatchedNode.asText().split("-");
-      int year = Integer.valueOf(whenWatchedArray[0]);
-      int month = Integer.valueOf(whenWatchedArray[1]);
-      int day = Integer.valueOf(whenWatchedArray[2]);
+      int year = Integer.parseInt(whenWatchedArray[0]);
+      int month = Integer.parseInt(whenWatchedArray[1]);
+      int day = Integer.parseInt(whenWatchedArray[2]);
       LocalDate whenWatched = LocalDate.of(year, month, day);
 
       return new Review(comment, rating, whenWatched);
