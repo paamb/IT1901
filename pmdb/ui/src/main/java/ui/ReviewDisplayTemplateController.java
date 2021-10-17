@@ -8,47 +8,48 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
 public class ReviewDisplayTemplateController {
-    
-    private IReview review;
 
-    private IMovie movie;
+  private IReview review;
 
-    private ReviewListController reviewListController;
+  private IMovie movie;
 
-    @FXML
-    Label movieTitle, whenWatched, rating;
+  private ReviewListController reviewListController;
 
-    @FXML
-    TextArea comment;
+  @FXML
+  Label movieTitle, whenWatched, rating;
 
-    @FXML
-    Button editReview, deleteReview;
+  @FXML
+  TextArea comment;
 
-    public void injectReviewListController(ReviewListController reviewListController){
-        this.reviewListController = reviewListController;
-    }
+  @FXML
+  Button editReview, deleteReview;
 
-    public void setReview(IReview review){
-        this.review = review;
-    }
-    public void setMovie(IMovie movie){
-        this.movie = movie;
-    }
+  public void injectReviewListController(ReviewListController reviewListController) {
+    this.reviewListController = reviewListController;
+  }
 
-    public void setContent(){
-        movieTitle.setText(movie.getTitle());
-        whenWatched.setText(review.getWhenWatched().toString());
-        rating.setText(String.valueOf(review.getRating()));
-        comment.setText(review.getComment());
-    }
+  public void setReview(IReview review) {
+    this.review = review;
+  }
 
-    @FXML
-    public void editReview() {
-        reviewListController.editReview(movie, review);
-    }
+  public void setMovie(IMovie movie) {
+    this.movie = movie;
+  }
 
-    @FXML
-    public void deleteReview() {
-        reviewListController.deleteReview(movie, review);
-    }
+  public void setContent() {
+    movieTitle.setText(movie.getTitle());
+    whenWatched.setText(review.getWhenWatched().toString());
+    rating.setText(String.valueOf(review.getRating()));
+    comment.setText(review.getComment());
+  }
+
+  @FXML
+  public void editReview() {
+    reviewListController.editReview(movie, review);
+  }
+
+  @FXML
+  public void deleteReview() {
+    reviewListController.deleteReview(movie, review);
+  }
 }
