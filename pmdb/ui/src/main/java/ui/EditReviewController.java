@@ -33,6 +33,7 @@ public class EditReviewController {
   @FXML
   Button cancelButton;
   
+  @FXML
   Button submitReview;
 
   private ReviewListController reviewListController;

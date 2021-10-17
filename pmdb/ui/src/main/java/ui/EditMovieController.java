@@ -31,6 +31,7 @@ public class EditMovieController {
   @FXML
   Button submitMovie;
   
+  @FXML
   Button cancelButton;
 
   @FXML
