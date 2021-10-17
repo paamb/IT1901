@@ -75,3 +75,40 @@ Bilde 2:
 Bildet viser et utklipp av en enkelt film. Her har man mulighet for å endre på filmen. Man skal ha mulighet for å endre på tittelen, beskrivelsen av filmen, lengden på filmen, og om filmen er sett. Trykker man "Bekreft" vil endringene bli lagret.
 
 Hvis man trykker på "pluss (+)"-knappen på startskjermen (se bilde 1), vil man også kommet til skjermbildet bilde 2, men da er skjermbildet tomt. Man har muligheten for å lage et nytt filmobjekt, som vil bli lagt til i "Min liste" når man har fylt ut og trykket "Bekreft".
+
+
+Her vises hovedlogikken i plant uml
+```plantuml
+@startuml
+allow_mixing
+component core {
+    package pmdb.core{
+        package moviecomparators
+        interface IMovie
+        class Movie
+        Movie ..> IMovie
+        interface IReview
+        class Review
+        Review ..> IReview
+        class MovieList
+        MovieList --> "*" IMovie : movieList
+    }
+    package json{
+        package moviepersistance
+    }
+}
+component jackson{
+
+}
+json ..> jackson
+component ui {
+
+    }
+component javafx{
+    component fxml{
+
+        }
+    }
+ui ..> javafx
+ui ..> fxml
+@enduml
