@@ -94,7 +94,7 @@ public class MovieListController {
     try {
       storage.saveMovieList(movieList);
     } catch (IOException e) {
-      System.out.println(e.getStackTrace());
+      e.getStackTrace();
     }
   }
 
@@ -109,9 +109,8 @@ public class MovieListController {
     try {
       int counter = 0;
       double offsetX = movieDisplay.getPrefWidth() / 2;
-      double offsetY =
-          ((Pane) new FXMLLoader(this.getClass().getResource("movieDisplayTemplate.fxml")).load())
-              .getPrefHeight();
+      double offsetY = ((Pane) new FXMLLoader(this.getClass().getResource("movieDisplayTemplate.fxml")).load())
+          .getPrefHeight();
 
       Collection<IMovie> movies = getMovies();
 
@@ -124,8 +123,7 @@ public class MovieListController {
       }
 
       for (IMovie movie : movies) {
-        FXMLLoader fxmlLoader =
-            new FXMLLoader(this.getClass().getResource("movieDisplayTemplate.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("movieDisplayTemplate.fxml"));
         Pane moviePane = fxmlLoader.load();
         moviePane.setLayoutX(offsetX * (counter % 2));
         moviePane.setLayoutY(offsetY * ((int) counter / 2));
