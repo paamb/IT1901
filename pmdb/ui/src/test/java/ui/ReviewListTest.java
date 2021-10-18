@@ -185,6 +185,7 @@ public class ReviewListTest extends ApplicationTest {
 
   @Test
   public void deleteReview() {
+    sleep500ms();
     clickOn("#openEditReview");
     waitForNode(editReviewController.commentField);
     sleep500ms();
