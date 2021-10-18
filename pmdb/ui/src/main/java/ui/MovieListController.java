@@ -2,11 +2,9 @@ package ui;
 
 import core.IMovie;
 import core.MovieList;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -149,7 +147,7 @@ public class MovieListController {
 
       for (IMovie movie : movies) {
         FXMLLoader fxmlLoader = 
-              new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
+            new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
         Pane moviePane = fxmlLoader.load();
         int counterCalc = (int) counter / 2;
         moviePane.setLayoutX(offsetX * (counter % 2));

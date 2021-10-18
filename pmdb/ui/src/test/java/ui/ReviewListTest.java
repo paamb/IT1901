@@ -14,7 +14,6 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -67,26 +66,24 @@ public class ReviewListTest extends ApplicationTest {
     return counter;
   }
 
-  private void sleep500ms(){
+  private void sleep500ms() {
     try {
       Thread.sleep(500);
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
-  
-  private void waitForNode(Node node){
+
+  private void waitForNode(Node node) {
     try {
-      WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS,
-          () -> {
-            while (true) {
-              if (node != null && node.isVisible()) {
-                return true;
-              }
-              Thread.sleep(100);
-            }
+      WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS, () -> {
+        while (true) {
+          if (node != null && node.isVisible()) {
+            return true;
           }
-      );
+          Thread.sleep(100);
+        }
+      });
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -145,6 +142,7 @@ public class ReviewListTest extends ApplicationTest {
     clickOn("#dateField");
     editReviewController.dateField.setValue(whenWatched);
     clickOn("#submitReview");
+    sleep500ms();
     assertEquals(1, reviewListSize());
     assertFalse(reviewListController.editReviewWindow.isVisible());
   }
@@ -172,16 +170,16 @@ public class ReviewListTest extends ApplicationTest {
     clickOn("#submitReview");
     WaitForAsyncUtils.waitForFxEvents();
     assertEquals(1, reviewListSize());
-    
+
     WaitForAsyncUtils.waitForFxEvents();
     clickOn(reviewListController.reviewDisplay.lookup("#0").lookup("#editReview"));
     deleteInput(editReviewController.commentField);
-    String newComment = "new comment";write(newComment);
+    String newComment = "new comment";
+    write(newComment);
     clickOn("#submitReview");
 
     assertEquals(1, reviewListSize());
-    IReview review = movieListController.getMovieList().getMovie("test movie")
-        .getReviews().stream().findFirst().get();
+    IReview review = movieListController.getMovieList().getMovie("test movie").getReviews().stream().findFirst().get();
     assertEquals(newComment, review.getComment());
   }
 
