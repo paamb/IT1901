@@ -70,6 +70,14 @@ public class MovieListTest extends ApplicationTest {
     clickOn(text).eraseText(text.getText().length());
   }
 
+  private void sleep500ms(){
+    try {
+      Thread.sleep(500);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   private void waitForNode(Node node){
     try {
       WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS,
@@ -112,7 +120,7 @@ public class MovieListTest extends ApplicationTest {
     try {
       movieListController.loadMovieListFile(testFile);
       assertEquals(1, movieListSize());
-      Thread.sleep(500);
+      sleep500ms();
       clickOn("#movieListTab");
     } catch (Exception e) {
       fail(e);
@@ -282,6 +290,7 @@ public class MovieListTest extends ApplicationTest {
     WaitForAsyncUtils.waitForFxEvents();
     clickOn("#openEditMovie");
     String title2 = "aaa";
+    sleep500ms();
     enterMovieValues(title2, description, hours, minutes, watched);
     clickOn("#submitMovie");
     String title1 = "test movie";
