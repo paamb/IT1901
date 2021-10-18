@@ -54,7 +54,7 @@ mvn test
 ## Prototype
 Under er det lagt ved bilder av prototypen:
 
-![Bildet ble ikke vist](images/desktopImage.png)
+![Bildet ble ikke vist](images/allmovies.png)
 
 
 Bilde 1:
@@ -67,8 +67,6 @@ Trykker man på "pluss (+)"-knappen nederst til høyre i bildet har man mulighet
 
 Trykker man på "Endre"-knappen på en film vil man få opp et bilde som gir brukeren muligheten for å endre på filmen (se bilde 2).
 
-
-![Bildet ble ikke vist](images/movieImage.png)
 
 Bilde 2:
 
