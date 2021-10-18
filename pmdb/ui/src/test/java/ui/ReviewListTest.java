@@ -12,18 +12,23 @@ import core.MovieList;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.concurrent.TimeUnit;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+
 import json.moviepersistance.MovieStorage;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.util.WaitForAsyncUtils;
 
 public class ReviewListTest extends ApplicationTest {
 
@@ -51,7 +56,7 @@ public class ReviewListTest extends ApplicationTest {
   }
 
   private void deleteInput(TextArea text) {
-    text.setText("");
+    clickOn(text).eraseText(text.getText().length());
   }
 
   private int reviewListSize() {
@@ -60,6 +65,31 @@ public class ReviewListTest extends ApplicationTest {
       counter += movie.getReviews().size();
     }
     return counter;
+  }
+
+  private void sleep500ms(){
+    try {
+      Thread.sleep(500);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  
+  private void waitForNode(Node node){
+    try {
+      WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS,
+          () -> {
+            while (true) {
+              if (node != null && node.isVisible()) {
+                return true;
+              }
+              Thread.sleep(100);
+            }
+          }
+      );
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -109,6 +139,8 @@ public class ReviewListTest extends ApplicationTest {
   @Test
   public void addReview_valid() {
     clickOn("#openEditReview");
+    WaitForAsyncUtils.waitForFxEvents();
+    waitForNode(editReviewController.commentField);
     clickOn("#commentField").write(comment);
     clickOn("#dateField");
     editReviewController.dateField.setValue(whenWatched);
@@ -130,19 +162,21 @@ public class ReviewListTest extends ApplicationTest {
 
   @Test
   public void editReview() {
-    
     clickOn("#openEditReview");
+    WaitForAsyncUtils.waitForFxEvents();
+    waitForNode(editReviewController.commentField);
+    sleep500ms();
     clickOn("#commentField").write(comment);
     clickOn("#dateField");
     editReviewController.dateField.setValue(whenWatched);
     clickOn("#submitReview");
+    WaitForAsyncUtils.waitForFxEvents();
     assertEquals(1, reviewListSize());
     
+    WaitForAsyncUtils.waitForFxEvents();
     clickOn(reviewListController.reviewDisplay.lookup("#0").lookup("#editReview"));
-    clickOn("#commentField");
     deleteInput(editReviewController.commentField);
-    String newComment = "new comment";
-    clickOn("#commentField").write(newComment);
+    String newComment = "new comment";write(newComment);
     clickOn("#submitReview");
 
     assertEquals(1, reviewListSize());
@@ -154,6 +188,8 @@ public class ReviewListTest extends ApplicationTest {
   @Test
   public void deleteReview() {
     clickOn("#openEditReview");
+    waitForNode(editReviewController.commentField);
+    sleep500ms();
     clickOn("#commentField").write(comment);
     clickOn("#dateField");
     editReviewController.dateField.setValue(whenWatched);
