@@ -16,7 +16,7 @@ public interface IMovie {
    * @return true if title is valid
    */
   public static boolean isValidTitle(String title) {
-    return (title.length() >= 1 && title.length() <= 50) && (title != null);
+    return (title != null) && (title.length() >= 1 && title.length() <= 50);
   }
 
   /**

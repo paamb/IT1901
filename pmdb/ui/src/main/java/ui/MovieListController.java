@@ -94,7 +94,7 @@ public class MovieListController {
     try {
       storage.saveMovieList(movieList);
     } catch (IOException e) {
-      System.out.println(e.getStackTrace());
+      e.printStackTrace();
     }
   }
 
@@ -127,8 +127,9 @@ public class MovieListController {
         FXMLLoader fxmlLoader =
             new FXMLLoader(this.getClass().getResource("movieDisplayTemplate.fxml"));
         Pane moviePane = fxmlLoader.load();
+        int counterCalc = (int) counter / 2;
         moviePane.setLayoutX(offsetX * (counter % 2));
-        moviePane.setLayoutY(offsetY * ((int) counter / 2));
+        moviePane.setLayoutY(offsetY * counterCalc);
 
         MovieDisplayTemplateController movieDisplayTemplateController = fxmlLoader.getController();
         movieDisplayTemplateController.injectMovieListController(this);
@@ -138,7 +139,8 @@ public class MovieListController {
         movieDisplay.getChildren().add(moviePane);
         counter++;
       }
-      movieDisplay.setLayoutY((int) counter / 2);
+      int counterCalc = (int) counter / 2;
+      movieDisplay.setLayoutY(counterCalc);
     } catch (Exception e) {
       System.out.println(e);
     }
