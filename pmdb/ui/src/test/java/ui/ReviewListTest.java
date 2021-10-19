@@ -96,6 +96,7 @@ public class ReviewListTest extends ApplicationTest {
   public void setup() {
     try {
       movieListController.loadMovieListFile(testFile);
+      sleep500ms();
     } catch (Exception e) {
       fail(e);
     }
@@ -154,6 +155,7 @@ public class ReviewListTest extends ApplicationTest {
     clickOn("#dateField");
     editReviewController.dateField.setValue(invalidDate);
     clickOn("#submitReview");
+    waitForNode(reviewListController.editReviewWindow);
     assertEquals(0, reviewListSize());
     assertTrue(reviewListController.editReviewWindow.isVisible());
   }
@@ -186,9 +188,9 @@ public class ReviewListTest extends ApplicationTest {
   @Test
   public void deleteReview() {
     sleep500ms();
+    waitForNode(movieListController.openEditMovie);
     clickOn("#openEditReview");
     waitForNode(editReviewController.commentField);
-    sleep500ms();
     clickOn("#commentField").write(comment);
     clickOn("#dateField");
     editReviewController.dateField.setValue(whenWatched);

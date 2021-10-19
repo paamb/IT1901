@@ -91,6 +91,7 @@ public class MovieListTest extends ApplicationTest {
 
   private void enterMovieValues(String title, String description, String hours, String minutes, boolean watched) {
     WaitForAsyncUtils.waitForFxEvents();
+    sleep500ms();
     waitForNode(editMovieController.titleField);
     clickOn("#titleField").write(title);
     clickOn("#descriptionField").write(description);
@@ -113,8 +114,14 @@ public class MovieListTest extends ApplicationTest {
     try {
       movieListController.loadMovieListFile(testFile);
       assertEquals(1, movieListSize());
+      System.out.println("before");
+      WaitForAsyncUtils.waitForFxEvents();
+      System.out.println("after");
+      sleep500ms();
       sleep500ms();
       clickOn("#movieListTab");
+      sleep500ms();
+      System.out.println(0);
     } catch (Exception e) {
       fail(e);
     }
@@ -126,6 +133,7 @@ public class MovieListTest extends ApplicationTest {
   @AfterEach
   public void tearDown() throws IOException {
     try {
+      WaitForAsyncUtils.waitForFxEvents();
       MovieStorage storage = new MovieStorage();
       storage.setFile(testFile);
       MovieList movieList = storage.loadMovieList();
@@ -142,14 +150,17 @@ public class MovieListTest extends ApplicationTest {
 
   @Test
   public void test_initialize() {
+    System.out.println(1);
     assertNotNull(movieListController);
     assertNotNull(editMovieController);
   }
 
   @Test
   public void testOpenEditMovie() {
-    WaitForAsyncUtils.waitForFxEvents();
+    System.out.println(2);
+    waitForNode(movieListController.openEditMovie);
     clickOn("#openEditMovie");
+    WaitForAsyncUtils.waitForFxEvents();
     waitForNode(movieListController.editMovieWindow);
     assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
     clickOn("#openEditMovie");
@@ -158,6 +169,7 @@ public class MovieListTest extends ApplicationTest {
 
   @Test
   public void testCloseEditMovie() {
+    System.out.println(3);
     clickOn("#openEditMovie");
     WaitForAsyncUtils.waitForFxEvents();
     waitForNode(movieListController.editMovieWindow);
@@ -168,7 +180,9 @@ public class MovieListTest extends ApplicationTest {
 
   @Test
   public void testAddMovie_valid() {
+    System.out.println(4);
     WaitForAsyncUtils.waitForFxEvents();
+    waitForNode(movieListController.editMovieWindow);
     clickOn("#openEditMovie");
     enterMovieValues(title, description, hours, minutes, watched);
     clickOn("#submitMovie");
@@ -187,6 +201,7 @@ public class MovieListTest extends ApplicationTest {
 
   @Test
   public void testAddMovie_titleInUse() {
+    System.out.println(5);
     WaitForAsyncUtils.waitForFxEvents();
     String title = "test movie";
     clickOn("#openEditMovie");
@@ -200,6 +215,7 @@ public class MovieListTest extends ApplicationTest {
 
   @Test
   public void testAddMovie_invalidDuration() {
+    System.out.println(6);
     WaitForAsyncUtils.waitForFxEvents();
     clickOn("#openEditMovie");
     String nonInteger = "1o";
@@ -226,6 +242,7 @@ public class MovieListTest extends ApplicationTest {
 
   @Test
   public void testDeleteMovie() {
+    System.out.println(7);
     WaitForAsyncUtils.waitForFxEvents();
     clickOn("#openEditMovie");
     enterMovieValues(title, description, hours, minutes, watched);
@@ -236,6 +253,8 @@ public class MovieListTest extends ApplicationTest {
 
   @Test
   public void testEditMovie_valid() {
+    System.out.println(8);
+    waitForNode(movieListController.openEditMovie);
     clickOn("#openEditMovie");
     waitForNode(movieListController.editMovieWindow);
     enterMovieValues(title, description, hours, minutes, watched);
@@ -259,6 +278,8 @@ public class MovieListTest extends ApplicationTest {
 
   @Test
   public void testEditMovie_titleInUse() {
+    System.out.println(9);
+    waitForNode(movieListController.openEditMovie);
     clickOn("#openEditMovie");
     waitForNode(movieListController.editMovieWindow);
     enterMovieValues(title, description, hours, minutes, watched);
@@ -276,7 +297,8 @@ public class MovieListTest extends ApplicationTest {
 
   @Test
   public void testSortMovies() {
-    WaitForAsyncUtils.waitForFxEvents();
+    System.out.println(10);
+    waitForNode(movieListController.openEditMovie);
     clickOn("#openEditMovie");
     String title2 = "aaa";
     sleep500ms();
