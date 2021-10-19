@@ -18,7 +18,14 @@ Vi fant ut at denne klassestrukturen var ugunstig, fordi vi så at det var overf
 Slik ser klassestrukturen ut nå.
 
 ## Endringer i JSON-lagringen
-I release 1 hadde vi en mer automatisk lagring. Vi sendte inn hele javaobjektet vi ville lagre, og lot JSON gjøre jobben for oss. Vi fant ut at dette var en ugunstig måte å gjøre det på da vi ikke hadde noe kontroll over hvordan objektet ble lagret. Dette gjorde det også vanskelig å teste lagring. Vi byttet dermed til en mer manuell lagring der vi selv bestemte hva som skulle lagres, og hvilket JSON-objekt det skulle bli lagret som. Vi fikk dermed større kontroll over hvordan JSON-filen ville se ut.
+I release 1 benyttet vi oss av Jackson sine metoder for lagring. Vi sendte inn hele `movielist`-objektet vi ville lagre, og lot Jackson lagre dette automatisk. Vi fant ut at dette var en ugunstig måte å gjøre det på da vi ikke hadde noe kontroll over hvordan objektet ble lagret. Dette gjorde det også vanskelig å teste lagring. Vi byttet dermed til en mer manuell lagring der vi selv bestemte hva som skulle lagres, og hvilket JSON-objekt det skulle bli lagret som. Vi fikk dermed større kontroll over hvordan JSON-filen ville se ut.
 
 ## Dokumentmetafor
 Vi har valgt å bruke dokumentmetafor når vi lagrer. Når brukeren skal opprette et *film-objekt* må han trykke på lagre-knappen for at det skal vises på skjermen og lagret til fil. Det samme gjelder for når brukeren oppretter en *anmeldelse*. Brukeren har mulighet for å både ender på en eksisterende *film* eller *anmeldelse*. Endringene her i objektene vil først bli utrettet når man har trykket på lagre-knappen. Vi benyttet oss av dokumentmetafor, for at brukeren innsikt i hva som blir lagret, og ha større kontroll. For brukeren er det lett å forstå at *film-objektet* blir lagret når personen trykker på lagre-knappen og fanen lukkes. Brukeren kan også se at *filmen* dukker opp på skjermen etterpå.
+
+## Arkitektur
+Vi har benyttet oss en flermodulær arkitektur. Vi har modulene `core` og `ui`. Modulene er skiller backend fra frontend. I `core` ligger alt som har med backend å gjøre. Der ligger logikken i en undermappe `core`, og lagringen i en undermappe `json`. I `ui` modulen ligger *kontrollerklassene* og *fxml-filene*. Vi valgte å skille `core` fra `ui`, fordi de utfører ulike oppgaver i appen. Hver modul har en `module-info` klasse som definerer hvilke moduler som denne modulen krever, og hvilke pakker inni modulen som er synlig for andre moduler. Dette skaper en god innkapsling. `ui` krever også en del moduler som ikke er nødvendig i `core`, noe som gjør det unødvendig for `core` å importere. Modulariseringen danner også et tydeligere *model-view-controller* skille, som er ønskelig.
+
+Under ligger pakkestrukturen som også ligger i README-filen i pmdb:
+
+![Bildet ble ikke vist](../pmdb/images/packageStructure.png)
