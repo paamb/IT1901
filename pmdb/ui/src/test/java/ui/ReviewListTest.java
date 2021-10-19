@@ -73,12 +73,12 @@ public class ReviewListTest extends ApplicationTest {
     while(counter < 50){
       try {
         return clickOn(id);
-      } catch (NoSuchElementException e) {
+      } catch (Exception e) {
         System.out.println("NoSuchElement, trying again");
       }
       counter++;
       try {
-        Thread.sleep(50);
+        Thread.sleep(100);
       } catch (Exception e) {
         System.out.println("Could not sleep");
       }
@@ -88,10 +88,10 @@ public class ReviewListTest extends ApplicationTest {
 
   private FxRobotInterface waitForThenClick(Node node){
     int counter = 0;
-    while(counter < 50){
+    while(counter < 100){
       try {
         return clickOn(node);
-      } catch (NoSuchElementException e) {
+      } catch (Exception e) {
         System.out.println("NoSuchElement, trying again");
       }
       counter++;
@@ -104,32 +104,24 @@ public class ReviewListTest extends ApplicationTest {
     return null;
   }
 
-  private void sleep500ms() {
-    // try {
-    //   Thread.sleep(500);
-    // } catch (Exception e) {
-    //   e.printStackTrace();
-    // }
-  }
-
   private void waitForNode(Node node) {
-    // try {
-    //   WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS, () -> {
-    //     while (true) {
-    //       if (node != null && node.isVisible()) {
-    //         return true;
-    //       }
-    //       Thread.sleep(100);
-    //     }
-    //   });
-    // } catch (Exception e) {
-    //   e.printStackTrace();
-    // }
-    // try {
-    //   Thread.sleep(500);
-    // } catch (Exception e) {
-    //   //TODO: handle exception
-    // }
+    try {
+      WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS, () -> {
+        while (true) {
+          if (node != null) {
+            return true;
+          }
+          Thread.sleep(100);
+        }
+      });
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    try {
+      Thread.sleep(500);
+    } catch (Exception e) {
+      //TODO: handle exception
+    }
   }
 
   /**
@@ -139,7 +131,7 @@ public class ReviewListTest extends ApplicationTest {
   public void setup() {
     try {
       movieListController.loadMovieListFile(testFile);
-      sleep500ms();
+      WaitForAsyncUtils.waitForFxEvents();
     } catch (Exception e) {
       fail(e);
     }
@@ -186,7 +178,7 @@ public class ReviewListTest extends ApplicationTest {
     waitForThenClick("#dateField");
     editReviewController.dateField.setValue(whenWatched);
     waitForThenClick("#submitReview");
-    sleep500ms();
+    WaitForAsyncUtils.waitForFxEvents();
     assertEquals(1, reviewListSize());
     assertFalse(reviewListController.editReviewWindow.isVisible());
   }
@@ -207,8 +199,6 @@ public class ReviewListTest extends ApplicationTest {
   public void editReview() {
     waitForThenClick("#openEditReview");
     WaitForAsyncUtils.waitForFxEvents();
-    waitForNode(editReviewController.commentField);
-    sleep500ms();
     waitForThenClick("#commentField").write(comment);
     waitForThenClick("#dateField");
     editReviewController.dateField.setValue(whenWatched);
@@ -230,14 +220,15 @@ public class ReviewListTest extends ApplicationTest {
 
   @Test
   public void deleteReview() {
-    sleep500ms();
     waitForNode(movieListController.openEditMovie);
     waitForThenClick("#openEditReview");
-    waitForNode(editReviewController.commentField);
-    waitForThenClick("#commentField").write(comment);
-    waitForThenClick("#dateField");
+    WaitForAsyncUtils.waitForFxEvents();
+    waitForThenClick(editReviewController.commentField);
+    WaitForAsyncUtils.waitForFxEvents();
+    write(comment);
+    waitForThenClick(editReviewController.dateField);
     editReviewController.dateField.setValue(whenWatched);
-    waitForThenClick("#submitReview");
+    waitForThenClick(editReviewController.submitReview);
     assertEquals(1, reviewListSize());
 
     waitForThenClick(reviewListController.reviewDisplay.lookup("#0").lookup("#deleteReview"));
