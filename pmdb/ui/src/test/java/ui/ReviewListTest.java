@@ -12,6 +12,7 @@ import core.MovieList;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 import javafx.fxml.FXMLLoader;
@@ -26,6 +27,7 @@ import json.moviepersistance.MovieStorage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testfx.api.FxRobotInterface;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
@@ -55,7 +57,7 @@ public class ReviewListTest extends ApplicationTest {
   }
 
   private void deleteInput(TextArea text) {
-    clickOn(text).eraseText(text.getText().length());
+    waitForThenClick(text).eraseText(text.getText().length());
   }
 
   private int reviewListSize() {
@@ -66,32 +68,68 @@ public class ReviewListTest extends ApplicationTest {
     return counter;
   }
 
-  private void sleep500ms() {
-    try {
-      Thread.sleep(500);
-    } catch (Exception e) {
-      e.printStackTrace();
+  private FxRobotInterface waitForThenClick(String id){
+    int counter = 0;
+    while(counter < 50){
+      try {
+        return clickOn(id);
+      } catch (NoSuchElementException e) {
+        System.out.println("NoSuchElement, trying again");
+      }
+      counter++;
+      try {
+        Thread.sleep(50);
+      } catch (Exception e) {
+        System.out.println("Could not sleep");
+      }
     }
+    return null;
+  }
+
+  private FxRobotInterface waitForThenClick(Node node){
+    int counter = 0;
+    while(counter < 50){
+      try {
+        return clickOn(node);
+      } catch (NoSuchElementException e) {
+        System.out.println("NoSuchElement, trying again");
+      }
+      counter++;
+      try {
+        Thread.sleep(50);
+      } catch (Exception e) {
+        System.out.println("Could not sleep");
+      }
+    }
+    return null;
+  }
+
+  private void sleep500ms() {
+    // try {
+    //   Thread.sleep(500);
+    // } catch (Exception e) {
+    //   e.printStackTrace();
+    // }
   }
 
   private void waitForNode(Node node) {
-    try {
-      WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS, () -> {
-        while (true) {
-          if (node != null && node.isVisible()) {
-            return true;
-          }
-          Thread.sleep(100);
-        }
-      });
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    try {
-      Thread.sleep(500);
-    } catch (Exception e) {
-      //TODO: handle exception
-    }
+    // try {
+    //   WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS, () -> {
+    //     while (true) {
+    //       if (node != null && node.isVisible()) {
+    //         return true;
+    //       }
+    //       Thread.sleep(100);
+    //     }
+    //   });
+    // } catch (Exception e) {
+    //   e.printStackTrace();
+    // }
+    // try {
+    //   Thread.sleep(500);
+    // } catch (Exception e) {
+    //   //TODO: handle exception
+    // }
   }
 
   /**
@@ -141,13 +179,13 @@ public class ReviewListTest extends ApplicationTest {
 
   @Test
   public void addReview_valid() {
-    clickOn("#openEditReview");
+    waitForThenClick("#openEditReview");
     WaitForAsyncUtils.waitForFxEvents();
     waitForNode(editReviewController.commentField);
-    clickOn("#commentField").write(comment);
-    clickOn("#dateField");
+    waitForThenClick("#commentField").write(comment);
+    waitForThenClick("#dateField");
     editReviewController.dateField.setValue(whenWatched);
-    clickOn("#submitReview");
+    waitForThenClick("#submitReview");
     sleep500ms();
     assertEquals(1, reviewListSize());
     assertFalse(reviewListController.editReviewWindow.isVisible());
@@ -156,10 +194,10 @@ public class ReviewListTest extends ApplicationTest {
   @Test
   public void addReview_invalidDate() {
     LocalDate invalidDate = LocalDate.now().plusDays(30);
-    clickOn("#openEditReview");
-    clickOn("#dateField");
+    waitForThenClick("#openEditReview");
+    waitForThenClick("#dateField");
     editReviewController.dateField.setValue(invalidDate);
-    clickOn("#submitReview");
+    waitForThenClick("#submitReview");
     waitForNode(reviewListController.editReviewWindow);
     assertEquals(0, reviewListSize());
     assertTrue(reviewListController.editReviewWindow.isVisible());
@@ -167,23 +205,23 @@ public class ReviewListTest extends ApplicationTest {
 
   @Test
   public void editReview() {
-    clickOn("#openEditReview");
+    waitForThenClick("#openEditReview");
     WaitForAsyncUtils.waitForFxEvents();
     waitForNode(editReviewController.commentField);
     sleep500ms();
-    clickOn("#commentField").write(comment);
-    clickOn("#dateField");
+    waitForThenClick("#commentField").write(comment);
+    waitForThenClick("#dateField");
     editReviewController.dateField.setValue(whenWatched);
-    clickOn("#submitReview");
+    waitForThenClick("#submitReview");
     WaitForAsyncUtils.waitForFxEvents();
     assertEquals(1, reviewListSize());
 
     WaitForAsyncUtils.waitForFxEvents();
-    clickOn(reviewListController.reviewDisplay.lookup("#0").lookup("#editReview"));
+    waitForThenClick(reviewListController.reviewDisplay.lookup("#0").lookup("#editReview"));
     deleteInput(editReviewController.commentField);
     String newComment = "new comment";
     write(newComment);
-    clickOn("#submitReview");
+    waitForThenClick("#submitReview");
 
     assertEquals(1, reviewListSize());
     IReview review = movieListController.getMovieList().getMovie("test movie").getReviews().stream().findFirst().get();
@@ -194,15 +232,15 @@ public class ReviewListTest extends ApplicationTest {
   public void deleteReview() {
     sleep500ms();
     waitForNode(movieListController.openEditMovie);
-    clickOn("#openEditReview");
+    waitForThenClick("#openEditReview");
     waitForNode(editReviewController.commentField);
-    clickOn("#commentField").write(comment);
-    clickOn("#dateField");
+    waitForThenClick("#commentField").write(comment);
+    waitForThenClick("#dateField");
     editReviewController.dateField.setValue(whenWatched);
-    clickOn("#submitReview");
+    waitForThenClick("#submitReview");
     assertEquals(1, reviewListSize());
 
-    clickOn(reviewListController.reviewDisplay.lookup("#0").lookup("#deleteReview"));
+    waitForThenClick(reviewListController.reviewDisplay.lookup("#0").lookup("#deleteReview"));
     assertEquals(0, reviewListSize());
   }
 }
