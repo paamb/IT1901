@@ -69,6 +69,39 @@ public class MovieListTest extends ApplicationTest {
     waitForThenClick(text).eraseText(text.getText().length());
   }
 
+  private boolean waitForNode(Node node){
+    int counter = 0;
+    while (counter < 50) {
+      if(node != null){
+        return true;
+      }
+      try {
+        Thread.sleep(100);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+    return false;
+  }
+
+  private FxRobotInterface waitForThenWrite(String text){
+    int counter = 0;
+    while(counter < 50){
+      try {
+        return write(text);
+      } catch (Exception e) {
+        System.out.println("NoSuchElement, trying again");
+      }
+      counter++;
+      try {
+        Thread.sleep(50);
+      } catch (Exception e) {
+        System.out.println("Could not sleep");
+      }
+    }
+    return null;
+  }
+
   private FxRobotInterface waitForThenClick(String id){
     int counter = 0;
     while(counter < 50){
@@ -114,16 +147,16 @@ public class MovieListTest extends ApplicationTest {
     }
     waitForThenClick(editMovieController.titleField);
     WaitForAsyncUtils.waitForFxEvents();
-    write(title);
+    waitForThenWrite(title);
     waitForThenClick(editMovieController.descriptionField);
     WaitForAsyncUtils.waitForFxEvents();
-    write(description);
+    waitForThenWrite(description);
     waitForThenClick(editMovieController.hoursField);
     WaitForAsyncUtils.waitForFxEvents();
-    write(hours);
+    waitForThenWrite(hours);
     waitForThenClick(editMovieController.minutesField);
     WaitForAsyncUtils.waitForFxEvents();
-    write(minutes);
+    waitForThenWrite(minutes);
     if (watched) {
       waitForThenClick("#watchedCheckBox");
     }
@@ -179,6 +212,7 @@ public class MovieListTest extends ApplicationTest {
   public void testOpenEditMovie() {
     waitForThenClick("#openEditMovie");
     WaitForAsyncUtils.waitForFxEvents();
+    waitForNode(movieListController.editMovieWindow);
     assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
     waitForThenClick("#openEditMovie");
     assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
@@ -186,8 +220,9 @@ public class MovieListTest extends ApplicationTest {
 
   @Test
   public void testCloseEditMovie() {
+    waitForNode(movieListController.openEditMovie);
     waitForThenClick("#openEditMovie");
-    WaitForAsyncUtils.waitForFxEvents();
+    waitForNode(movieListController.editMovieWindow);
     assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
     waitForThenClick("#cancelButton");
     WaitForAsyncUtils.waitForFxEvents();
@@ -239,15 +274,17 @@ public class MovieListTest extends ApplicationTest {
 
     deleteInput(editMovieController.hoursField);
     String hoursOutOfRange = "30";
-    waitForThenClick("#hoursField").write(hoursOutOfRange);
+    waitForThenClick("#hoursField");
+    waitForThenWrite(hoursOutOfRange);
     waitForThenClick("#submitMovie");
     assertEquals(1, movieListSize());
 
     deleteInput(editMovieController.hoursField);
-    write(hours);
+    waitForThenWrite(hours);
     deleteInput(editMovieController.minutesField);
+    waitForThenClick(editMovieController.minutesField);
     String minutesOutOfRange = "-30";
-    write(minutesOutOfRange);
+    waitForThenWrite(minutesOutOfRange);
     waitForThenClick("#submitMovie");
     assertEquals(1, movieListSize());
   }
@@ -273,7 +310,7 @@ public class MovieListTest extends ApplicationTest {
 
     String newTitle = "new title";
     deleteInput(editMovieController.titleField);
-    write(newTitle);
+    waitForThenWrite(newTitle);
     waitForThenClick("#submitMovie");
     assertFalse(movieListController.editMovieWindow.isVisible());
     assertEquals(newTitle, movieListController.getMovieList().getMovie(newTitle).getTitle());
@@ -297,7 +334,7 @@ public class MovieListTest extends ApplicationTest {
     waitForThenClick(movieListController.movieDisplay.lookup("#1").lookup("#editMovie"));
     deleteInput(editMovieController.titleField);
     String invalidTitle = "test movie";
-    write(invalidTitle);
+    waitForThenWrite(invalidTitle);
     waitForThenClick("#submitMovie");
     assertTrue(movieListController.editMovieWindow.isVisible());
     assertEquals(title, movieListController.getMovieList().getMovie(title).getTitle());
