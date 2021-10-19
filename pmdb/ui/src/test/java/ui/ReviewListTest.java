@@ -87,6 +87,11 @@ public class ReviewListTest extends ApplicationTest {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    try {
+      Thread.sleep(500);
+    } catch (Exception e) {
+      //TODO: handle exception
+    }
   }
 
   /**

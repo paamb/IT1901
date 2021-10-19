@@ -60,6 +60,7 @@ public class MovieListTest extends ApplicationTest {
     editMovieController = movieListController.editMovieController;
     stage.setScene(new Scene(root));
     stage.show();
+    WaitForAsyncUtils.waitForFxEvents();
   }
 
   private void deleteInput(TextField text) {
@@ -158,10 +159,10 @@ public class MovieListTest extends ApplicationTest {
   @Test
   public void testOpenEditMovie() {
     System.out.println(2);
-    waitForNode(movieListController.openEditMovie);
+    // waitForNode(movieListController.openEditMovie);
     clickOn("#openEditMovie");
     WaitForAsyncUtils.waitForFxEvents();
-    waitForNode(movieListController.editMovieWindow);
+    // waitForNode(movieListController.editMovieWindow);
     assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
     clickOn("#openEditMovie");
     assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
@@ -172,7 +173,7 @@ public class MovieListTest extends ApplicationTest {
     System.out.println(3);
     clickOn("#openEditMovie");
     WaitForAsyncUtils.waitForFxEvents();
-    waitForNode(movieListController.editMovieWindow);
+    // waitForNode(movieListController.editMovieWindow);
     assertTrue(movieListController.editMovieWindow.isVisible(), "EditMovie-window should be visible.");
     clickOn("#cancelButton");
     assertFalse(movieListController.editMovieWindow.isVisible(), "EditMovie-window should not be visible.");
@@ -182,7 +183,7 @@ public class MovieListTest extends ApplicationTest {
   public void testAddMovie_valid() {
     System.out.println(4);
     WaitForAsyncUtils.waitForFxEvents();
-    waitForNode(movieListController.editMovieWindow);
+    // waitForNode(movieListController.editMovieWindow);
     clickOn("#openEditMovie");
     enterMovieValues(title, description, hours, minutes, watched);
     clickOn("#submitMovie");
@@ -205,7 +206,7 @@ public class MovieListTest extends ApplicationTest {
     WaitForAsyncUtils.waitForFxEvents();
     String title = "test movie";
     clickOn("#openEditMovie");
-    waitForNode(movieListController.editMovieWindow);
+    // waitForNode(movieListController.editMovieWindow);
     enterMovieValues(title, description, hours, minutes, watched);
     clickOn("#submitMovie");
     assertNotEquals("", editMovieController.errorField.getText());
@@ -254,9 +255,9 @@ public class MovieListTest extends ApplicationTest {
   @Test
   public void testEditMovie_valid() {
     System.out.println(8);
-    waitForNode(movieListController.openEditMovie);
+    // waitForNode(movieListController.openEditMovie);
     clickOn("#openEditMovie");
-    waitForNode(movieListController.editMovieWindow);
+    // waitForNode(movieListController.editMovieWindow);
     enterMovieValues(title, description, hours, minutes, watched);
     clickOn("#submitMovie");
     clickOn(movieListController.movieDisplay.lookup("#1").lookup("#editMovie"));
@@ -279,9 +280,11 @@ public class MovieListTest extends ApplicationTest {
   @Test
   public void testEditMovie_titleInUse() {
     System.out.println(9);
-    waitForNode(movieListController.openEditMovie);
+    // waitForNode(movieListController.openEditMovie);
+    WaitForAsyncUtils.waitForFxEvents();
     clickOn("#openEditMovie");
-    waitForNode(movieListController.editMovieWindow);
+    // waitForNode(movieListController.editMovieWindow);
+    
     enterMovieValues(title, description, hours, minutes, watched);
     clickOn("#submitMovie");
 
@@ -298,7 +301,7 @@ public class MovieListTest extends ApplicationTest {
   @Test
   public void testSortMovies() {
     System.out.println(10);
-    waitForNode(movieListController.openEditMovie);
+    // waitForNode(movieListController.openEditMovie);
     clickOn("#openEditMovie");
     String title2 = "aaa";
     sleep500ms();
