@@ -1,5 +1,5 @@
 # Release 2
-## Endring i strukturen
+## Endring i klassestrukturen
 
 ### Strukturen i release 1
 I release 1 var tanken at vi skulle ha både ha en klasse for *liste med anmeldelser* (`ReviewList.java`) og en for *liste med filmer* (`MovieList.java`). Hver *film* skulle bare ha én *anmeldelse*. 
