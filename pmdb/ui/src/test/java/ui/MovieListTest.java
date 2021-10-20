@@ -33,7 +33,7 @@ import org.testfx.api.FxRobotInterface;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
-public class MovieListTest extends ApplicationTest {
+public class MovieListTest extends AbstractNodeFinderTest {
 
   @FXML
   Tab movieListTab;
@@ -69,34 +69,7 @@ public class MovieListTest extends ApplicationTest {
     clickOn(text).eraseText(text.getText().length());
   }
 
-  private Node waitForNode(String id){
-    WaitForAsyncUtils.waitForFxEvents();
-    Node[] nodes = new Node[1];
-    try {
-      WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS,
-          () -> {
-            int counter = 0;
-            while (true && counter <= 20) {
-              try{
-                nodes[0] = lookup(id).queryAll().stream().findFirst().get();
-                if (nodes[0] != null) {
   
-                  return true;
-                }
-              } catch (Exception e){
-                // Try again
-              }
-              counter++;
-              Thread.sleep(100);
-            }
-            return false;
-          }
-      );
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return nodes[0];
-  }
 
   private void enterMovieValues(String title, String description, String hours, String minutes, boolean watched) {
     clickOn(waitForNode("#titleField")).write(title);
