@@ -6,7 +6,7 @@
 
 <AnchorPane fx:id="app" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController">
   <children>
-    <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+    <TabPane id="tabPane" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
         <Tab text="Vurderte filmer" fx:id="reviewListTab" id="reviewListTab">
           <content>

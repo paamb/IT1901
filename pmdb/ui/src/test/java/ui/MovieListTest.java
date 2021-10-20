@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 import json.moviepersistance.MovieStorage;
 
@@ -60,6 +61,7 @@ public class MovieListTest extends AbstractNodeFinderTest {
 
   private void enterMovieValues(String title, String description, String hours, String minutes,
       boolean watched) {
+    WaitForAsyncUtils.waitForFxEvents();
     clickOn(waitForNode("#titleField")).write(title);
     clickOn(waitForNode("#descriptionField")).write(description);
     clickOn(waitForNode("#hoursField")).write(hours);
@@ -81,8 +83,8 @@ public class MovieListTest extends AbstractNodeFinderTest {
     try {
       movieListController.loadMovieListFile(testFile);
       assertEquals(1, movieListSize());
+      ((TabPane) waitForNode("#tabPane")).getSelectionModel().selectLast();
       WaitForAsyncUtils.waitForFxEvents();
-      clickOn(waitForNode("#movieListTab"));
     } catch (Exception e) {
       fail(e);
     }
@@ -131,6 +133,8 @@ public class MovieListTest extends AbstractNodeFinderTest {
   public void testCloseEditMovie() {
     clickOn(waitForNode("#openEditMovie"));
     waitForNode("#editMovieWindow");
+    WaitForAsyncUtils.waitForFxEvents();
+
     assertTrue(movieListController.editMovieWindow.isVisible(),
         "EditMovie-window should be visible.");
     clickOn(waitForNode("#cancelButton"));
@@ -244,6 +248,7 @@ public class MovieListTest extends AbstractNodeFinderTest {
   public void testEditMovie_titleInUse() {
     WaitForAsyncUtils.waitForFxEvents();
     clickOn(waitForNode("#openEditMovie"));
+    WaitForAsyncUtils.waitForFxEvents();
 
     enterMovieValues(title, description, hours, minutes, watched);
     clickOn(waitForNode("#submitMovie"));
