@@ -68,6 +68,24 @@ public class ReviewListTest extends ApplicationTest {
     return counter;
   }
 
+  private FxRobotInterface waitForThenWrite(String text){
+    int counter = 0;
+    while(counter < 50){
+      try {
+        return write(text);
+      } catch (Exception e) {
+        System.out.println("NoSuchElement, trying again");
+      }
+      counter++;
+      try {
+        Thread.sleep(50);
+      } catch (Exception e) {
+        System.out.println("Could not sleep");
+      }
+    }
+    return null;
+  }
+
   private FxRobotInterface waitForThenClick(String id){
     int counter = 0;
     while(counter < 50){
@@ -108,7 +126,7 @@ public class ReviewListTest extends ApplicationTest {
     try {
       WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS, () -> {
         while (true) {
-          if (node != null) {
+          if (node != null && node.isVisible()) {
             return true;
           }
           Thread.sleep(100);
@@ -174,7 +192,8 @@ public class ReviewListTest extends ApplicationTest {
     waitForThenClick("#openEditReview");
     WaitForAsyncUtils.waitForFxEvents();
     waitForNode(editReviewController.commentField);
-    waitForThenClick("#commentField").write(comment);
+    waitForThenClick("#commentField");
+    waitForThenWrite(comment);
     waitForThenClick("#dateField");
     editReviewController.dateField.setValue(whenWatched);
     waitForThenClick("#submitReview");
@@ -199,7 +218,8 @@ public class ReviewListTest extends ApplicationTest {
   public void editReview() {
     waitForThenClick("#openEditReview");
     WaitForAsyncUtils.waitForFxEvents();
-    waitForThenClick("#commentField").write(comment);
+    waitForThenClick("#commentField");
+    waitForThenWrite(comment);
     waitForThenClick("#dateField");
     editReviewController.dateField.setValue(whenWatched);
     waitForThenClick("#submitReview");
@@ -210,7 +230,7 @@ public class ReviewListTest extends ApplicationTest {
     waitForThenClick(reviewListController.reviewDisplay.lookup("#0").lookup("#editReview"));
     deleteInput(editReviewController.commentField);
     String newComment = "new comment";
-    write(newComment);
+    waitForThenWrite(newComment);
     waitForThenClick("#submitReview");
 
     assertEquals(1, reviewListSize());
@@ -225,7 +245,7 @@ public class ReviewListTest extends ApplicationTest {
     WaitForAsyncUtils.waitForFxEvents();
     waitForThenClick(editReviewController.commentField);
     WaitForAsyncUtils.waitForFxEvents();
-    write(comment);
+    waitForThenWrite(comment);
     waitForThenClick(editReviewController.dateField);
     editReviewController.dateField.setValue(whenWatched);
     waitForThenClick(editReviewController.submitReview);

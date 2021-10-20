@@ -72,7 +72,7 @@ public class MovieListTest extends ApplicationTest {
   private boolean waitForNode(Node node){
     int counter = 0;
     while (counter < 50) {
-      if(node != null){
+      if(node != null && node.isVisible()){
         return true;
       }
       try {
@@ -255,6 +255,7 @@ public class MovieListTest extends ApplicationTest {
     waitForThenClick("#openEditMovie");
     enterMovieValues(title, description, hours, minutes, watched);
     waitForThenClick("#submitMovie");
+    WaitForAsyncUtils.waitForFxEvents();
     assertNotEquals("", editMovieController.errorField.getText());
     assertEquals(1, movieListSize());
     assertEquals(true, movieListController.editMovieWindow.isVisible());
