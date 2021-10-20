@@ -152,7 +152,7 @@ public class MovieListController {
         int counterCalc = (int) counter / 2;
         moviePane.setLayoutX(offsetX * (counter % 2));
         moviePane.setLayoutY(offsetY * counterCalc);
-        moviePane.setId(String.valueOf(counter));
+        moviePane.setId("M" + String.valueOf(counter));
 
         MovieDisplayTemplateController movieDisplayTemplateController = fxmlLoader.getController();
         movieDisplayTemplateController.injectMovieListController(this);

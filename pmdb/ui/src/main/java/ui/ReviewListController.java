@@ -82,7 +82,7 @@ public class ReviewListController {
           int counterCalc = (int) counter / 2;
           reviewPane.setLayoutX(offsetX * (counter % 2));
           reviewPane.setLayoutY(offsetY * counterCalc);
-          reviewPane.setId(String.valueOf(counter));
+          reviewPane.setId("R" + String.valueOf(counter));
 
           ReviewDisplayTemplateController reviewDisplayTemplateController =
               fxmlLoader.getController();

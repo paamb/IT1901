@@ -12,14 +12,11 @@ import core.MovieList;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 
 import json.moviepersistance.MovieStorage;
@@ -27,11 +24,9 @@ import json.moviepersistance.MovieStorage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testfx.api.FxRobotInterface;
-import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
-public class ReviewListTest extends ApplicationTest {
+public class ReviewListTest extends AbstractNodeFinderTest {
 
   private MovieListController movieListController;
 
@@ -56,10 +51,6 @@ public class ReviewListTest extends ApplicationTest {
     stage.show();
   }
 
-  private void deleteInput(TextArea text) {
-    waitForThenClick(text).eraseText(text.getText().length());
-  }
-
   private int reviewListSize() {
     int counter = 0;
     for (IMovie movie : movieListController.getMovies()) {
@@ -68,78 +59,13 @@ public class ReviewListTest extends ApplicationTest {
     return counter;
   }
 
-  private FxRobotInterface waitForThenWrite(String text){
-    int counter = 0;
-    while(counter < 50){
-      try {
-        return write(text);
-      } catch (Exception e) {
-        System.out.println("NoSuchElement, trying again");
-      }
-      counter++;
-      try {
-        Thread.sleep(50);
-      } catch (Exception e) {
-        System.out.println("Could not sleep");
-      }
-    }
-    return null;
-  }
-
-  private FxRobotInterface waitForThenClick(String id){
-    int counter = 0;
-    while(counter < 50){
-      try {
-        return clickOn(id);
-      } catch (Exception e) {
-        System.out.println("NoSuchElement, trying again");
-      }
-      counter++;
-      try {
-        Thread.sleep(100);
-      } catch (Exception e) {
-        System.out.println("Could not sleep");
-      }
-    }
-    return null;
-  }
-
-  private FxRobotInterface waitForThenClick(Node node){
-    int counter = 0;
-    while(counter < 100){
-      try {
-        return clickOn(node);
-      } catch (Exception e) {
-        System.out.println("NoSuchElement, trying again");
-      }
-      counter++;
-      try {
-        Thread.sleep(50);
-      } catch (Exception e) {
-        System.out.println("Could not sleep");
-      }
-    }
-    return null;
-  }
-
-  private void waitForNode(Node node) {
-    try {
-      WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS, () -> {
-        while (true) {
-          if (node != null && node.isVisible()) {
-            return true;
-          }
-          Thread.sleep(100);
-        }
-      });
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    try {
-      Thread.sleep(500);
-    } catch (Exception e) {
-      //TODO: handle exception
-    }
+  private void addDummyReview() {
+    clickOn(waitForNode("#openEditReview"));
+    WaitForAsyncUtils.waitForFxEvents();
+    clickOn(waitForNode("#commentField")).write(comment);
+    clickOn(waitForNode("#dateField"));
+    ((DatePicker) waitForNode("#dateField")).setValue(whenWatched);
+    clickOn(waitForNode("#submitReview"));
   }
 
   /**
@@ -182,6 +108,7 @@ public class ReviewListTest extends ApplicationTest {
 
   @Test
   public void test_initialize() {
+    WaitForAsyncUtils.waitForFxEvents();
     assertNotNull(reviewListController);
     assertNotNull(editReviewController);
     assertNotNull(movieListController);
@@ -189,15 +116,9 @@ public class ReviewListTest extends ApplicationTest {
 
   @Test
   public void addReview_valid() {
-    waitForThenClick("#openEditReview");
+    addDummyReview();
     WaitForAsyncUtils.waitForFxEvents();
-    waitForNode(editReviewController.commentField);
-    waitForThenClick("#commentField");
-    waitForThenWrite(comment);
-    waitForThenClick("#dateField");
-    editReviewController.dateField.setValue(whenWatched);
-    waitForThenClick("#submitReview");
-    WaitForAsyncUtils.waitForFxEvents();
+
     assertEquals(1, reviewListSize());
     assertFalse(reviewListController.editReviewWindow.isVisible());
   }
@@ -205,53 +126,42 @@ public class ReviewListTest extends ApplicationTest {
   @Test
   public void addReview_invalidDate() {
     LocalDate invalidDate = LocalDate.now().plusDays(30);
-    waitForThenClick("#openEditReview");
-    waitForThenClick("#dateField");
-    editReviewController.dateField.setValue(invalidDate);
-    waitForThenClick("#submitReview");
-    waitForNode(reviewListController.editReviewWindow);
+    clickOn(waitForNode("#openEditReview"));
+    clickOn(waitForNode("#dateField"));
+    ((DatePicker) waitForNode("#dateField")).setValue(invalidDate);
+    clickOn(waitForNode("#submitReview"));
+    WaitForAsyncUtils.waitForFxEvents();
+
     assertEquals(0, reviewListSize());
     assertTrue(reviewListController.editReviewWindow.isVisible());
   }
 
   @Test
   public void editReview() {
-    waitForThenClick("#openEditReview");
+    addDummyReview();
     WaitForAsyncUtils.waitForFxEvents();
-    waitForThenClick("#commentField");
-    waitForThenWrite(comment);
-    waitForThenClick("#dateField");
-    editReviewController.dateField.setValue(whenWatched);
-    waitForThenClick("#submitReview");
-    WaitForAsyncUtils.waitForFxEvents();
+
     assertEquals(1, reviewListSize());
 
-    WaitForAsyncUtils.waitForFxEvents();
-    waitForThenClick(reviewListController.reviewDisplay.lookup("#0").lookup("#editReview"));
-    deleteInput(editReviewController.commentField);
+    clickOn(waitForNode("#R0").lookup("#editReview"));
     String newComment = "new comment";
-    waitForThenWrite(newComment);
-    waitForThenClick("#submitReview");
+    clickOn(waitForNode("#commentField")).eraseText(comment.length()).write(newComment);
+    clickOn(waitForNode("#submitReview"));
+    WaitForAsyncUtils.waitForFxEvents();
 
     assertEquals(1, reviewListSize());
-    IReview review = movieListController.getMovieList().getMovie("test movie").getReviews().stream().findFirst().get();
+    IReview review = movieListController.getMovieList().getMovie("test movie").getReviews().stream()
+        .findFirst().get();
     assertEquals(newComment, review.getComment());
   }
 
   @Test
   public void deleteReview() {
-    waitForNode(movieListController.openEditMovie);
-    waitForThenClick("#openEditReview");
+    addDummyReview();
     WaitForAsyncUtils.waitForFxEvents();
-    waitForThenClick(editReviewController.commentField);
-    WaitForAsyncUtils.waitForFxEvents();
-    waitForThenWrite(comment);
-    waitForThenClick(editReviewController.dateField);
-    editReviewController.dateField.setValue(whenWatched);
-    waitForThenClick(editReviewController.submitReview);
-    assertEquals(1, reviewListSize());
 
-    waitForThenClick(reviewListController.reviewDisplay.lookup("#0").lookup("#deleteReview"));
+    assertEquals(1, reviewListSize());
+    clickOn(waitForNode("#R0").lookup("#deleteReview"));
     assertEquals(0, reviewListSize());
   }
 }
