@@ -2,6 +2,11 @@ package ui;
 
 import javafx.fxml.FXML;
 
+/**
+ * AppController class.
+ * 
+ * 
+ */
 public class AppController {
 
   @FXML

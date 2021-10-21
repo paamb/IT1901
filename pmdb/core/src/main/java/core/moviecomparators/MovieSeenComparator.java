@@ -4,6 +4,11 @@ import core.IMovie;
 import java.io.Serializable;
 import java.util.Comparator;
 
+/**
+ * MovieSeenComparator class.
+ * 
+ * 
+ */
 public class MovieSeenComparator implements Comparator<IMovie>, Serializable {
 
   @Override

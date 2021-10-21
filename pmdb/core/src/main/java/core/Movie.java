@@ -4,6 +4,11 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Movie class.
+ * 
+ * 
+ */
 public class Movie implements IMovie {
 
   private String title;

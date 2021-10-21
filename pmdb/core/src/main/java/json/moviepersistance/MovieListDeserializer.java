@@ -12,6 +12,11 @@ import core.IMovie;
 import core.MovieList;
 import java.io.IOException;
 
+/**
+ * MovieListDeserializer class.
+ * 
+ * 
+ */
 public class MovieListDeserializer extends JsonDeserializer<MovieList> {
   private MovieDeserializer movieDeserializer = new MovieDeserializer();
   private MovieList movieList = new MovieList();

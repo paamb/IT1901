@@ -5,6 +5,11 @@ import core.IMovie;
 import core.IReview;
 import core.MovieList;
 
+/**
+ * MovieModule class.
+ * 
+ * 
+ */
 public class MovieModule extends SimpleModule {
   /**
    * Initializing the movieModule with Serializers and Deserializers.
