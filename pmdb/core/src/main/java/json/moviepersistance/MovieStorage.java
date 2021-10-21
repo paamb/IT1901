@@ -29,7 +29,20 @@ public class MovieStorage {
   }
 
   /**
-   * Saves the movie list to json file.
+   * Sets the storagefile, for loading and saving.
+   * 
+   * @param file the file to be set
+   */
+  public void setFile(File file) {
+    if (file == null) {
+      throw new IllegalArgumentException("FileName cannot be null.");
+    }
+    this.file = file;
+    this.fileName = file.getPath();
+  }
+
+  /**
+    * Saves the movie list to json file.
    * 
    * @param movieList the movielist object to be saved.
    */

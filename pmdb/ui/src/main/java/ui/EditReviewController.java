@@ -37,9 +37,9 @@ public class EditReviewController {
 
   @FXML
   Button cancelButton;
-
+  
   @FXML
-  Button addReviewButton;
+  Button submitReview;
 
   private ReviewListController reviewListController;
 

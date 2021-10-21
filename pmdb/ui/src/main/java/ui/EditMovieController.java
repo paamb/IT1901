@@ -34,8 +34,8 @@ public class EditMovieController {
   TextArea descriptionField;
 
   @FXML
-  Button addTheMovie;
-
+  Button submitMovie;
+  
   @FXML
   Button cancelButton;
 
@@ -70,7 +70,7 @@ public class EditMovieController {
               movieListController.hideEditMovie();
               clearFields();
             } else {
-              errorField.setText("Beskrivelse kan ikke være 'null'");;
+              errorField.setText("Beskrivelse kan ikke være 'null'");
             }
           } else {
             errorField.setText("Ugyldig varighet");

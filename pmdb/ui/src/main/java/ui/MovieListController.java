@@ -2,8 +2,10 @@ package ui;
 
 import core.IMovie;
 import core.MovieList;
+import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -38,17 +40,37 @@ public class MovieListController {
   Pane movieDisplay;
 
   @FXML
+  String userMovieListPath;
+
+  @FXML
   EditMovieController editMovieController;
 
   private ReviewListController reviewListController;
 
   @FXML
   void initialize() throws IOException {
-    storage = new MovieStorage();
-    movieList = storage.loadMovieList();
+    loadMovieListFile(new File(userMovieListPath));
     editMovieController.injectMovieListController(this);
-    hideEditMovie();
-    displayMovieList();
+    Platform.runLater(() -> {
+      hideEditMovie();
+      displayMovieList();
+    });
+  }
+
+  /**
+   * Loades MovieList from given file.
+   * 
+   * @param file the file to load from.
+   * @throws IOException when unable to load from file.
+   */
+  public void loadMovieListFile(File file) throws IOException {
+    storage = new MovieStorage();
+    storage.setFile(file);
+    movieList = storage.loadMovieList();
+    Platform.runLater(() -> {
+      hideEditMovie();
+      displayMovieList();
+    });
   }
 
   protected void injectReviewListController(ReviewListController reviewListController) {
@@ -114,9 +136,9 @@ public class MovieListController {
     try {
       int counter = 0;
       double offsetX = movieDisplay.getPrefWidth() / 2;
-      double offsetY =
-          ((Pane) new FXMLLoader(this.getClass().getResource("movieDisplayTemplate.fxml")).load())
-              .getPrefHeight();
+      double offsetY = 
+          ((Pane) new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml")).load())
+          .getPrefHeight();
 
       Collection<IMovie> movies = getMovies();
 
@@ -129,12 +151,13 @@ public class MovieListController {
       }
 
       for (IMovie movie : movies) {
-        FXMLLoader fxmlLoader =
-            new FXMLLoader(this.getClass().getResource("movieDisplayTemplate.fxml"));
+        FXMLLoader fxmlLoader = 
+            new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
         Pane moviePane = fxmlLoader.load();
         int counterCalc = (int) counter / 2;
         moviePane.setLayoutX(offsetX * (counter % 2));
         moviePane.setLayoutY(offsetY * counterCalc);
+        moviePane.setId("M" + String.valueOf(counter));
 
         MovieDisplayTemplateController movieDisplayTemplateController = fxmlLoader.getController();
         movieDisplayTemplateController.injectMovieListController(this);
