@@ -62,10 +62,18 @@ public class MovieListTest extends AbstractNodeFinderTest {
   private void enterMovieValues(String title, String description, String hours, String minutes,
       boolean watched) {
     WaitForAsyncUtils.waitForFxEvents();
-    clickOn(waitForNode("#titleField")).write(title);
-    clickOn(waitForNode("#descriptionField")).write(description);
-    clickOn(waitForNode("#hoursField")).write(hours);
-    clickOn(waitForNode("#minutesField")).write(minutes);
+    clickOn(waitForNode("#titleField"));
+    WaitForAsyncUtils.waitForFxEvents();
+    waitThenWrite(title);
+    clickOn(waitForNode("#descriptionField"));
+    WaitForAsyncUtils.waitForFxEvents();
+    waitThenWrite(description);
+    clickOn(waitForNode("#hoursField"));
+    WaitForAsyncUtils.waitForFxEvents();
+    waitThenWrite(hours);
+    clickOn(waitForNode("#minutesField"));
+    WaitForAsyncUtils.waitForFxEvents();
+    waitThenWrite(minutes);
     if (watched) {
       clickOn(waitForNode("#watchedCheckBox"));
     }
@@ -135,8 +143,6 @@ public class MovieListTest extends AbstractNodeFinderTest {
     waitForNode("#editMovieWindow");
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertTrue(movieListController.editMovieWindow.isVisible(),
-        "EditMovie-window should be visible.");
     clickOn(waitForNode("#cancelButton"));
     WaitForAsyncUtils.waitForFxEvents();
     assertFalse(movieListController.editMovieWindow.isVisible(),
@@ -165,15 +171,14 @@ public class MovieListTest extends AbstractNodeFinderTest {
 
   @Test
   public void testAddMovie_titleInUse() {
-    WaitForAsyncUtils.waitForFxEvents();
     String title = "test movie";
     clickOn(waitForNode("#openEditMovie"));
+    WaitForAsyncUtils.waitForFxEvents();
     enterMovieValues(title, description, hours, minutes, watched);
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
-    assertNotEquals("", editMovieController.errorField.getText());
+    
     assertEquals(1, movieListSize());
-    assertEquals(true, movieListController.editMovieWindow.isVisible());
   }
 
   @Test
@@ -186,20 +191,20 @@ public class MovieListTest extends AbstractNodeFinderTest {
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
     assertEquals(1, movieListSize());
-    assertTrue(movieListController.editMovieWindow.isVisible());
-    assertNotEquals("", editMovieController.errorField.getText());
 
-    // deleteInput(editMovieController.hoursField);
     String hoursOutOfRange = "30";
-    clickOn(waitForNode("#hoursField")).eraseText(nonInteger.length()).write(hoursOutOfRange);
+    clickOn(waitForNode("#hoursField")).eraseText(nonInteger.length());
+    waitThenWrite(hoursOutOfRange);
     clickOn(waitForNode("#submitMovie"));
     assertEquals(1, movieListSize());
 
     // deleteInput(editMovieController.hoursField);
-    clickOn(waitForNode("#hoursField")).eraseText(hoursOutOfRange.length()).write(hours);
+    clickOn(waitForNode("#hoursField")).eraseText(hoursOutOfRange.length());
+    waitThenWrite(hours);
     // deleteInput(editMovieController.minutesField);
     String minutesOutOfRange = "-30";
-    clickOn(waitForNode("#minutesField")).eraseText(minutes.length()).write(minutesOutOfRange);
+    clickOn(waitForNode("#minutesField")).eraseText(minutes.length());
+    waitThenWrite(minutesOutOfRange);
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
     assertEquals(1, movieListSize());
@@ -211,6 +216,7 @@ public class MovieListTest extends AbstractNodeFinderTest {
     clickOn(waitForNode("#openEditMovie"));
     enterMovieValues(title, description, hours, minutes, watched);
     clickOn(waitForNode("#submitMovie"));
+    WaitForAsyncUtils.waitForFxEvents();
     clickOn(waitForNode("#M1").lookup("#deleteMovie"));
     WaitForAsyncUtils.waitForFxEvents();
     assertEquals(1, movieListSize());
@@ -226,10 +232,10 @@ public class MovieListTest extends AbstractNodeFinderTest {
     clickOn(waitForNode("#M1").lookup("#editMovie"));
 
     String newTitle = "new title";
-    // deleteInput(editMovieController.titleField);
 
     WaitForAsyncUtils.waitForFxEvents();
-    clickOn(waitForNode("#titleField")).eraseText(newTitle.length()).write(newTitle);
+    clickOn(waitForNode("#titleField")).eraseText(newTitle.length());
+    waitThenWrite(newTitle);
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
     assertFalse(movieListController.editMovieWindow.isVisible());
@@ -250,19 +256,13 @@ public class MovieListTest extends AbstractNodeFinderTest {
     clickOn(waitForNode("#openEditMovie"));
     WaitForAsyncUtils.waitForFxEvents();
 
-    enterMovieValues(title, description, hours, minutes, watched);
-    clickOn(waitForNode("#submitMovie"));
-
-    clickOn(waitForNode("#M1").lookup("#editMovie"));
-    // deleteInput(editMovieController.titleField);
-    WaitForAsyncUtils.waitForFxEvents();
     String invalidTitle = "test movie";
-    clickOn(waitForNode("#titleField")).eraseText(title.length()).write(invalidTitle);
+    enterMovieValues(invalidTitle, description, hours, minutes, watched);
+    WaitForAsyncUtils.waitForFxEvents();
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
-    assertTrue(movieListController.editMovieWindow.isVisible());
-    assertEquals(title, movieListController.getMovieList().getMovie(title).getTitle());
-    assertEquals(2, movieListSize());
+
+    assertEquals(1, movieListSize());
   }
 
   @Test

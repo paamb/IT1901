@@ -62,7 +62,8 @@ public class ReviewListTest extends AbstractNodeFinderTest {
   private void addDummyReview() {
     clickOn(waitForNode("#openEditReview"));
     WaitForAsyncUtils.waitForFxEvents();
-    clickOn(waitForNode("#commentField")).write(comment);
+    clickOn(waitForNode("#commentField"));
+    waitThenWrite(comment);
     clickOn(waitForNode("#dateField"));
     ((DatePicker) waitForNode("#dateField")).setValue(whenWatched);
     clickOn(waitForNode("#submitReview"));
@@ -145,7 +146,8 @@ public class ReviewListTest extends AbstractNodeFinderTest {
 
     clickOn(waitForNode("#R0").lookup("#editReview"));
     String newComment = "new comment";
-    clickOn(waitForNode("#commentField")).eraseText(comment.length()).write(newComment);
+    clickOn(waitForNode("#commentField")).eraseText(comment.length());
+    waitThenWrite(newComment);
     clickOn(waitForNode("#submitReview"));
     WaitForAsyncUtils.waitForFxEvents();
 
@@ -160,7 +162,6 @@ public class ReviewListTest extends AbstractNodeFinderTest {
     addDummyReview();
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(1, reviewListSize());
     clickOn(waitForNode("#R0").lookup("#deleteReview"));
     assertEquals(0, reviewListSize());
   }

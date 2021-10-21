@@ -1,5 +1,6 @@
 package ui;
 
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import javafx.scene.Node;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -31,9 +32,32 @@ abstract class AbstractNodeFinderTest extends ApplicationTest {
           }
       );
     } catch (Exception e) {
-      e.printStackTrace();
+      //Time ran out
     }
     return nodes[0];
   }
 
+  protected void waitThenWrite(String text) {
+    WaitForAsyncUtils.waitForFxEvents();
+    try {
+      WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS,
+          () -> {
+            int counter = 0;
+            while (true && counter <= 20) {
+              try {
+                write(text);
+                return true;
+              } catch (NoSuchElementException e){
+                // Try again
+              }
+              counter++;
+              Thread.sleep(100);
+            }
+            return false;
+          }
+      );
+    } catch (Exception e) {
+      //Time ran out
+    }
+  }
 }
