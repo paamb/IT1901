@@ -21,6 +21,7 @@ Slik ser klassestrukturen ut nå.
 
 ## Endringer i JSON-lagringen
 I release 1 hadde vi bare en klasse for lagring `Storage.java` som n benyttet vi oss av Jackson sine metoder for lagring. Vi sendte inn hele `movielist`-objektet vi ville lagre, og lot Jackson lagre dette automatisk. Vi fant ut at dette var en ugunstig måte å gjøre det på da vi ikke hadde noe kontroll over hvordan objektet ble lagret. Dette gjorde det også vanskelig å teste lagring. Vi byttet dermed til en mer manuell lagring der vi selv bestemte hva som skulle lagres, og hvilket JSON-objekt det skulle bli lagret som. Vi fikk dermed større kontroll over hvordan JSON-filen ville se ut.
+
 Persistense release 1             |  Persistense release 2
 :-------------------------:|:-------------------------:
 ![Bildet ble ikke vist](../pmdb/images/classDiagramPersistanceRelease1.png) | ![Bildet ble ikke vist](../pmdb/images/classDiagramPersistanceRelease2.png)
