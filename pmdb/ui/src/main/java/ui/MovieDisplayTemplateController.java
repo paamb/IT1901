@@ -6,6 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
+/**
+ * MovieDisplayTemplateController class.
+ * 
+ * 
+ */
 public class MovieDisplayTemplateController {
 
   private IMovie movie;

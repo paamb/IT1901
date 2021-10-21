@@ -6,6 +6,11 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import core.IReview;
 import java.io.IOException;
 
+/**
+ * ReviewSerializer class.
+ * 
+ * 
+ */
 public class ReviewSerializer extends JsonSerializer<IReview> {
 
   @Override

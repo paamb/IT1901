@@ -10,6 +10,11 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 
+/**
+ * MovieStorage class.
+ * 
+ * 
+ */
 public class MovieStorage {
   private String fileName = "MovieList.json";
   private File file;

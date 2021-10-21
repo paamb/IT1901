@@ -2,6 +2,11 @@ package core;
 
 import java.time.LocalDate;
 
+/**
+ * IReview interface.
+ * 
+ * 
+ */
 public interface IReview {
 
   /**
