@@ -7,6 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
+/**
+ * ReviewDisplayTemplateController class.
+ * 
+ * 
+ */
 public class ReviewDisplayTemplateController {
 
   private IReview review;

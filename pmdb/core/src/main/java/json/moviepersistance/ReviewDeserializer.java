@@ -13,6 +13,11 @@ import core.Review;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * ReviewDeserializer class.
+ * 
+ * 
+ */
 public class ReviewDeserializer extends JsonDeserializer<IReview> {
 
   @Override

@@ -7,6 +7,11 @@ import core.IMovie;
 import core.IReview;
 import java.io.IOException;
 
+/**
+ * MovieSerializer class.
+ * 
+ * 
+ */
 public class MovieSerializer extends JsonSerializer<IMovie> {
 
   @Override

@@ -12,6 +12,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import json.moviepersistance.MovieStorage;
 
+/**
+ * MovieListController class.
+ * 
+ * 
+ */
 public class MovieListController {
 
   private MovieList movieList;

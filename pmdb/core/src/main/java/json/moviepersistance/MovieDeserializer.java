@@ -16,6 +16,11 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+/**
+ * MovieDeserializer class.
+ * 
+ * 
+ */
 public class MovieDeserializer extends JsonDeserializer<IMovie> {
 
   @Override

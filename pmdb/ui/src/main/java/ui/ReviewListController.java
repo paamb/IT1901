@@ -10,6 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+/**
+ * ReviewListController class.
+ * 
+ * 
+ */
 public class ReviewListController {
 
   @FXML
