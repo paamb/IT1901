@@ -13,14 +13,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
-<<<<<<< HEAD
-=======
 /**
  * EditReviewController class.
  * 
  * 
  */
->>>>>>> main
 public class EditReviewController {
 
   @FXML

@@ -176,7 +176,7 @@ public class MovieListTest extends AbstractNodeFinderTest {
     enterMovieValues(title, description, hours, minutes, watched);
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
-    
+
     assertEquals(1, movieListSize());
   }
 
