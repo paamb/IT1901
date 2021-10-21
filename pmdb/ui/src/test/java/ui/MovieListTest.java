@@ -2,7 +2,6 @@ package ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -192,16 +191,8 @@ public class MovieListTest extends AbstractNodeFinderTest {
     WaitForAsyncUtils.waitForFxEvents();
     assertEquals(1, movieListSize());
 
-    String hoursOutOfRange = "30";
     clickOn(waitForNode("#hoursField")).eraseText(nonInteger.length());
-    waitThenWrite(hoursOutOfRange);
-    clickOn(waitForNode("#submitMovie"));
-    assertEquals(1, movieListSize());
-
-    // deleteInput(editMovieController.hoursField);
-    clickOn(waitForNode("#hoursField")).eraseText(hoursOutOfRange.length());
     waitThenWrite(hours);
-    // deleteInput(editMovieController.minutesField);
     String minutesOutOfRange = "-30";
     clickOn(waitForNode("#minutesField")).eraseText(minutes.length());
     waitThenWrite(minutesOutOfRange);
@@ -248,21 +239,6 @@ public class MovieListTest extends AbstractNodeFinderTest {
     assertFalse(movieListController.editMovieWindow.isVisible());
     assertEquals(newTitle, movieListController.getMovieList().getMovie(newTitle).getTitle());
     assertEquals(2, movieListSize());
-  }
-
-  @Test
-  public void testEditMovie_titleInUse() {
-    WaitForAsyncUtils.waitForFxEvents();
-    clickOn(waitForNode("#openEditMovie"));
-    WaitForAsyncUtils.waitForFxEvents();
-
-    String invalidTitle = "test movie";
-    enterMovieValues(invalidTitle, description, hours, minutes, watched);
-    WaitForAsyncUtils.waitForFxEvents();
-    clickOn(waitForNode("#submitMovie"));
-    WaitForAsyncUtils.waitForFxEvents();
-
-    assertEquals(1, movieListSize());
   }
 
   @Test
