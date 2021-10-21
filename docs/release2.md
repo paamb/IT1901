@@ -11,6 +11,7 @@ Det var et *én-til-én* forhold mellom `Movie` og `Review`. `ReviewList` hadde 
 
 ### Strukturen i release 2
 Vi fant ut at denne klassestrukturen var ugunstig, fordi vi så at det var overflødig å både ha `ReviewList` og `MovieList`. Vi tenkte også at det skulle være mulig for en bruker å lage flere *anmeldelser* til én *film*. Derfor endret vi klasseforholdet til at `Movie` hadde *en-til-mange* forhold med `Review`. Dermed kunne vi droppe `ReviewList`, og istedenfor la `MovieList` inneholde mange `Movies` som igjen inneholder mange `Reviews`. Da kunne vi også lagre alt i en fil. Hvis vi vil nå ha tak i en `Review`, trenger vi bare å finne den tilhørende filmen.
+
 Struktur release 1         |  Struktur release 2
 :-------------------------:|:-------------------------:
 ![Bildet ble ikke vist](../pmdb/images/classDiagramRelease1.png) | ![Bildet ble ikke vist](../pmdb/images/classDiagramRelease2.png)
@@ -20,6 +21,7 @@ Struktur release 1         |  Struktur release 2
 
 ## Endringer i JSON-lagringen
 I release 1 hadde vi bare en klasse for lagring `Storage.java`, som benyttet `jackson` sine metoder for lagring. Vi sendte inn hele `movielist`-objektet vi ville lagre, og lot `jackson` lagre dette automatisk. Vi fant ut at dette var en ugunstig, da vi ikke hadde noe kontroll over hvordan objektet ble lagret. Vi visste ikke hvordan JSON-filen ville se ut, som skapte trøbbel da vi skulle hente hente ut objektet. Dette gjorde det også vanskelig å teste lagring, fordi vi egentlig ikke visste hvordan objektet ville se ut. Vi byttet dermed til en mer manuell lagring der vi selv bestemte hva som skulle lagres, og hvilke JSON-objekter det vil lagres som. Vi fikk da større kontroll over hvordan JSON-filen ville se ut, og testingen ble mer valid.
+
 Persistense release 1 |  Persistense release 2
 :-------------------------:|:-------------------------:
 ![Bildet ble ikke vist](../pmdb/images/classDiagramPersistanceRelease1.png) | ![Bildet ble ikke vist](../pmdb/images/classDiagramPersistanceRelease2.png)
