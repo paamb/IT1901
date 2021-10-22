@@ -89,3 +89,88 @@ Fordelene vi generelt opplevde med parprogrammeringen er blant annet:
 - Det er alltid bedre å ha to personer løse et problem enn en. Vi kom oss til en kortere og enklere løsning når.
 - Vi opplevde også at det førte til færre feil i koden. Dette er nok fordi mens en programmerer, ser den andre over den. F.eks kunne den som programmerer å legge til en "private" på en deklarasjon, men feilen ble oppdaget av den som ser på.
 - Det førte til at vi også skjønte mer av helheten av appen/programmet fordi du man får innblikk i alle sidene ved koden. Man lærer også en god del av hverandre, det kan f.eks være ting du ikke kan som partneren din kan lære deg.
+
+---
+
+## Tester
+
+I dette programmet har vi testet både backenden og frontenden ved hjelp av JUnit 5 til Java. Testene er viktige for å oppdage bugs og sørge for at bugs ikke finner sted etterhvert når programmet brukes. Modulene blir testet individuelt og uavhengig av hverandre. Dette fører til en mer pålitelig og gjenbrukbar kode.
+
+I tillegg er det nyttig for å kunne se om koden funker slik den skal og yter slik den var ment å gjøre. Ikke minst hjelper unit-testing med å holde koden tydelig og ikke mer komplisert enn det den trenger å være. For eksempel, hadde vi i begynnelsen to konstruktører til Movie.java, en tom og en med argumenter. Gjennom testing fant vi ut av at den tommer var unødvendig og gjorde koden bare mer kompleks, så den ble fjernet.
+
+Generelt har vi forholdt oss til en tilnærming som vi har funnet veldig nyttig. Det er rett og slett kontinuerlig testing. Vi har med andre ord kjørt testene gjentatte ganger, og alle testene ble kjørt på nytt ved enhver liten eller stor endring på klassene. Dette gjorde at vi kunne lett finne ut av om endringene førte til at oppførselen til klassene endret, og vi forsikrer oss dermed med at endringene ikke forårsaker problemer.
+
+---
+
+### Testing av core/scr/java
+
+Hovedklassene våre var MovieList, Movie og Review, og de har alle sine respektive tester.
+
+I disse testene har vi forsøkt å teste alle mulige inputs en bruker kan gjøre. Vi har testet både "vanlige"/det vi vanligvis forventer brukeren kommer til å gjøre. Som du ser i ReviewTest.java for eksempel, da har har vi isolert de tre forskjellige testene på den samme metoden setComment() slik at hver test-metode tar for seg en side av setComment(). Som du kan se i testSetRating_lessThanMin() så tester vi også edge-case scenarioer, og ser du videre i den denne klassen, så ser du at vi også har testet testSetRating_moreThanMax() (altså begge edge-casene).
+
+```
+@Test
+@DisplayName("Testing if the rating is less than 1, invalid")
+public  void testSetRating_lessThanMin() {
+	assertThrows(IllegalArgumentException.class, () -> review.setRating(0),
+	"The rating is less than 1.");
+	review.setRating(4);
+	assertTrue(review.getRating() == 4);
+}
+```
+
+Vi gjør dette for å forsikre oss om at koden funker slik vi tenkte i begynnelsen. Som du også legger merke til har vi brukt junits **@DisplayName** på noen metoder for å gir en litt mer forklarende beskrivelse av hva noen testmetoder gjør. Man legger også kanskje til at vi bruker lange, men deskriptive navn på metodene. Dette er for å gjøre koden gjenbrukbar og at alle i som leser navnet forstår hva testen tester.
+
+Vi har også benyttet oss av **@BeforeEach** før en setUp()-metode som skal sette opp de nødvendige tingene før hver testmetode kjøres. For eksempel kan en setUp() initialisere et nytt objekt av klassen:
+
+```
+@BeforeEach
+public void setUp() {
+	movie = new Movie(initTitle, initDescription, initDuration, false, initReview);
+}
+```
+
+@BeforeEach-metoder gjør at testmetodene blir mer uavhengige og dermed mer pålitlige.
+
+---
+
+#### Eksempler på metoder som ikke ble testet
+
+- Noen metoder har vi valgt å ikke teste fordi det er unødvendig, slik som toString()-metodene, siden oppførselen til metoden er ikke spesifikk og andre klasser er ikke avhengig av den. toString()-metodene har bare blitt brukt til å debugge koden i dens tilhørende klasse.
+- Vi har heller ikke testet get-ers, med mindre de har en litt mer "kompleks" kode. Et eksempel på en litt mer kompleks getter er fra MovieList.java:
+
+```
+public IMovie getMovie(String title) {
+	return movieList.stream().filter(m -> m.getTitle().equals(title)).findFirst().orElse(null);
+}
+```
+
+- Det samme gjelder setters også, men et eksemel som vi tenkte burde testes, er denne fra Moive.java siden den for eksempel kaster en exception:
+
+```
+public void setTitle(String title) {
+	if (!IMovie.isValidTitle(title)) {
+		throw new IllegalArgumentException("Illegal movie title");
+	}
+	this.title = title;
+}
+```
+
+---
+
+#### Exception
+
+Vi har også sørget for at alle unntak som kan oppstå blir testet, og som oftest i sine egne testmetoder:
+
+```
+@Test
+@DisplayName("Testing if whenWatched can be null")
+public void testSetWhenWatched_null() {
+	assertThrows(IllegalArgumentException.class, () -> review.setWhenWatched(null),
+			"whenWatched cannot be null.");
+	review.setWhenWatched(LocalDate.of(2021, 1, 1));
+	assertEquals("2021-01-01", review.getWhenWatched().toString(), "The dates do not match.");
+}
+```
+
+---
