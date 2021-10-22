@@ -51,6 +51,15 @@ cd core
 mvn test
 ```
 
+### Bygging av prosjekt i GitPod
+GitPod har problemer ved kjøring av programvare i parallelle tråder. Dette har innvirkning ved kjøring av ui-testene, da GUI-et og testene kjører i forskjellige tråder. Det er implementert metoder i i testene for å minimalisere denne effetkten, men det er fremdeles muligheter for at det oppstår problemer. Dersom det blir et problem ved bygging av prosjektet kan det være lurt å gå inn i pmdb\ui\pom.xml og sette variabelen skipTests til true:
+```
+<properties>
+    <skipTests>true</skipTests>
+</properties>
+```
+
+---
 ## Appen
 
 Under er flyten i appen beskrevet, med bilder og tilhørende tekst.

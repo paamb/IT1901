@@ -1,4 +1,13 @@
 # Release 2
+Dokumentasjon for release 2:
+
+- [Endringer i klassestruktur](#endring-i-klassestrukturen)
+- [Endring i JSON-lagring](#endringer-i-json-lagringen)
+- [Dokument metafor](#dokumentmetafor)
+- [Arkitektur](#arkitektur)
+- [Arbeidsvaner](#arbeidsvaner)
+- [Tester](#tester)
+- [Checkstyle](#checkstyle) 
 
 ## Endring i klassestrukturen
 
@@ -19,7 +28,7 @@ Vi fant ut at denne klassestrukturen var ugunstig, fordi vi så at det var overf
 | ![Bildet ble ikke vist](../pmdb/images/classDiagramRelease1.png) | ![Bildet ble ikke vist](../pmdb/images/classDiagramRelease2.png) |
 
 ---
-
+<!-- <a name="json"></a> -->
 ## Endringer i JSON-lagringen
 
 I release 1 hadde vi bare en klasse for lagring `Storage.java`, som benyttet `jackson` sine metoder for lagring. Vi sendte inn hele `movielist`-objektet vi ville lagre, og lot `jackson` lagre dette automatisk. Vi fant ut at dette var en ugunstig, da vi ikke hadde noe kontroll over hvordan objektet ble lagret. Vi visste ikke hvordan JSON-filen ville se ut, som skapte trøbbel da vi skulle hente hente ut objektet. Dette gjorde det også vanskelig å teste lagring, fordi vi egentlig ikke visste hvordan objektet ville se ut. Vi byttet dermed til en mer manuell lagring der vi selv bestemte hva som skulle lagres, og hvilke JSON-objekter det vil lagres som. Vi fikk da større kontroll over hvordan JSON-filen ville se ut, og testingen ble mer valid.
@@ -29,7 +38,6 @@ I release 1 hadde vi bare en klasse for lagring `Storage.java`, som benyttet `ja
 | ![Bildet ble ikke vist](../pmdb/images/classDiagramPersistanceRelease1.png) | ![Bildet ble ikke vist](../pmdb/images/classDiagramPersistanceRelease2.png) |
 
 ---
-
 ## Dokumentmetafor
 
 Vi har valgt å bruke dokumentmetafor når vi lagrer. Når brukeren skal opprette et _film-objekt_, må han trykke på lagre-knappen for at det skal vises på skjermen og lagret til fil. Det samme gjelder for når brukeren oppretter en _anmeldelse_. Brukeren har mulighet for å både endre på en eksisterende _film_ eller _anmeldelse_. Endringene i objektene vil først bli utrettet når man har trykket på lagre-knappen. Som gjør at det er brukt dokumentmetafor. Vi benyttet oss av dokumentmetafor, for å gi brukeren innsikt i hva som blir lagret, og større kontroll. For brukeren er det lett å forstå at _film-objektet_ blir lagret når personen trykker på lagre-knappen og pop-up-en lukkes. Brukeren kan også se at _filmen_ dukker opp på skjermen etterpå. Når man lukker programmet har appen allerede lagret alle _filmene_ og _anmeldelsene_ til fil, ettersom at brukeren ha opprettet de underveis. Så brukeren trenger ikke å trykke på en lagre knapp før personene kan lukke appen for at ting skal bli lagret. Dette bryter litt med dokumentmetafor, men vi tenkte at denne lagringen var naturlig å skje automatisk.
@@ -204,8 +212,22 @@ Programmet vil da hoppe over ui-testene ved bygging av programmet. Hvis det frem
 
 ---
 
+### Testing av MoviePersistance
+
+Testene for MoviePersistance ligger i `MovieModuleTest.java`. Testene er skrevet for å sikre at skriving og lesing til JSON fungerer som det skal. Vi har delt disse testene inn i `testSerializers, testDeserializer og testSerializersDeserializers`. Alle testene har tilgang til en `movieListString` som representerer et JSON objekt med to filmer og tilknyttede `reviews`.
+
+I `testSerializers()` oppretter vi to `movies` som tilsvarer de i `movieListString` og sjekker deretter at de er like ved hjelp av `mapper.writeValueAsString()`.
+
+I `testDeserializers()` leser vi `movieListString` til en `MovieList` ved hjelp av `mapper.readValue()`. Deretter lager vi en ny liste med alle elementene i `MovieList` og tester at elementene i lista er lik elementene i `movieListString`.
+
+I `testSerializersDeserializers` oppretter vi først to Movieobjekter og legger de til en `MovieList`, før vi leser filmene inn ved hjelp av `readValue` og sjekker at feltene stemmer overens med de Movieobjektene vi opprettet.
+
 #### Testing av ui i MacOS
 
 Testene baserer seg på APIet FxRobot, som tar kontroll over datamaskinens musepeker og skriver og skriver inn tekst automatisk. I MacOS, og muligens andre operativsystemer, må en på Sikkerhet og Personvern-siden gi tillatelse til at programmet kan overstyre disse delene av datamskinen.
 
 ---
+
+## Checkstyle
+
+Vi har brukt checkstyle for å sikre at vi følger dagens kodestandarder for Javautvikling. Vi valgte å bruke google sin konfigurasjon, foruten testen `[AbbreviationAsWordInName]` som vi valgte å fjerne på grunn av at navngivning med to store bokstaver etter hverandre, som i `IReview` og `IMovie` , trigget advarsler fra denne testen.
