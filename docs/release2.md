@@ -3,33 +3,36 @@
 ## Endring i klassestrukturen
 
 ### Strukturen i release 1
-I release 1 var tanken at vi skulle ha både ha en klasse for *liste med anmeldelser* (`ReviewList.java`) og en for *liste med filmer* (`MovieList.java`). Hver *film* skulle bare ha én *anmeldelse*. 
 
-Det var et *én-til-én* forhold mellom `Movie` og `Review`. `ReviewList` hadde *én-til-mange* forhold med `Review`, det samme hadde `MovieList` med `Movie`. Se uml-diagram under. Vi benyttet oss av denne strukturen, fordi vi tenkte at det ville gjøre lagringen lettere. Tanken var at vi skulle ha to filer, en for lagring av `ReviewList` og en for lagring av `MovieList`. Dette matchet også hvordan ui-et ville være da vi skulle ha én fane for å vise *listen med anmeldelser* (`ReviewList`) og én for *listen med filmer* (`MovieList`).
+I release 1 var tanken at vi skulle ha både ha en klasse for _liste med anmeldelser_ (`ReviewList.java`) og en for _liste med filmer_ (`MovieList.java`). Hver _film_ skulle bare ha én _anmeldelse_.
+
+Det var et _én-til-én_ forhold mellom `Movie` og `Review`. `ReviewList` hadde _én-til-mange_ forhold med `Review`, det samme hadde `MovieList` med `Movie`. Se uml-diagram under. Vi benyttet oss av denne strukturen, fordi vi tenkte at det ville gjøre lagringen lettere. Tanken var at vi skulle ha to filer, en for lagring av `ReviewList` og en for lagring av `MovieList`. Dette matchet også hvordan ui-et ville være da vi skulle ha én fane for å vise _listen med anmeldelser_ (`ReviewList`) og én for _listen med filmer_ (`MovieList`).
 
 ---
 
 ### Strukturen i release 2
-Vi fant ut at denne klassestrukturen var ugunstig, fordi vi så at det var overflødig å både ha `ReviewList` og `MovieList`. Vi tenkte også at det skulle være mulig for en bruker å lage flere *anmeldelser* til én *film*. Derfor endret vi klasseforholdet til at `Movie` hadde *en-til-mange* forhold med `Review`. Dermed kunne vi droppe `ReviewList`, og istedenfor la `MovieList` inneholde mange `Movies` som igjen inneholder mange `Reviews`. Da kunne vi også lagre alt i en fil. Hvis vi vil nå ha tak i en `Review`, trenger vi bare å finne den tilhørende filmen.
 
-Struktur release 1         |  Struktur release 2
-:-------------------------:|:-------------------------:
-![Bildet ble ikke vist](../pmdb/images/classDiagramRelease1.png) | ![Bildet ble ikke vist](../pmdb/images/classDiagramRelease2.png)
+Vi fant ut at denne klassestrukturen var ugunstig, fordi vi så at det var overflødig å både ha `ReviewList` og `MovieList`. Vi tenkte også at det skulle være mulig for en bruker å lage flere _anmeldelser_ til én _film_. Derfor endret vi klasseforholdet til at `Movie` hadde _en-til-mange_ forhold med `Review`. Dermed kunne vi droppe `ReviewList`, og istedenfor la `MovieList` inneholde mange `Movies` som igjen inneholder mange `Reviews`. Da kunne vi også lagre alt i en fil. Hvis vi vil nå ha tak i en `Review`, trenger vi bare å finne den tilhørende filmen.
 
+|                        Struktur release 1                        |                        Struktur release 2                        |
+| :--------------------------------------------------------------: | :--------------------------------------------------------------: |
+| ![Bildet ble ikke vist](../pmdb/images/classDiagramRelease1.png) | ![Bildet ble ikke vist](../pmdb/images/classDiagramRelease2.png) |
 
 ---
 
 ## Endringer i JSON-lagringen
+
 I release 1 hadde vi bare en klasse for lagring `Storage.java`, som benyttet `jackson` sine metoder for lagring. Vi sendte inn hele `movielist`-objektet vi ville lagre, og lot `jackson` lagre dette automatisk. Vi fant ut at dette var en ugunstig, da vi ikke hadde noe kontroll over hvordan objektet ble lagret. Vi visste ikke hvordan JSON-filen ville se ut, som skapte trøbbel da vi skulle hente hente ut objektet. Dette gjorde det også vanskelig å teste lagring, fordi vi egentlig ikke visste hvordan objektet ville se ut. Vi byttet dermed til en mer manuell lagring der vi selv bestemte hva som skulle lagres, og hvilke JSON-objekter det vil lagres som. Vi fikk da større kontroll over hvordan JSON-filen ville se ut, og testingen ble mer valid.
 
-Persistense release 1 |  Persistense release 2
-:-------------------------:|:-------------------------:
-![Bildet ble ikke vist](../pmdb/images/classDiagramPersistanceRelease1.png) | ![Bildet ble ikke vist](../pmdb/images/classDiagramPersistanceRelease2.png)
+|                            Persistense release 1                            |                            Persistense release 2                            |
+| :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
+| ![Bildet ble ikke vist](../pmdb/images/classDiagramPersistanceRelease1.png) | ![Bildet ble ikke vist](../pmdb/images/classDiagramPersistanceRelease2.png) |
 
 ---
 
 ## Dokumentmetafor
-Vi har valgt å bruke dokumentmetafor når vi lagrer. Når brukeren skal opprette et *film-objekt*, må han trykke på lagre-knappen for at det skal vises på skjermen og lagret til fil. Det samme gjelder for når brukeren oppretter en *anmeldelse*. Brukeren har mulighet for å både endre på en eksisterende *film* eller *anmeldelse*. Endringene i objektene vil først bli utrettet når man har trykket på lagre-knappen. Som gjør at det er brukt dokumentmetafor. Vi benyttet oss av dokumentmetafor, for å gi brukeren innsikt i hva som blir lagret, og større kontroll. For brukeren er det lett å forstå at *film-objektet* blir lagret når personen trykker på lagre-knappen og pop-up-en lukkes. Brukeren kan også se at *filmen* dukker opp på skjermen etterpå. Når man lukker programmet har appen allerede lagret alle *filmene* og *anmeldelsene* til fil, ettersom at brukeren ha opprettet de underveis. Så brukeren trenger ikke å trykke på en lagre knapp før personene kan lukke appen for at ting skal bli lagret. Dette bryter litt med dokumentmetafor, men vi tenkte at denne lagringen var naturlig å skje automatisk.
+
+Vi har valgt å bruke dokumentmetafor når vi lagrer. Når brukeren skal opprette et _film-objekt_, må han trykke på lagre-knappen for at det skal vises på skjermen og lagret til fil. Det samme gjelder for når brukeren oppretter en _anmeldelse_. Brukeren har mulighet for å både endre på en eksisterende _film_ eller _anmeldelse_. Endringene i objektene vil først bli utrettet når man har trykket på lagre-knappen. Som gjør at det er brukt dokumentmetafor. Vi benyttet oss av dokumentmetafor, for å gi brukeren innsikt i hva som blir lagret, og større kontroll. For brukeren er det lett å forstå at _film-objektet_ blir lagret når personen trykker på lagre-knappen og pop-up-en lukkes. Brukeren kan også se at _filmen_ dukker opp på skjermen etterpå. Når man lukker programmet har appen allerede lagret alle _filmene_ og _anmeldelsene_ til fil, ettersom at brukeren ha opprettet de underveis. Så brukeren trenger ikke å trykke på en lagre knapp før personene kan lukke appen for at ting skal bli lagret. Dette bryter litt med dokumentmetafor, men vi tenkte at denne lagringen var naturlig å skje automatisk.
 
 ## Arkitektur
 
@@ -130,7 +133,7 @@ public void setUp() {
 }
 ```
 
-@BeforeEach-metoder gjør at testmetodene blir mer uavhengige og dermed mer pålitlige.
+@BeforeEach-metoden lager et nytt Movie-objekt hver gang. Dette gjør at testmetodene blir mer uavhengige av hvordan det objektet behandles i andre tester, og dermed mer pålitlige. Det sikrer konsekvent oppførsel.
 
 ---
 
@@ -172,5 +175,37 @@ public void testSetWhenWatched_null() {
 	assertEquals("2021-01-01", review.getWhenWatched().toString(), "The dates do not match.");
 }
 ```
+
+---
+
+### Testing av ui
+
+I ui-et har vi hovedsakelig kontrollerene MovieListController og ReviewListController, der MovieListController tar i bruk en EditMovieController og MovieDisplayTemplateController, og ReviewListController har tilsvarende hjelpekontrollere. I tillegg har vi App.java og AppController for å sette i gang programmet.
+
+Vi har valgt å ha en initialiseringstest på AppController, samt mer omfattende tester for MovieListController og ReviewListController, der også hjelpekontrollerene blir tatt i bruk og testet.
+
+Slik som i core-testene, har vi her testet både gyldige og ugyldige input, samt edge-caser. Oppsettet og konvensjoner som er tatt i bruk i core-testene, er også tatt i bruk i ui-testene.
+
+---
+
+#### Testing av ui i GitPod
+
+Ved bruk av javafx, kan det av og til oppstå problemer ved kjøring av programvare i parallelle tråder. I GitPod oppstår disse problemene oftere, da den kjører programmet på en virtuell datamaskin. Dette har innvirkning på kjøring av ui-testene, da selve testene og GUI-et kjører i forskjellige tråder. Det som kan skje er at testene ligger foran oppdateringen av GUI-et, slik at den prøver å teste noe som enda ikke eksisterer i GUI-et, og en får en feil.
+
+Det er implementert metoder for å minimalisere disse problemene, men det kan fremdeles oppstå feil ved kjøring av testene i GitPod. Ved kjøring lokalt skal dette ikke være et problem. Dersom dette blir et problem ved kjøring av programmet i GitPod anbefales det å enten bytte til å kjøre programmet lokalt, eller gå inn i pmdb/ui/pom.fxml og endre variabelen skipTests til true:
+
+```
+<properties>
+    <skipTests>true</skipTests>
+</properties>
+```
+
+Programmet vil da hoppe over ui-testene ved bygging av programmet. Hvis det fremdeles oppstår problemer ved selve kjøringen av programmet anbefales det å heller kjøre programmet lokalt.
+
+---
+
+#### Testing av ui i MacOS
+
+Testene baserer seg på APIet FxRobot, som tar kontroll over datamaskinens musepeker og skriver og skriver inn tekst automatisk. I MacOS, og muligens andre operativsystemer, må en på Sikkerhet og Personvern-siden gi tillatelse til at programmet kan overstyre disse delene av datamskinen.
 
 ---
