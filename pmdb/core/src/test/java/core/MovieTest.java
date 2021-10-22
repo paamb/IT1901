@@ -5,20 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 public class MovieTest {
 
   private Movie movie;
   private String initTitle = "initTitle";
   private String initDescription = "initDescription";
-  private LocalTime initDuration = LocalTime.of(02, 00);
+  private int initDuration = 360;
   private Collection<IReview> initReview = new ArrayList<IReview>(Arrays.asList());
   private Review review1 = new Review("Bra film", 8, LocalDate.of(2000, 1, 1));
   private Review review2 = new Review("Teit film", 1, LocalDate.of(2001, 2, 2));
@@ -27,9 +25,8 @@ public class MovieTest {
   public void testConstructor() {
     String title = "Film1";
     String description = "Dette er film nummer 1.";
-    LocalTime duration = LocalTime.of(2, 10);
-    Collection<IReview> reviews =
-        new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
+    int duration = 130;
+    Collection<IReview> reviews = new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
     Movie movie = new Movie(title, description, duration, false, reviews);
 
     assertEquals(title, movie.getTitle(), "Movie title is not correct.");
@@ -70,7 +67,7 @@ public class MovieTest {
 
   @Test
   public void testSetDuration() {
-    LocalTime newDuration = LocalTime.of(3, 30);
+    int newDuration = 210;
     assertEquals(initDuration, movie.getDuration(), "Duration is not correct");
     movie.setDuration(newDuration);
     assertEquals(newDuration, movie.getDuration(), "Duration is not correct");
@@ -109,8 +106,7 @@ public class MovieTest {
     assertTrue(movie.getReviews().contains(review1), "Movie should contain review1");
     assertTrue(movie.getReviews().contains(review2), "Movie should contain reivew2");
 
-    assertThrows(IllegalArgumentException.class,
-        () -> movie.setReviews(Arrays.asList(review1, review1)),
+    assertThrows(IllegalArgumentException.class, () -> movie.setReviews(Arrays.asList(review1, review1)),
         "Cannot add a list with duplicate reviews");
   }
 }
