@@ -35,7 +35,7 @@ public interface IMovie {
    * @return true if duration is valid
    */
   public static boolean isValidDuration(int duration) {
-    return duration < 0;
+    return duration > 0;
   }
 
   /**
