@@ -26,8 +26,7 @@ public class MovieTest {
     String title = "Film1";
     String description = "Dette er film nummer 1.";
     int duration = 130;
-    Collection<IReview> reviews =
-        new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
+    Collection<IReview> reviews = new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
     Movie movie = new Movie(title, description, duration, false, reviews);
 
     assertEquals(title, movie.getTitle(), "Movie title is not correct.");
@@ -67,11 +66,36 @@ public class MovieTest {
   }
 
   @Test
-  public void testSetDuration() {
+  public void testSetDuration_valid() {
     int newDuration = 210;
     assertEquals(initDuration, movie.getDuration(), "Duration is not correct");
     movie.setDuration(newDuration);
     assertEquals(newDuration, movie.getDuration(), "Duration is not correct");
+  }
+
+  @Test
+  public void testSetDuration_unvalidZero() {
+    int zeroDuration = 0;
+    assertThrows(IllegalArgumentException.class, () -> movie.setDuration(zeroDuration),
+        "Movie cannot have duration zero");
+    movie.setDuration(20);
+    assertEquals(20, movie.getDuration(), "Durations should match.");
+  }
+
+  @Test
+  public void testSetDuration_unvalidNegative() {
+    int negativeDuration = 0;
+    assertThrows(IllegalArgumentException.class, () -> movie.setDuration(negativeDuration),
+        "Movie cannot have duration zero");
+    movie.setDuration(30);
+    assertEquals(30, movie.getDuration(), "Durations should match.");
+  }
+
+  @Test
+  public void testSetDuration_validEdgeCase() {
+    int edgeDuration = 1;
+    movie.setDuration(edgeDuration);
+    assertEquals(edgeDuration, movie.getDuration(), "Durations should match.");
   }
 
   @Test
@@ -107,8 +131,7 @@ public class MovieTest {
     assertTrue(movie.getReviews().contains(review1), "Movie should contain review1");
     assertTrue(movie.getReviews().contains(review2), "Movie should contain reivew2");
 
-    assertThrows(IllegalArgumentException.class,
-        () -> movie.setReviews(Arrays.asList(review1, review1)),
+    assertThrows(IllegalArgumentException.class, () -> movie.setReviews(Arrays.asList(review1, review1)),
         "Cannot add a list with duplicate reviews");
   }
 }
