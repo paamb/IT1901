@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import util.DurationConverter;
 
 /**
  * MovieDisplayTemplateController class.
@@ -48,7 +49,8 @@ public class MovieDisplayTemplateController {
    */
   public void setContent() {
     movieTitle.setText(movie.getTitle());
-    movieDuration.setText(movie.getDuration().toString());
+
+    movieDuration.setText(DurationConverter.getDurationDisplayText(movie.getDuration()));
     movieDescription.setText(movie.getDescription());
     movieWatched.setText(movie.isWatched() ? "Sett" : "Ikke sett");
   }
