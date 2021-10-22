@@ -26,7 +26,8 @@ public class MovieTest {
     String title = "Film1";
     String description = "Dette er film nummer 1.";
     int duration = 130;
-    Collection<IReview> reviews = new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
+    Collection<IReview> reviews =
+        new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
     Movie movie = new Movie(title, description, duration, false, reviews);
 
     assertEquals(title, movie.getTitle(), "Movie title is not correct.");
@@ -106,7 +107,8 @@ public class MovieTest {
     assertTrue(movie.getReviews().contains(review1), "Movie should contain review1");
     assertTrue(movie.getReviews().contains(review2), "Movie should contain reivew2");
 
-    assertThrows(IllegalArgumentException.class, () -> movie.setReviews(Arrays.asList(review1, review1)),
+    assertThrows(IllegalArgumentException.class,
+        () -> movie.setReviews(Arrays.asList(review1, review1)),
         "Cannot add a list with duplicate reviews");
   }
 }
