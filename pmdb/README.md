@@ -51,27 +51,63 @@ cd core
 mvn test
 ```
 
-## Prototype
-Under er det lagt ved bilder av prototypen:
+### Bygging av prosjekt i GitPod
+GitPod har problemer ved kjøring av programvare i parallelle tråder. Dette har innvirkning ved kjøring av ui-testene, da GUI-et og testene kjører i forskjellige tråder. Det er implementert metoder i i testene for å minimalisere denne effetkten, men det er fremdeles muligheter for at det oppstår problemer. Dersom det blir et problem ved bygging av prosjektet kan det være lurt å gå inn i pmdb\ui\pom.xml og sette variabelen skipTests til true:
+```
+<properties>
+    <skipTests>true</skipTests>
+</properties>
+```
 
-![Bildet ble ikke vist](images/desktopImage.png)
+---
+## Appen
 
+Under er flyten i appen beskrevet, med bilder og tilhørende tekst.
 
 Bilde 1:
 
-Dette er bildet en bruker får opp når personen åpner appen. Øverst ser man faner der man kan enten velge å se "Min liste", "Vurderte filmer" eller "Alle filmer". Hvis man trykker på "Vurderte filmer" kommer man til en side der man kan se filmene som man har sett og er vurdert. Trykker man på "Min liste" kommer man til siden som viser filmene man har lagt til, men ikke vurderte enda. Hvis man trykker "Alle filmer" kommer man til siden der man ser alle filmene, både de som er vurderte, og de som er i min liste.
+![Bildet ble ikke vist](images/allmovies.png)
 
-På hver side har man muligheten for å bestemme hvilke filmer man vil se basert på en sjanger. 
-
-Trykker man på "pluss (+)"-knappen nederst til høyre i bildet har man mulighet for å legge til en film i "Min liste" (se bilde 2).
-
-Trykker man på "Endre"-knappen på en film vil man få opp et bilde som gir brukeren muligheten for å endre på filmen (se bilde 2).
-
-
-![Bildet ble ikke vist](images/movieImage.png)
+Bilde 1 viser hvordan appen ser ut når den blir åpnet. Der kan man legge til filmer som vist på figuren. Man legger til en film ved å trykke på *(+) - knappen* nederst til høyre i appen. Da vil man få opp et bilde (se bilde 2 under) som gir muligheten for å opprette en film.
 
 Bilde 2:
 
-Bildet viser et utklipp av en enkelt film. Her har man mulighet for å endre på filmen. Man skal ha mulighet for å endre på tittelen, beskrivelsen av filmen, lengden på filmen, og om filmen er sett. Trykker man "Bekreft" vil endringene bli lagret.
+![Bildet ble ikke vist](images/movieImage.png)
 
-Hvis man trykker på "pluss (+)"-knappen på startskjermen (se bilde 1), vil man også kommet til skjermbildet bilde 2, men da er skjermbildet tomt. Man har muligheten for å lage et nytt filmobjekt, som vil bli lagt til i "Min liste" når man har fylt ut og trykket "Bekreft".
+Når man oppretter en film må man fylle ut feltene:
+- Tittel
+- Varighet
+- Om filmen er sett
+- Sammendrag av filmen
+
+Man har mulighet til å både *endre* på en eksisterende film, og *slette* en eksisterende film. 
+
+Hvis man trykker på *endre-knappen* kommer man til et bilde som er likt som når man trykker på *(+)-knappen* bare at feltene er fylt inn, og man har mulighet for å endre på de og lagre endringene.
+
+På venstre har man mulighet til å trykke på checkboxer som sorterer filmene basert på:
+- Tittel
+- At filmer som du ikke har sett skal komme først
+
+Disse sorteringene kan kombineres, slik at man både kan sortere på tittel og på om filmen er sett. Vi har gjort det slik at sorteringen på om filmen er sett trumfer sorteringen basert på tittel.
+
+
+Bilde 3:
+
+![Bildet ble ikke vist](images/reviewedMovies.png)
+
+Bilde 3 viser hvordan siden for *Anmeldelser* ser ut. Her har man muligheten til å anmelde en eksisterende film, som ligger i *Alle filmer* (siden du startet på). Man lager en anmeldelse ved å trykke på *(+) - knappen* nederst til høyre i bildet. Da vil man få opp bildet under.
+
+![Bildet ble ikke vist](images/reviewImage.png)
+
+Når man anmelder en film må man fylle ut feltene:
+- Film (en checkbox av filmobjekter man kan anmelde)
+- Når filmen er sett
+- Din rangering av filmen
+- En kommentar til filmen.
+
+Man har mulighet for å *endre* og *slette* en anmeldelse slik som man har med en film.
+
+
+### Arkitektur:
+
+![Bildet ble ikke vist](images/packageStructure.png)

@@ -21,11 +21,11 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 import json.moviepersistance.MovieStorage;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.util.WaitForAsyncUtils;
+import util.DurationConverter;
 
 public class MovieListTest extends AbstractNodeFinderTest {
 
@@ -163,8 +163,11 @@ public class MovieListTest extends AbstractNodeFinderTest {
 
     assertEquals(title, movie.getTitle());
     assertEquals(description, movie.getDescription());
-    assertEquals(hours, String.valueOf(movie.getDuration().getHour()));
-    assertEquals(minutes, String.valueOf(movie.getDuration().getMinute()));
+    int[] timetuppel = DurationConverter.minutesToHoursAndMinutes(movie.getDuration());
+    int inputHours = timetuppel[0];
+    int inputMinutes = timetuppel[1];
+    assertEquals(hours, String.valueOf(inputHours));
+    assertEquals(minutes, String.valueOf(inputMinutes));
     assertEquals(watched, movie.isWatched());
   }
 

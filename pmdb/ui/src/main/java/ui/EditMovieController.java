@@ -2,7 +2,6 @@ package ui;
 
 import core.IMovie;
 import core.Movie;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,6 +9,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import util.DurationConverter;
 
 /**
  * EditMovieController class.
@@ -35,7 +35,7 @@ public class EditMovieController {
 
   @FXML
   Button submitMovie;
-  
+
   @FXML
   Button cancelButton;
 
@@ -54,8 +54,8 @@ public class EditMovieController {
         try {
           int hours = Integer.parseInt(hoursField.getText());
           int minutes = Integer.parseInt(minutesField.getText());
-          LocalTime duration = LocalTime.of(hours, minutes);
-          if (IMovie.isValidDuration(duration)) {
+          int duration = DurationConverter.hoursAndMinutesToMinutes(hours, minutes);
+          if (IMovie.isValidDuration(duration) && hours >= 0 && minutes >= 0) {
             String description = descriptionField.getText();
             if (IMovie.isValidDescription(description)) {
               boolean watched = watchedCheckBox.isSelected();
@@ -106,7 +106,7 @@ public class EditMovieController {
     this.movieListController = movieListController;
   }
 
-  private void updateExistingMovie(String title, String description, LocalTime duration,
+  private void updateExistingMovie(String title, String description, int duration,
       boolean watched) {
     if (editingMovie == null) {
       throw new IllegalStateException("Cant update movie if editingMovie is not set.");
@@ -137,8 +137,12 @@ public class EditMovieController {
     watchedCheckBox.setSelected(editingMovie.isWatched());
     titleField.setText(editingMovie.getTitle());
     descriptionField.setText(editingMovie.getDescription());
-    hoursField.setText(String.valueOf(editingMovie.getDuration().getHour()));
-    minutesField.setText(String.valueOf(editingMovie.getDuration().getMinute()));
+
+    int[] timetuppel = DurationConverter.minutesToHoursAndMinutes(editingMovie.getDuration());
+    int hours = timetuppel[0];
+    int minutes = timetuppel[1];
+    hoursField.setText(String.valueOf(hours));
+    minutesField.setText(String.valueOf(minutes));
   }
 
   private boolean thisTitleIsAvailable(String title) {

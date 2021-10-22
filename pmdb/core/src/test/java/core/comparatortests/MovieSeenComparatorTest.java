@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import core.IMovie;
 import core.Movie;
 import core.MovieList;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,10 +18,10 @@ public class MovieSeenComparatorTest {
   @Test
   public void testMovieTitleSort() {
     MovieList movieList = new MovieList();
-    IMovie movie1 = new Movie("aaa", "Komedie", LocalTime.of(1, 2, 3), false, Arrays.asList());
-    IMovie movie2 = new Movie("ddd", "Action", LocalTime.of(2, 3, 4), false, Arrays.asList());
-    IMovie movie3 = new Movie("aaa", "Komedie", LocalTime.of(1, 2, 3), true, Arrays.asList());
-    IMovie movie4 = new Movie("ccc", "Action", LocalTime.of(2, 3, 4), true, Arrays.asList());
+    IMovie movie1 = new Movie("aaa", "Komedie", 1, false, Arrays.asList());
+    IMovie movie2 = new Movie("ddd", "Action", 2, false, Arrays.asList());
+    IMovie movie3 = new Movie("aaa", "Komedie", 3, true, Arrays.asList());
+    IMovie movie4 = new Movie("ccc", "Action", 4, true, Arrays.asList());
 
     Collection<IMovie> movies =
         new ArrayList<IMovie>(Arrays.asList(movie2, movie3, movie4, movie1));

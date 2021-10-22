@@ -5,6 +5,12 @@
   "java.format.settings.profile": "GoogleStyle",
   "[java]": {
     "editor.tabSize": 2,
-    "editor.detectIndentation": false,
-  }
+    "editor.detectIndentation": false
+  },
+// PlantUMLServer: Render diagrams by server which is specified with "plantuml.server". It's much faster, but requires a server.
+// Local is the default configuration.
+"plantuml.render": "PlantUMLServer",
+
+// Plantuml server to generate UML diagrams on-the-fly.
+"plantuml.server": "http://www.plantuml.com/plantuml",
 }

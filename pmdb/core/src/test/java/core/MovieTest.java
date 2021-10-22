@@ -5,20 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 public class MovieTest {
 
   private Movie movie;
   private String initTitle = "initTitle";
   private String initDescription = "initDescription";
-  private LocalTime initDuration = LocalTime.of(02, 00);
+  private int initDuration = 360;
   private Collection<IReview> initReview = new ArrayList<IReview>(Arrays.asList());
   private Review review1 = new Review("Bra film", 8, LocalDate.of(2000, 1, 1));
   private Review review2 = new Review("Teit film", 1, LocalDate.of(2001, 2, 2));
@@ -27,7 +25,7 @@ public class MovieTest {
   public void testConstructor() {
     String title = "Film1";
     String description = "Dette er film nummer 1.";
-    LocalTime duration = LocalTime.of(2, 10);
+    int duration = 130;
     Collection<IReview> reviews =
         new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
     Movie movie = new Movie(title, description, duration, false, reviews);
@@ -69,11 +67,36 @@ public class MovieTest {
   }
 
   @Test
-  public void testSetDuration() {
-    LocalTime newDuration = LocalTime.of(3, 30);
+  public void testSetDuration_valid() {
+    int newDuration = 210;
     assertEquals(initDuration, movie.getDuration(), "Duration is not correct");
     movie.setDuration(newDuration);
     assertEquals(newDuration, movie.getDuration(), "Duration is not correct");
+  }
+
+  @Test
+  public void testSetDuration_unvalidZero() {
+    int zeroDuration = 0;
+    assertThrows(IllegalArgumentException.class, () -> movie.setDuration(zeroDuration),
+        "Movie cannot have duration zero");
+    movie.setDuration(20);
+    assertEquals(20, movie.getDuration(), "Durations should match.");
+  }
+
+  @Test
+  public void testSetDuration_unvalidNegative() {
+    int negativeDuration = 0;
+    assertThrows(IllegalArgumentException.class, () -> movie.setDuration(negativeDuration),
+        "Movie cannot have duration zero");
+    movie.setDuration(30);
+    assertEquals(30, movie.getDuration(), "Durations should match.");
+  }
+
+  @Test
+  public void testSetDuration_validEdgeCase() {
+    int edgeDuration = 1;
+    movie.setDuration(edgeDuration);
+    assertEquals(edgeDuration, movie.getDuration(), "Durations should match.");
   }
 
   @Test
