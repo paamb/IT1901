@@ -26,9 +26,9 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="editReview" id="editReview" layoutX="209.0" layoutY="15.0" mnemonicParsing="false" onAction="#editReview" text="Endre" />
+            <Button fx:id="editReview" id="editReview" layoutX="199.0" layoutY="15.0" mnemonicParsing="false" onAction="#editReview" text="Endre" />
             <TextArea fx:id="comment" id="comment" editable="false" layoutX="20.0" layoutY="107.0" prefHeight="176.0" prefWidth="224.0" wrapText="true" />
-            <Button fx:id="deleteReview" id="deleteReview" layoutX="148.0" layoutY="15.0" mnemonicParsing="false" onAction="#deleteReview" style="-fx-background-color: db5151;" text="Slett" textFill="WHITE" />
+            <Button fx:id="deleteReview" id="deleteReview" layoutX="153.0" layoutY="15.0" mnemonicParsing="false" onAction="#deleteReview" style="-fx-background-color: db5151;" text="Slett" textFill="WHITE" />
             <Label layoutX="14.0" layoutY="61.0" text="Når sett:" />
             <Label fx:id="whenWatched" id="whenWatched" layoutX="68.0" layoutY="61.0" text="Date" />
             <Label layoutX="14.0" layoutY="78.0" text="Rangering (1-10):" />
