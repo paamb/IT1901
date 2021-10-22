@@ -1,22 +1,21 @@
 # Brukerhistorier
 
-## Watchlist (us-1)
+## MovieList (us-1)
 
-Som buker av pmdb ønsker jeg å kunne lagre filmer jeg vil se senere på en enkel måte.
+Som bruker av pmdb ønsker jeg å kunne lagre filmer jeg vil se senere på en enkel måte.
 
-Brukeren har behov for å enkelt kunne legge til filmer i sin private database, sammen med egne merkelapper for enkel sortering. Disse merkelappen bør kunne gjenbrukes og "festes" på nye filmer som blir lagt til i lista.
+Brukeren har behov for å enkelt kunne legge til filmer i sin private database, og ha mulighet for å la filmene man ikke har sett komme først. Dette gjør det enkelt for brukeren å finne inspirasjon til filmer å se. Som bruker har jeg også lyst til å kunne sortere filmen i alfabetisk rekkefølge.
 
 ### Viktig å kunne se
 
 - En liste med filmer brukeren har lagt til
-- En boks med labels for sortering
 
 ### Viktig å kunne gjøre
 
 - Huke av at man har sett filmen
 - Legge til filmer
 - Fjerne filmer
-- Trykke inn på filmen for å få mer info
+- Vise all informasjon
 
 
 ## Review (us-2)
@@ -28,7 +27,7 @@ Brukeren har behov for å kunne anmelde filmer, legge til en kommentar på filme
 ### Viktig å kunne se
 
 - Hvilken film det var
-- Informasjon om filmen (merkelapper, varighet, beskrivelse) 
+- Informasjon om filmen (varighet, beskrivelse) 
 - Når du så filmen
 - Om du hadde noen kommentarer rundt filmen 
 - Og hva du rangere den fra 1 til 10
