@@ -8,7 +8,7 @@
   <children>
     <TabPane id="tabPane" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
-        <Tab text="Vurderte filmer" fx:id="reviewListTab" id="reviewListTab">
+        <Tab text="Anmeldelser" fx:id="reviewListTab" id="reviewListTab">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
               <fx:include fx:id="reviewList" source="ReviewList.fxml" />
