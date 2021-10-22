@@ -1,6 +1,5 @@
 package core;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,7 +12,7 @@ public class Movie implements IMovie {
 
   private String title;
   private String description;
-  private LocalTime duration;
+  private int duration;
   private boolean watched;
   private Collection<IReview> reviews;
 
@@ -22,8 +21,7 @@ public class Movie implements IMovie {
    * 
    * 
    */
-  public Movie(String title, String description, LocalTime duration, boolean watched,
-      Collection<IReview> reviews) {
+  public Movie(String title, String description, int duration, boolean watched, Collection<IReview> reviews) {
     setTitle(title);
     setDescription(description);
     setDuration(duration);
@@ -76,14 +74,14 @@ public class Movie implements IMovie {
    * 
    * @param duration The duration of the movie
    */
-  public void setDuration(LocalTime duration) {
+  public void setDuration(int duration) {
     if (!IMovie.isValidDuration(duration)) {
       throw new IllegalArgumentException("Illegal movie duration");
     }
     this.duration = duration;
   }
 
-  public LocalTime getDuration() {
+  public int getDuration() {
     return duration;
   }
 
@@ -132,9 +130,8 @@ public class Movie implements IMovie {
 
   @Override
   public String toString() {
-    String s =
-        "Movie: " + getTitle() + "\n" + "Description: " + getDescription() + "\n" + "Duration: "
-            + getDuration().toString() + "\n" + "Watched: " + (isWatched() ? "Yes" : "No");
+    String s = "Movie: " + getTitle() + "\n" + "Description: " + getDescription() + "\n" + "Duration: " + getDuration()
+        + "\n" + "Watched: " + (isWatched() ? "Yes" : "No");
 
     if (reviews.size() == 0) {
       return s;

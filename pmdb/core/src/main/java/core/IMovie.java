@@ -1,6 +1,5 @@
 package core;
 
-import java.time.LocalTime;
 import java.util.Collection;
 
 /**
@@ -35,8 +34,8 @@ public interface IMovie {
    * @param duration Movie duration
    * @return true if duration is valid
    */
-  public static boolean isValidDuration(LocalTime duration) {
-    return duration != null;
+  public static boolean isValidDuration(int duration) {
+    return duration < 0;
   }
 
   /**
@@ -87,14 +86,14 @@ public interface IMovie {
    * 
    * @param duration Movie duration
    */
-  public void setDuration(LocalTime duration);
+  public void setDuration(int duration);
 
   /**
    * Get the duration of this movie.
    * 
    * @return this movies duration
    */
-  public LocalTime getDuration();
+  public int getDuration();
 
   /**
    * Sets a Collection of reviews.
