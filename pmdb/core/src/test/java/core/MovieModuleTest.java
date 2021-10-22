@@ -34,12 +34,7 @@ public class MovieModuleTest {
         "movies" : [ {
           "title" : "Up",
           "description" : "Komedie",
-          "duration" : {
-            "hour" : 1,
-            "minute" : 2,
-            "second" : 3,
-            "nano" : 0
-          },
+          "duration" : 1,
           "watched" : true,
           "reviews" : [ {
             "comment" : "Teit",
@@ -49,12 +44,7 @@ public class MovieModuleTest {
         }, {
           "title" : "Batman",
           "description" : "Action",
-          "duration" : {
-            "hour" : 2,
-            "minute" : 3,
-            "second" : 4,
-            "nano" : 0
-          },
+          "duration" : 43,
           "watched" : false,
           "reviews" : [ {
             "comment" : "Bra",
@@ -68,10 +58,11 @@ public class MovieModuleTest {
   @Test
   public void testSerializers() {
     MovieList movieList = new MovieList();
-    ArrayList<IReview> reviews = new ArrayList<IReview>(
-        Arrays.asList(new Review("Teit", 1, LocalDate.of(2000, 1, 1)), new Review("Bra", 8, LocalDate.of(2001, 2, 2))));
-    Movie movie1 = new Movie("Up", "Komedie", LocalTime.of(1, 2, 3), true, Arrays.asList(reviews.get(0)));
-    Movie movie2 = new Movie("Batman", "Action", LocalTime.of(2, 3, 4), false, Arrays.asList(reviews.get(1)));
+    ArrayList<IReview> reviews =
+        new ArrayList<IReview>(Arrays.asList(new Review("Teit", 1, LocalDate.of(2000, 1, 1)),
+            new Review("Bra", 8, LocalDate.of(2001, 2, 2))));
+    Movie movie1 = new Movie("Up", "Komedie", 1, true, Arrays.asList(reviews.get(0)));
+    Movie movie2 = new Movie("Batman", "Action", 43, false, Arrays.asList(reviews.get(1)));
     movieList.addMovie(movie1);
     movieList.addMovie(movie2);
     try {
@@ -93,8 +84,8 @@ public class MovieModuleTest {
       IReview review2 = movie2.getReviews().iterator().next();
       assertEquals(movie1.getTitle(), "Up");
       assertEquals(movie2.getTitle(), "Batman");
-      assertEquals(movie1.getDuration(), LocalTime.of(1, 2));
-      assertEquals(movie2.getDuration(), LocalTime.of(2, 3));
+      assertEquals(movie1.getDuration(), 1);
+      assertEquals(movie2.getDuration(), 43);
       assertTrue(movie1.isWatched());
       assertFalse(movie2.isWatched());
       assertEquals("Teit", review1.getComment());
@@ -113,10 +104,12 @@ public class MovieModuleTest {
   @Test
   public void testSerializersDeserializers() {
     MovieList movieList = new MovieList();
-    ArrayList<IReview> reviews = new ArrayList<IReview>(Arrays.asList(new Review("Dust", 1, LocalDate.of(2000, 1, 1)),
-        new Review("Utrolig bra", 8, LocalDate.of(2001, 2, 2))));
-    Movie movie1 = new Movie("Spiderman", "Action", LocalTime.of(1, 2, 3), true, Arrays.asList(reviews.get(0)));
-    Movie movie2 = new Movie("Shutter Island", "Thriller", LocalTime.of(2, 3, 4), false, Arrays.asList(reviews.get(1)));
+    ArrayList<IReview> reviews =
+        new ArrayList<IReview>(Arrays.asList(new Review("Dust", 1, LocalDate.of(2000, 1, 1)),
+            new Review("Utrolig bra", 8, LocalDate.of(2001, 2, 2))));
+    Movie movie1 = new Movie("Spiderman", "Action", 103, true, Arrays.asList(reviews.get(0)));
+    Movie movie2 =
+        new Movie("Shutter Island", "Thriller", 45, false, Arrays.asList(reviews.get(1)));
     movieList.addMovie(movie1);
     movieList.addMovie(movie2);
     try {
@@ -130,8 +123,8 @@ public class MovieModuleTest {
       IReview review2 = movie2.getReviews().iterator().next();
       assertEquals(movie3.getTitle(), "Spiderman");
       assertEquals(movie4.getTitle(), "Shutter Island");
-      assertEquals(movie3.getDuration(), LocalTime.of(1, 2));
-      assertEquals(movie4.getDuration(), LocalTime.of(2, 3));
+      assertEquals(movie3.getDuration(), 103);
+      assertEquals(movie4.getDuration(), 45);
       assertTrue(movie3.isWatched());
       assertFalse(movie4.isWatched());
       assertEquals("Dust", review1.getComment());
