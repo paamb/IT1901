@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -26,9 +25,9 @@ public class MovieListTest {
   @BeforeEach
   public void setUp() {
     movieList = new MovieList();
-    movie1 = new Movie("tittel", "desc", LocalTime.of(3, 2, 3), true, new ArrayList<>());
-    movie2 = new Movie("tittel", "descasdas", LocalTime.of(4, 2, 3), false, new ArrayList<>());
-    movie3 = new Movie("tittela", "descasdas", LocalTime.of(4, 2, 3), false, new ArrayList<>());
+    movie1 = new Movie("tittel", "desc", 182, true, new ArrayList<>());
+    movie2 = new Movie("tittel", "descasdas", 242, false, new ArrayList<>());
+    movie3 = new Movie("tittela", "descasdas", 242, false, new ArrayList<>());
   }
 
   @Test
@@ -42,17 +41,14 @@ public class MovieListTest {
     movieList.addMovie(movie3);
     assertEquals(2, movieList.getMovies().size());
 
-    assertSame(movie1, movieList.getMovie(movie1.getTitle()), 
-        "The movies should have same reference.");
-    assertSame(movie3, movieList.getMovie(movie3.getTitle()), 
-        "The movies should have same reference.");
+    assertSame(movie1, movieList.getMovie(movie1.getTitle()), "The movies should have same reference.");
+    assertSame(movie3, movieList.getMovie(movie3.getTitle()), "The movies should have same reference.");
   }
 
   @Test
   public void testAddMovieUnvalid() {
     movieList.addMovie(movie1);
-    assertThrows(IllegalStateException.class, () -> movieList.addMovie(movie2), 
-        "The movies have the same title.");
+    assertThrows(IllegalStateException.class, () -> movieList.addMovie(movie2), "The movies have the same title.");
     movieList.addMovie(movie3);
     assertEquals(2, movieList.getMovies().size(), "The length of the list should be 2.");
   }
@@ -80,8 +76,7 @@ public class MovieListTest {
   @Test
   public void testGetMovie_validOption() {
     movieList.addMovie(movie1);
-    assertSame(movie1, movieList.getMovie(movie1.getTitle()), 
-        "The movies should have the same title.");
+    assertSame(movie1, movieList.getMovie(movie1.getTitle()), "The movies should have the same title.");
   }
 
   @Test
@@ -101,7 +96,7 @@ public class MovieListTest {
     testIterator_helper(movieList.iterator(), movie3);
     movieList.addMovie(movie1);
 
-    Movie movie4 = new Movie("title", "description", LocalTime.of(3, 3), true, new ArrayList<>());
+    Movie movie4 = new Movie("title", "description", 183, true, new ArrayList<>());
     movieList.addMovie(movie4);
     testIterator_helper(movieList.iterator(), movie3, movie1, movie4);
     movieList.removeMovie(movie1);
