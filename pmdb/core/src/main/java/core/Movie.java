@@ -21,7 +21,8 @@ public class Movie implements IMovie {
    * 
    * 
    */
-  public Movie(String title, String description, int duration, boolean watched, Collection<IReview> reviews) {
+  public Movie(String title, String description, int duration, boolean watched,
+      Collection<IReview> reviews) {
     setTitle(title);
     setDescription(description);
     setDuration(duration);
@@ -130,8 +131,8 @@ public class Movie implements IMovie {
 
   @Override
   public String toString() {
-    String s = "Movie: " + getTitle() + "\n" + "Description: " + getDescription() + "\n" + "Duration: " + getDuration()
-        + "\n" + "Watched: " + (isWatched() ? "Yes" : "No");
+    String s = "Movie: " + getTitle() + "\n" + "Description: " + getDescription() + "\n"
+        + "Duration: " + getDuration() + "\n" + "Watched: " + (isWatched() ? "Yes" : "No");
 
     if (reviews.size() == 0) {
       return s;
