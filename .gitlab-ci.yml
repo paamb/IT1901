@@ -1,0 +1,15 @@
+stages:
+  - compile
+  - verify
+
+compile:
+  stage: compile
+  script:
+    - cd pmdb
+    - mvn compile
+
+verify:
+  stage: verify
+  script:
+    - cd pmdb
+    - mvn verify -f core/pom.xml
