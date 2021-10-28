@@ -7,6 +7,7 @@ import java.util.Collection;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -22,6 +23,9 @@ public class ReviewListController {
 
   @FXML
   Button openEditReview;
+
+  @FXML
+  Label noMoviesWarning;
 
   @FXML
   Pane reviewDisplay;
@@ -72,38 +76,50 @@ public class ReviewListController {
 
   protected void displayReviewList() {
     reviewDisplay.getChildren().clear();
-    try {
-      int counter = 0;
-      double offsetX = reviewDisplay.getPrefWidth() / 2;
-      double offsetY =
-          ((Pane) new FXMLLoader(this.getClass().getResource("ReviewDisplayTemplate.fxml")).load())
-              .getPrefHeight();
-      Collection<IMovie> movies = getMovies();
-      for (IMovie movie : movies) {
-        for (IReview review : movie.getReviews()) {
-          FXMLLoader fxmlLoader =
-              new FXMLLoader(this.getClass().getResource("ReviewDisplayTemplate.fxml"));
-          Pane reviewPane = fxmlLoader.load();
+    hideEditReview();
+    if (!movieListController.getMovies().isEmpty()) {
+      noAvailableMovies(false);
+      try {
+        openEditReview.setDisable(false);
+        int counter = 0;
+        double offsetX = reviewDisplay.getPrefWidth() / 2;
+        double offsetY =
+            ((Pane) new FXMLLoader(this.getClass().getResource("ReviewDisplayTemplate.fxml"))
+                .load()).getPrefHeight();
+        Collection<IMovie> movies = getMovies();
+        for (IMovie movie : movies) {
+          for (IReview review : movie.getReviews()) {
+            FXMLLoader fxmlLoader =
+                new FXMLLoader(this.getClass().getResource("ReviewDisplayTemplate.fxml"));
+            Pane reviewPane = fxmlLoader.load();
+            int counterCalc = (int) counter / 2;
+            reviewPane.setLayoutX(offsetX * (counter % 2));
+            reviewPane.setLayoutY(offsetY * counterCalc);
+            reviewPane.setId("R" + String.valueOf(counter));
+
+            ReviewDisplayTemplateController reviewDisplayTemplateController =
+                fxmlLoader.getController();
+            reviewDisplayTemplateController.injectReviewListController(this);
+            reviewDisplayTemplateController.setReview(review);
+            reviewDisplayTemplateController.setMovie(movie);
+            reviewDisplayTemplateController.setContent();
+
+            reviewDisplay.getChildren().add(reviewPane);
+            counter++;
+          }
           int counterCalc = (int) counter / 2;
-          reviewPane.setLayoutX(offsetX * (counter % 2));
-          reviewPane.setLayoutY(offsetY * counterCalc);
-          reviewPane.setId("R" + String.valueOf(counter));
-
-          ReviewDisplayTemplateController reviewDisplayTemplateController =
-              fxmlLoader.getController();
-          reviewDisplayTemplateController.injectReviewListController(this);
-          reviewDisplayTemplateController.setReview(review);
-          reviewDisplayTemplateController.setMovie(movie);
-          reviewDisplayTemplateController.setContent();
-
-          reviewDisplay.getChildren().add(reviewPane);
-          counter++;
+          reviewDisplay.setLayoutY(counterCalc);
         }
-        int counterCalc = (int) counter / 2;
-        reviewDisplay.setLayoutY(counterCalc);
+      } catch (Exception e) {
+        e.printStackTrace();
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } else {
+      noAvailableMovies(true);
     }
+  }
+
+  private void noAvailableMovies(boolean bool) {
+    openEditReview.setDisable(bool);
+    noMoviesWarning.setVisible(bool);
   }
 }
