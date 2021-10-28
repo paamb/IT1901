@@ -9,7 +9,7 @@ compile:
     - cd pmdb
     - mvn compile
   only:
-    - main
+    - merge_requests
 
 verify:
   stage: verify
@@ -17,4 +17,4 @@ verify:
     - cd pmdb
     - mvn verify -f core/pom.xml
   only:
-    - main
+    - merge_requests
