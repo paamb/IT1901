@@ -113,7 +113,6 @@ public class MovieListController {
 
   protected void movieListIsEdited() {
     displayMovieList();
-    reviewListController.displayReviewList();
     saveMovieList();
   }
 
@@ -132,6 +131,7 @@ public class MovieListController {
 
   @FXML
   private void displayMovieList() {
+    reviewListController.displayReviewList();
     movieDisplay.getChildren().clear();
     try {
       int counter = 0;
