@@ -1,0 +1,20 @@
+image: maven:latest
+stages:
+  - compile
+  - verify
+
+compile:
+  stage: compile
+  script:
+    - cd pmdb
+    - mvn compile
+  only:
+    - merge_requests
+
+verify:
+  stage: verify
+  script:
+    - cd pmdb
+    - mvn verify -f core/pom.xml
+  only:
+    - merge_requests
