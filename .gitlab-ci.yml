@@ -1,4 +1,4 @@
-image: 3.8.3-jdk-11
+image: maven:latest
 stages:
   - compile
   - verify
