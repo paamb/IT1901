@@ -23,15 +23,15 @@ public class LabelList implements Iterable<ILabel> {
     return labels.stream().filter(m -> m.getTitle().equals(title)).findFirst().orElse(null);
   }
 
-  public void removeMovie(ILabel label) {
+  public void removeLabel(ILabel label) {
     labels.remove(label);
   }
 
-  public Collection<ILabel> getMovies() {
+  public Collection<ILabel> getLabels() {
     return new ArrayList<>(labels);
   }
 
-  public void clearMovieList() {
+  public void clearLabelList() {
     labels.clear();
   }
 
