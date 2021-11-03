@@ -135,9 +135,7 @@ public class MovieListController {
     try {
       int counter = 0;
       double offsetX = movieDisplay.getPrefWidth() / 2;
-      double offsetY =
-          ((Pane) new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml")).load())
-              .getPrefHeight();
+      double offsetY = -1.0;
 
       Collection<IMovie> movies = getMovies();
 
@@ -153,6 +151,10 @@ public class MovieListController {
         FXMLLoader fxmlLoader =
             new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
         Pane moviePane = fxmlLoader.load();
+        if (offsetY < 0.0) {
+          offsetY = moviePane.getPrefHeight();
+        }
+
         int counterCalc = (int) counter / 2;
         moviePane.setLayoutX(offsetX * (counter % 2));
         moviePane.setLayoutY(offsetY * counterCalc);
