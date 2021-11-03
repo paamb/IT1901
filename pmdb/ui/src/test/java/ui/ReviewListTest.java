@@ -14,6 +14,7 @@ import java.io.File;
 import java.time.LocalDate;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
@@ -24,9 +25,20 @@ import json.moviepersistance.MovieStorage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
-public class ReviewListTest extends AbstractNodeFinderTest {
+public class ReviewListTest extends ApplicationTest {
+
+  private NodeFinderHelper nodeFinder;
+
+  private Node waitForNode(String id) {
+    return nodeFinder.waitForNode(id);
+  }
+
+  private void waitThenWrite(String text) {
+    nodeFinder.waitThenWrite(text);
+  }
 
   private MovieListController movieListController;
 
@@ -74,6 +86,7 @@ public class ReviewListTest extends AbstractNodeFinderTest {
    */
   @BeforeEach
   public void setup() {
+    nodeFinder = new NodeFinderHelper();
     try {
       movieListController.loadMovieListFile(testFile);
       WaitForAsyncUtils.waitForFxEvents();

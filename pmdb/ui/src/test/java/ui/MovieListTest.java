@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -24,10 +25,21 @@ import json.moviepersistance.MovieStorage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 import util.DurationConverter;
 
-public class MovieListTest extends AbstractNodeFinderTest {
+public class MovieListTest extends ApplicationTest {
+
+  private NodeFinderHelper nodeFinder;
+
+  private Node waitForNode(String id) {
+    return nodeFinder.waitForNode(id);
+  }
+
+  private void waitThenWrite(String text) {
+    nodeFinder.waitThenWrite(text);
+  }
 
   @FXML
   Tab movieListTab;
@@ -87,6 +99,7 @@ public class MovieListTest extends AbstractNodeFinderTest {
    */
   @BeforeEach
   public void setup() {
+    nodeFinder = new NodeFinderHelper();
     try {
       movieListController.loadMovieListFile(testFile);
       assertEquals(1, movieListSize());
