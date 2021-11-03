@@ -47,14 +47,16 @@ public class MovieListController {
 
   private ReviewListController reviewListController;
 
+  private Runnable initViewRunnable = () -> {
+    hideEditMovie();
+    displayMovieList();
+  };
+
   @FXML
   void initialize() throws IOException {
     loadMovieListFile(new File(userMovieListPath));
     editMovieController.injectMovieListController(this);
-    Platform.runLater(() -> {
-      hideEditMovie();
-      displayMovieList();
-    });
+    Platform.runLater(initViewRunnable);
   }
 
   /**
@@ -67,10 +69,7 @@ public class MovieListController {
     storage = new MovieStorage();
     storage.setFile(file);
     movieList = storage.loadMovieList();
-    Platform.runLater(() -> {
-      hideEditMovie();
-      displayMovieList();
-    });
+    Platform.runLater(initViewRunnable);
   }
 
   protected void injectReviewListController(ReviewListController reviewListController) {
