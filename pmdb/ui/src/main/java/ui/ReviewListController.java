@@ -83,15 +83,17 @@ public class ReviewListController {
         openEditReview.setDisable(false);
         int counter = 0;
         double offsetX = reviewDisplay.getPrefWidth() / 2;
-        double offsetY =
-            ((Pane) new FXMLLoader(this.getClass().getResource("ReviewDisplayTemplate.fxml"))
-                .load()).getPrefHeight();
+        double offsetY = -1.0;
         Collection<IMovie> movies = getMovies();
         for (IMovie movie : movies) {
           for (IReview review : movie.getReviews()) {
             FXMLLoader fxmlLoader =
                 new FXMLLoader(this.getClass().getResource("ReviewDisplayTemplate.fxml"));
             Pane reviewPane = fxmlLoader.load();
+            if (offsetY < 0.0) {
+              offsetY = reviewPane.getPrefHeight();
+            }
+            
             int counterCalc = (int) counter / 2;
             reviewPane.setLayoutX(offsetX * (counter % 2));
             reviewPane.setLayoutY(offsetY * counterCalc);
