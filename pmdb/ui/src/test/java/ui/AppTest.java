@@ -21,7 +21,7 @@ public class AppTest extends ApplicationTest {
 
   private ReviewListController reviewListController;
 
-  private final File testFile = new File("src/test/resources/ui/MovieList_test.json");
+  private final File testFile = new File(getClass().getResource("MovieList_test.json").getFile());
 
   @Override
   public void start(final Stage stage) throws Exception {
