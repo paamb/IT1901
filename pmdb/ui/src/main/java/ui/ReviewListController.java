@@ -4,8 +4,10 @@ import core.IMovie;
 import core.IReview;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -32,11 +34,14 @@ public class ReviewListController {
 
   private MovieListController movieListController;
 
+  private HashMap<String, IReview> displayedReviews;
+
   @FXML
   EditReviewController editReviewController;
 
   @FXML
   void initialize() {
+    displayedReviews = new HashMap<String, IReview>();
     editReviewController.injectReviewListController(this);
     hideEditReview();
   }
@@ -75,7 +80,8 @@ public class ReviewListController {
   }
 
   protected void displayReviewList() {
-    reviewDisplay.getChildren().clear();
+    clearDeletedReviews();
+    HashMap<String, IReview> newHashMap = new HashMap<String, IReview>();
     hideEditReview();
     if (!movieListController.getMovies().isEmpty()) {
       noAvailableMovies(false);
@@ -87,9 +93,21 @@ public class ReviewListController {
         Collection<IMovie> movies = getMovies();
         for (IMovie movie : movies) {
           for (IReview review : movie.getReviews()) {
-            FXMLLoader fxmlLoader =
-                new FXMLLoader(this.getClass().getResource("ReviewDisplayTemplate.fxml"));
-            Pane reviewPane = fxmlLoader.load();
+            Pane reviewPane = findReviewPane(review);
+            if (reviewPane == null) {
+              FXMLLoader fxmlLoader =
+                  new FXMLLoader(this.getClass().getResource("ReviewDisplayTemplate.fxml"));
+              reviewPane = fxmlLoader.load();
+              
+              ReviewDisplayTemplateController reviewDisplayTemplateController =
+                  fxmlLoader.getController();
+              reviewDisplayTemplateController.injectReviewListController(this);
+              reviewDisplayTemplateController.setReview(review);
+              reviewDisplayTemplateController.setMovie(movie);
+              reviewDisplayTemplateController.setContent();
+              reviewDisplay.getChildren().add(reviewPane);
+            }
+
             if (offsetY < 0.0) {
               offsetY = reviewPane.getPrefHeight();
             }
@@ -97,27 +115,59 @@ public class ReviewListController {
             int counterCalc = (int) counter / 2;
             reviewPane.setLayoutX(offsetX * (counter % 2));
             reviewPane.setLayoutY(offsetY * counterCalc);
-            reviewPane.setId("R" + String.valueOf(counter));
+            String id = "R" + String.valueOf(counter);
+            reviewPane.setId(id);
+            newHashMap.put(id, review);
 
-            ReviewDisplayTemplateController reviewDisplayTemplateController =
-                fxmlLoader.getController();
-            reviewDisplayTemplateController.injectReviewListController(this);
-            reviewDisplayTemplateController.setReview(review);
-            reviewDisplayTemplateController.setMovie(movie);
-            reviewDisplayTemplateController.setContent();
-
-            reviewDisplay.getChildren().add(reviewPane);
             counter++;
           }
           int counterCalc = (int) counter / 2;
           reviewDisplay.setLayoutY(counterCalc);
         }
+        displayedReviews = newHashMap;
       } catch (Exception e) {
         e.printStackTrace();
       }
     } else {
       noAvailableMovies(true);
     }
+  }
+
+  private void clearDeletedReviews() {
+    Collection<IReview> allReviews = getAllReviews();
+    Collection<Node> deletingNodes = new ArrayList<Node>();
+    for (Node reviewNode : reviewDisplay.getChildren()) {
+      IReview nodeReview = displayedReviews.get(reviewNode.getId());
+      if (!allReviews.contains(nodeReview)) {
+        deletingNodes.add(reviewNode);
+      }
+    }
+    deletingNodes.forEach(node -> {
+      reviewDisplay.getChildren().remove(node);
+    });
+  }
+
+  private Pane findReviewPane(IReview review) {
+    for (Node reviewNode : reviewDisplay.getChildren()) {
+      try {
+        if (review == displayedReviews.get(reviewNode.getId())) {
+          return (Pane) reviewNode;
+        }
+      } catch (Exception e) {
+        // ignore
+      }
+    }
+    return null;
+  }
+
+  private Collection<IReview> getAllReviews() {
+    Collection<IReview> allReviews = new ArrayList<IReview>();
+    for (IMovie movie : getMovies()) {
+      for (IReview review : movie.getReviews()) {
+        allReviews.add(review);
+      }
+    }
+    return allReviews;
   }
 
   private void noAvailableMovies(boolean bool) {
