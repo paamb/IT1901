@@ -91,7 +91,7 @@ public class EditReviewController {
   }
 
   @FXML
-  void cancelEditReview() {
+  private void cancelEditReview() {
     reviewListController.hideEditReview();
     editingReview = null;
     availableMovies = null;
@@ -99,17 +99,17 @@ public class EditReviewController {
   }
 
   @FXML
-  void ratingOnChange() {
+  private void ratingOnChange() {
     validateRating(onChangeLambda(invalidRatingText));
   }
 
   @FXML
-  void commentOnChange() {
+  private void commentOnChange() {
     validateComment(onChangeLambda(invalidCommentText));
   }
 
   @FXML
-  void whenWatchedOnChange() {
+  private void whenWatchedOnChange() {
     validateWhenWatched(onChangeLambda(invalidWhenWatchedText));
   }
   

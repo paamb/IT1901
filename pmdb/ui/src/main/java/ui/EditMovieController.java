@@ -3,6 +3,7 @@ package ui;
 import core.IMovie;
 import core.Movie;
 import java.util.ArrayList;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -46,44 +47,40 @@ public class EditMovieController {
 
   private IMovie editingMovie;
 
+  private String invalidTitleText = "Tittel må ha lengde mellom 1 og 50 tegn";
+
+  private String usedTitleText = "Denne tittelen er allerede i bruk";
+
+  private String invalidDurationText = "Ugyldig varighet";
+
+  private String invalidDescriptionText = "Beskrivelse kan ikke være 'null'";
+
   @FXML
   private void submit() {
-    String title = titleField.getText();
-    if (IMovie.isValidTitle(title)) {
-      if (thisTitleIsAvailable(title)) {
-        try {
+    validateTitle(() -> {
+      validateDuration(() -> {
+        validateDescription(() -> {
           int hours = Integer.parseInt(hoursField.getText());
           int minutes = Integer.parseInt(minutesField.getText());
           int duration = DurationConverter.hoursAndMinutesToMinutes(hours, minutes);
-          if (IMovie.isValidDuration(duration) && hours >= 0 && minutes >= 0) {
-            String description = descriptionField.getText();
-            if (IMovie.isValidDescription(description)) {
-              boolean watched = watchedCheckBox.isSelected();
-              if (editingMovie == null) {
-                IMovie movie = new Movie(title, description, duration, watched, new ArrayList<>());
-                movieListController.addMovie(movie);
-              } else {
-                updateExistingMovie(title, description, duration, watched);
-                editingMovie = null;
-              }
-              movieListController.movieListIsEdited();
-              movieListController.hideEditMovie();
-              clearFields();
-            } else {
-              errorField.setText("Beskrivelse kan ikke være 'null'");
-            }
+          String title = titleField.getText();
+          String description = descriptionField.getText();
+          boolean watched = watchedCheckBox.isSelected();
+
+          if (editingMovie == null) {
+            IMovie movie = new Movie(title, description, duration, watched, new ArrayList<>());
+            movieListController.addMovie(movie);
           } else {
-            errorField.setText("Ugyldig varighet");
+            updateExistingMovie(title, description, duration, watched);
+            editingMovie = null;
           }
-        } catch (Exception e) {
-          errorField.setText("Varighet-feltet må være mer enn 00:00 og mindre enn 23:59");
-        }
-      } else {
-        errorField.setText("Denne tittelen er allerede i bruk");
-      }
-    } else {
-      errorField.setText("Tittel må ha lengde mellom 1 og 50 tegn");
-    }
+          
+          movieListController.movieListIsEdited();
+          movieListController.hideEditMovie();
+          clearFields();
+        });
+      });
+    });
   }
 
   @FXML
@@ -91,6 +88,75 @@ public class EditMovieController {
     movieListController.hideEditMovie();
     clearFields();
     editingMovie = null;
+  }
+
+  @FXML
+  private void titleOnChange() {
+    Platform.runLater(() -> {
+      validateTitle(() -> {
+        String errorFieldText = errorField.getText();
+        if (errorFieldText.equals(invalidTitleText) || errorFieldText.equals(usedTitleText)) {
+          errorField.setText("");
+        }
+      });
+    });
+  }
+
+  @FXML
+  private void durationOnChange() {
+    validateDuration(() -> {
+      if (errorField.getText().equals(invalidDurationText)) {
+        errorField.setText("");
+      }
+    });
+  }
+
+  @FXML
+  private void descriptionOnChange() {
+    validateDuration(() -> {
+      if (errorField.getText().equals(invalidDescriptionText)) {
+        errorField.setText("");
+      }
+    });
+  }
+
+  private void validateTitle(Runnable ifValid) {
+    String title = titleField.getText();
+    if (IMovie.isValidTitle(title)) {
+      if (thisTitleIsAvailable(title)) {
+        ifValid.run();
+      } else if (errorField.getText().isEmpty()) {
+        errorField.setText(usedTitleText);
+      }
+    } else if (errorField.getText().isEmpty()) {
+      errorField.setText(invalidTitleText);
+    }
+  }
+
+  private void validateDuration(Runnable ifValid) {
+    try {
+      int hours = Integer.parseInt(hoursField.getText());
+      int minutes = Integer.parseInt(minutesField.getText());
+      int duration = DurationConverter.hoursAndMinutesToMinutes(hours, minutes);
+      if (IMovie.isValidDuration(duration) && hours >= 0 && minutes >= 0) {
+        ifValid.run();
+      } else if (errorField.getText().isEmpty()) {
+        errorField.setText(invalidDurationText);
+      }
+    } catch (Exception e) {
+      if (errorField.getText().isEmpty()) {
+        errorField.setText(invalidDurationText);
+      }
+    }
+  }
+
+  private void validateDescription(Runnable ifValid) {
+    String description = descriptionField.getText();
+    if (IMovie.isValidDescription(description)) {
+      ifValid.run();
+    } else if (errorField.getText().isEmpty()) {
+      errorField.setText(invalidDescriptionText);
+    }
   }
 
   protected void editMovie(IMovie movie) {
