@@ -145,7 +145,7 @@ public class EditReviewController {
     int rating = ratingComboBox.getSelectionModel().getSelectedItem();
     if (IReview.isValidRating(rating)) {
       ifValid.run();
-    } else if (errorField.getText().isEmpty()) {
+    } else {
       errorField.setText(invalidRatingText);
     }
   }
@@ -154,7 +154,7 @@ public class EditReviewController {
     String comment = commentField.getText();
     if (IReview.isValidComment(comment)) {
       ifValid.run();
-    } else if (errorField.getText().isEmpty()) {
+    } else {
       errorField.setText(invalidCommentText);
     }
   }
@@ -163,7 +163,7 @@ public class EditReviewController {
     LocalDate whenWatched = dateField.getValue();
     if (IReview.isValidWhenWatched(whenWatched)) {
       ifValid.run();
-    } else if (errorField.getText().isEmpty()) {
+    } else {
       errorField.setText(invalidWhenWatchedText);
     }
   }

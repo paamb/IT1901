@@ -74,7 +74,7 @@ public class EditMovieController {
             updateExistingMovie(title, description, duration, watched);
             editingMovie = null;
           }
-          
+
           movieListController.movieListIsEdited();
           movieListController.hideEditMovie();
           clearFields();
@@ -125,10 +125,10 @@ public class EditMovieController {
     if (IMovie.isValidTitle(title)) {
       if (thisTitleIsAvailable(title)) {
         ifValid.run();
-      } else if (errorField.getText().isEmpty()) {
+      } else {
         errorField.setText(usedTitleText);
       }
-    } else if (errorField.getText().isEmpty()) {
+    } else {
       errorField.setText(invalidTitleText);
     }
   }
@@ -140,13 +140,11 @@ public class EditMovieController {
       int duration = DurationConverter.hoursAndMinutesToMinutes(hours, minutes);
       if (IMovie.isValidDuration(duration) && hours >= 0 && minutes >= 0) {
         ifValid.run();
-      } else if (errorField.getText().isEmpty()) {
+      } else {
         errorField.setText(invalidDurationText);
       }
     } catch (Exception e) {
-      if (errorField.getText().isEmpty()) {
-        errorField.setText(invalidDurationText);
-      }
+      errorField.setText(invalidDurationText);
     }
   }
 
@@ -154,7 +152,7 @@ public class EditMovieController {
     String description = descriptionField.getText();
     if (IMovie.isValidDescription(description)) {
       ifValid.run();
-    } else if (errorField.getText().isEmpty()) {
+    } else {
       errorField.setText(invalidDescriptionText);
     }
   }
