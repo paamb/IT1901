@@ -37,7 +37,7 @@ public class EditReviewController {
 
   @FXML
   Button cancelButton;
-  
+
   @FXML
   Button submitReview;
 
@@ -49,6 +49,12 @@ public class EditReviewController {
 
   private ArrayList<IMovie> availableMovies;
 
+  private String invalidRatingText = "Vurdering må være mellom 1 og 10";
+
+  private String invalidCommentText = "Ugyldig kommentar";
+
+  private String invalidWhenWatchedText = "Sett-dato kan ikke være i fremtiden";
+
   @FXML
   void initialize() {
     ratingComboBox.getItems()
@@ -57,12 +63,13 @@ public class EditReviewController {
 
   @FXML
   void submit() {
-    int rating = ratingComboBox.getSelectionModel().getSelectedItem();
-    if (IReview.isValidRating(rating)) {
-      String comment = commentField.getText();
-      if (IReview.isValidComment(comment)) {
-        LocalDate whenWatched = dateField.getValue();
-        if (IReview.isValidWhenWatched(whenWatched)) {
+    validateRating(() -> {
+      validateComment(() -> {
+        validateWhenWatched(() -> {
+          int rating = ratingComboBox.getSelectionModel().getSelectedItem();
+          String comment = commentField.getText();
+          LocalDate whenWatched = dateField.getValue();
+
           if (editingReview == null) {
             IReview review = new Review(comment, rating, whenWatched);
             IMovie movie =
@@ -78,15 +85,9 @@ public class EditReviewController {
           editingReview = null;
           availableMovies = null;
           clearFields();
-        } else {
-          errorField.setText("Sett-dato kan ikke være i fremtiden");
-        }
-      } else {
-        errorField.setText("Ugyldig kommentar");
-      }
-    } else {
-      errorField.setText("Vurdering må være mellom 1 og 10");
-    }
+        });
+      });
+    });
   }
 
   @FXML
@@ -95,6 +96,29 @@ public class EditReviewController {
     editingReview = null;
     availableMovies = null;
     clearFields();
+  }
+
+  @FXML
+  void ratingOnChange() {
+    validateRating(onChangeLambda(invalidRatingText));
+  }
+
+  @FXML
+  void commentOnChange() {
+    validateComment(onChangeLambda(invalidCommentText));
+  }
+
+  @FXML
+  void whenWatchedOnChange() {
+    validateWhenWatched(onChangeLambda(invalidWhenWatchedText));
+  }
+  
+  private Runnable onChangeLambda(String errorText) {
+    return () -> {
+      if (errorField.getText().equals(errorText)) {
+        errorField.setText("");
+      }
+    };
   }
 
   protected void injectReviewListController(ReviewListController reviewListController) {
@@ -115,6 +139,33 @@ public class EditReviewController {
 
   protected void setActiveReviewsMovie(IMovie movie) {
     activeReviewsMovie = movie;
+  }
+
+  private void validateRating(Runnable ifValid) {
+    int rating = ratingComboBox.getSelectionModel().getSelectedItem();
+    if (IReview.isValidRating(rating)) {
+      ifValid.run();
+    } else if (errorField.getText().isEmpty()) {
+      errorField.setText(invalidRatingText);
+    }
+  }
+  
+  private void validateComment(Runnable ifValid) {
+    String comment = commentField.getText();
+    if (IReview.isValidComment(comment)) {
+      ifValid.run();
+    } else if (errorField.getText().isEmpty()) {
+      errorField.setText(invalidCommentText);
+    }
+  }
+
+  private void validateWhenWatched(Runnable ifValid) {
+    LocalDate whenWatched = dateField.getValue();
+    if (IReview.isValidWhenWatched(whenWatched)) {
+      ifValid.run();
+    } else if (errorField.getText().isEmpty()) {
+      errorField.setText(invalidWhenWatchedText);
+    }
   }
 
   private void clearFields() {
