@@ -113,7 +113,7 @@ public class EditMovieController {
 
   @FXML
   private void descriptionOnChange() {
-    validateDuration(() -> {
+    validateDescription(() -> {
       if (errorField.getText().equals(invalidDescriptionText)) {
         errorField.setText("");
       }

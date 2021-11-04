@@ -4,12 +4,17 @@ import core.IMovie;
 import core.MovieList;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import json.moviepersistance.MovieStorage;
@@ -130,8 +135,7 @@ public class MovieListController {
 
   @FXML
   private void displayMovieList() {
-    reviewListController.displayReviewList();
-    movieDisplay.getChildren().clear();
+    clearDeletedMovies();
     try {
       int counter = 0;
       double offsetX = movieDisplay.getPrefWidth() / 2;
@@ -148,9 +152,20 @@ public class MovieListController {
       }
 
       for (IMovie movie : movies) {
-        FXMLLoader fxmlLoader =
-            new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
-        Pane moviePane = fxmlLoader.load();
+        Pane moviePane = findMoviePane(movie);
+        if (moviePane == null) {
+          FXMLLoader fxmlLoader =
+              new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
+          moviePane = fxmlLoader.load();
+
+          MovieDisplayTemplateController movieDisplayTemplateController =
+              fxmlLoader.getController();
+          movieDisplayTemplateController.injectMovieListController(this);
+          movieDisplayTemplateController.setMovie(movie);
+          movieDisplayTemplateController.setContent();
+          movieDisplay.getChildren().add(moviePane);
+        }
+
         if (offsetY < 0.0) {
           offsetY = moviePane.getPrefHeight();
         }
@@ -159,19 +174,34 @@ public class MovieListController {
         moviePane.setLayoutX(offsetX * (counter % 2));
         moviePane.setLayoutY(offsetY * counterCalc);
         moviePane.setId("M" + String.valueOf(counter));
-
-        MovieDisplayTemplateController movieDisplayTemplateController = fxmlLoader.getController();
-        movieDisplayTemplateController.injectMovieListController(this);
-        movieDisplayTemplateController.setMovie(movie);
-        movieDisplayTemplateController.setContent();
-
-        movieDisplay.getChildren().add(moviePane);
         counter++;
       }
       int counterCalc = (int) counter / 2;
       movieDisplay.setLayoutY(counterCalc);
+
+      reviewListController.displayReviewList();
     } catch (Exception e) {
       System.out.println(e);
     }
+  }
+
+  private void clearDeletedMovies() {
+    ObservableList<Node> movieNodes = movieDisplay.getChildren();
+    Collection<Node> deletingNodes = new ArrayList<Node>();
+    movieNodes.forEach(movieNode -> {
+      if (movieList.getMovie(((Label) movieNode.lookup("#movieTitle")).getText()) == null) {
+        deletingNodes.add(movieNode);
+      }
+    });
+    deletingNodes.forEach(node -> movieNodes.remove(node));
+  }
+
+  private Pane findMoviePane(IMovie movie) {
+    for (Node node : movieDisplay.getChildren()) {
+      if (((Label) node.lookup("#movieTitle")).getText().equals(movie.getTitle())) {
+        return (Pane) node;
+      }
+    }
+    return null;
   }
 }
