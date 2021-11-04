@@ -30,7 +30,8 @@ import org.testfx.util.WaitForAsyncUtils;
 import util.DurationConverter;
 
 public class MovieListTest extends ApplicationTest {
-
+  
+  // Need instance of NodeFinderHelper because NodeFinderHelper cannot have static methods
   private NodeFinderHelper nodeFinder;
 
   private Node waitForNode(String id) {
@@ -51,7 +52,7 @@ public class MovieListTest extends ApplicationTest {
 
   private EditMovieController editMovieController;
 
-  private final File testFile = new File("src/test/resources/ui/MovieList_test.json");
+  private final File testFile = new File(getClass().getResource("MovieList_test.json").getFile());
 
   private String title = "title";
   private String description = "description";

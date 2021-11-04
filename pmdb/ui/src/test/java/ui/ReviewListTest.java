@@ -30,6 +30,7 @@ import org.testfx.util.WaitForAsyncUtils;
 
 public class ReviewListTest extends ApplicationTest {
 
+  // Need instance of NodeFinderHelper because NodeFinderHelper cannot have static methods
   private NodeFinderHelper nodeFinder;
 
   private Node waitForNode(String id) {
@@ -45,8 +46,8 @@ public class ReviewListTest extends ApplicationTest {
   private ReviewListController reviewListController;
 
   private EditReviewController editReviewController;
-
-  private final File testFile = new File("src/test/resources/ui/MovieList_test.json");
+  
+  private final File testFile = new File(getClass().getResource("MovieList_test.json").getFile());
 
   private String comment = "comment";
   private LocalDate whenWatched = LocalDate.of(2021, 10, 10);
