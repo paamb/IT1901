@@ -94,7 +94,7 @@ public class ReviewListTest extends ApplicationTest {
     } catch (Exception e) {
       fail(e);
     }
-    assertEquals(0, reviewListSize());
+    assertEquals(0, reviewListSize(), "wrong number of reviews loaded");
   }
 
   /**
@@ -124,9 +124,9 @@ public class ReviewListTest extends ApplicationTest {
   @Test
   public void test_initialize() {
     WaitForAsyncUtils.waitForFxEvents();
-    assertNotNull(reviewListController);
-    assertNotNull(editReviewController);
-    assertNotNull(movieListController);
+    assertNotNull(reviewListController, "reviewListController not loaded");
+    assertNotNull(editReviewController, "editReviewController not loaded");
+    assertNotNull(movieListController, "movieListController not loaded");
   }
 
   @Test
@@ -134,8 +134,9 @@ public class ReviewListTest extends ApplicationTest {
     addDummyReview();
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(1, reviewListSize());
-    assertFalse(reviewListController.editReviewWindow.isVisible());
+    assertEquals(1, reviewListSize(), "wrong number of reviews");
+    assertFalse(reviewListController.editReviewWindow.isVisible(),
+        "editReviewWindow should not be visible");
   }
 
   @Test
@@ -147,8 +148,9 @@ public class ReviewListTest extends ApplicationTest {
     clickOn(waitForNode("#submitReview"));
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(0, reviewListSize());
-    assertTrue(reviewListController.editReviewWindow.isVisible());
+    assertEquals(0, reviewListSize(), "wrong number of reviews");
+    assertTrue(reviewListController.editReviewWindow.isVisible(),
+        "editReviewWindow should be visible");
   }
 
   @Test
@@ -156,7 +158,7 @@ public class ReviewListTest extends ApplicationTest {
     addDummyReview();
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(1, reviewListSize());
+    assertEquals(1, reviewListSize(), "wrong number of reviews");
 
     clickOn(waitForNode("#R0").lookup("#editReview"));
     String newComment = "new comment";
@@ -165,10 +167,10 @@ public class ReviewListTest extends ApplicationTest {
     clickOn(waitForNode("#submitReview"));
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(1, reviewListSize());
+    assertEquals(1, reviewListSize(), "wrong number of reviews");
     IReview review = movieListController.getMovieList().getMovie("test movie").getReviews().stream()
         .findFirst().get();
-    assertEquals(newComment, review.getComment());
+    assertEquals(newComment, review.getComment(), "wrong comment saved");
   }
 
   @Test
@@ -177,6 +179,6 @@ public class ReviewListTest extends ApplicationTest {
     WaitForAsyncUtils.waitForFxEvents();
 
     clickOn(waitForNode("#R0").lookup("#deleteReview"));
-    assertEquals(0, reviewListSize());
+    assertEquals(0, reviewListSize(), "wrong number of reviews");
   }
 }

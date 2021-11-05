@@ -48,8 +48,8 @@ public class AppTest extends ApplicationTest {
 
   @Test
   public void testAppController_initial() {
-    assertNotNull(movieListController);
-    assertNotNull(reviewListController);
+    assertNotNull(movieListController, "movieListController not loaded");
+    assertNotNull(reviewListController, "reviewListController not loaded");
   }
 
   @Test
