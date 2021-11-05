@@ -93,6 +93,11 @@ public class EditMovieController {
     editingMovie = null;
   }
 
+  @FXML
+  private void addLabel() {
+    //add label
+  }
+
   protected void editMovie(IMovie movie) {
     editingMovie = movie;
     if (movie == null) {
