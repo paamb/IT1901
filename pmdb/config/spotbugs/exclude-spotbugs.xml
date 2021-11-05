@@ -11,5 +11,4 @@
     <Match>
         <Bug pattern="SBSC_USE_STRINGBUFFER_CONCATENATION" />
     </Match>
-    
 </FindBugsFilter>
