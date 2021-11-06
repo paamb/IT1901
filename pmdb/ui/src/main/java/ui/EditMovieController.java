@@ -91,10 +91,6 @@ public class EditMovieController {
   }
 
   @FXML
-<<<<<<< HEAD
-  private void addLabel() {
-    //add label
-=======
   private void titleOnChange() {
     Platform.runLater(() -> {
       validateTitle(() -> {
@@ -159,7 +155,6 @@ public class EditMovieController {
     } else {
       errorField.setText(invalidDescriptionText);
     }
->>>>>>> 80-reimplement-labels
   }
 
   protected void editMovie(IMovie movie) {
