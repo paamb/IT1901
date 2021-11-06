@@ -30,11 +30,22 @@ public class MovieModuleTest {
 
   private final static String movieListString = """
       {
+        "labels" : [ {
+          "title" : "Comedy",
+          "color" : "#EEEEEE"
+        }, {
+          "title" : "Romance",
+          "color" : "#AAAAAA"
+        }, {
+          "title" : "Action",
+          "color" : "#FFFFFF"
+        } ],
         "movies" : [ {
           "title" : "Up",
           "description" : "Komedie",
           "duration" : 1,
           "watched" : true,
+          "labels" : [ "Comedy", "Romance" ],
           "reviews" : [ {
             "comment" : "Teit",
             "rating" : 1,
@@ -45,6 +56,7 @@ public class MovieModuleTest {
           "description" : "Action",
           "duration" : 43,
           "watched" : false,
+          "labels" : [ "Action", "Comedy", "Romance" ],
           "reviews" : [ {
             "comment" : "Bra",
             "rating" : 8,
@@ -54,14 +66,32 @@ public class MovieModuleTest {
       }
       """;
 
+  private boolean isLabelInMovie(IMovie movie, String title) {
+    return movie.getLabels().stream().anyMatch(label -> label.getTitle().equals(title));
+  }
+
   @Test
   public void testSerializers() {
     MovieList movieList = new MovieList();
-    ArrayList<IReview> reviews =
-        new ArrayList<IReview>(Arrays.asList(new Review("Teit", 1, LocalDate.of(2000, 1, 1)),
+    List<IReview> reviews =
+        new ArrayList<>(Arrays.asList(new Review("Teit", 1, LocalDate.of(2000, 1, 1)),
             new Review("Bra", 8, LocalDate.of(2001, 2, 2))));
+<<<<<<< HEAD
     Movie movie1 = new Movie("Up", "Komedie", 1, true, Arrays.asList(reviews.get(0)), new ArrayList<>());
     Movie movie2 = new Movie("Batman", "Action", 43, false, Arrays.asList(reviews.get(1)), new ArrayList<>());
+=======
+    List<ILabel> labels = new ArrayList<>(Arrays.asList(new Label("Action", "#FFFFFF"),
+        new Label("Comedy", "#EEEEEE"), new Label("Romance", "#AAAAAA")));
+    Movie movie1 =
+        new Movie("Up", "Komedie", 1, true, Arrays.asList(reviews.get(0)), Arrays.asList());
+    Movie movie2 =
+        new Movie("Batman", "Action", 43, false, Arrays.asList(reviews.get(1)), Arrays.asList());
+    movie1.addLabel(labels.get(1));
+    movie1.addLabel(labels.get(2));
+    movie2.addLabel(labels.get(0));
+    movie2.addLabel(labels.get(1));
+    movie2.addLabel(labels.get(2));
+>>>>>>> 80-reimplement-labels
     movieList.addMovie(movie1);
     movieList.addMovie(movie2);
     try {
@@ -93,7 +123,11 @@ public class MovieModuleTest {
       assertEquals("Bra", review2.getComment());
       assertEquals(8, review2.getRating());
       assertEquals(LocalDate.of(2001, 2, 2).toString(), review2.getWhenWatched().toString());
-
+      assertTrue(isLabelInMovie(movie1, "Comedy"));
+      assertTrue(isLabelInMovie(movie1, "Romance"));
+      assertTrue(isLabelInMovie(movie2, "Action"));
+      assertTrue(isLabelInMovie(movie2, "Comedy"));
+      assertTrue(isLabelInMovie(movie2, "Romance"));
     } catch (Exception e) {
       fail(e.getMessage());
     }
@@ -103,12 +137,21 @@ public class MovieModuleTest {
   @Test
   public void testSerializersDeserializers() {
     MovieList movieList = new MovieList();
-    ArrayList<IReview> reviews =
+    List<IReview> reviews =
         new ArrayList<IReview>(Arrays.asList(new Review("Dust", 1, LocalDate.of(2000, 1, 1)),
             new Review("Utrolig bra", 8, LocalDate.of(2001, 2, 2))));
+<<<<<<< HEAD
     Movie movie1 = new Movie("Spiderman", "Action", 103, true, Arrays.asList(reviews.get(0)), new ArrayList<>());
     Movie movie2 =
         new Movie("Shutter Island", "Thriller", 45, false, Arrays.asList(reviews.get(1)), new ArrayList<>());
+=======
+    List<ILabel> labels = new ArrayList<>(Arrays.asList(new Label("Action", "#FFFFFF"),
+        new Label("Comedy", "#EEEEEE"), new Label("Romance", "#AAAAAA")));
+    Movie movie1 = new Movie("Spiderman", "Action", 103, true, Arrays.asList(reviews.get(0)),
+        Arrays.asList(labels.get(1), labels.get(2)));
+    Movie movie2 = new Movie("Shutter Island", "Thriller", 45, false, Arrays.asList(reviews.get(1)),
+        Arrays.asList(labels.get(0), labels.get(1), labels.get(2)));
+>>>>>>> 80-reimplement-labels
     movieList.addMovie(movie1);
     movieList.addMovie(movie2);
     try {
@@ -120,18 +163,23 @@ public class MovieModuleTest {
       IMovie movie4 = movies.get(1);
       IReview review1 = movie1.getReviews().iterator().next();
       IReview review2 = movie2.getReviews().iterator().next();
-      assertEquals(movie3.getTitle(), "Spiderman");
-      assertEquals(movie4.getTitle(), "Shutter Island");
-      assertEquals(movie3.getDuration(), 103);
-      assertEquals(movie4.getDuration(), 45);
-      assertTrue(movie3.isWatched());
-      assertFalse(movie4.isWatched());
+      assertEquals(movie3.getTitle(), movie1.getTitle());
+      assertEquals(movie4.getTitle(), movie2.getTitle());
+      assertEquals(movie3.getDuration(), movie1.getDuration());
+      assertEquals(movie4.getDuration(), movie2.getDuration());
+      assertEquals(movie3.isWatched(), movie1.isWatched());
+      assertEquals(movie4.isWatched(), movie2.isWatched());
       assertEquals("Dust", review1.getComment());
       assertEquals(1, review1.getRating());
       assertEquals(LocalDate.of(2000, 1, 1).toString(), review1.getWhenWatched().toString());
       assertEquals("Utrolig bra", review2.getComment());
       assertEquals(8, review2.getRating());
       assertEquals(LocalDate.of(2001, 2, 2).toString(), review2.getWhenWatched().toString());
+      assertTrue(isLabelInMovie(movie1, "Comedy"));
+      assertTrue(isLabelInMovie(movie1, "Romance"));
+      assertTrue(isLabelInMovie(movie2, "Action"));
+      assertTrue(isLabelInMovie(movie2, "Comedy"));
+      assertTrue(isLabelInMovie(movie2, "Romance"));
     } catch (JsonProcessingException e) {
       fail(e.getMessage());
     }

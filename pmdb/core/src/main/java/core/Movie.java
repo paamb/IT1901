@@ -32,6 +32,11 @@ public class Movie implements IMovie {
     setLabels(labels);
   }
 
+  public Movie(String title, String description, int duration, boolean watched,
+      Collection<IReview> reviews) {
+    this(title, description, duration, watched, reviews, new ArrayList<>());
+  }
+
   public void setWatched(boolean watched) {
     this.watched = watched;
   }

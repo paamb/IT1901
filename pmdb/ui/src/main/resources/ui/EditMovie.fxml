@@ -19,21 +19,23 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <CheckBox id="watchedCheckBox" fx:id="watchedCheckBox" layoutX="29.0" layoutY="325.0" mnemonicParsing="false" text="Sett" />
+      <CheckBox id="watchedCheckBox" fx:id="watchedCheckBox" layoutX="23.0" layoutY="294.0" mnemonicParsing="false" text="Sett" />
       <Label layoutX="23.0" layoutY="53.0" text="Tittel:" />
-      <TextField id="titleField" fx:id="titleField" layoutX="87.0" layoutY="48.0" prefHeight="27.0" prefWidth="202.0" />
-      <Label layoutX="11.0" layoutY="80.0" prefHeight="17.0" prefWidth="79.0" text="Beskrivelse:" />
-      <TextArea id="descriptionField" fx:id="descriptionField" layoutX="87.0" layoutY="80.0" prefHeight="55.0" prefWidth="202.0" wrapText="true" />
-      <Label layoutX="14.0" layoutY="298.0" text="Varighet (tt:mm):" />
-      <TextField id="hoursField" fx:id="hoursField" layoutX="118.0" layoutY="293.0" prefHeight="27.0" prefWidth="38.0" />
-      <Label layoutX="165.0" layoutY="293.0" prefHeight="23.0" prefWidth="0.0" text=":">
+      <TextField id="titleField" fx:id="titleField" layoutX="87.0" layoutY="48.0" onKeyPressed="#titleOnChange" prefHeight="27.0" prefWidth="202.0" />
+      <Label layoutX="11.0" layoutY="98.0" prefHeight="17.0" prefWidth="79.0" text="Beskrivelse:" />
+      <TextArea id="descriptionField" fx:id="descriptionField" layoutX="87.0" layoutY="98.0" onKeyTyped="#descriptionOnChange" prefHeight="140.0" prefWidth="202.0" wrapText="true" />
+      <Label layoutX="22.0" layoutY="263.0" text="Varighet (tt:mm):" />
+      <TextField id="hoursField" fx:id="hoursField" layoutX="118.0" layoutY="258.0" onKeyTyped="#durationOnChange" prefHeight="27.0" prefWidth="38.0" text="00" />
+      <Label layoutX="165.0" layoutY="260.0" prefHeight="23.0" prefWidth="0.0" text=":">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField id="minutesField" fx:id="minutesField" layoutX="176.0" layoutY="293.0" prefHeight="27.0" prefWidth="38.0" />
+      <ComboBox fx:id="labelComboBox" editable="true" layoutX="11.0" layoutY="161.0" prefHeight="26.0" prefWidth="126.0" />
+      <Button fx:id="addLabel" layoutX="137.0" layoutY="161.0" mnemonicParsing="false" onAction="#addLabel" prefHeight="26.0" prefWidth="30.0" text="-&gt;" />
+      <TextField id="minutesField" fx:id="minutesField" layoutX="176.0" layoutY="258.0" onKeyTyped="#durationOnChange" prefHeight="27.0" prefWidth="38.0" text="00" />
       <Button id="submitMovie" fx:id="submitMovie" layoutX="269.0" layoutY="359.0" mnemonicParsing="false" onAction="#submit" text="Lagre" />
-      <Text id="errorField" fx:id="errorField" fill="#dd0606" layoutX="17.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ErrorField" wrappingWidth="184.0" />
+      <Text id="errorField" fx:id="errorField" fill="#dd0606" layoutX="17.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="184.0" />
       <Button id="cancelButton" fx:id="cancelButton" layoutX="208.0" layoutY="359.0" mnemonicParsing="false" onAction="#cancelEditMovie" text="Avbryt" />
       <Label layoutX="11.0" layoutY="143.0" text="Emneknagger:" />
       <ScrollPane layoutX="170.0" layoutY="161.0" prefHeight="107.0" prefWidth="151.0">
@@ -41,7 +43,5 @@
             <VBox fx:id="labelDisplay" prefHeight="46.0" prefWidth="135.0" />
          </content>
       </ScrollPane>
-      <ComboBox fx:id="labelComboBox" editable="true" layoutX="11.0" layoutY="161.0" prefHeight="26.0" prefWidth="126.0" />
-      <Button fx:id="addLabel" layoutX="137.0" layoutY="161.0" mnemonicParsing="false" onAction="#addLabel" prefHeight="26.0" prefWidth="30.0" text="-&gt;" />
    </children>
 </AnchorPane>
