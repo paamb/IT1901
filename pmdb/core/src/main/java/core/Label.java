@@ -9,12 +9,12 @@ public class Label implements ILabel {
 
   public Label(String title) {
     setTitle(title);
-    setColor(color);
+    setColor(getRandomColor());
   }
 
   public Label(String title, String color) {
     setTitle(title);
-    setColor(getRandomColor());
+    setColor(color);
   }
 
   /**
@@ -52,7 +52,7 @@ public class Label implements ILabel {
 
   @Override
   public String toString() {
-    return "Label: " + getTitle() + "\n" + "Color: " + getColor();
+    return "Title: " + getTitle() + "\n" + "Color: " + getColor();
   }
 }
 
