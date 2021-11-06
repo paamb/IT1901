@@ -14,6 +14,7 @@ import java.io.File;
 import java.time.LocalDate;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
@@ -24,17 +25,29 @@ import json.moviepersistance.MovieStorage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
-public class ReviewListTest extends AbstractNodeFinderTest {
+public class ReviewListTest extends ApplicationTest {
+
+  // Need instance of NodeFinderHelper because NodeFinderHelper cannot have static methods
+  private NodeFinderHelper nodeFinder;
+
+  private Node waitForNode(String id) {
+    return nodeFinder.waitForNode(id);
+  }
+
+  private void waitThenWrite(String text) {
+    nodeFinder.waitThenWrite(text);
+  }
 
   private MovieListController movieListController;
 
   private ReviewListController reviewListController;
 
   private EditReviewController editReviewController;
-
-  private final File testFile = new File("src/test/resources/ui/MovieList_test.json");
+  
+  private final File testFile = new File(getClass().getResource("MovieList_test.json").getFile());
 
   private String comment = "comment";
   private LocalDate whenWatched = LocalDate.of(2021, 10, 10);
@@ -74,13 +87,14 @@ public class ReviewListTest extends AbstractNodeFinderTest {
    */
   @BeforeEach
   public void setup() {
+    nodeFinder = new NodeFinderHelper();
     try {
       movieListController.loadMovieListFile(testFile);
       WaitForAsyncUtils.waitForFxEvents();
     } catch (Exception e) {
       fail(e);
     }
-    assertEquals(0, reviewListSize());
+    assertEquals(0, reviewListSize(), "wrong number of reviews loaded");
   }
 
   /**
@@ -110,9 +124,9 @@ public class ReviewListTest extends AbstractNodeFinderTest {
   @Test
   public void test_initialize() {
     WaitForAsyncUtils.waitForFxEvents();
-    assertNotNull(reviewListController);
-    assertNotNull(editReviewController);
-    assertNotNull(movieListController);
+    assertNotNull(reviewListController, "reviewListController not loaded");
+    assertNotNull(editReviewController, "editReviewController not loaded");
+    assertNotNull(movieListController, "movieListController not loaded");
   }
 
   @Test
@@ -120,8 +134,9 @@ public class ReviewListTest extends AbstractNodeFinderTest {
     addDummyReview();
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(1, reviewListSize());
-    assertFalse(reviewListController.editReviewWindow.isVisible());
+    assertEquals(1, reviewListSize(), "wrong number of reviews");
+    assertFalse(reviewListController.editReviewWindow.isVisible(),
+        "editReviewWindow should not be visible");
   }
 
   @Test
@@ -133,8 +148,9 @@ public class ReviewListTest extends AbstractNodeFinderTest {
     clickOn(waitForNode("#submitReview"));
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(0, reviewListSize());
-    assertTrue(reviewListController.editReviewWindow.isVisible());
+    assertEquals(0, reviewListSize(), "wrong number of reviews");
+    assertTrue(reviewListController.editReviewWindow.isVisible(),
+        "editReviewWindow should be visible");
   }
 
   @Test
@@ -142,7 +158,7 @@ public class ReviewListTest extends AbstractNodeFinderTest {
     addDummyReview();
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(1, reviewListSize());
+    assertEquals(1, reviewListSize(), "wrong number of reviews");
 
     clickOn(waitForNode("#R0").lookup("#editReview"));
     String newComment = "new comment";
@@ -151,10 +167,10 @@ public class ReviewListTest extends AbstractNodeFinderTest {
     clickOn(waitForNode("#submitReview"));
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(1, reviewListSize());
+    assertEquals(1, reviewListSize(), "wrong number of reviews");
     IReview review = movieListController.getMovieList().getMovie("test movie").getReviews().stream()
         .findFirst().get();
-    assertEquals(newComment, review.getComment());
+    assertEquals(newComment, review.getComment(), "wrong comment saved");
   }
 
   @Test
@@ -163,6 +179,6 @@ public class ReviewListTest extends AbstractNodeFinderTest {
     WaitForAsyncUtils.waitForFxEvents();
 
     clickOn(waitForNode("#R0").lookup("#deleteReview"));
-    assertEquals(0, reviewListSize());
+    assertEquals(0, reviewListSize(), "wrong number of reviews");
   }
 }

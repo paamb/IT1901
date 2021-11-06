@@ -6,9 +6,10 @@ import javafx.scene.Node;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
-abstract class AbstractNodeFinderTest extends ApplicationTest {
-
-  protected Node waitForNode(String id) {
+class NodeFinderHelper extends ApplicationTest {
+  
+  //Methods cannot be static because of references to non-static methods
+  public Node waitForNode(String id) {
     WaitForAsyncUtils.waitForFxEvents();
     Node[] nodes = new Node[1];
     try {
@@ -35,7 +36,7 @@ abstract class AbstractNodeFinderTest extends ApplicationTest {
     return nodes[0];
   }
 
-  protected void waitThenWrite(String text) {
+  public void waitThenWrite(String text) {
     WaitForAsyncUtils.waitForFxEvents();
     try {
       WaitForAsyncUtils.waitFor(2000, TimeUnit.MILLISECONDS, () -> {

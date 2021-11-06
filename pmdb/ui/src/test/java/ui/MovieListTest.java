@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -24,10 +25,22 @@ import json.moviepersistance.MovieStorage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 import util.DurationConverter;
 
-public class MovieListTest extends AbstractNodeFinderTest {
+public class MovieListTest extends ApplicationTest {
+
+  // Need instance of NodeFinderHelper because NodeFinderHelper cannot have static methods
+  private NodeFinderHelper nodeFinder;
+
+  private Node waitForNode(String id) {
+    return nodeFinder.waitForNode(id);
+  }
+
+  private void waitThenWrite(String text) {
+    nodeFinder.waitThenWrite(text);
+  }
 
   @FXML
   Tab movieListTab;
@@ -39,7 +52,7 @@ public class MovieListTest extends AbstractNodeFinderTest {
 
   private EditMovieController editMovieController;
 
-  private final File testFile = new File("src/test/resources/ui/MovieList_test.json");
+  private final File testFile = new File(getClass().getResource("MovieList_test.json").getFile());
 
   private String title = "title";
   private String description = "description";
@@ -87,9 +100,10 @@ public class MovieListTest extends AbstractNodeFinderTest {
    */
   @BeforeEach
   public void setup() {
+    nodeFinder = new NodeFinderHelper();
     try {
       movieListController.loadMovieListFile(testFile);
-      assertEquals(1, movieListSize());
+      assertEquals(1, movieListSize(), "wrong number of movies loaded");
       ((TabPane) waitForNode("#tabPane")).getSelectionModel().selectLast();
       WaitForAsyncUtils.waitForFxEvents();
     } catch (Exception e) {
@@ -120,8 +134,8 @@ public class MovieListTest extends AbstractNodeFinderTest {
 
   @Test
   public void test_initialize() {
-    assertNotNull(movieListController);
-    assertNotNull(editMovieController);
+    assertNotNull(movieListController, "movieListController not loaded");
+    assertNotNull(editMovieController, "reviewListController not loaded");
   }
 
   @Test
@@ -156,19 +170,21 @@ public class MovieListTest extends AbstractNodeFinderTest {
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(2, movieListController.getMovieList().getMovies().size());
-    assertEquals(false, movieListController.editMovieWindow.isVisible());
+    assertEquals(2, movieListController.getMovieList().getMovies().size(),
+        "wrong number of movies");
+    assertEquals(false, movieListController.editMovieWindow.isVisible(),
+        "editMovieWindow should not be visible");
 
     IMovie movie = movieListController.getMovieList().getMovie(title);
 
-    assertEquals(title, movie.getTitle());
-    assertEquals(description, movie.getDescription());
+    assertEquals(title, movie.getTitle(), "wrong movieTitle saved");
+    assertEquals(description, movie.getDescription(), "wrong description saved");
     int[] timetuppel = DurationConverter.minutesToHoursAndMinutes(movie.getDuration());
     int inputHours = timetuppel[0];
     int inputMinutes = timetuppel[1];
-    assertEquals(hours, String.valueOf(inputHours));
-    assertEquals(minutes, String.valueOf(inputMinutes));
-    assertEquals(watched, movie.isWatched());
+    assertEquals(hours, String.valueOf(inputHours), "wrong hours saved");
+    assertEquals(minutes, String.valueOf(inputMinutes), "wrong minutes saved");
+    assertEquals(watched, movie.isWatched(), "wrong 'watched' saved");
   }
 
   @Test
@@ -180,7 +196,7 @@ public class MovieListTest extends AbstractNodeFinderTest {
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(1, movieListSize());
+    assertEquals(1, movieListSize(), "wrong number of movies");
   }
 
   @Test
@@ -192,7 +208,7 @@ public class MovieListTest extends AbstractNodeFinderTest {
     enterMovieValues(title, description, nonInteger, minutes, watched);
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
-    assertEquals(1, movieListSize());
+    assertEquals(1, movieListSize(), "wrong number of movies");
 
     clickOn(waitForNode("#hoursField")).eraseText(nonInteger.length());
     waitThenWrite(hours);
@@ -201,7 +217,7 @@ public class MovieListTest extends AbstractNodeFinderTest {
     waitThenWrite(minutesOutOfRange);
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
-    assertEquals(1, movieListSize());
+    assertEquals(1, movieListSize(), "wrong number of movies");
   }
 
   @Test
@@ -213,7 +229,7 @@ public class MovieListTest extends AbstractNodeFinderTest {
     WaitForAsyncUtils.waitForFxEvents();
     clickOn(waitForNode("#M1").lookup("#deleteMovie"));
     WaitForAsyncUtils.waitForFxEvents();
-    assertEquals(1, movieListSize());
+    assertEquals(1, movieListSize(), "wrong number of movies");
   }
 
   @Test
@@ -232,16 +248,20 @@ public class MovieListTest extends AbstractNodeFinderTest {
     waitThenWrite(newTitle);
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
-    assertFalse(movieListController.editMovieWindow.isVisible());
-    assertEquals(newTitle, movieListController.getMovieList().getMovie(newTitle).getTitle());
-    assertEquals(2, movieListSize());
+    assertFalse(movieListController.editMovieWindow.isVisible(),
+        "editMovieWindow should not be visible");
+    assertEquals(newTitle, movieListController.getMovieList().getMovie(newTitle).getTitle(),
+        "wrong title saved");
+    assertEquals(2, movieListSize(), "wrong number of movies");
 
     clickOn(waitForNode("#M1").lookup("#editMovie"));
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
-    assertFalse(movieListController.editMovieWindow.isVisible());
-    assertEquals(newTitle, movieListController.getMovieList().getMovie(newTitle).getTitle());
-    assertEquals(2, movieListSize());
+    assertFalse(movieListController.editMovieWindow.isVisible(),
+        "editMovieWindow should not be visible");
+    assertEquals(newTitle, movieListController.getMovieList().getMovie(newTitle).getTitle(),
+        "wrong title saved");
+    assertEquals(2, movieListSize(), "wrong number of movies");
   }
 
   @Test
@@ -252,12 +272,15 @@ public class MovieListTest extends AbstractNodeFinderTest {
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
     String title1 = "test movie";
-    assertEquals(title1, ((Label) waitForNode("#M0").lookup("#movieTitle")).getText());
+    assertEquals(title1, ((Label) waitForNode("#M0").lookup("#movieTitle")).getText(),
+        "not sorted correctly");
 
     clickOn(waitForNode("#sortOnTitleCheckbox"));
-    assertEquals(title2, ((Label) waitForNode("#M0").lookup("#movieTitle")).getText());
+    assertEquals(title2, ((Label) waitForNode("#M0").lookup("#movieTitle")).getText(),
+        "not sorted correctly");
 
     clickOn(waitForNode("#sortOnSeenCheckbox"));
-    assertEquals(title2, ((Label) waitForNode("#M0").lookup("#movieTitle")).getText());
+    assertEquals(title2, ((Label) waitForNode("#M0").lookup("#movieTitle")).getText(),
+        "not sorted correctly");
   }
 }
