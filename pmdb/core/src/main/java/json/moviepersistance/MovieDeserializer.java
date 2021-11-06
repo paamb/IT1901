@@ -44,7 +44,8 @@ public class MovieDeserializer extends JsonDeserializer<IMovie> {
       BooleanNode watchedNode = (BooleanNode) movieNode.get("watched");
       boolean watched = watchedNode.asBoolean();
 
-      IMovie newMovie = new Movie(title, description, duration, watched, new ArrayList<>());
+      IMovie newMovie =
+          new Movie(title, description, duration, watched, new ArrayList<>(), new ArrayList<>());
 
       ArrayNode reviewsNode = (ArrayNode) movieNode.get("reviews");
       ReviewDeserializer reviewDeserializer = new ReviewDeserializer();

@@ -122,4 +122,12 @@ public interface IMovie {
    * @return a collection of this movies reviews
    */
   public Collection<IReview> getReviews();
+
+  public void setLabels(Collection<ILabel> labels);
+
+  public void addLabel(ILabel label);
+
+  public void removeLabel(ILabel label);
+
+  public Collection<ILabel> getLabels();
 }
