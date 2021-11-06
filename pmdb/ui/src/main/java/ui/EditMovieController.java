@@ -2,7 +2,7 @@ package ui;
 
 import core.IMovie;
 import core.Movie;
-import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -60,7 +60,8 @@ public class EditMovieController {
             if (IMovie.isValidDescription(description)) {
               boolean watched = watchedCheckBox.isSelected();
               if (editingMovie == null) {
-                IMovie movie = new Movie(title, description, duration, watched, new ArrayList<>());
+                IMovie movie = new Movie(title, description, duration, watched, Arrays.asList(),
+                    Arrays.asList());
                 movieListController.addMovie(movie);
               } else {
                 updateExistingMovie(title, description, duration, watched);
