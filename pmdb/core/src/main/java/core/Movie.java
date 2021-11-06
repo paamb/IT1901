@@ -15,6 +15,7 @@ public class Movie implements IMovie {
   private int duration;
   private boolean watched;
   private Collection<IReview> reviews;
+  private Collection<ILabel> labels;
 
   /**
    * Movie constructor.
@@ -22,12 +23,13 @@ public class Movie implements IMovie {
    * 
    */
   public Movie(String title, String description, int duration, boolean watched,
-      Collection<IReview> reviews) {
+      Collection<IReview> reviews, Collection<ILabel> labels) {
     setTitle(title);
     setDescription(description);
     setDuration(duration);
     setWatched(watched);
     setReviews(reviews);
+    setLabels(labels);
   }
 
   public void setWatched(boolean watched) {
@@ -129,6 +131,23 @@ public class Movie implements IMovie {
     return new ArrayList<>(reviews);
   }
 
+  public Collection<ILabel> getLabels() {
+    return new ArrayList<>(labels);
+  }
+
+  public void addLabel(ILabel label) {
+    labels.add(label);
+  }
+
+  public void setLabels(Collection<ILabel> labels) {
+    this.labels = new ArrayList<>(labels);
+  }
+
+  public void removeLabel(ILabel label) {
+    labels.remove(label);
+
+  }
+
   @Override
   public String toString() {
     String s = "Movie: " + getTitle() + "\n" + "Description: " + getDescription() + "\n"
@@ -145,4 +164,6 @@ public class Movie implements IMovie {
 
     return s.substring(0, s.length() - 2);
   }
+
+
 }
