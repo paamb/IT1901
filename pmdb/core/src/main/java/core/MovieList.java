@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * MovieList class.
@@ -54,6 +55,11 @@ public class MovieList implements Iterable<IMovie> {
    */
   public IMovie getMovie(String title) {
     return movieList.stream().filter(m -> m.getTitle().equals(title)).findFirst().orElse(null);
+  }
+
+  public Collection<ILabel> getAllLabels() {
+    return movieList.stream().map(IMovie::getLabels).flatMap(Collection::stream).distinct()
+        .collect(Collectors.toList());
   }
 
   /**
