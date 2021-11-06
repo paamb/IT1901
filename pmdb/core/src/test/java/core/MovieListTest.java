@@ -25,9 +25,9 @@ public class MovieListTest {
   @BeforeEach
   public void setUp() {
     movieList = new MovieList();
-    movie1 = new Movie("tittel", "desc", 182, true, new ArrayList<>());
-    movie2 = new Movie("tittel", "descasdas", 242, false, new ArrayList<>());
-    movie3 = new Movie("tittela", "descasdas", 242, false, new ArrayList<>());
+    movie1 = new Movie("tittel", "desc", 182, true, new ArrayList<>(), new ArrayList<>());
+    movie2 = new Movie("tittel", "descasdas", 242, false, new ArrayList<>(), new ArrayList<>());
+    movie3 = new Movie("tittela", "descasdas", 242, false, new ArrayList<>(), new ArrayList<>());
   }
 
   @Test
@@ -100,7 +100,8 @@ public class MovieListTest {
     testIterator_helper(movieList.iterator(), movie3);
     movieList.addMovie(movie1);
 
-    Movie movie4 = new Movie("title", "description", 183, true, new ArrayList<>());
+    Movie movie4 =
+        new Movie("title", "description", 183, true, new ArrayList<>(), new ArrayList<>());
     movieList.addMovie(movie4);
     testIterator_helper(movieList.iterator(), movie3, movie1, movie4);
     movieList.removeMovie(movie1);
