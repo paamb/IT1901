@@ -32,12 +32,12 @@ public class CombinedComparatorSortTest {
   @BeforeEach
   public void setUp() {
     movieList = new MovieList();
-    IMovie movie1 = new Movie("aaa", "Komedie", 1, true, Arrays.asList());
-    IMovie movie2 = new Movie("aaa", "Action", 2, false, Arrays.asList());
-    IMovie movie3 = new Movie("ccc", "Komedie", 3, true, Arrays.asList());
-    IMovie movie4 = new Movie("ddd", "Action", 4, false, Arrays.asList());
-    IMovie movie5 = new Movie("eee", "Action", 5, false, Arrays.asList());
-    IMovie movie6 = new Movie("fff", "Action", 6, true, Arrays.asList());
+    IMovie movie1 = new Movie("aaa", "Komedie", 1, true, Arrays.asList(), Arrays.asList());
+    IMovie movie2 = new Movie("aaa", "Action", 2, false, Arrays.asList(), Arrays.asList());
+    IMovie movie3 = new Movie("ccc", "Komedie", 3, true, Arrays.asList(), Arrays.asList());
+    IMovie movie4 = new Movie("ddd", "Action", 4, false, Arrays.asList(), Arrays.asList());
+    IMovie movie5 = new Movie("eee", "Action", 5, false, Arrays.asList(), Arrays.asList());
+    IMovie movie6 = new Movie("fff", "Action", 6, true, Arrays.asList(), Arrays.asList());
     movies = new ArrayList<>(Arrays.asList(movie1, movie2, movie5, movie6, movie3, movie4));
   }
 
