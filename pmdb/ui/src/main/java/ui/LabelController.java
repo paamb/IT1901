@@ -10,8 +10,7 @@ public class LabelController {
   @FXML
   Button removeLabel;
 
-  @FXML
-  Pane self;
+  private Pane selfPane;
 
   private ILabel label;
 
@@ -29,9 +28,18 @@ public class LabelController {
     return label;
   }
 
+  public void setPane(Pane pane) {
+    selfPane = pane;
+  }
+
+  public Pane getPane() {
+    return selfPane;
+  }
+
   @FXML
   private void removeLabel() {
-    editMovieController.removeLabel(self);
+    System.out.println("removing");
+    editMovieController.removeLabel(this);
   }
   
 }

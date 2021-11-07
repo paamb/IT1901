@@ -137,6 +137,12 @@ public class EditMovieController {
   @FXML
   private void addLabel() {
     String labelName = labelComboBox.getSelectionModel().getSelectedItem();
+    //Checking if label already is added
+    for (Node labelPane : labelDisplay.getChildren()) {
+      if (labelPane.getId().equals(labelName)) {
+        return;
+      }
+    }
     ILabel label = null;
     for (ILabel l : movieListController.getMovieList().getAllLabels()) {
       if (l.getTitle().equals(labelName)) {
@@ -154,6 +160,7 @@ public class EditMovieController {
       LabelController labelController = fxmlLoader.getController();
       labelController.injectEditMovieController(this);
       labelController.setLabel(label);
+      labelController.setPane(labelPane);
       labelDisplay.getChildren().add(labelPane);
     } catch (Exception e) {
       e.printStackTrace();
@@ -197,8 +204,8 @@ public class EditMovieController {
     }
   }
 
-  protected void removeLabel(Pane labelPane) {
-    labelDisplay.getChildren().remove(labelPane);
+  protected void removeLabel(LabelController controller) {
+    labelDisplay.getChildren().remove(controller.getPane());
   }
 
   protected void editMovie(IMovie movie) {
