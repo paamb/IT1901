@@ -1,14 +1,22 @@
 package ui;
 
+import core.ILabel;
 import core.IMovie;
+import core.Label;
 import core.Movie;
 import java.util.ArrayList;
+import java.util.Collection;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import util.DurationConverter;
 
@@ -42,6 +50,12 @@ public class EditMovieController {
 
   @FXML
   Text errorField;
+
+  @FXML
+  ComboBox<String> labelComboBox;
+
+  @FXML
+  VBox labelDisplay;
 
   private MovieListController movieListController;
 
@@ -120,6 +134,32 @@ public class EditMovieController {
     });
   }
 
+  @FXML
+  private void addLabel() {
+    String labelName = labelComboBox.getSelectionModel().getSelectedItem();
+    ILabel label = null;
+    for (ILabel l : movieListController.getMovieList().getAllLabels()) {
+      if (l.getTitle().equals(labelName)) {
+        label = l;
+      }
+    }
+    if (label == null) {
+      label = new Label(labelName);
+    }
+    
+    try {
+      FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Label.fxml"));
+      Pane labelPane = fxmlLoader.load();
+      labelPane.setId(label.getTitle());
+      LabelController labelController = fxmlLoader.getController();
+      labelController.injectEditMovieController(this);
+      labelController.setLabel(label);
+      labelDisplay.getChildren().add(labelPane);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   private void validateTitle(Runnable ifValid) {
     String title = titleField.getText();
     if (IMovie.isValidTitle(title)) {
@@ -157,6 +197,10 @@ public class EditMovieController {
     }
   }
 
+  protected void removeLabel(Pane labelPane) {
+    labelDisplay.getChildren().remove(labelPane);
+  }
+
   protected void editMovie(IMovie movie) {
     editingMovie = movie;
     if (movie == null) {
@@ -191,26 +235,37 @@ public class EditMovieController {
     descriptionField.clear();
     watchedCheckBox.setSelected(false);
     errorField.setText("");
+    fillLabelComboBox();
   }
-
+  
   private void fillFields() {
     if (editingMovie == null) {
       throw new IllegalStateException("Cant fill fields when no editingMovie is set.");
     }
-
+    
     watchedCheckBox.setSelected(editingMovie.isWatched());
     titleField.setText(editingMovie.getTitle());
     descriptionField.setText(editingMovie.getDescription());
-
+    
     int[] timetuppel = DurationConverter.minutesToHoursAndMinutes(editingMovie.getDuration());
     int hours = timetuppel[0];
     int minutes = timetuppel[1];
     hoursField.setText(String.valueOf(hours));
     minutesField.setText(String.valueOf(minutes));
+    errorField.setText("");
+    fillLabelComboBox();
   }
 
   private boolean thisTitleIsAvailable(String title) {
     IMovie movie = movieListController.getMovieList().getMovie(title);
     return (movie == null) || (movie == editingMovie);
+  }
+
+  private void fillLabelComboBox() {
+    Collection<String> addItems = new ArrayList<String>();
+    for (ILabel label : movieListController.getMovieList().getAllLabels()) {
+      addItems.add(label.getTitle());
+    }
+    labelComboBox.getItems().addAll(addItems);
   }
 }
