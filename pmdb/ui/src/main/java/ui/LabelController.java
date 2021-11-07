@@ -3,12 +3,17 @@ package ui;
 import core.ILabel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 
 public class LabelController {
 
   @FXML
   Button removeLabel;
+
+  @FXML
+  Label labelName;
 
   private Pane selfPane;
 
@@ -20,8 +25,15 @@ public class LabelController {
     editMovieController = controller;
   }
 
+  /**
+   * Sets label and displays labelname and -color.
+   * 
+   * @param label the label to be set.
+   */
   public void setLabel(ILabel label) {
     this.label = label;
+    labelName.setText(label.getTitle());
+    labelName.setTextFill(Paint.valueOf(label.getColor()));
   }
 
   public ILabel getLabel() {
