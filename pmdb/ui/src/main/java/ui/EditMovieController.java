@@ -137,6 +137,10 @@ public class EditMovieController {
   @FXML
   private void addLabel() {
     String labelName = labelComboBox.getSelectionModel().getSelectedItem();
+    //Checking if labelname is empty
+    if (labelName == null || labelName.isEmpty()) {
+      return;
+    }
     //Checking if label already is added
     for (Node labelPane : labelDisplay.getChildren()) {
       if (labelPane.getId().equals(labelName)) {
