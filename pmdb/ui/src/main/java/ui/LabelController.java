@@ -50,7 +50,6 @@ public class LabelController {
 
   @FXML
   private void removeLabel() {
-    System.out.println("removing");
     editMovieController.removeLabel(this);
   }
   

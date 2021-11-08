@@ -177,7 +177,6 @@ public class EditMovieController {
       labelDisplay.getChildren().add(labelPane);
 
       currentLabels.add(label);
-      System.out.println(currentLabels);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -227,7 +226,6 @@ public class EditMovieController {
   protected void removeLabel(LabelController controller) {
     labelDisplay.getChildren().remove(controller.getPane());
     currentLabels.remove(controller.getLabel());
-    System.out.println(currentLabels);
   }
 
   protected void editMovie(IMovie movie) {
