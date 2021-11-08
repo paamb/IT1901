@@ -28,7 +28,7 @@ public class MovieTest {
     int duration = 130;
     Collection<IReview> reviews =
         new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
-    Movie movie = new Movie(title, description, duration, false, reviews);
+    Movie movie = new Movie(title, description, duration, false, reviews, Arrays.asList());
 
     assertEquals(title, movie.getTitle(), "Movie title is not correct.");
     assertEquals(description, movie.getDescription(), "Description is not correct.");
@@ -38,7 +38,7 @@ public class MovieTest {
 
   @BeforeEach
   public void setUp() {
-    movie = new Movie(initTitle, initDescription, initDuration, false, initReview);
+    movie = new Movie(initTitle, initDescription, initDuration, false, initReview, Arrays.asList());
 
   }
 
