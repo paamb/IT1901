@@ -17,7 +17,8 @@ public class MovieTest {
   private String initTitle = "initTitle";
   private String initDescription = "initDescription";
   private int initDuration = 360;
-  private Collection<IReview> initReview = new ArrayList<IReview>(Arrays.asList());
+  private Collection<IReview> initReview = new ArrayList<>(Arrays.asList());
+  private Collection<ILabel> initLabels = new ArrayList<>(Arrays.asList());
   private Review review1 = new Review("Bra film", 8, LocalDate.of(2000, 1, 1));
   private Review review2 = new Review("Teit film", 1, LocalDate.of(2001, 2, 2));
 
@@ -28,7 +29,7 @@ public class MovieTest {
     int duration = 130;
     Collection<IReview> reviews =
         new ArrayList<IReview>(Arrays.asList(new Review("", 1, LocalDate.now())));
-    Movie movie = new Movie(title, description, duration, false, reviews);
+    Movie movie = new Movie(title, description, duration, false, reviews, Arrays.asList());
 
     assertEquals(title, movie.getTitle(), "Movie title is not correct.");
     assertEquals(description, movie.getDescription(), "Description is not correct.");
@@ -38,7 +39,7 @@ public class MovieTest {
 
   @BeforeEach
   public void setUp() {
-    movie = new Movie(initTitle, initDescription, initDuration, false, initReview);
+    movie = new Movie(initTitle, initDescription, initDuration, false, initReview, Arrays.asList());
 
   }
 
@@ -135,5 +136,39 @@ public class MovieTest {
     assertThrows(IllegalArgumentException.class,
         () -> movie.setReviews(Arrays.asList(review1, review1)),
         "Cannot add a list with duplicate reviews");
+  }
+
+  @Test
+  public void testAddLabel() {
+    Label labelOne = new Label("labelOne");
+    Label labelTwo = new Label("labelTwo");
+    Collection<ILabel> newLabels = new ArrayList<>(initLabels);
+    newLabels.add(labelOne);
+    newLabels.add(labelTwo);
+
+    assertEquals(initLabels, movie.getLabels());
+    movie.addLabel(labelOne);
+    movie.addLabel(labelTwo);
+    assertEquals(newLabels, movie.getLabels());
+  }
+
+  @Test
+  public void testRemoveLabel() {
+    Label labelOne = new Label("labelOne");
+    Label labelTwo = new Label("labelTwo");
+    Collection<ILabel> newLabels = new ArrayList<>(initLabels);
+    newLabels.add(labelOne);
+    newLabels.add(labelTwo);
+    movie.addLabel(labelOne);
+    movie.addLabel(labelTwo);
+    assertEquals(newLabels, movie.getLabels());
+    movie.removeLabel(labelTwo);
+    newLabels.remove(labelTwo);
+    assertEquals(newLabels, movie.getLabels());
+    movie.removeLabel(labelOne);
+    newLabels.remove(labelOne);
+    assertEquals(newLabels, movie.getLabels());
+    movie.removeLabel(new Label("notAddedLabel"));
+    assertEquals(newLabels, movie.getLabels());
   }
 }

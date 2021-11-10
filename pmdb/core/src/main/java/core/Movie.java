@@ -15,6 +15,7 @@ public class Movie implements IMovie {
   private int duration;
   private boolean watched;
   private Collection<IReview> reviews;
+  private Collection<ILabel> labels;
 
   /**
    * Movie constructor.
@@ -22,12 +23,18 @@ public class Movie implements IMovie {
    * 
    */
   public Movie(String title, String description, int duration, boolean watched,
-      Collection<IReview> reviews) {
+      Collection<IReview> reviews, Collection<ILabel> labels) {
     setTitle(title);
     setDescription(description);
     setDuration(duration);
     setWatched(watched);
     setReviews(reviews);
+    setLabels(labels);
+  }
+
+  public Movie(String title, String description, int duration, boolean watched,
+      Collection<IReview> reviews) {
+    this(title, description, duration, watched, reviews, new ArrayList<>());
   }
 
   public void setWatched(boolean watched) {
@@ -92,16 +99,8 @@ public class Movie implements IMovie {
    * @param reviews Collection of reviews
    */
   public void setReviews(Collection<IReview> reviews) {
-    for (IReview review : reviews) {
-      int count = 0;
-      for (IReview review2 : reviews) {
-        if (review == review2) {
-          count++;
-        }
-        if (count > 1) {
-          throw new IllegalArgumentException("Duplicate reviews not allowed");
-        }
-      }
+    if (reviews.stream().distinct().count() != reviews.size()) {
+      throw new IllegalArgumentException("Duplicate reviews not allowed");
     }
     this.reviews = new ArrayList<>(reviews);
   }
@@ -129,20 +128,62 @@ public class Movie implements IMovie {
     return new ArrayList<>(reviews);
   }
 
+  public Collection<ILabel> getLabels() {
+    return new ArrayList<>(labels);
+  }
+
+  /**
+   * Adds a label to the movie.
+   * 
+   * @param label The label to be added.
+   */
+  public void addLabel(ILabel label) {
+    if (label == null) {
+      throw new IllegalArgumentException("Label cannot be null");
+    }
+    if (labels.contains(label)) {
+      throw new IllegalStateException("Duplicate labels not allowed");
+    }
+    labels.add(label);
+  }
+
+  /**
+   * Sets the labels for this movie.
+   * 
+   * @param labels to be set
+   */
+  public void setLabels(Collection<ILabel> labels) {
+    if (labels.stream().distinct().count() != labels.size()) {
+      throw new IllegalArgumentException("Duplicate labels not allowed");
+    }
+    this.labels = new ArrayList<>(labels);
+  }
+
+  public void removeLabel(ILabel label) {
+    labels.remove(label);
+
+  }
+
   @Override
   public String toString() {
     String s = "Movie: " + getTitle() + "\n" + "Description: " + getDescription() + "\n"
         + "Duration: " + getDuration() + "\n" + "Watched: " + (isWatched() ? "Yes" : "No");
 
-    if (reviews.size() == 0) {
-      return s;
-    } else {
+    if (reviews.size() != 0) {
       s += "\nRating from reviews: ";
       for (IReview review : reviews) {
         s += review.getRating() + ", ";
       }
     }
 
+    if (labels.size() == 0) {
+      return s;
+    } else {
+      s += "\nLabels: ";
+      for (ILabel label : labels) {
+        s += "\n" + label + ", ";
+      }
+    }
     return s.substring(0, s.length() - 2);
   }
 }

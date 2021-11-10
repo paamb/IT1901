@@ -122,4 +122,32 @@ public interface IMovie {
    * @return a collection of this movies reviews
    */
   public Collection<IReview> getReviews();
+
+  /**
+   * Set labels for this movie.
+   * 
+   * @param labels Collection of labels to be set.
+   */
+  public void setLabels(Collection<ILabel> labels);
+
+  /**
+   * Adds a label to this movie.
+   * 
+   * @param label to be added to the movie.
+   */
+  public void addLabel(ILabel label);
+
+  /**
+   * Removes a label from this movie.
+   * 
+   * @param label to be removed from the movie.
+   */
+  public void removeLabel(ILabel label);
+
+  /**
+   * Returns a collection of the labels attached to this movie.
+   * 
+   * @return Collection of labels
+   */
+  public Collection<ILabel> getLabels();
 }

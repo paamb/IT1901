@@ -20,6 +20,7 @@ public class MovieStorage {
   private File file;
   private ObjectMapper mapper;
 
+
   /**
    * The movie storage initialization. Creating a new file and creating the object mapper.
    */
@@ -42,7 +43,7 @@ public class MovieStorage {
   }
 
   /**
-    * Saves the movie list to json file.
+   * Saves the movie list to json file.
    * 
    * @param movieList the movielist object to be saved.
    */

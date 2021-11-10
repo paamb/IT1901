@@ -18,10 +18,10 @@ public class MovieTitleComparatorTest {
   @Test
   public void testMovieTitleSort() {
     MovieList movieList = new MovieList();
-    IMovie movie1 = new Movie("aaa", "Komedie", 1, true, Arrays.asList());
-    IMovie movie2 = new Movie("bbb", "Action", 2, false, Arrays.asList());
-    IMovie movie3 = new Movie("ccc", "Komedie", 3, true, Arrays.asList());
-    IMovie movie4 = new Movie("ddd", "Action", 4, false, Arrays.asList());
+    IMovie movie1 = new Movie("aaa", "Komedie", 1, true, Arrays.asList(), Arrays.asList());
+    IMovie movie2 = new Movie("bbb", "Action", 2, false, Arrays.asList(), Arrays.asList());
+    IMovie movie3 = new Movie("ccc", "Komedie", 3, true, Arrays.asList(), Arrays.asList());
+    IMovie movie4 = new Movie("ddd", "Action", 4, false, Arrays.asList(), Arrays.asList());
 
     Collection<IMovie> movies =
         new ArrayList<IMovie>(Arrays.asList(movie2, movie3, movie4, movie1));
