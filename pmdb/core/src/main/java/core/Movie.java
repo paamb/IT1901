@@ -154,7 +154,7 @@ public class Movie implements IMovie {
    */
   public void setLabels(Collection<ILabel> labels) {
     if (labels.stream().distinct().count() != labels.size()) {
-      throw new IllegalArgumentException("Duplicate reviews not allowed");
+      throw new IllegalArgumentException("Duplicate labels not allowed");
     }
     this.labels = new ArrayList<>(labels);
   }
@@ -169,17 +169,21 @@ public class Movie implements IMovie {
     String s = "Movie: " + getTitle() + "\n" + "Description: " + getDescription() + "\n"
         + "Duration: " + getDuration() + "\n" + "Watched: " + (isWatched() ? "Yes" : "No");
 
-    if (reviews.size() == 0) {
-      return s;
-    } else {
+    if (reviews.size() != 0) {
       s += "\nRating from reviews: ";
       for (IReview review : reviews) {
         s += review.getRating() + ", ";
       }
     }
 
+    if (labels.size() == 0) {
+      return s;
+    } else {
+      s += "\nLabels: ";
+      for (ILabel label : labels) {
+        s += "\n" + label + ", ";
+      }
+    }
     return s.substring(0, s.length() - 2);
   }
-
-
 }
