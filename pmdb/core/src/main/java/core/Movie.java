@@ -140,7 +140,18 @@ public class Movie implements IMovie {
     return new ArrayList<>(labels);
   }
 
+  /**
+   * Adds a label to the movie.
+   * 
+   * @param label The label to be added.
+   */
   public void addLabel(ILabel label) {
+    if (label == null) {
+      throw new IllegalArgumentException("Label cannot be null");
+    }
+    if (labels.contains(label)) {
+      throw new IllegalStateException("Duplicate labels not allowed");
+    }
     labels.add(label);
   }
 
