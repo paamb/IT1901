@@ -31,11 +31,10 @@ public class MovieListSerializer extends JsonSerializer<MovieList> {
 
     gen.writeArrayFieldStart("movies");
 
-    if (movieList != null) {
-      for (IMovie movie : movieList) {
-        gen.writeObject(movie);
-      }
+    for (IMovie movie : movieList) {
+      gen.writeObject(movie);
     }
+
     gen.writeEndArray();
     gen.writeEndObject();
   }

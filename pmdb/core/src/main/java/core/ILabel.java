@@ -1,5 +1,9 @@
 package core;
 
+/**
+ * Interface for Label.
+ * 
+ */
 public interface ILabel {
 
   /**
@@ -7,7 +11,7 @@ public interface ILabel {
    * 
    * @param movie movie to be checked
    * @param title title to
-   * @return
+   * @return Returns true if title matches a label titel in movie.
    */
   public static boolean isLabelInMovie(IMovie movie, String title) {
     return movie.getLabels().stream().anyMatch(label -> label.getTitle().equals(title));

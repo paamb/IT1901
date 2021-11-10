@@ -2,6 +2,9 @@ package core;
 
 import java.util.Random;
 
+/**
+ * Label class.
+ */
 public class Label implements ILabel {
   private String title;
   private String color;
@@ -18,6 +21,7 @@ public class Label implements ILabel {
   }
 
   /**
+   * Generates a random color.
    * 
    * @return A random hexcolor #FFFFFF
    */
