@@ -11,6 +11,9 @@ import core.ILabel;
 import core.Label;
 import java.io.IOException;
 
+/**
+ * LabelDeserilaizer class.
+ */
 public class LabelDeserializer extends JsonDeserializer<ILabel> {
 
   @Override

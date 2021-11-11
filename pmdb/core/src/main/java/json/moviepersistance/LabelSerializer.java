@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import core.ILabel;
 import java.io.IOException;
 
+/**
+ * LabelSerializer class.
+ */
 public class LabelSerializer extends JsonSerializer<ILabel> {
 
   @Override

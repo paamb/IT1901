@@ -2,6 +2,9 @@ package core;
 
 import java.util.Random;
 
+/**
+ * Label class.
+ */
 public class Label implements ILabel {
   private String title;
   private String color;
@@ -18,6 +21,7 @@ public class Label implements ILabel {
   }
 
   /**
+   * Generates a random color.
    * 
    * @return A random hexcolor #FFFFFF
    */
@@ -34,7 +38,14 @@ public class Label implements ILabel {
     return colorValue.toString();
   }
 
+  /**
+   * Sets title if its valid.
+   * 
+   */
   public void setTitle(String title) {
+    if (!ILabel.isValidTitle(title)) {
+      throw new IllegalArgumentException("Cannot set title, because title is not valid");
+    }
     this.title = title;
   }
 
@@ -42,7 +53,14 @@ public class Label implements ILabel {
     return title;
   }
 
+  /**
+   * Sets color if its valid.
+   * 
+   */
   public void setColor(String color) {
+    if (!ILabel.isValidColor(color)) {
+      throw new IllegalArgumentException("Cannot set color, because color is not valid");
+    }
     this.color = color;
   }
 
