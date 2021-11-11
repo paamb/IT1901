@@ -1,10 +1,9 @@
 package core;
 
-import core.moviecomparators.MovieSeenComparator;
-import core.moviecomparators.MovieTitleComparator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +16,12 @@ import java.util.stream.Collectors;
 public class MovieList implements Iterable<IMovie> {
 
   private Collection<IMovie> movieList;
+
+  public static Comparator<IMovie> sortOnSeen =
+      (IMovie o1, IMovie o2) -> Boolean.compare(o1.isWatched(), o2.isWatched());
+
+  public static Comparator<IMovie> sortOnTitle =
+      (IMovie o1, IMovie o2) -> o1.getTitle().toLowerCase().compareTo(o2.getTitle().toLowerCase());
 
   public MovieList() {
     movieList = new ArrayList<>();
@@ -68,21 +73,9 @@ public class MovieList implements Iterable<IMovie> {
    * @param movies the movieList to sort
    * @return returns a collection of movies sorted on title
    */
-  public Collection<IMovie> getSortedMoviesByTitle(Collection<IMovie> movies) {
+  public Collection<IMovie> getSortedMovies(Collection<IMovie> movies, Comparator<IMovie> cmp) {
     List<IMovie> sortedMovieList = new ArrayList<>(movies);
-    Collections.sort(sortedMovieList, new MovieTitleComparator());
-    return sortedMovieList;
-  }
-
-  /**
-   * Sorts movielist by seen and returns it.
-   * 
-   * @param movies the movieList to sort
-   * @return returns a collection of movies sorted on seen
-   */
-  public Collection<IMovie> getSortedMoviesOnSeen(Collection<IMovie> movies) {
-    List<IMovie> sortedMovieList = new ArrayList<>(movies);
-    Collections.sort(sortedMovieList, new MovieSeenComparator());
+    Collections.sort(sortedMovieList, cmp);
     return sortedMovieList;
   }
 
