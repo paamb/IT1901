@@ -3,6 +3,7 @@ package json.moviepersistance;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.MovieList;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,7 +18,6 @@ import java.nio.file.Paths;
  */
 public class MovieStorage {
   private String fileName = "MovieList.json";
-  private File file;
   private ObjectMapper mapper;
 
 
@@ -25,8 +25,7 @@ public class MovieStorage {
    * The movie storage initialization. Creating a new file and creating the object mapper.
    */
   public MovieStorage() {
-    file = new File(fileName);
-    createObjectMapper();
+    setObjectMapper();
   }
 
   /**
@@ -38,7 +37,6 @@ public class MovieStorage {
     if (file == null) {
       throw new IllegalArgumentException("FileName cannot be null.");
     }
-    this.file = file;
     this.fileName = file.getPath();
   }
 
@@ -55,23 +53,20 @@ public class MovieStorage {
   }
 
   /**
-   * Loads movielist from json file.
+   * Loads movielist from json file. If the json file does not exist it returns an empty movieList.
    * 
    * @return a new movie list.
    * @throws IOException when reading from json file fails.
    */
   public MovieList loadMovieList() throws IOException {
-    if (file.exists() && file.length() != 0) {
-      try (Reader fileReader =
-          new FileReader(Paths.get(fileName).toFile(), StandardCharsets.UTF_8)) {
-        return (MovieList) mapper.readValue(fileReader, MovieList.class);
-      }
-    } else {
+    try (Reader fileReader = new FileReader(Paths.get(fileName).toFile(), StandardCharsets.UTF_8)) {
+      return mapper.readValue(fileReader, MovieList.class);
+    } catch (FileNotFoundException e) {
       return new MovieList();
     }
   }
 
-  private void createObjectMapper() {
+  private void setObjectMapper() {
     mapper = new ObjectMapper().registerModule(new MovieModule());
   }
 
