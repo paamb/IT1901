@@ -39,7 +39,7 @@ public class MovieListTest {
   public void testAddMovieValid() {
     movieList.addMovie(movie1);
     movieList.addMovie(movie3);
-    assertEquals(2, movieList.getMovies().size());
+    assertEquals(2, movieList.getMovies().size(), "List should contain 2 movies");
 
     assertSame(movie1, movieList.getMovie(movie1.getTitle()),
         "The movies should have same reference.");
@@ -63,7 +63,8 @@ public class MovieListTest {
 
     movieList.removeMovie(movie3);
     assertEquals(1, movieList.getMovies().size(), "The length of the list should be 2.");
-    assertSame(null, movieList.getMovie(movie3.getTitle()));
+    assertSame(null, movieList.getMovie(movie3.getTitle()), "The movie with title "
+        + movie3.getTitle() + " should not be in the list because it should be removed.");
   }
 
   @Test
@@ -86,7 +87,8 @@ public class MovieListTest {
   @Test
   public void testtestGetMovie_unvalidOption() {
     movieList.addMovie(movie1);
-    assertSame(null, movieList.getMovie(movie3.getTitle()));
+    assertSame(null, movieList.getMovie(movie3.getTitle()),
+        "Could not add movie, because a movie with this title is already in the list");
   }
 
   @Test
@@ -115,10 +117,11 @@ public class MovieListTest {
   static void testIterator_helper(Iterator<IMovie> it, IMovie... movies) {
     int movieCounter = 0;
     while (it.hasNext()) {
-      assertTrue(movieCounter < movies.length);
-      assertSame(movies[movieCounter], it.next());
+      assertTrue(movieCounter < movies.length,
+          "moviecounter should be less than the length of movies.");
+      assertSame(movies[movieCounter], it.next(), "Wrong movie");
       movieCounter++;
     }
-    assertTrue(movieCounter == movies.length);
+    assertTrue(movieCounter == movies.length, "moviecounter should be equal to length of movies.");
   }
 }
