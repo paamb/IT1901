@@ -99,11 +99,11 @@ public class MovieListController {
   }
 
   protected Collection<IMovie> getSortedMoviesByTitle(Collection<IMovie> movies) {
-    return movieList.getSortedMoviesByTitle(movies);
+    return movieList.getSortedMovies(movies, MovieList.sortOnTitle);
   }
 
   protected Collection<IMovie> getSortedMoviesOnSeen(Collection<IMovie> movies) {
-    return movieList.getSortedMoviesOnSeen(movies);
+    return movieList.getSortedMovies(movies, MovieList.sortOnSeen);
   }
 
   protected MovieList getMovieList() {
