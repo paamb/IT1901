@@ -47,8 +47,9 @@ public class CombinedComparatorSortTest {
    */
   @Test
   public void testFirstSortOnSeenThenTitle() {
-    Collection<IMovie> sortedMoviesOnSeen = movieList.getSortedMoviesOnSeen(movies);
-    Collection<IMovie> sortedMovies = movieList.getSortedMoviesByTitle(sortedMoviesOnSeen);
+    Collection<IMovie> sortedMoviesOnSeen = movieList.getSortedMovies(movies, MovieList.sortOnSeen);
+    Collection<IMovie> sortedMovies =
+        movieList.getSortedMovies(sortedMoviesOnSeen, MovieList.sortOnTitle);
     Iterator<IMovie> sortedMoviesIterator = sortedMovies.iterator();
 
     assertTrue(sortedMoviesIterator.hasNext(), "The movieIterator should have more elements");
@@ -83,8 +84,10 @@ public class CombinedComparatorSortTest {
    */
   @Test
   public void testFirstSortOnTitleThenSeen() {
-    Collection<IMovie> sortedMoviesOnTitle = movieList.getSortedMoviesByTitle(movies);
-    Collection<IMovie> sortedMovies = movieList.getSortedMoviesOnSeen(sortedMoviesOnTitle);
+    Collection<IMovie> sortedMoviesOnTitle =
+        movieList.getSortedMovies(movies, MovieList.sortOnTitle);
+    Collection<IMovie> sortedMovies =
+        movieList.getSortedMovies(sortedMoviesOnTitle, MovieList.sortOnSeen);
     Iterator<IMovie> sortedMoviesIterator = sortedMovies.iterator();
 
     assertTrue(sortedMoviesIterator.hasNext(), "The movieIterator should have more elements");
