@@ -143,20 +143,18 @@ public class EditMovieController {
   @FXML
   private void addLabel() {
     String labelName = labelComboBox.getSelectionModel().getSelectedItem();
-    // Checking if labelname is empty
-    if (labelName == null || labelName.isEmpty()) {
-      return;
-    }
-    ILabel label = null;
-    for (ILabel l : movieListController.getMovieList().getAllLabels()) {
-      if (l.getTitle().equals(labelName)) {
-        label = l;
+    validateLabelName(() -> {
+      ILabel label = null;
+      for (ILabel l : movieListController.getMovieList().getAllLabels()) {
+        if (l.getTitle().equals(labelName)) {
+          label = l;
+        }
       }
-    }
-    if (label == null) {
-      label = new Label(labelName);
-    }
-    displayLabel(label);
+      if (label == null) {
+        label = new Label(labelName);
+      }
+      displayLabel(label);
+    });
   }
 
   private void displayLabel(ILabel label) {
@@ -179,6 +177,13 @@ public class EditMovieController {
       currentLabels.add(label);
     } catch (Exception e) {
       e.printStackTrace();
+    }
+  }
+
+  private void validateLabelName(Runnable ifValid) {
+    String labelName = labelComboBox.getSelectionModel().getSelectedItem();
+    if (ILabel.isValidTitle(labelName)) {
+      ifValid.run();
     }
   }
 

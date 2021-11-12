@@ -24,7 +24,7 @@
       <TextField id="titleField" fx:id="titleField" layoutX="87.0" layoutY="48.0" onKeyPressed="#titleOnChange" prefHeight="27.0" prefWidth="202.0" />
       <Label layoutX="14.0" layoutY="82.0" prefHeight="17.0" prefWidth="79.0" text="Beskrivelse:" />
       <TextArea id="descriptionField" fx:id="descriptionField" layoutX="87.0" layoutY="82.0" onKeyTyped="#descriptionOnChange" prefHeight="76.0" prefWidth="202.0" wrapText="true" />
-      <Label layoutX="14.0" layoutY="297.0" text="Varighet (tt:mm):" />
+      <Label layoutX="14.0" layoutY="297.0" text="Varighet (tt : mm):" />
       <TextField id="hoursField" fx:id="hoursField" layoutX="118.0" layoutY="292.0" onKeyTyped="#durationOnChange" prefHeight="27.0" prefWidth="38.0" />
       <Label layoutX="165.0" layoutY="292.0" prefHeight="23.0" prefWidth="0.0" text=":">
          <font>
@@ -37,7 +37,7 @@
       <Button id="submitMovie" fx:id="submitMovie" layoutX="269.0" layoutY="359.0" mnemonicParsing="false" onAction="#submit" text="Lagre" />
       <Text id="errorField" fx:id="errorField" fill="#dd0606" layoutX="17.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ErrorField" wrappingWidth="184.0" />
       <Button id="cancelButton" fx:id="cancelButton" layoutX="208.0" layoutY="359.0" mnemonicParsing="false" onAction="#cancelEditMovie" text="Avbryt" />
-      <Label layoutX="6.0" layoutY="167.0" text="Emneknagger:" />
+      <Label layoutX="6.0" layoutY="167.0" text="Emneknagger (1 - 15 tegn):" />
       <ScrollPane layoutX="169.0" layoutY="194.0" prefHeight="82.0" prefWidth="151.0">
          <content>
             <VBox fx:id="labelDisplay" prefWidth="135.0" />
