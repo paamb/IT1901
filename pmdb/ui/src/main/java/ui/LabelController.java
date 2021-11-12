@@ -7,6 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 
+/**
+ * Controller for Labels in UI.
+ */
 public class LabelController {
 
   @FXML
