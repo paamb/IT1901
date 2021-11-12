@@ -12,13 +12,11 @@ import core.MovieList;
 import java.io.File;
 import java.io.IOException;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 import json.moviepersistance.MovieStorage;
@@ -29,7 +27,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 import util.DurationConverter;
 
-public class MovieListTest extends ApplicationTest {
+public class MovieListControllerTest extends ApplicationTest {
 
   // Need instance of NodeFinderHelper because NodeFinderHelper cannot have static methods
   private NodeFinderHelper nodeFinder;
@@ -41,12 +39,6 @@ public class MovieListTest extends ApplicationTest {
   private void waitThenWrite(String text) {
     nodeFinder.waitThenWrite(text);
   }
-
-  @FXML
-  Tab movieListTab;
-
-  @FXML
-  Tab reviewListTab;
 
   private MovieListController movieListController;
 

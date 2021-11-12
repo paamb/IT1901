@@ -31,8 +31,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="labelComboBox" editable="true" layoutX="6.0" layoutY="194.0" prefHeight="26.0" prefWidth="126.0" />
-      <Button fx:id="addLabel" layoutX="132.0" layoutY="194.0" mnemonicParsing="false" onAction="#addLabel" prefHeight="26.0" prefWidth="30.0" text="-&gt;" />
+      <ComboBox id="labelComboBox" fx:id="labelComboBox" editable="true" layoutX="6.0" layoutY="194.0" prefHeight="26.0" prefWidth="126.0" />
+      <Button id="addLabel" fx:id="addLabel" layoutX="132.0" layoutY="194.0" mnemonicParsing="false" onAction="#addLabel" prefHeight="26.0" prefWidth="30.0" text="-&gt;" />
       <TextField id="minutesField" fx:id="minutesField" layoutX="176.0" layoutY="292.0" onKeyTyped="#durationOnChange" prefHeight="27.0" prefWidth="38.0" />
       <Button id="submitMovie" fx:id="submitMovie" layoutX="269.0" layoutY="359.0" mnemonicParsing="false" onAction="#submit" text="Lagre" />
       <Text id="errorField" fx:id="errorField" fill="#dd0606" layoutX="17.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ErrorField" wrappingWidth="184.0" />
@@ -40,7 +40,7 @@
       <Label layoutX="6.0" layoutY="167.0" text="Emneknagger (1 - 15 tegn):" />
       <ScrollPane layoutX="169.0" layoutY="194.0" prefHeight="82.0" prefWidth="151.0">
          <content>
-            <VBox fx:id="labelDisplay" prefWidth="135.0" />
+            <VBox id="labelDisplay" fx:id="labelDisplay" prefWidth="135.0" />
          </content>
       </ScrollPane>
    </children>
