@@ -1,10 +1,13 @@
 package ui;
 
+import core.ILabel;
 import core.IMovie;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import util.DurationConverter;
 
 /**
@@ -36,6 +39,9 @@ public class MovieDisplayTemplateController {
   @FXML
   Button deleteMovie;
 
+  @FXML
+  VBox movieLabels;
+
   public void injectMovieListController(MovieListController movieListController) {
     this.movieListController = movieListController;
   }
@@ -53,11 +59,18 @@ public class MovieDisplayTemplateController {
     movieDuration.setText(DurationConverter.getDurationDisplayText(movie.getDuration()));
     movieDescription.setText(movie.getDescription());
     movieWatched.setText(movie.isWatched() ? "Sett" : "Ikke sett");
+    movieLabels.getChildren().clear();
+    for (ILabel label : movie.getLabels()) {
+      Label labelLabel = new Label();
+      labelLabel.setText(label.getTitle());
+      labelLabel.setTextFill(Paint.valueOf(label.getColor()));
+      movieLabels.getChildren().add(labelLabel);
+    }
   }
 
   @FXML
   public void editMovie() {
-    movieListController.editMovie(movie);
+    movieListController.editMovie(movie, this);
   }
 
   @FXML
