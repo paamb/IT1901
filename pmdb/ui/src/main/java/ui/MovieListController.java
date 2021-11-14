@@ -27,7 +27,6 @@ import json.moviepersistance.MovieStorage;
 public class MovieListController {
 
   private MovieList movieList;
-  private MovieStorage storage;
 
   @FXML
   CheckBox sortOnTitleCheckbox;
@@ -67,10 +66,13 @@ public class MovieListController {
     //loadMovieListFile(new File(userMovieListPath));
     try {
       access = new RemoteMovieListAccess(new URI(apiBaseUri));
+      movieList = access.getMovieList();
     } catch (Exception e) {
-      throw new RuntimeException("Could not set MovieListAccess");
+      System.out.println("Server is not running");
+      access = new LocalMovieListAccess(new File(userMovieListPath));
+      // access = new LocalMovieListAccess();
+      movieList = access.getMovieList();
     }
-    movieList = access.getMovieList();
     editMovieController.injectMovieListController(this);
     Platform.runLater(initViewRunnable);
   }
@@ -82,9 +84,8 @@ public class MovieListController {
    * @throws IOException when unable to load from file.
    */
   public void loadMovieListFile(File file) throws IOException {
-    storage = new MovieStorage();
-    storage.setFile(file);
-    movieList = storage.loadMovieList();
+    access = new LocalMovieListAccess(file);
+    movieList = access.getMovieList();
     Platform.runLater(initViewRunnable);
   }
 
@@ -134,21 +135,16 @@ public class MovieListController {
 
   protected void movieListIsEdited() {
     displayMovieList();
-    //saveMovieList();
     access.putMovieList(movieList);
-  }
-
-  protected void saveMovieList() {
-    try {
-      storage.saveMovieList(movieList);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
   }
 
   protected void deleteMovie(IMovie movie) {
     movieList.removeMovie(movie);
     movieListIsEdited();
+  }
+
+  protected boolean serverIsRunning() {
+    return access instanceof RemoteMovieListAccess;
   }
 
   @FXML
