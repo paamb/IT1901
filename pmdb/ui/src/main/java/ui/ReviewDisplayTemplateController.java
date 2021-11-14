@@ -62,7 +62,7 @@ public class ReviewDisplayTemplateController {
 
   @FXML
   public void editReview() {
-    reviewListController.editReview(movie, review);
+    reviewListController.editReview(movie, review, this);
   }
 
   @FXML
