@@ -15,6 +15,7 @@
    <VBox>
     <fx:define>
       <String fx:id="userMovieListPath" fx:value="MovieList.json" />
+      <String fx:id="apiBaseUri" fx:value="http://localhost:8999/movielist" />
     </fx:define>
    </VBox>
    <children>

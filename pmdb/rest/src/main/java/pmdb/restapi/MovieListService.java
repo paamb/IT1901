@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 @Path(MovieListService.MOVIE_LIST_SERVICE_PATH)
 @Produces(MediaType.APPLICATION_JSON)
 public class MovieListService {
-  public static final String MOVIE_LIST_SERVICE_PATH = "movie";
+  public static final String MOVIE_LIST_SERVICE_PATH = "movielist";
 
   private static final Logger LOG = LoggerFactory.getLogger(MovieListService.class);
 
