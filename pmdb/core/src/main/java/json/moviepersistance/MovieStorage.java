@@ -25,7 +25,7 @@ public class MovieStorage {
    */
   public MovieStorage() {
     file = new File(fileName);
-    createObjectMapper();
+    mapper = createObjectMapper();
   }
 
   /**
@@ -81,8 +81,8 @@ public class MovieStorage {
   // }
 
 
-  public void createObjectMapper() {
-    mapper = new ObjectMapper().registerModule(new MovieModule());
+  public static ObjectMapper createObjectMapper() {
+    return new ObjectMapper().registerModule(new MovieModule());
   }
 
   public ObjectMapper getObjectMapper() {
