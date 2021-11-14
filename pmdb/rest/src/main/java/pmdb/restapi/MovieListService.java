@@ -2,6 +2,7 @@ package pmdb.restapi;
 
 import core.IMovie;
 import core.MovieList;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -20,11 +21,11 @@ public class MovieListService {
 
   private static final Logger LOG = LoggerFactory.getLogger(MovieListService.class);
 
-  @Context
-  public MovieList movieList;
+  // @Context
+  // public MovieList movieList;
 
   @Context
-  public MovieStorage movieStorage;
+  public MovieStorage movieStorage = new MovieStorage();
 
   /**
    * The root resource, /movie.
@@ -33,7 +34,11 @@ public class MovieListService {
    */
   @GET
   public MovieList getMovieList() {
-    return movieList;
+    try {
+      return movieStorage.loadMovieList();
+    } catch (Exception e) {
+      return new MovieList();
+    }
   }
 
   /**
@@ -42,13 +47,13 @@ public class MovieListService {
    * @param movieTitle the movie title for the movie to be returned.
    * @return The movie with movie title in param.
    */
-  @GET
-  @Path("/{movieTitle}")
-  public IMovie getMovieByTitle(@PathParam("movieTitle") String movieTitle) {
-    IMovie movie = movieList.getMovie(movieTitle);
-    LOG.debug("getMovieByTitle: " + movie);
-    return movie;
-  }
+  // @GET
+  // @Path("/{movieTitle}")
+  // public IMovie getMovieByTitle(@PathParam("movieTitle") String movieTitle) {
+  //   IMovie movie = movieList.getMovie(movieTitle);
+  //   LOG.debug("getMovieByTitle: " + movie);
+  //   return movie;
+  // }
 
   /**
    * Adds a movie to the movieList.
@@ -56,10 +61,23 @@ public class MovieListService {
    * @param movie movie the movie to be added.
    * @return If the movie was successfully added.
    */
+  // @PUT
+  // @Path("/movie")
+  // public boolean addMovie(IMovie movie) {
+  //   this.movieList.addMovie(movie);
+  //   return movieList.getMovies().contains(movie);
+  // }
+
+
   @PUT
-  public boolean addMovie(IMovie movie) {
-    this.movieList.addMovie(movie);
-    return movieList.getMovies().contains(movie);
+  @Consumes(MediaType.APPLICATION_JSON)
+  public boolean putMovieList(MovieList movieList) {
+    try {
+      movieStorage.saveMovieList(movieList);
+    } catch (Exception e) {
+      return false;
+    }
+    return true;
   }
 }
 
