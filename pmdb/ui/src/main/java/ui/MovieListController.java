@@ -17,7 +17,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import json.moviepersistance.MovieStorage;
 
 /**
  * MovieListController class.
@@ -44,13 +43,15 @@ public class MovieListController {
   Pane movieDisplay;
 
   @FXML
-  String userMovieListPath;
+  String localMovieListPath;
   
   @FXML
   String apiBaseUri;
 
   @FXML
   EditMovieController editMovieController;
+
+  private AppController appController;
 
   private ReviewListController reviewListController;
 
@@ -78,22 +79,24 @@ public class MovieListController {
     movieList = access.getMovieList();
     Platform.runLater(initViewRunnable);
   }
+  
+  protected void injectReviewListController(ReviewListController reviewListController) {
+    this.reviewListController = reviewListController;
+  }
+
+  protected void injectAppController(AppController appController) {
+    this.appController = appController;
+  }
 
   protected void syncWithServer() {
     try {
       access = new RemoteMovieListAccess(new URI(apiBaseUri));
       movieList = access.getMovieList();
     } catch (Exception e) {
-      System.out.println("Server is not running");
-      access = new LocalMovieListAccess(new File(userMovieListPath));
-      // access = new LocalMovieListAccess();
+      access = new LocalMovieListAccess(new File(localMovieListPath));
       movieList = access.getMovieList();
     }
     Platform.runLater(initViewRunnable);
-  }
-
-  protected void injectReviewListController(ReviewListController reviewListController) {
-    this.reviewListController = reviewListController;
   }
 
   protected void editMovie(IMovie movie) {
@@ -137,8 +140,12 @@ public class MovieListController {
   }
 
   protected void movieListIsEdited() {
+    try {
+      access.putMovieList(movieList);
+    } catch (Exception e) {
+      appController.syncWithServer();
+    }
     displayMovieList();
-    access.putMovieList(movieList);
   }
 
   protected void deleteMovie(IMovie movie) {

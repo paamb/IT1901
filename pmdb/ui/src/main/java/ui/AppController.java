@@ -26,13 +26,13 @@ public class AppController {
   @FXML
   void initialize() {
     movieListController.injectReviewListController(reviewListController);
+    movieListController.injectAppController(this);
     reviewListController.injectMovieListController(movieListController);
     updateConnectionInfo();
   }
   
   @FXML
-  private void syncWithServer() {
-    System.out.println("Syncing...");
+  protected void syncWithServer() {
     movieListController.syncWithServer();
     updateConnectionInfo();
   }
