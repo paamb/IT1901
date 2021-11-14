@@ -63,18 +63,8 @@ public class MovieListController {
 
   @FXML
   void initialize() throws IOException {
-    //loadMovieListFile(new File(userMovieListPath));
-    try {
-      access = new RemoteMovieListAccess(new URI(apiBaseUri));
-      movieList = access.getMovieList();
-    } catch (Exception e) {
-      System.out.println("Server is not running");
-      access = new LocalMovieListAccess(new File(userMovieListPath));
-      // access = new LocalMovieListAccess();
-      movieList = access.getMovieList();
-    }
+    syncWithServer();
     editMovieController.injectMovieListController(this);
-    Platform.runLater(initViewRunnable);
   }
 
   /**
@@ -86,6 +76,19 @@ public class MovieListController {
   public void loadMovieListFile(File file) throws IOException {
     access = new LocalMovieListAccess(file);
     movieList = access.getMovieList();
+    Platform.runLater(initViewRunnable);
+  }
+
+  protected void syncWithServer() {
+    try {
+      access = new RemoteMovieListAccess(new URI(apiBaseUri));
+      movieList = access.getMovieList();
+    } catch (Exception e) {
+      System.out.println("Server is not running");
+      access = new LocalMovieListAccess(new File(userMovieListPath));
+      // access = new LocalMovieListAccess();
+      movieList = access.getMovieList();
+    }
     Platform.runLater(initViewRunnable);
   }
 

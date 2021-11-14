@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -25,6 +26,7 @@
         </Tab>
       </tabs>
     </TabPane>
-      <Label fx:id="serverNotRunningInfo" layoutX="230.0" layoutY="5.0" text="Server kjører ikke, bruker lokal lagring." visible="false" />
+      <Label fx:id="noConnectionInfo" layoutX="230.0" layoutY="5.0" text="Ingen kontakt med server, bruker lokal lagring." visible="false" />
+      <Button fx:id="syncWithServer" layoutX="720.0" layoutY="2.0" mnemonicParsing="false" onAction="#syncWithServer" text="Synkroniser" />
   </children>
 </AnchorPane>
