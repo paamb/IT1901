@@ -82,7 +82,13 @@ public class MovieListController {
 
   protected void editMovie(IMovie movie) {
     editMovieController.editMovie(movie);
+    editMovieController.setMovieDisplayController(null);
     editMovieWindow.setVisible(true);
+  }
+
+  protected void editMovie(IMovie movie, MovieDisplayTemplateController controller) {
+    editMovie(movie);
+    editMovieController.setMovieDisplayController(controller);
   }
 
   @FXML

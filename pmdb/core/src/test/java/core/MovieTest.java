@@ -17,8 +17,8 @@ public class MovieTest {
   private String initTitle = "initTitle";
   private String initDescription = "initDescription";
   private int initDuration = 360;
-  private Collection<IReview> initReview = new ArrayList<>(Arrays.asList());
-  private Collection<ILabel> initLabels = new ArrayList<>(Arrays.asList());
+  private Collection<IReview> initReview = Arrays.asList();
+  private Collection<ILabel> initLabels = Arrays.asList();
   private Review review1 = new Review("Bra film", 8, LocalDate.of(2000, 1, 1));
   private Review review2 = new Review("Teit film", 1, LocalDate.of(2001, 2, 2));
 
@@ -40,7 +40,6 @@ public class MovieTest {
   @BeforeEach
   public void setUp() {
     movie = new Movie(initTitle, initDescription, initDuration, false, initReview, Arrays.asList());
-
   }
 
   @Test

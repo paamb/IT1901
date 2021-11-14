@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
-public class AppTest extends ApplicationTest {
+public class AppControllerTest extends ApplicationTest {
 
   private MovieListController movieListController;
 

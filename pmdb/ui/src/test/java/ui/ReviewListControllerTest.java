@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
-public class ReviewListTest extends ApplicationTest {
+public class ReviewListControllerTest extends ApplicationTest {
 
   // Need instance of NodeFinderHelper because NodeFinderHelper cannot have static methods
   private NodeFinderHelper nodeFinder;

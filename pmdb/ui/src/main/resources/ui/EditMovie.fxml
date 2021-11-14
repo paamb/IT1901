@@ -2,10 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -16,21 +19,29 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <CheckBox id="watchedCheckBox" fx:id="watchedCheckBox" layoutX="23.0" layoutY="294.0" mnemonicParsing="false" text="Sett" />
-      <Label layoutX="23.0" layoutY="53.0" text="Tittel:" />
+      <CheckBox id="watchedCheckBox" fx:id="watchedCheckBox" layoutX="17.0" layoutY="320.0" mnemonicParsing="false" text="Sett" />
+      <Label layoutX="14.0" layoutY="53.0" text="Tittel:" />
       <TextField id="titleField" fx:id="titleField" layoutX="87.0" layoutY="48.0" onKeyPressed="#titleOnChange" prefHeight="27.0" prefWidth="202.0" />
-      <Label layoutX="11.0" layoutY="98.0" prefHeight="17.0" prefWidth="79.0" text="Beskrivelse:" />
-      <TextArea id="descriptionField" fx:id="descriptionField" layoutX="87.0" layoutY="98.0" onKeyTyped="#descriptionOnChange" prefHeight="140.0" prefWidth="202.0" wrapText="true" />
-      <Label layoutX="22.0" layoutY="263.0" text="Varighet (tt:mm):" />
-      <TextField id="hoursField" fx:id="hoursField" layoutX="118.0" layoutY="258.0" onKeyTyped="#durationOnChange" prefHeight="27.0" prefWidth="38.0" text="00" />
-      <Label layoutX="165.0" layoutY="260.0" prefHeight="23.0" prefWidth="0.0" text=":">
+      <Label layoutX="14.0" layoutY="82.0" prefHeight="17.0" prefWidth="79.0" text="Beskrivelse:" />
+      <TextArea id="descriptionField" fx:id="descriptionField" layoutX="87.0" layoutY="82.0" onKeyTyped="#descriptionOnChange" prefHeight="76.0" prefWidth="202.0" wrapText="true" />
+      <Label layoutX="14.0" layoutY="297.0" text="Varighet (tt : mm):" />
+      <TextField id="hoursField" fx:id="hoursField" layoutX="118.0" layoutY="292.0" onKeyTyped="#durationOnChange" prefHeight="27.0" prefWidth="38.0" />
+      <Label layoutX="165.0" layoutY="292.0" prefHeight="23.0" prefWidth="0.0" text=":">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField id="minutesField" fx:id="minutesField" layoutX="176.0" layoutY="258.0" onKeyTyped="#durationOnChange" prefHeight="27.0" prefWidth="38.0" text="00" />
+      <ComboBox id="labelComboBox" fx:id="labelComboBox" editable="true" layoutX="6.0" layoutY="194.0" prefHeight="26.0" prefWidth="126.0" />
+      <Button id="addLabel" fx:id="addLabel" layoutX="132.0" layoutY="194.0" mnemonicParsing="false" onAction="#addLabel" prefHeight="26.0" prefWidth="30.0" text="-&gt;" />
+      <TextField id="minutesField" fx:id="minutesField" layoutX="176.0" layoutY="292.0" onKeyTyped="#durationOnChange" prefHeight="27.0" prefWidth="38.0" />
       <Button id="submitMovie" fx:id="submitMovie" layoutX="269.0" layoutY="359.0" mnemonicParsing="false" onAction="#submit" text="Lagre" />
-      <Text id="errorField" fx:id="errorField" fill="#dd0606" layoutX="17.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="184.0" />
+      <Text id="errorField" fx:id="errorField" fill="#dd0606" layoutX="17.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ErrorField" wrappingWidth="184.0" />
       <Button id="cancelButton" fx:id="cancelButton" layoutX="208.0" layoutY="359.0" mnemonicParsing="false" onAction="#cancelEditMovie" text="Avbryt" />
+      <Label layoutX="6.0" layoutY="167.0" text="Emneknagger (1 - 15 tegn):" />
+      <ScrollPane layoutX="169.0" layoutY="194.0" prefHeight="82.0" prefWidth="151.0">
+         <content>
+            <VBox id="labelDisplay" fx:id="labelDisplay" prefWidth="135.0" />
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>
