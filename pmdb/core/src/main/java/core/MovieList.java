@@ -17,10 +17,10 @@ public class MovieList implements Iterable<IMovie> {
 
   private Collection<IMovie> movieList;
 
-  public static Comparator<IMovie> sortOnSeen =
+  public static final Comparator<IMovie> sortOnSeenComparator =
       (IMovie o1, IMovie o2) -> Boolean.compare(o1.isWatched(), o2.isWatched());
 
-  public static Comparator<IMovie> sortOnTitle =
+  public static final Comparator<IMovie> sortOnTitleComparator =
       (IMovie o1, IMovie o2) -> o1.getTitle().toLowerCase().compareTo(o2.getTitle().toLowerCase());
 
   public MovieList() {

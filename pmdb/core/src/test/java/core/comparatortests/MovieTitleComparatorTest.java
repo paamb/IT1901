@@ -25,7 +25,8 @@ public class MovieTitleComparatorTest {
 
     Collection<IMovie> movies =
         new ArrayList<IMovie>(Arrays.asList(movie2, movie3, movie4, movie1));
-    Collection<IMovie> sortedMovies = movieList.getSortedMovies(movies, MovieList.sortOnTitle);
+    Collection<IMovie> sortedMovies =
+        movieList.getSortedMovies(movies, MovieList.sortOnTitleComparator);
     Iterator<IMovie> sortedMoviesIterator = sortedMovies.iterator();
 
     assertTrue(sortedMoviesIterator.hasNext(), "The movieIterator should have more elements");
