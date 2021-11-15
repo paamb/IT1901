@@ -186,7 +186,6 @@ public class MovieListController {
               fxmlLoader.getController();
           movieDisplayTemplateController.injectMovieListController(this);
           movieDisplayTemplateController.setMovie(movie);
-          System.out.println("HEEEI");
           movieDisplayTemplateController.setContent();
           movieDisplay.getChildren().add(moviePane);
         }
