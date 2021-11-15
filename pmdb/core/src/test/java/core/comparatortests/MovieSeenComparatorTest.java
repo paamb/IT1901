@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 public class MovieSeenComparatorTest {
 
   @Test
-  public void testMovieTitleSort() {
+  public void testMovieSeenSort() {
     MovieList movieList = new MovieList();
     IMovie movie1 = new Movie("aaa", "Komedie", 1, false, Arrays.asList(), Arrays.asList());
     IMovie movie2 = new Movie("ddd", "Action", 2, false, Arrays.asList(), Arrays.asList());
@@ -25,7 +25,8 @@ public class MovieSeenComparatorTest {
 
     Collection<IMovie> movies =
         new ArrayList<IMovie>(Arrays.asList(movie2, movie3, movie4, movie1));
-    Collection<IMovie> sortedMovies = movieList.getSortedMoviesOnSeen(movies);
+    Collection<IMovie> sortedMovies =
+        movieList.getSortedMovies(movies, MovieList.sortOnSeenComparator);
     Iterator<IMovie> sortedMoviesIterator = sortedMovies.iterator();
 
     assertTrue(sortedMoviesIterator.hasNext(), "The movieIterator should have more elements");

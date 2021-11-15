@@ -11,7 +11,7 @@ import core.MovieList;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.time.Duration;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -25,7 +25,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
-import util.DurationConverter;
 
 public class MovieListControllerTest extends ApplicationTest {
 
@@ -171,9 +170,9 @@ public class MovieListControllerTest extends ApplicationTest {
 
     assertEquals(title, movie.getTitle(), "wrong movieTitle saved");
     assertEquals(description, movie.getDescription(), "wrong description saved");
-    int[] timetuppel = DurationConverter.minutesToHoursAndMinutes(movie.getDuration());
-    int inputHours = timetuppel[0];
-    int inputMinutes = timetuppel[1];
+    Duration totalMinutes = Duration.ofMinutes(movie.getDuration());
+    int inputHours = (int) totalMinutes.toHours();
+    int inputMinutes = totalMinutes.toMinutesPart();
     assertEquals(hours, String.valueOf(inputHours), "wrong hours saved");
     assertEquals(minutes, String.valueOf(inputMinutes), "wrong minutes saved");
     assertEquals(watched, movie.isWatched(), "wrong 'watched' saved");

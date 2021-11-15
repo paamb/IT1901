@@ -2,13 +2,13 @@ package ui;
 
 import core.ILabel;
 import core.IMovie;
+import java.time.Duration;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
-import util.DurationConverter;
 
 /**
  * MovieDisplayTemplateController class.
@@ -55,8 +55,9 @@ public class MovieDisplayTemplateController {
    */
   public void setContent() {
     movieTitle.setText(movie.getTitle());
-
-    movieDuration.setText(DurationConverter.getDurationDisplayText(movie.getDuration()));
+    Duration totalMinutes = Duration.ofMinutes(movie.getDuration());
+    movieDuration
+        .setText(String.format("%02d:%02d", totalMinutes.toHours(), totalMinutes.toMinutesPart()));
     movieDescription.setText(movie.getDescription());
     movieWatched.setText(movie.isWatched() ? "Sett" : "Ikke sett");
     movieLabels.getChildren().clear();

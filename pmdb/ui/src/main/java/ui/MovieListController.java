@@ -124,11 +124,11 @@ public class MovieListController {
   }
 
   protected Collection<IMovie> getSortedMoviesByTitle(Collection<IMovie> movies) {
-    return movieList.getSortedMoviesByTitle(movies);
+    return movieList.getSortedMovies(movies, MovieList.sortOnTitleComparator);
   }
 
   protected Collection<IMovie> getSortedMoviesOnSeen(Collection<IMovie> movies) {
-    return movieList.getSortedMoviesOnSeen(movies);
+    return movieList.getSortedMovies(movies, MovieList.sortOnSeenComparator);
   }
 
   protected MovieList getMovieList() {
@@ -212,7 +212,7 @@ public class MovieListController {
 
   private void clearDeletedMovies() {
     ObservableList<Node> movieNodes = movieDisplay.getChildren();
-    Collection<Node> deletingNodes = new ArrayList<Node>();
+    Collection<Node> deletingNodes = new ArrayList<>();
     movieNodes.forEach(movieNode -> {
       if (movieList.getMovie(((Label) movieNode.lookup("#movieTitle")).getText()) == null) {
         deletingNodes.add(movieNode);

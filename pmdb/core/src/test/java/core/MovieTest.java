@@ -2,7 +2,6 @@ package core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,9 +17,7 @@ public class MovieTest {
   private String initDescription = "initDescription";
   private int initDuration = 360;
   private Collection<IReview> initReview = Arrays.asList();
-  private Collection<ILabel> initLabels = Arrays.asList();
   private Review review1 = new Review("Bra film", 8, LocalDate.of(2000, 1, 1));
-  private Review review2 = new Review("Teit film", 1, LocalDate.of(2001, 2, 2));
 
   @Test
   public void testConstructor() {
@@ -46,11 +43,11 @@ public class MovieTest {
   public void testSetTitle() {
     String legalTitle = "Title1.!?";
 
-    assertEquals(initTitle, movie.getTitle(), "Movie title is not correct.");
     movie.setTitle(legalTitle);
+    assertEquals(legalTitle, movie.getTitle(), "Title should be set, because it is legal.");
+
     String illegalTitle1 = "";
     String illegalTitle2 = "ThisTitleIsTooLongBecauseItContainsOver50Characters";
-    assertEquals(legalTitle, movie.getTitle(), "Movie title is not correct.");
     assertThrows(IllegalArgumentException.class, () -> movie.setTitle(illegalTitle1),
         "Did not throw exception on illegal title: " + illegalTitle1);
     assertThrows(IllegalArgumentException.class, () -> movie.setTitle(illegalTitle2),
@@ -58,20 +55,16 @@ public class MovieTest {
   }
 
   @Test
-  public void testSetDescription() {
-    String newDescription = "newDescription";
-
-    assertEquals(initDescription, movie.getDescription(), "Description is not correct");
-    movie.setDescription(newDescription);
-    assertEquals(newDescription, movie.getDescription(), "Description is not correct");
+  public void testSetDescription_unvalidNull() {
+    assertThrows(IllegalArgumentException.class, () -> movie.setDescription(null),
+        "Failed to throw exception when setting description null");
   }
 
   @Test
-  public void testSetDuration_valid() {
-    int newDuration = 210;
-    assertEquals(initDuration, movie.getDuration(), "Duration is not correct");
-    movie.setDuration(newDuration);
-    assertEquals(newDuration, movie.getDuration(), "Duration is not correct");
+  public void testSetDuration_validEdgeCase() {
+    int edgeDuration = 1;
+    movie.setDuration(edgeDuration);
+    assertEquals(edgeDuration, movie.getDuration(), "Durations should match.");
   }
 
   @Test
@@ -85,89 +78,70 @@ public class MovieTest {
 
   @Test
   public void testSetDuration_unvalidNegative() {
-    int negativeDuration = 0;
+    int negativeDuration = -10;
     assertThrows(IllegalArgumentException.class, () -> movie.setDuration(negativeDuration),
-        "Movie cannot have duration zero");
+        "Movie cannot have negative duration");
     movie.setDuration(30);
     assertEquals(30, movie.getDuration(), "Durations should match.");
   }
 
   @Test
-  public void testSetDuration_validEdgeCase() {
-    int edgeDuration = 1;
-    movie.setDuration(edgeDuration);
-    assertEquals(edgeDuration, movie.getDuration(), "Durations should match.");
-  }
-
-  @Test
-  public void testSetWatched() {
-    assertEquals(false, movie.isWatched(), "Wacthed is not correct");
-    movie.setWatched(true);
-    assertEquals(true, movie.isWatched(), "Failed to set watched true");
-    movie.setWatched(true);
-    assertEquals(true, movie.isWatched(), "Failed on setWatched() when movie is watched");
-  }
-
-  @Test
-  public void testAddReview() {
+  public void testAddReview_addingDuplicateReview() {
     movie.addReview(review1);
-    movie.addReview(review2);
+    assertEquals(1, movie.getReviews().size(), "This movie should have 1 review");
 
-    assertEquals(2, movie.getReviews().size(), "This movie should have 2 reviews");
-    assertTrue(movie.getReviews().contains(review1), "Movie should contain review1");
-    assertTrue(movie.getReviews().contains(review2), "Movie should contain reivew2");
     assertThrows(IllegalStateException.class, () -> movie.addReview(review1),
         "Failed to throw exception on adding duplicate review");
-    assertThrows(IllegalArgumentException.class, () -> movie.addReview(null),
-        "Failed to throw exception on adding null");
+    assertEquals(1, movie.getReviews().size(), "This movie should have 1 review");
   }
 
   @Test
-  public void testSetReviews() {
+  public void testAddReview_addingNull() {
     movie.addReview(review1);
-    movie.addReview(review2);
-    movie.setReviews(Arrays.asList(review1, review2));
+    assertEquals(1, movie.getReviews().size(), "This movie should have 1 review");
 
-    assertEquals(2, movie.getReviews().size(), "This movie should have 2 reviews");
-    assertTrue(movie.getReviews().contains(review1), "Movie should contain review1");
-    assertTrue(movie.getReviews().contains(review2), "Movie should contain reivew2");
+    assertThrows(IllegalArgumentException.class, () -> movie.addReview(null),
+        "Failed to throw exception on adding null");
+    assertEquals(1, movie.getReviews().size(), "This movie should have 1 review");
+  }
 
+  @Test
+  public void testSetReviews_duplicateReviews() {
     assertThrows(IllegalArgumentException.class,
         () -> movie.setReviews(Arrays.asList(review1, review1)),
         "Cannot add a list with duplicate reviews");
   }
 
   @Test
-  public void testAddLabel() {
+  public void testAddLabel_duplicateLabel() {
     Label labelOne = new Label("labelOne");
-    Label labelTwo = new Label("labelTwo");
-    Collection<ILabel> newLabels = new ArrayList<>(initLabels);
-    newLabels.add(labelOne);
-    newLabels.add(labelTwo);
 
-    assertEquals(initLabels, movie.getLabels());
     movie.addLabel(labelOne);
-    movie.addLabel(labelTwo);
-    assertEquals(newLabels, movie.getLabels());
+    assertThrows(IllegalStateException.class, () -> movie.addLabel(labelOne),
+        "Failed to throw exception on adding duplicate label");
+
+    assertEquals(1, movie.getLabels().size(),
+        "Labels should have size 1, because the illegal value was not added");
   }
 
   @Test
-  public void testRemoveLabel() {
+  public void testAddLabel_nullLabel() {
+    assertThrows(IllegalArgumentException.class, () -> movie.addLabel(null),
+        "Failed to throw exception on adding null as a label");
+
+    assertEquals(0, movie.getLabels().size(),
+        "Labels should have size 0, because we have only added an illegal value");
+  }
+
+  @Test
+  public void testSetLabel_duplicateLabel() {
     Label labelOne = new Label("labelOne");
-    Label labelTwo = new Label("labelTwo");
-    Collection<ILabel> newLabels = new ArrayList<>(initLabels);
-    newLabels.add(labelOne);
-    newLabels.add(labelTwo);
-    movie.addLabel(labelOne);
-    movie.addLabel(labelTwo);
-    assertEquals(newLabels, movie.getLabels());
-    movie.removeLabel(labelTwo);
-    newLabels.remove(labelTwo);
-    assertEquals(newLabels, movie.getLabels());
-    movie.removeLabel(labelOne);
-    newLabels.remove(labelOne);
-    assertEquals(newLabels, movie.getLabels());
-    movie.removeLabel(new Label("notAddedLabel"));
-    assertEquals(newLabels, movie.getLabels());
+
+    assertThrows(IllegalStateException.class,
+        () -> movie.setLabels(Arrays.asList(labelOne, labelOne)),
+        "Failed to throw exception on setting duplicate labels");
+
+    assertEquals(0, movie.getLabels().size(),
+        "Labels should have size 0, because we have only added an illegal value");
   }
 }

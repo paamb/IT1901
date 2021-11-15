@@ -6,5 +6,4 @@ module pmdb.core {
 
   exports core;
   exports json.moviepersistance;
-  exports util;
 }
