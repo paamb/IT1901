@@ -4,6 +4,7 @@ import core.ILabel;
 import core.IMovie;
 import core.Label;
 import core.Movie;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +20,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import util.DurationConverter;
 
 /**
  * EditMovieController class.
@@ -62,7 +62,7 @@ public class EditMovieController {
 
   private IMovie editingMovie;
 
-  private Collection<ILabel> currentLabels = new ArrayList<ILabel>();
+  private Collection<ILabel> currentLabels = new ArrayList<>();
 
   private String invalidTitleText = "Tittel må ha lengde mellom 1 og 50 tegn";
 
@@ -81,14 +81,14 @@ public class EditMovieController {
         validateDescription(() -> {
           int hours = Integer.parseInt(hoursField.getText());
           int minutes = Integer.parseInt(minutesField.getText());
-          int duration = DurationConverter.hoursAndMinutesToMinutes(hours, minutes);
+          int duration = (int) Duration.ofHours(hours).toMinutes() + minutes;
           String title = titleField.getText();
           String description = descriptionField.getText();
           boolean watched = watchedCheckBox.isSelected();
 
           if (editingMovie == null) {
             IMovie movie = new Movie(title, description, duration, watched, new ArrayList<>(),
-                new ArrayList<ILabel>(currentLabels));
+                new ArrayList<>(currentLabels));
             movieListController.addMovie(movie);
           } else {
             updateExistingMovie(title, description, duration, watched);
@@ -204,7 +204,7 @@ public class EditMovieController {
     try {
       int hours = Integer.parseInt(hoursField.getText());
       int minutes = Integer.parseInt(minutesField.getText());
-      int duration = DurationConverter.hoursAndMinutesToMinutes(hours, minutes);
+      int duration = (int) Duration.ofHours(hours).toMinutes() + minutes;
       if (IMovie.isValidDuration(duration) && hours >= 0 && minutes >= 0) {
         ifValid.run();
       } else {
@@ -283,9 +283,9 @@ public class EditMovieController {
     titleField.setText(editingMovie.getTitle());
     descriptionField.setText(editingMovie.getDescription());
 
-    int[] timetuppel = DurationConverter.minutesToHoursAndMinutes(editingMovie.getDuration());
-    int hours = timetuppel[0];
-    int minutes = timetuppel[1];
+    Duration totalMinutes = Duration.ofMinutes(editingMovie.getDuration());
+    int hours = (int) totalMinutes.toHours();
+    int minutes = totalMinutes.toMinutesPart();
     hoursField.setText(String.valueOf(hours));
     minutesField.setText(String.valueOf(minutes));
     errorField.setText("");

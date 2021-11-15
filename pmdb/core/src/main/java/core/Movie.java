@@ -154,7 +154,7 @@ public class Movie implements IMovie {
    */
   public void setLabels(Collection<ILabel> labels) {
     if (labels.stream().distinct().count() != labels.size()) {
-      throw new IllegalArgumentException("Duplicate labels not allowed");
+      throw new IllegalStateException("Duplicate labels not allowed");
     }
     this.labels = new ArrayList<>(labels);
   }
