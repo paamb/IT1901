@@ -7,7 +7,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.ext.ContextResolver;
 import jakarta.ws.rs.ext.Provider;
 import json.moviepersistance.MovieModule;
-import json.moviepersistance.MovieStorage;
 
 /**
  * Provides objectMapper for MovieModule.
@@ -20,7 +19,6 @@ public class MovieModuleObjectMapperProvider implements ContextResolver<ObjectMa
   private final ObjectMapper objectMapper;
 
   public MovieModuleObjectMapperProvider() {
-    // objectMapper = MovieStorage.createObjectMapper();
     objectMapper = new ObjectMapper().registerModule(new MovieModule());
   }
 
