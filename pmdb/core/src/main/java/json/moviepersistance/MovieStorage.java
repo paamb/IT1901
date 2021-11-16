@@ -71,11 +71,6 @@ public class MovieStorage {
     return mapper.readValue(reader, MovieList.class);
   }
 
-  // private void setObjectMapper() {
-  //   mapper = new ObjectMapper().registerModule(new MovieModule());
-  // }
-
-
   public static ObjectMapper createObjectMapper() {
     return new ObjectMapper().registerModule(new MovieModule());
   }
