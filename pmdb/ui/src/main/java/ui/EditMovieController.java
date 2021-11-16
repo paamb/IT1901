@@ -86,13 +86,17 @@ public class EditMovieController {
           String description = descriptionField.getText();
           boolean watched = watchedCheckBox.isSelected();
 
-          if (editingMovie == null) {
-            IMovie movie = new Movie(title, description, duration, watched, new ArrayList<>(),
-                new ArrayList<>(currentLabels));
-            movieListController.addMovie(movie);
-          } else {
-            updateExistingMovie(title, description, duration, watched);
-            editingMovie = null;
+          try {
+            if (editingMovie == null) {
+              IMovie movie = new Movie(title, description, duration, watched, new ArrayList<>(),
+                  new ArrayList<>(currentLabels));
+              movieListController.addMovie(movie);
+            } else {
+              updateExistingMovie(title, description, duration, watched);
+              editingMovie = null;
+            }
+          } catch (Exception e) {
+            movieListController.syncWithServer();
           }
 
           movieListController.movieListIsEdited();
