@@ -14,7 +14,8 @@
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MovieListController">
    <VBox>
     <fx:define>
-      <String fx:id="userMovieListPath" fx:value="MovieList.json" />
+      <String fx:id="localMovieListPath" fx:value="MovieList.json" />
+      <String fx:id="apiBaseUri" fx:value="http://localhost:8999/movielist" />
     </fx:define>
    </VBox>
    <children>

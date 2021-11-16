@@ -1,0 +1,29 @@
+{
+  "labels" : [ {
+    "title" : "Action",
+    "color" : "#58E5EB"
+  }, {
+    "title" : "Eventyr",
+    "color" : "#314677"
+  } ],
+  "movies" : [ {
+    "title" : "Dette er en film",
+    "description" : "Flott film",
+    "duration" : 122,
+    "watched" : true,
+    "labels" : [ "Action", "Eventyr" ],
+    "reviews" : [ {
+      "comment" : "Kjempegøy",
+      "rating" : 3,
+      "whenWatched" : "2021-11-05"
+    } ]
+  }, {
+    "title" : "Film2",
+    "description" : "Kjempespennende",
+    "duration" : 122,
+    "watched" : false,
+    "labels" : [ "Action" ],
+    "reviews" : [ ]
+  } ]
+}
+  

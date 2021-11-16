@@ -23,12 +23,12 @@ import java.util.Map;
 public class MovieListDeserializer extends JsonDeserializer<MovieList> {
   private MovieDeserializer movieDeserializer = new MovieDeserializer();
   private LabelDeserializer labelDeserializer = new LabelDeserializer();
-  private Map<String, ILabel> labelsHash = new HashMap<>();
-  private MovieList movieList = new MovieList();
 
   @Override
   public MovieList deserialize(JsonParser p, DeserializationContext ctxt)
       throws IOException, JsonProcessingException {
+    MovieList movieList = new MovieList();
+    Map<String, ILabel> labelsHash = new HashMap<>();
     TreeNode treeNode = p.getCodec().readTree(p);
     if (treeNode instanceof ObjectNode objectNode) {
       JsonNode labelsNode = objectNode.get("labels");

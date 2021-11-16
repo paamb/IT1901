@@ -7,4 +7,4 @@ target/
 org.eclipse.*.prefs
 movies.json
 MovieList.json
-WatchList.json
+server-movielist.json
