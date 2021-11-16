@@ -31,6 +31,18 @@ cd ui
 mvn javafx:run
 ```
 
+For å kjøre prosjektet med server, kjør:
+
+```
+.\scripts\run-with-server.sh
+```
+Da kan det hende at appen ikke har koblet seg til serveren enda. Trykk på "synkroniser" for å koble til serveren.
+
+Lukking av appen:
+
+Ved lukking av appen er det viktig at man også skrur av serveren. Dette kan gjøres ved å utføre kommandoen `CTRL + C` i git bash vinduet.
+
+
 ### Testing av prosjektet
 For å kjøre alle testene, kjør:
 
