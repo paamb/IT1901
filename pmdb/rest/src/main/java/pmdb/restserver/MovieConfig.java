@@ -19,6 +19,9 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import pmdb.restapi.MovieListService;
 
+/**
+ * MovieConfig, used in server.
+ */
 public class MovieConfig extends ResourceConfig {
   private MovieList movieList;
   private MovieStorage movieStorage;

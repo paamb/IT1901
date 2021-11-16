@@ -2,6 +2,9 @@ package ui;
 
 import core.MovieList;
 
+/**
+ * Interface for access used in MovieListController.
+ */
 public interface MovieListAccess {
 
   /**

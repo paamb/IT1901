@@ -14,15 +14,15 @@ import json.moviepersistance.MovieStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Sets available Http-requests in api.
+ */
 @Path(MovieListService.MOVIE_LIST_SERVICE_PATH)
 @Produces(MediaType.APPLICATION_JSON)
 public class MovieListService {
   public static final String MOVIE_LIST_SERVICE_PATH = "movielist";
 
   private static final Logger LOG = LoggerFactory.getLogger(MovieListService.class);
-
-  // @Context
-  // public MovieList movieList;
 
   @Context
   public MovieStorage movieStorage = new MovieStorage();
@@ -34,6 +34,7 @@ public class MovieListService {
    */
   @GET
   public MovieList getMovieList() {
+    LOG.debug("getMovieList()");
     try {
       return movieStorage.loadMovieList();
     } catch (Exception e) {
@@ -47,31 +48,23 @@ public class MovieListService {
    * @param movieTitle the movie title for the movie to be returned.
    * @return The movie with movie title in param.
    */
-  // @GET
-  // @Path("/{movieTitle}")
-  // public IMovie getMovieByTitle(@PathParam("movieTitle") String movieTitle) {
-  //   IMovie movie = movieList.getMovie(movieTitle);
-  //   LOG.debug("getMovieByTitle: " + movie);
-  //   return movie;
-  // }
+  @GET
+  @Path("/{movieTitle}")
+  public IMovie getMovieByTitle(@PathParam("movieTitle") String movieTitle) {
+    LOG.debug("getMovieByTitle({})", movieTitle);
+    return getMovieList().getMovie(movieTitle);
+  }
 
   /**
-   * Adds a movie to the movieList.
+   * puts a MovieList to server.
    * 
-   * @param movie movie the movie to be added.
-   * @return If the movie was successfully added.
+   * @param movieList to be put.
+   * @return if put was successfull.
    */
-  // @PUT
-  // @Path("/movie")
-  // public boolean addMovie(IMovie movie) {
-  //   this.movieList.addMovie(movie);
-  //   return movieList.getMovies().contains(movie);
-  // }
-
-
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
   public boolean putMovieList(MovieList movieList) {
+    LOG.debug("putMovieList(): " + movieList.toString());
     try {
       movieStorage.saveMovieList(movieList);
     } catch (Exception e) {
@@ -80,4 +73,3 @@ public class MovieListService {
     return true;
   }
 }
-

@@ -4,6 +4,9 @@ import core.MovieList;
 import java.io.File;
 import json.moviepersistance.MovieStorage;
 
+/**
+ * Class for Local access, used when server is down.
+ */
 public class LocalMovieListAccess implements MovieListAccess {
 
   private MovieStorage movieStorage;

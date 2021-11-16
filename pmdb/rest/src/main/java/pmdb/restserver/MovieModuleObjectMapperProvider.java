@@ -9,7 +9,9 @@ import jakarta.ws.rs.ext.Provider;
 import json.moviepersistance.MovieModule;
 import json.moviepersistance.MovieStorage;
 
-
+/**
+ * Provides objectMapper for MovieModule.
+ */
 @Provider
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

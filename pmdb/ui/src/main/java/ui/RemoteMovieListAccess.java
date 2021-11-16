@@ -9,6 +9,9 @@ import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import json.moviepersistance.MovieStorage;
 
+/**
+ * Class for Remote access, used when server is running.
+ */
 public class RemoteMovieListAccess implements MovieListAccess {
   
   private URI baseUri;
