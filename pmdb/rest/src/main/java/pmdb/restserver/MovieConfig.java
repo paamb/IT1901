@@ -4,7 +4,6 @@ import core.IReview;
 import core.Movie;
 import core.MovieList;
 import core.Review;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -34,7 +33,7 @@ public class MovieConfig extends ResourceConfig {
   public MovieConfig(MovieList movieList) {
     setMovieList(movieList);
     movieStorage = new MovieStorage();
-    movieStorage.setFile(new File("server-movielist.json"));
+    movieStorage.setFilePath("server-movielist.json");
     register(MovieListService.class);
     register(JacksonFeature.class);
     register(MovieModuleObjectMapperProvider.class);

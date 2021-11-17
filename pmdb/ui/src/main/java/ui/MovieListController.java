@@ -44,7 +44,7 @@ public class MovieListController {
 
   @FXML
   String localMovieListPath;
-  
+
   @FXML
   String apiBaseUri;
 
@@ -79,7 +79,7 @@ public class MovieListController {
     movieList = access.getMovieList();
     Platform.runLater(initViewRunnable);
   }
-  
+
   protected void injectReviewListController(ReviewListController reviewListController) {
     this.reviewListController = reviewListController;
   }
@@ -93,7 +93,7 @@ public class MovieListController {
       access = new RemoteMovieListAccess(new URI(apiBaseUri));
       movieList = access.getMovieList();
     } catch (Exception e) {
-      access = new LocalMovieListAccess(new File(localMovieListPath));
+      access = new LocalMovieListAccess(localMovieListPath);
       movieList = access.getMovieList();
     }
     Platform.runLater(initViewRunnable);
