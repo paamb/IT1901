@@ -27,6 +27,6 @@
       </tabs>
     </TabPane>
       <Label fx:id="noConnectionInfo" layoutX="230.0" layoutY="5.0" text="Ingen kontakt med server, bruker lokal lagring." visible="false" />
-      <Button fx:id="syncWithServer" layoutX="720.0" layoutY="2.0" mnemonicParsing="false" onAction="#syncWithServer" text="Synkroniser" />
+      <Button fx:id="syncWithServer" layoutX="700.0" layoutY="2.0" mnemonicParsing="false" onAction="#syncWithServer" text="Koble til server" />
   </children>
 </AnchorPane>
