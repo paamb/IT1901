@@ -1,0 +1,11 @@
+{
+    "labels" : [ ],
+    "movies" : [ {
+      "title" : "test movie",
+      "description" : "This is a movie",
+      "duration" : 150,
+      "watched" : true,
+      "labels" : [ ],
+      "reviews" : [ ]
+    } ]
+  }
