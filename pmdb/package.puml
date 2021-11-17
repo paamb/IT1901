@@ -1,0 +1,60 @@
+@startuml
+allow_mixing
+component core {
+    package pmdb.core{
+        interface IMovie
+        class Movie
+        Movie ..> IMovie
+        interface IReview
+        class Review
+
+        Review ..> IReview
+        class MovieList
+        MovieList --> "*" IMovie : movieList
+    }
+    package pmdb.json{
+        package moviepersistance
+    }
+}
+component jackson{
+
+}
+pmdb.json ..> jackson
+component jersey{
+
+}
+component jakarta {
+
+}
+component glassfish{
+
+}
+component rest{
+    package pmdb.restapi{
+
+    }
+    package pmdb.restserver{
+    
+    }
+}
+pmdb.restapi ..> pmdb.restserver
+rest..> pmdb.core
+rest ..> jakarta
+rest ..> jersey
+rest ..> glassfish
+rest ..> pmdb.json
+
+component ui {
+
+    }
+component javafx{
+    component fxml{
+
+        }
+    }
+ui ..> javafx
+ui ..> fxml
+ui..> moviepersistance
+ui..> pmdb.core
+ui..> rest
+@enduml
