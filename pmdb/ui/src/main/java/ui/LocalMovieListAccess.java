@@ -16,6 +16,11 @@ public class LocalMovieListAccess implements MovieListAccess {
     movieStorage.setFilePath(movieListFile);
   }
 
+  public LocalMovieListAccess(String movieListFileName) {
+    movieStorage = new MovieStorage();
+    movieStorage.setFilePath(movieListFileName);
+  }
+
   public LocalMovieListAccess() {
     movieStorage = new MovieStorage();
   }
