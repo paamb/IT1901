@@ -13,7 +13,12 @@ public class LocalMovieListAccess implements MovieListAccess {
 
   public LocalMovieListAccess(File movieListFile) {
     movieStorage = new MovieStorage();
-    movieStorage.setFile(movieListFile);
+    movieStorage.setFilePath(movieListFile);
+  }
+
+  public LocalMovieListAccess(String movieListFileName) {
+    movieStorage = new MovieStorage();
+    movieStorage.setFilePath(movieListFileName);
   }
 
   public LocalMovieListAccess() {
@@ -46,5 +51,5 @@ public class LocalMovieListAccess implements MovieListAccess {
       throw new RuntimeException("Could not save MovieList to local file: " + e);
     }
   }
-  
+
 }

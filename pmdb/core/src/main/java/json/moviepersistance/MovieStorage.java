@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -17,8 +18,8 @@ import java.nio.file.Paths;
  * 
  */
 public class MovieStorage {
-  private String fileName = "MovieList.json";
   private ObjectMapper mapper;
+  private Path filePath = null;
 
   /**
    * The movie storage initialization. Creating a new file and creating the object mapper.
@@ -28,15 +29,27 @@ public class MovieStorage {
   }
 
   /**
-   * Sets the storagefile, for loading and saving.
+   * Sets filepath given String.
    * 
-   * @param file the file to be set
+   * @param filePath the string to be appended to path.
    */
-  public void setFile(File file) {
-    if (file == null) {
+  public void setFilePath(String filePath) {
+    if (filePath.isEmpty()) {
       throw new IllegalArgumentException("FileName cannot be null.");
     }
-    this.fileName = file.getPath();
+    this.filePath = Paths.get(System.getProperty("user.home"), filePath);
+  }
+
+  /**
+   * Sets filepath given File object.
+   * 
+   * @param file the file to add to path.
+   */
+  public void setFilePath(File file) {
+    if (file == null || file.getName().isEmpty()) {
+      throw new IllegalArgumentException("FileName cannot be null.");
+    }
+    this.filePath = file.toPath();
   }
 
   /**
@@ -44,9 +57,11 @@ public class MovieStorage {
    * 
    * @param movieList the movielist object to be saved.
    */
-  public void saveMovieList(MovieList movieList) throws IOException {
-    try (FileWriter fileWriter =
-        new FileWriter(Paths.get(fileName).toFile(), StandardCharsets.UTF_8)) {
+  public void saveMovieList(MovieList movieList) throws IOException, IllegalStateException {
+    if (this.filePath == null) {
+      throw new IllegalStateException("Filepath is not set.");
+    }
+    try (FileWriter fileWriter = new FileWriter(filePath.toFile(), StandardCharsets.UTF_8)) {
       mapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, movieList);
     } catch (Exception e) {
       System.out.println(e);
@@ -60,7 +75,7 @@ public class MovieStorage {
    * @throws IOException when reading from json file fails.
    */
   public MovieList loadMovieList() throws IOException {
-    try (Reader fileReader = new FileReader(Paths.get(fileName).toFile(), StandardCharsets.UTF_8)) {
+    try (Reader fileReader = new FileReader(filePath.toFile(), StandardCharsets.UTF_8)) {
       return mapper.readValue(fileReader, MovieList.class);
     } catch (FileNotFoundException e) {
       return new MovieList();
@@ -74,7 +89,7 @@ public class MovieStorage {
   public static ObjectMapper createObjectMapper() {
     return new ObjectMapper().registerModule(new MovieModule());
   }
-  
+
   private void setObjectMapper() {
     mapper = createObjectMapper();
   }
