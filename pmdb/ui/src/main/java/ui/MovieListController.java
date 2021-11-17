@@ -89,8 +89,12 @@ public class MovieListController {
   }
 
   protected void syncWithServer() {
+    syncWithServer(apiBaseUri);
+  }
+
+  protected void syncWithServer(String baseUri) {
     try {
-      access = new RemoteMovieListAccess(new URI(apiBaseUri));
+      access = new RemoteMovieListAccess(new URI(baseUri));
       movieList = access.getMovieList();
     } catch (Exception e) {
       access = new LocalMovieListAccess(localMovieListPath);

@@ -1,26 +1,22 @@
 package pmdb.restserver;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import core.MovieList;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import json.moviepersistance.MovieStorage;
-import pmdb.restapi.MovieListService;
-import java.util.Iterator;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import core.MovieList;
+import pmdb.restapi.MovieListService;
 
 public class MovieListServiceTest extends JerseyTest {
   
@@ -51,11 +47,10 @@ public class MovieListServiceTest extends JerseyTest {
     try {
       MovieList movieList = objectMapper.readValue(
           getResponse.readEntity(String.class), MovieList.class);
-      System.out.println(movieList);
       assertNotNull(movieList, "Should load a movieList");
+
     } catch (JsonProcessingException e) {
       fail(e.getMessage());
     }
   }
-
 }
