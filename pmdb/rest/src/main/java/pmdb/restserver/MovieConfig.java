@@ -1,18 +1,6 @@
 package pmdb.restserver;
 
-import core.IReview;
-import core.Movie;
-import core.MovieList;
-import core.Review;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import json.moviepersistance.MovieStorage;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jackson.JacksonFeature;
