@@ -34,14 +34,31 @@ public class MovieStorage {
    * @param file the file to be set
    */
   public void setFile(File file) {
-    if (file == null || file.getName().isEmpty()) {
-      throw new IllegalArgumentException("FileName cannot be null.");
-    }
     setFilePath(file.getName());
   }
 
-  private void setFilePath(String filePath) {
+  /**
+   * Sets filepath given String.
+   * 
+   * @param filePath the string to be appended to path.
+   */
+  public void setFilePath(String filePath) {
+    if (filePath.isEmpty()) {
+      throw new IllegalArgumentException("FileName cannot be null.");
+    }
     this.filePath = Paths.get(System.getProperty("user.home"), filePath);
+  }
+
+  /**
+   * Sets filepath given File object.
+   * 
+   * @param file the file to add to path.
+   */
+  public void setFilePath(File file) {
+    if (file == null || file.getName().isEmpty()) {
+      throw new IllegalArgumentException("FileName cannot be null.");
+    }
+    this.filePath = file.toPath();
   }
 
   /**
