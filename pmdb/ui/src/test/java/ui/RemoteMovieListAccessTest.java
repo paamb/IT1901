@@ -7,8 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import core.IMovie;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collection;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
@@ -20,6 +23,9 @@ public class RemoteMovieListAccessTest {
 
   private RemoteMovieListAccess remoteMovieListAccess;
 
+  /**
+   * Sets up and starts the Mockerver, and initializes remoteMovieListAccess.
+   */
   @BeforeEach
   public void setupAndStartWireMockServer() throws URISyntaxException {
     wireMockConfig = WireMockConfiguration.wireMockConfig().port(8999);
@@ -32,9 +38,10 @@ public class RemoteMovieListAccessTest {
   }
 
   @Test
-  @DisplayName("Test")
   public void testGetMovieList() {
-
+    
+    Collection<IMovie> movies = remoteMovieListAccess.getMovieList().getMovies(); 
+    assertEquals(2, movies.size());
   }
 
   @AfterEach
