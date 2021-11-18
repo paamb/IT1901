@@ -42,6 +42,8 @@ Lukking av appen:
 
 Ved lukking av appen er det viktig at man også skrur av serveren. Dette kan gjøres ved å utføre kommandoen `CTRL + C` i git bash vinduet.
 
+### Eksportere prosjektet til exe (Shippable product)
+Cd inn i ui og kjør ```mvn clean compile javafx:jlink jpackage:jpackage```
 
 ### Testing av prosjektet
 For å kjøre alle testene, kjør:
