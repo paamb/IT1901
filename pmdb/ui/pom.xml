@@ -11,7 +11,7 @@
     </parent>
 
     <properties>
-        <skipTests>false</skipTests>
+        <skipTests>true</skipTests>
     </properties>
 
     <dependencies>
@@ -89,6 +89,31 @@
                 <configuration>
                     <!-- syntax: module-name/full-app-class-name -->
                     <mainClass>pmdb.ui/ui.App</mainClass>
+                    <compress>2</compress>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <stripDebug>true</stripDebug>
+                    <noManPages>true</noManPages>
+                    <launcher>pmdb</launcher>
+                    <jlinkImageName>pmdb</jlinkImageName>
+                    <jlinkZipName>pmdb</jlinkZipName>
+                </configuration>
+            </plugin>
+
+             <!-- config above and below taken from https://dev.to/cherrychain/javafx-jlink-and-jpackage-h9 -->
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <name>pmdb</name>
+                    <appVersion>1.0.0</appVersion>
+                    <vendor>gr2105</vendor>
+                    <destination>target/dist</destination>
+                    <module>pmdb.ui/ui.App</module>
+                    <runtimeImage>target/pmdb</runtimeImage>
+                    <javaOptions>
+                        <option>-Dfile.encoding=UTF-8</option>
+                    </javaOptions>
                 </configuration>
             </plugin>
 
