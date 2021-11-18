@@ -9,7 +9,9 @@ module pmdb.rest {
   requires org.glassfish.hk2.api;
   requires org.slf4j;
 
-  requires pmdb.core;
+  requires transitive pmdb.core;
+
+  exports pmdb.restapi;
 
   opens pmdb.restapi to jersey.server;
 }

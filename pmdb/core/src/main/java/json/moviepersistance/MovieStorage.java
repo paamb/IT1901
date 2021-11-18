@@ -29,15 +29,6 @@ public class MovieStorage {
   }
 
   /**
-   * Sets the storagefile, for loading and saving.
-   * 
-   * @param file the file to be set
-   */
-  public void setFile(File file) {
-    setFilePath(file.getName());
-  }
-
-  /**
    * Sets filepath given String.
    * 
    * @param filePath the string to be appended to path.
