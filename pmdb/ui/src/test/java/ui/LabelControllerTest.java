@@ -25,31 +25,31 @@ import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
 public class LabelControllerTest extends ApplicationTest {
-  
+
   private NodeFinderHelper nodeFinder;
-  
+
   private Node waitForNode(String id) {
     return nodeFinder.waitForNode(id);
   }
-  
+
   private void waitThenWrite(String text) {
     nodeFinder.waitThenWrite(text);
   }
-  
+
   private MovieListController movieListController;
-  
+
   private EditMovieController editMovieController;
-  
+
   private final File testFile = new File(getClass().getResource("MovieList_test.json").getFile());
-  
+
   private String title = "t";
   private String description = "";
   private String hours = "1";
   private String minutes = "1";
   private boolean watched = false;
-  
+
   private String legalLabelTitle = "label";
-  
+
   @Override
   public void start(final Stage stage) throws Exception {
     final FXMLLoader loader = new FXMLLoader(getClass().getResource("App.fxml"));
@@ -60,11 +60,11 @@ public class LabelControllerTest extends ApplicationTest {
     stage.setScene(new Scene(root));
     stage.show();
   }
-  
+
   private void enterMinMovieValues() {
     enterMovieValues(title, description, hours, minutes, watched);
   }
-  
+
   private void enterMovieValues(String title, String description, String hours, String minutes,
       boolean watched) {
     WaitForAsyncUtils.waitForFxEvents();
@@ -84,7 +84,7 @@ public class LabelControllerTest extends ApplicationTest {
       clickOn(waitForNode("#watchedCheckBox"));
     }
   }
-  
+
   /**
    * Done before each test.
    */
@@ -100,7 +100,7 @@ public class LabelControllerTest extends ApplicationTest {
       fail(e);
     }
   }
-  
+
   /**
    * Done after each test.
    */
@@ -109,7 +109,7 @@ public class LabelControllerTest extends ApplicationTest {
     try {
       WaitForAsyncUtils.waitForFxEvents();
       MovieStorage storage = new MovieStorage();
-      storage.setFile(testFile);
+      storage.setFilePath(testFile);
       MovieList movieList = storage.loadMovieList();
       movieList.getMovies().stream().forEach(movie -> {
         if (!movie.getTitle().equals("test movie")) {
@@ -121,13 +121,13 @@ public class LabelControllerTest extends ApplicationTest {
       fail(e);
     }
   }
-  
+
   @Test
   public void test_initialize() {
     assertNotNull(movieListController, "movieListController not loaded");
     assertNotNull(editMovieController, "reviewListController not loaded");
   }
-  
+
   @Test
   public void testAddLabel_valid() {
     WaitForAsyncUtils.waitForFxEvents();
@@ -137,43 +137,43 @@ public class LabelControllerTest extends ApplicationTest {
     waitThenWrite(legalLabelTitle);
     clickOn(waitForNode("#addLabel"));
     WaitForAsyncUtils.waitForFxEvents();
-    
+
     VBox labelDisplay = (VBox) waitForNode("#labelDisplay");
     assertEquals(1, labelDisplay.getChildren().size(), "Label not added");
     assertEquals(legalLabelTitle,
         ((Label) labelDisplay.getChildren().get(0).lookup("#labelName")).getText(),
         "wrong labelTitle");
-    
+
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
-    Collection<ILabel> labels =  movieListController.getMovieList().getMovie(title).getLabels();
+    Collection<ILabel> labels = movieListController.getMovieList().getMovie(title).getLabels();
     assertEquals(1, labels.size());
     assertEquals(legalLabelTitle, labels.stream().findFirst().get().getTitle());
   }
-  
+
   @Test
   public void testAddLabel_invalid() {
     WaitForAsyncUtils.waitForFxEvents();
     clickOn(waitForNode("#openEditMovie"));
-    
+
     String tooShortLabel = "";
     clickOn(waitForNode("#labelComboBox"));
     waitThenWrite(tooShortLabel);
     clickOn(waitForNode("#addLabel"));
     WaitForAsyncUtils.waitForFxEvents();
-    
+
     VBox labelDisplay = (VBox) waitForNode("#labelDisplay");
     assertEquals(0, labelDisplay.getChildren().size());
-    
+
     String tooLongLabel = "thisIsOver15Characters";
     clickOn(waitForNode("#labelComboBox"));
     waitThenWrite(tooLongLabel);
     clickOn(waitForNode("#addLabel"));
     WaitForAsyncUtils.waitForFxEvents();
-    
+
     assertEquals(0, labelDisplay.getChildren().size());
   }
-  
+
   @Test
   public void testEditLabels() {
     WaitForAsyncUtils.waitForFxEvents();
@@ -186,13 +186,13 @@ public class LabelControllerTest extends ApplicationTest {
     WaitForAsyncUtils.waitForFxEvents();
     clickOn(waitForNode("#M1").lookup("#editMovie"));
     WaitForAsyncUtils.waitForFxEvents();
-    
+
     VBox labelDisplay = (VBox) waitForNode("#labelDisplay");
     assertEquals(1, labelDisplay.getChildren().size());
-    
+
     clickOn((labelDisplay.getChildren().get(0)).lookup("#removeLabel"));
     WaitForAsyncUtils.waitForFxEvents();
-    
+
     assertEquals(0, labelDisplay.getChildren().size());
 
     clickOn(waitForNode("#submitMovie"));

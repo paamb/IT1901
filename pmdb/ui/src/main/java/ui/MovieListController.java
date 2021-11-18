@@ -97,7 +97,7 @@ public class MovieListController {
       access = new RemoteMovieListAccess(new URI(baseUri));
       movieList = access.getMovieList();
     } catch (Exception e) {
-      access = new LocalMovieListAccess(new File(localMovieListPath));
+      access = new LocalMovieListAccess(localMovieListPath);
       movieList = access.getMovieList();
     }
     Platform.runLater(initViewRunnable);

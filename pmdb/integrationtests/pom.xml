@@ -50,11 +50,6 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
-        <!-- <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-        </dependency> -->
 
         <!-- Test with TextFX -->
 		<dependency>
@@ -77,24 +72,6 @@
             <scope>runtime</scope>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>headless</id>
-            <properties>
-                <headlessTests>true</headlessTests>
-            </properties>
-            <dependencies>
-                <!-- https://mvnrepository.com/artifact/org.testfx/openjfx-monocle -->
-                <dependency>
-                    <groupId>org.testfx</groupId>
-                    <artifactId>openjfx-monocle</artifactId>
-                    <version>jdk-12.0.1+2</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
 
     <build>
         <plugins>
@@ -130,9 +107,6 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>11.0.2</version>
-                <!--
-                <version>9.4.31.v20200723</version>
-                -->
                 <configuration>
                     <httpConnector>
                         <port>${jetty.port}</port>
@@ -168,11 +142,9 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <skipTests>${skipUiTests}</skipTests>
-                            <!-- System.getProperty("todo.port") gir riktig port -->
+                            <!-- System.getProperty("pmdb.port") gir riktig port -->
                             <systemPropertyVariables>
-                                <headless>${headlessTests}</headless>
-                                <todo.port>${jetty.port}</todo.port>
+                                <pmdb.port>${jetty.port}</pmdb.port>
                             </systemPropertyVariables>
                         </configuration>
                     </execution>
