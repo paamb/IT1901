@@ -104,8 +104,8 @@ public class MovieModuleTest {
       movieList.iterator().forEachRemaining(movies::add);
       IMovie movie1 = movies.get(0);
       IMovie movie2 = movies.get(1);
-      IReview review1 = movie1.getReviews().iterator().next();
-      IReview review2 = movie2.getReviews().iterator().next();
+      IReview review1 = movie1.reviewIterator().next();
+      IReview review2 = movie2.reviewIterator().next();
       assertEquals(movie1.getTitle(), "Up");
       assertEquals(movie2.getTitle(), "Batman");
       assertEquals(movie1.getDuration(), 1);
@@ -150,8 +150,8 @@ public class MovieModuleTest {
       movieList2.iterator().forEachRemaining(movies::add);
       IMovie movie3 = movies.get(0);
       IMovie movie4 = movies.get(1);
-      IReview review1 = movie1.getReviews().iterator().next();
-      IReview review2 = movie2.getReviews().iterator().next();
+      IReview review1 = movie1.reviewIterator().next();
+      IReview review2 = movie2.reviewIterator().next();
       assertEquals(movie3.getTitle(), movie1.getTitle());
       assertEquals(movie4.getTitle(), movie2.getTitle());
       assertEquals(movie3.getDuration(), movie1.getDuration());

@@ -2,6 +2,7 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * Movie class.
@@ -124,8 +125,12 @@ public class Movie implements IMovie {
     reviews.remove(review);
   }
 
-  public Collection<IReview> getReviews() {
-    return new ArrayList<>(reviews);
+  public Iterator<IReview> reviewIterator() {
+    return reviews.iterator();
+  }
+
+  public int getReviewCount() {
+    return reviews.size();
   }
 
   public Collection<ILabel> getLabels() {

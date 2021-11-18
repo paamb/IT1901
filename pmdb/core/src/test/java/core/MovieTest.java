@@ -88,21 +88,21 @@ public class MovieTest {
   @Test
   public void testAddReview_addingDuplicateReview() {
     movie.addReview(review1);
-    assertEquals(1, movie.getReviews().size(), "This movie should have 1 review");
+    assertEquals(1, movie.getReviewCount(), "This movie should have 1 review");
 
     assertThrows(IllegalStateException.class, () -> movie.addReview(review1),
         "Failed to throw exception on adding duplicate review");
-    assertEquals(1, movie.getReviews().size(), "This movie should have 1 review");
+    assertEquals(1, movie.getReviewCount(), "This movie should have 1 review");
   }
 
   @Test
   public void testAddReview_addingNull() {
     movie.addReview(review1);
-    assertEquals(1, movie.getReviews().size(), "This movie should have 1 review");
+    assertEquals(1, movie.getReviewCount(), "This movie should have 1 review");
 
     assertThrows(IllegalArgumentException.class, () -> movie.addReview(null),
         "Failed to throw exception on adding null");
-    assertEquals(1, movie.getReviews().size(), "This movie should have 1 review");
+    assertEquals(1, movie.getReviewCount(), "This movie should have 1 review");
   }
 
   @Test

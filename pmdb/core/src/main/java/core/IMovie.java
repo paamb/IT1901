@@ -1,6 +1,7 @@
 package core;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * Interface for movie.
@@ -117,11 +118,18 @@ public interface IMovie {
   public void removeReview(IReview review);
 
   /**
-   * Get all reviews for this movie.
+   * Returns iterator over reviews.
    * 
-   * @return a collection of this movies reviews
+   * @return
    */
-  public Collection<IReview> getReviews();
+  public Iterator<IReview> reviewIterator();
+
+  /**
+   * Returns reviewlistsize.
+   * 
+   * @return
+   */
+  public int getReviewCount();
 
   /**
    * Set labels for this movie.
