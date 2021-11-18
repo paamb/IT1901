@@ -88,14 +88,13 @@ public class MovieListController {
     this.appController = appController;
   }
 
-  // TODO:
-  public void setBaseUri(String apiBaseUri) {
-    this.apiBaseUri = apiBaseUri;
+  protected void syncWithServer() {
+    syncWithServer(apiBaseUri);
   }
 
-  protected void syncWithServer() {
+  protected void syncWithServer(String baseUri) {
     try {
-      access = new RemoteMovieListAccess(new URI(apiBaseUri)); // TODO:
+      access = new RemoteMovieListAccess(new URI(baseUri));
       movieList = access.getMovieList();
     } catch (Exception e) {
       access = new LocalMovieListAccess(new File(localMovieListPath));
