@@ -153,9 +153,16 @@ public interface IMovie {
   public void removeLabel(ILabel label);
 
   /**
-   * Returns a collection of the labels attached to this movie.
+   * Returns iterator over labels.
    * 
-   * @return Collection of labels
+   * @return
    */
-  public Collection<ILabel> getLabels();
+  public Iterator<ILabel> labelIterator();
+
+  /**
+   * returns size of labels.
+   * 
+   * @return
+   */
+  public int getLabelCount();
 }

@@ -3,6 +3,7 @@ package ui;
 import core.ILabel;
 import core.IMovie;
 import java.time.Duration;
+import java.util.Iterator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -61,7 +62,8 @@ public class MovieDisplayTemplateController {
     movieDescription.setText(movie.getDescription());
     movieWatched.setText(movie.isWatched() ? "Sett" : "Ikke sett");
     movieLabels.getChildren().clear();
-    for (ILabel label : movie.getLabels()) {
+    for (Iterator<ILabel> labels = movie.labelIterator(); labels.hasNext(); ) {
+      ILabel label = labels.next();
       Label labelLabel = new Label();
       labelLabel.setText(label.getTitle());
       labelLabel.setTextFill(Paint.valueOf(label.getColor()));

@@ -67,7 +67,7 @@ public class MovieModuleTest {
       """;
 
   private boolean isLabelInMovie(IMovie movie, String title) {
-    return movie.getLabels().stream().anyMatch(label -> label.getTitle().equals(title));
+    return ILabel.isLabelInMovie(movie, title);
   }
 
   @Test

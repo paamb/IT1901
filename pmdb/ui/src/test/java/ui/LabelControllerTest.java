@@ -9,6 +9,7 @@ import core.MovieList;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Iterator;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -146,9 +147,13 @@ public class LabelControllerTest extends ApplicationTest {
 
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
-    Collection<ILabel> labels = movieListController.getMovieList().getMovie(title).getLabels();
-    assertEquals(1, labels.size());
-    assertEquals(legalLabelTitle, labels.stream().findFirst().get().getTitle());
+    assertEquals(1, movieListController.getMovieList().getMovie(title).getLabelCount());
+    Iterator<ILabel> labels = movieListController.getMovieList().getMovie(title).labelIterator();
+    if (labels.hasNext()) {
+      assertEquals(legalLabelTitle, labels.next().getTitle());
+    } else {
+      fail("Should be a label");
+    }
   }
 
   @Test
@@ -198,6 +203,6 @@ public class LabelControllerTest extends ApplicationTest {
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(0, movieListController.getMovieList().getMovie(title).getLabels().size());
+    assertEquals(0, movieListController.getMovieList().getMovie(title).getLabelCount());
   }
 }

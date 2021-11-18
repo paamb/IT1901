@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -62,9 +64,22 @@ public class MovieList implements Iterable<IMovie> {
     return movieList.stream().filter(m -> m.getTitle().equals(title)).findFirst().orElse(null);
   }
 
+  /**
+   * Loops through movies and finds all labels.
+   * 
+   * @return all labels in movieList.
+   */
   public Collection<ILabel> getAllLabels() {
-    return movieList.stream().map(IMovie::getLabels).flatMap(Collection::stream).distinct()
-        .collect(Collectors.toList());
+    Collection<ILabel> allLabels = new ArrayList<ILabel>();
+    for (IMovie movie : movieList) {
+      for (Iterator<ILabel> labels = movie.labelIterator(); labels.hasNext(); ) {
+        ILabel label = labels.next();
+        if (!allLabels.contains(label)) {
+          allLabels.add(label);
+        }
+      }
+    }
+    return allLabels;
   }
 
   /**

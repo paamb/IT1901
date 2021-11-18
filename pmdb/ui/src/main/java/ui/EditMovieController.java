@@ -7,6 +7,7 @@ import core.Movie;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -295,13 +296,22 @@ public class EditMovieController {
     errorField.setText("");
     fillLabelComboBox();
     for (Node labelNode : labelDisplay.getChildren()) {
-      if (!editingMovie.getLabels().stream()
-          .anyMatch(l -> l.getTitle().equals(labelNode.getId()))) {
-        labelDisplay.getChildren().remove(labelNode);
+      for (Iterator<ILabel> labels = editingMovie.labelIterator(); labels.hasNext(); ) {
+        if (labels.next().getTitle().equals(labelNode.getId())) {
+          labelDisplay.getChildren().remove(labelNode);
+        }
       }
+
+      // if (!editingMovie.getLabels().stream()
+      //     .anyMatch(l -> l.getTitle().equals(labelNode.getId()))) {
+      //   labelDisplay.getChildren().remove(labelNode);
+      // }
     }
     currentLabels = new ArrayList<ILabel>();
-    editingMovie.getLabels().stream().forEach(l -> displayLabel(l));
+    for (Iterator<ILabel> labels = editingMovie.labelIterator(); labels.hasNext(); ) {
+      displayLabel(labels.next());
+    }
+    //editingMovie.getLabels().stream().forEach(l -> displayLabel(l));
   }
 
   private boolean thisTitleIsAvailable(String title) {

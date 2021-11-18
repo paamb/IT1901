@@ -133,8 +133,12 @@ public class Movie implements IMovie {
     return reviews.size();
   }
 
-  public Collection<ILabel> getLabels() {
-    return new ArrayList<>(labels);
+  public Iterator<ILabel> labelIterator() {
+    return labels.iterator();
+  }
+
+  public int getLabelCount() {
+    return labels.size();
   }
 
   /**
