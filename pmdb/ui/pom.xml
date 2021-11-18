@@ -11,7 +11,7 @@
     </parent>
 
     <properties>
-        <skipTests>false</skipTests>
+        <skipTests>true</skipTests>
     </properties>
 
     <dependencies>
@@ -107,7 +107,7 @@
                 <configuration>
                     <name>pmdb</name>
                     <appVersion>1.0.0</appVersion>
-                    <vendor>gr2105</vendor>
+                    <vendor>it1901</vendor>
                     <destination>target/dist</destination>
                     <module>pmdb.ui/ui.App</module>
                     <runtimeImage>target/pmdb</runtimeImage>
