@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,14 +10,14 @@
   <children>
     <TabPane id="tabPane" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
-        <Tab text="Anmeldelser" fx:id="reviewListTab" id="reviewListTab">
+        <Tab id="reviewListTab" fx:id="reviewListTab" text="Anmeldelser">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
               <fx:include fx:id="reviewList" source="ReviewList.fxml" />
             </AnchorPane>
           </content>
         </Tab>
-        <Tab text="Alle filmer" fx:id="movieListTab" id="movieListTab">
+        <Tab id="movieListTab" fx:id="movieListTab" text="Alle filmer">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
               <fx:include fx:id="movieList" source="MovieList.fxml" />
@@ -24,5 +26,7 @@
         </Tab>
       </tabs>
     </TabPane>
+      <Label fx:id="noConnectionInfo" layoutX="230.0" layoutY="5.0" text="Ingen kontakt med server, bruker lokal lagring." visible="false" />
+      <Button fx:id="syncWithServer" layoutX="700.0" layoutY="2.0" mnemonicParsing="false" onAction="#syncWithServer" text="Koble til server" />
   </children>
 </AnchorPane>

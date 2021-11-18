@@ -4,6 +4,7 @@ import core.IMovie;
 import core.MovieList;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import javafx.application.Platform;
@@ -16,7 +17,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import json.moviepersistance.MovieStorage;
 
 /**
  * MovieListController class.
@@ -26,7 +26,6 @@ import json.moviepersistance.MovieStorage;
 public class MovieListController {
 
   private MovieList movieList;
-  private MovieStorage storage;
 
   @FXML
   CheckBox sortOnTitleCheckbox;
@@ -44,12 +43,19 @@ public class MovieListController {
   Pane movieDisplay;
 
   @FXML
-  String userMovieListPath;
+  String localMovieListPath;
+
+  @FXML
+  String apiBaseUri;
 
   @FXML
   EditMovieController editMovieController;
 
+  private AppController appController;
+
   private ReviewListController reviewListController;
+
+  private MovieListAccess access;
 
   private Runnable initViewRunnable = () -> {
     hideEditMovie();
@@ -58,9 +64,8 @@ public class MovieListController {
 
   @FXML
   void initialize() throws IOException {
-    loadMovieListFile(new File(userMovieListPath));
+    syncWithServer();
     editMovieController.injectMovieListController(this);
-    Platform.runLater(initViewRunnable);
   }
 
   /**
@@ -70,14 +75,32 @@ public class MovieListController {
    * @throws IOException when unable to load from file.
    */
   public void loadMovieListFile(File file) throws IOException {
-    storage = new MovieStorage();
-    storage.setFile(file);
-    movieList = storage.loadMovieList();
+    access = new LocalMovieListAccess(file);
+    movieList = access.getMovieList();
     Platform.runLater(initViewRunnable);
   }
 
   protected void injectReviewListController(ReviewListController reviewListController) {
     this.reviewListController = reviewListController;
+  }
+
+  protected void injectAppController(AppController appController) {
+    this.appController = appController;
+  }
+
+  protected void syncWithServer() {
+    syncWithServer(apiBaseUri);
+  }
+
+  protected void syncWithServer(String baseUri) {
+    try {
+      access = new RemoteMovieListAccess(new URI(baseUri));
+      movieList = access.getMovieList();
+    } catch (Exception e) {
+      access = new LocalMovieListAccess(localMovieListPath);
+      movieList = access.getMovieList();
+    }
+    Platform.runLater(initViewRunnable);
   }
 
   protected void editMovie(IMovie movie) {
@@ -121,21 +144,21 @@ public class MovieListController {
   }
 
   protected void movieListIsEdited() {
-    displayMovieList();
-    saveMovieList();
-  }
-
-  protected void saveMovieList() {
     try {
-      storage.saveMovieList(movieList);
-    } catch (IOException e) {
-      e.printStackTrace();
+      access.putMovieList(movieList);
+    } catch (Exception e) {
+      appController.syncWithServer();
     }
+    displayMovieList();
   }
 
   protected void deleteMovie(IMovie movie) {
     movieList.removeMovie(movie);
     movieListIsEdited();
+  }
+
+  protected boolean serverIsRunning() {
+    return access instanceof RemoteMovieListAccess;
   }
 
   @FXML
@@ -159,12 +182,10 @@ public class MovieListController {
       for (IMovie movie : movies) {
         Pane moviePane = findMoviePane(movie);
         if (moviePane == null) {
-          FXMLLoader fxmlLoader =
-              new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
+          FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
           moviePane = fxmlLoader.load();
 
-          MovieDisplayTemplateController movieDisplayTemplateController =
-              fxmlLoader.getController();
+          MovieDisplayTemplateController movieDisplayTemplateController = fxmlLoader.getController();
           movieDisplayTemplateController.injectMovieListController(this);
           movieDisplayTemplateController.setMovie(movie);
           movieDisplayTemplateController.setContent();

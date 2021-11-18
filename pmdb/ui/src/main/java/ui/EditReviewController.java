@@ -55,6 +55,8 @@ public class EditReviewController {
 
   private String invalidWhenWatchedText = "Sett-dato kan ikke være i fremtiden";
 
+  private ReviewDisplayTemplateController reviewDisplayTemplateController;
+
   @FXML
   void initialize() {
     ratingComboBox.getItems()
@@ -79,6 +81,7 @@ public class EditReviewController {
             editingReview.setRating(rating);
             editingReview.setComment(comment);
             editingReview.setWhenWatched(whenWatched);
+            reviewDisplayTemplateController.setContent();
           }
           reviewListController.reviewListIsEdited();
           reviewListController.hideEditReview();
@@ -123,6 +126,10 @@ public class EditReviewController {
 
   protected void injectReviewListController(ReviewListController reviewListController) {
     this.reviewListController = reviewListController;
+  }
+
+  protected void setReviewDisplayController(ReviewDisplayTemplateController controller) {
+    reviewDisplayTemplateController = controller;
   }
 
   protected void editReview(IReview review) {
