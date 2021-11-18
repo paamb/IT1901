@@ -34,10 +34,12 @@ public class MovieListService {
    */
   @GET
   public MovieList getMovieList() {
-    LOG.debug("getMovieList()");
     try {
+      MovieList movieList = movieStorage.loadMovieList();
+      LOG.debug("getMovieList(): " + movieList.toString());
       return movieStorage.loadMovieList();
     } catch (Exception e) {
+      LOG.debug("getMovieList(): failed, returning empty movieList");
       return new MovieList();
     }
   }

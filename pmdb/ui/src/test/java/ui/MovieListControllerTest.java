@@ -110,7 +110,7 @@ public class MovieListControllerTest extends ApplicationTest {
     try {
       WaitForAsyncUtils.waitForFxEvents();
       MovieStorage storage = new MovieStorage();
-      storage.setFile(testFile);
+      storage.setFilePath(testFile);
       MovieList movieList = storage.loadMovieList();
       movieList.getMovies().stream().forEach(movie -> {
         if (!movie.getTitle().equals("test movie")) {

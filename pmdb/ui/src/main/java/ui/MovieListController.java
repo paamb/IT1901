@@ -44,7 +44,7 @@ public class MovieListController {
 
   @FXML
   String localMovieListPath;
-  
+
   @FXML
   String apiBaseUri;
 
@@ -79,7 +79,7 @@ public class MovieListController {
     movieList = access.getMovieList();
     Platform.runLater(initViewRunnable);
   }
-  
+
   protected void injectReviewListController(ReviewListController reviewListController) {
     this.reviewListController = reviewListController;
   }
@@ -89,11 +89,15 @@ public class MovieListController {
   }
 
   protected void syncWithServer() {
+    syncWithServer(apiBaseUri);
+  }
+
+  protected void syncWithServer(String baseUri) {
     try {
-      access = new RemoteMovieListAccess(new URI(apiBaseUri));
+      access = new RemoteMovieListAccess(new URI(baseUri));
       movieList = access.getMovieList();
     } catch (Exception e) {
-      access = new LocalMovieListAccess(new File(localMovieListPath));
+      access = new LocalMovieListAccess(localMovieListPath);
       movieList = access.getMovieList();
     }
     Platform.runLater(initViewRunnable);
@@ -178,12 +182,10 @@ public class MovieListController {
       for (IMovie movie : movies) {
         Pane moviePane = findMoviePane(movie);
         if (moviePane == null) {
-          FXMLLoader fxmlLoader =
-              new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
+          FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
           moviePane = fxmlLoader.load();
 
-          MovieDisplayTemplateController movieDisplayTemplateController =
-              fxmlLoader.getController();
+          MovieDisplayTemplateController movieDisplayTemplateController = fxmlLoader.getController();
           movieDisplayTemplateController.injectMovieListController(this);
           movieDisplayTemplateController.setMovie(movie);
           movieDisplayTemplateController.setContent();

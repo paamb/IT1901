@@ -46,7 +46,7 @@ public class ReviewListControllerTest extends ApplicationTest {
   private ReviewListController reviewListController;
 
   private EditReviewController editReviewController;
-  
+
   private final File testFile = new File(getClass().getResource("MovieList_test.json").getFile());
 
   private String comment = "comment";
@@ -104,7 +104,7 @@ public class ReviewListControllerTest extends ApplicationTest {
   public void tearDown() {
     try {
       MovieStorage storage = new MovieStorage();
-      storage.setFile(testFile);
+      storage.setFilePath(testFile);
       MovieList movieList = storage.loadMovieList();
       movieList.getMovies().stream().forEach(movie -> {
         if (!movie.getTitle().equals("test movie")) {
