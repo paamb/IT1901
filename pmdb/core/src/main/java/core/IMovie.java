@@ -120,14 +120,14 @@ public interface IMovie {
   /**
    * Returns iterator over reviews.
    * 
-   * @return
+   * @return iterator
    */
   public Iterator<IReview> reviewIterator();
 
   /**
    * Returns reviewlistsize.
    * 
-   * @return
+   * @return size
    */
   public int getReviewCount();
 
@@ -155,14 +155,14 @@ public interface IMovie {
   /**
    * Returns iterator over labels.
    * 
-   * @return
+   * @return iterator
    */
   public Iterator<ILabel> labelIterator();
 
   /**
    * returns size of labels.
    * 
-   * @return
+   * @return size
    */
   public int getLabelCount();
 }
