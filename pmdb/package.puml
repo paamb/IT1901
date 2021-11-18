@@ -2,15 +2,6 @@
 allow_mixing
 component core {
     package pmdb.core{
-        interface IMovie
-        class Movie
-        Movie ..> IMovie
-        interface IReview
-        class Review
-
-        Review ..> IReview
-        class MovieList
-        MovieList --> "*" IMovie : movieList
     }
     package pmdb.json{
         package moviepersistance
