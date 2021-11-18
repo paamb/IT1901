@@ -33,8 +33,8 @@ public class AppIT extends ApplicationTest {
   @BeforeEach
   public void setupMovieList() {
     try {
-      String port = System.getProperty("todo.port");
-      assertNotNull(port, "The port moive.port is null.");
+      String port = System.getProperty("pmdb.port");
+      assertNotNull(port, "The port pmdb.port is null.");
       String baseUri = "http://localhost:" + port + "/movielist";
       this.movieListController.syncWithServer(baseUri);
       assertTrue(this.movieListController.serverIsRunning());
