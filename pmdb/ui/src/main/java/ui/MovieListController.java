@@ -89,8 +89,12 @@ public class MovieListController {
   }
 
   protected void syncWithServer() {
+    syncWithServer(apiBaseUri);
+  }
+
+  protected void syncWithServer(String baseUri) {
     try {
-      access = new RemoteMovieListAccess(new URI(apiBaseUri));
+      access = new RemoteMovieListAccess(new URI(baseUri));
       movieList = access.getMovieList();
     } catch (Exception e) {
       access = new LocalMovieListAccess(localMovieListPath);
@@ -178,12 +182,10 @@ public class MovieListController {
       for (IMovie movie : movies) {
         Pane moviePane = findMoviePane(movie);
         if (moviePane == null) {
-          FXMLLoader fxmlLoader =
-              new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
+          FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
           moviePane = fxmlLoader.load();
 
-          MovieDisplayTemplateController movieDisplayTemplateController =
-              fxmlLoader.getController();
+          MovieDisplayTemplateController movieDisplayTemplateController = fxmlLoader.getController();
           movieDisplayTemplateController.injectMovieListController(this);
           movieDisplayTemplateController.setMovie(movie);
           movieDisplayTemplateController.setContent();
