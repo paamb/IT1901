@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import pmdb.restapi.MovieListService;
 
 public class MovieListServiceTest extends JerseyTest {
-  
+
   private ObjectMapper objectMapper;
 
   @Override
@@ -41,12 +41,11 @@ public class MovieListServiceTest extends JerseyTest {
   @Test
   public void testGet_movieList() {
     Response getResponse = target(MovieListService.MOVIE_LIST_SERVICE_PATH)
-        .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
-        .get();
+        .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8").get();
     assertEquals(200, getResponse.getStatus());
     try {
-      MovieList movieList = objectMapper.readValue(
-          getResponse.readEntity(String.class), MovieList.class);
+      MovieList movieList =
+          objectMapper.readValue(getResponse.readEntity(String.class), MovieList.class);
       assertNotNull(movieList, "Should load a movieList");
 
     } catch (JsonProcessingException e) {
