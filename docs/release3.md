@@ -1,5 +1,7 @@
 # Release 3
+
 Dokumentasjon for release 3:
+
 - [Implementasjon av labels](#implementasjon-av-labels)
 - [Implementasjon av API](#implementasjo-av-api)
 - [Arkitektur](#arkitektur)
@@ -7,14 +9,16 @@ Dokumentasjon for release 3:
 - [Tester](#tester)
 
 ### Implementasjon av labels
+
 I release 2 hadde vi planer om å implementere emneknagger til en film, men gikk bort fra det da vi fant ut at vi hadde nok implementasjon fra før av. Vi bestemte oss dermed å implementere emneknagger i denne releasen, da vi allerede hadde en konseptuell modell for hvordan det ville se ut, og at vi allerede hadde implementert en del av logikken i release 2.
 
 #### Problemer ved implementasjon av labels
+
 Da vi skulle implementere `Label` hadde vi problemer med hvordan strukturen skulle se ut. Én `Label` skulle ha mange `Movie`-objekter, og én `Movie` skulle også ha mange `Label`-objekter. Dette skapte en mange-til-mange relasjon mellom `Movie` og `Label`. Vi var usikre på hvordan vi ville implementere denne strukturen. Relasjonen mellom `Movie` og `Label` ga oss også problemer med lagring. Vi var usikre på hvordan vi skulle lagre `Label`-objektene, da vi ville unngå å lagre og opprette samme objekt flere ganger.
 
 Løsning 1:
 
-Vi tenkte først at vi måtte ha en hovedliste i `MovieList`, som holdt styr på alle `Label`-objektene, og at et `Movie`-objekt skulle ha en liste med sine `Label`-objekt. Et nytt `Label`-objekt skulle opprettes om det ikke fantes i hovedlisten i `MovieList`. Da måtte vi lagre `Label`-objektet både i `MovieList`-en og i `Movie`-en med denne `Label`-en. Vi fant ut at dette både var tungvindt og unødvendig. 
+Vi tenkte først at vi måtte ha en hovedliste i `MovieList`, som holdt styr på alle `Label`-objektene, og at et `Movie`-objekt skulle ha en liste med sine `Label`-objekt. Et nytt `Label`-objekt skulle opprettes om det ikke fantes i hovedlisten i `MovieList`. Da måtte vi lagre `Label`-objektet både i `MovieList`-en og i `Movie`-en med denne `Label`-en. Vi fant ut at dette både var tungvindt og unødvendig.
 
 Løsning 2:
 
@@ -22,8 +26,7 @@ Vi beholdt idéen om at et `Movie`-objekt skulle holde på sine `Label`-objekter
 
 Lagring av Labels:
 
-Vi hadde også som nevnt problemer med å lagre `Label`-objektene, fordi vi ikke ville lagre samme objekt flere ganger. Derfor bestemte vi oss for å lagre `Label`-objektene først, og så lagre en liste men navnene på `Label`-objektene for hver `Movie`-objekt. Når vi da skal deserialisere et `Movie`-objekt matcher vi bare navnet med navnet på objektet som allerede er deseralisert, og legge det til i `Movie`-objekte hvis det matcher. 
-
+Vi hadde også som nevnt problemer med å lagre `Label`-objektene, fordi vi ikke ville lagre samme objekt flere ganger. Derfor bestemte vi oss for å lagre `Label`-objektene først, og så lagre en liste men navnene på `Label`-objektene for hver `Movie`-objekt. Når vi da skal deserialisere et `Movie`-objekt matcher vi bare navnet med navnet på objektet som allerede er deseralisert, og legge det til i `Movie`-objekte hvis det matcher.
 
 ### Implementasjon av API
 
@@ -31,22 +34,120 @@ Vi har benyttet oss av Jersey for bygging og konfigurering av serveren. Videre h
 
 Vi har tre request metoder for behandling av server. Vi har:
 
-`getMovieList()` - Dette er en get-metode som tar inn serveren i JSON format, og oppretter et `MovieList`-objekt ved hjelp av våre definerte deserialiserere. Den eneste gangen denne metoden blir kalt er under oppstart. Dette gjør vi, fordi appen trenger hele `MovieList`-objektet ved oppstart, fordi vi vil vise alle filmene lagret på serveren ved oppstart. Objektet blir lagret som et felt i `MovieListController`, når en endring skjer på `MovieList`-objektet vil metoden `putMovieList` bli kalt og JSON filen på serveren oppdatert. 
+`getMovieList()` - Dette er en get-metode som tar inn serveren i JSON format, og oppretter et `MovieList`-objekt ved hjelp av våre definerte deserialiserere. Den eneste gangen denne metoden blir kalt er under oppstart. Dette gjør vi, fordi appen trenger hele `MovieList`-objektet ved oppstart, fordi vi vil vise alle filmene lagret på serveren ved oppstart. Objektet blir lagret som et felt i `MovieListController`, når en endring skjer på `MovieList`-objektet vil metoden `putMovieList` bli kalt og JSON filen på serveren oppdatert.
 
-
-`getMovieByTitle` - Dette er en get-metode som henter ut en film ved hjelp av tittel. Denne benyttes ikke i appen, men var grei å ha under testing i Postman.  
-
+`getMovieByTitle` - Dette er en get-metode som henter ut en film ved hjelp av tittel. Denne benyttes ikke i appen, men var grei å ha under testing i Postman.
 
 `putMovieList` - Denne metoden oppdaterer JSON formatet på server med tilhørende `MovieList` som blir sendt inn som parameter.
+
+### PUT /movielist
+
+### Request eksempel
+
+```json
+{
+  "labels": [
+    {
+      "title": "Action",
+      "color": "#58E5EB"
+    },
+    {
+      "title": "Eventyr",
+      "color": "#314677"
+    }
+  ],
+  "movies": [
+    {
+      "title": "Dette er en film",
+      "description": "Flott film",
+      "duration": 122,
+      "watched": true,
+      "labels": ["Action", "Eventyr"],
+      "reviews": [
+        {
+          "comment": "Kjempegøy",
+          "rating": 3,
+          "whenWatched": "2021-11-05"
+        }
+      ]
+    },
+    {
+      "title": "Film2",
+      "description": "Kjempespennende",
+      "duration": 122,
+      "watched": false,
+      "labels": ["Action"],
+      "reviews": []
+    }
+  ]
+}
+```
+
+### Response eksempel
+
+Dersom vellyket
+
+```
+true
+```
+
+Ellers
+
+```
+false
+```
+
+### GET /movielist
+
+### Response eksempel
+
+```json
+{
+  "labels": [
+    {
+      "title": "Action",
+      "color": "#58E5EB"
+    },
+    {
+      "title": "Eventyr",
+      "color": "#314677"
+    }
+  ],
+  "movies": [
+    {
+      "title": "Dette er en film",
+      "description": "Flott film",
+      "duration": 122,
+      "watched": true,
+      "labels": ["Action", "Eventyr"],
+      "reviews": [
+        {
+          "comment": "Kjempegøy",
+          "rating": 3,
+          "whenWatched": "2021-11-05"
+        }
+      ]
+    },
+    {
+      "title": "Film2",
+      "description": "Kjempespennende",
+      "duration": 122,
+      "watched": false,
+      "labels": ["Action"],
+      "reviews": []
+    }
+  ]
+}
+```
 
 #### Ugunstig lagring til server
 
 `putMovieList` - metoden lagrer hele `movieList`-objektet mellom hver gang det skjer en endring i objektet. Dette er kostbart, men nødvendig når vi bruker JSON. Dette ville vært unngått om vi hadde benyttet oss av en database, og ikke en JSON-fil.
- 
-
-
-
 
 ### Lage kopi av movies
 
+### run-with-server script
 
+Dette scriptet brukes for å starte serveren APIet kjører på og selve appen med samme kommando. Vi har laget dette for å forenkle kjøring av appen med remoteaccess. Ettersom serveren og appen starter samtidig må man koble til ved hjelp av knappen oppe i høyre hjørne for å få tilgang til data fra APIet.
+
+###
