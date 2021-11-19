@@ -69,7 +69,7 @@ public class ReviewListController {
   }
 
   protected Collection<IMovie> getMovies() {
-    return new ArrayList<IMovie>(movieListController.getMovieList().getMovies());
+    return movieListController.getMovieList().getMovies();
   }
 
   protected void injectMovieListController(MovieListController movieListController) {
