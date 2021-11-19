@@ -1,6 +1,6 @@
 # Release 3
 
-Dokumentasjon for release 3:
+## Dokumentasjon for release 3:
 - [Innledning](#innledning)
 - [Implementasjon av labels](#implementasjon-av-labels)
 - [Implementasjon av API](#implementasjon-av-api)
@@ -48,7 +48,7 @@ Vi har tre request metoder for behandling av server. Vi har:
 
 ### PUT /movielist
 
-### Request-body eksempel:
+#### Request-body eksempel:
 
 ```json
 {
