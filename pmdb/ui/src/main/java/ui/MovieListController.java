@@ -182,10 +182,12 @@ public class MovieListController {
       for (IMovie movie : movies) {
         Pane moviePane = findMoviePane(movie);
         if (moviePane == null) {
-          FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
+          FXMLLoader fxmlLoader = 
+              new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
           moviePane = fxmlLoader.load();
 
-          MovieDisplayTemplateController movieDisplayTemplateController = fxmlLoader.getController();
+          MovieDisplayTemplateController movieDisplayTemplateController = 
+              fxmlLoader.getController();
           movieDisplayTemplateController.injectMovieListController(this);
           movieDisplayTemplateController.setMovie(movie);
           movieDisplayTemplateController.setContent();
