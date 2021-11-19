@@ -160,6 +160,7 @@
                         </goals>
                         <configuration>
                             <skipTests>${skipUiTests}</skipTests>
+                            <!-- System.getProperty("pmdb.port") gir riktig port -->
                             <systemPropertyVariables>
                                 <headless>${headlessTests}</headless>
                                 <pmdb.port>${jetty.port}</pmdb.port>

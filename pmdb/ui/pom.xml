@@ -127,6 +127,9 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
+                <configuration> 
+                    <excludeFilterFile>../config/spotbugs/exclude-spotbugs.xml</excludeFilterFile>
+                </configuration>
             </plugin>
 
             <!-- Configure jacoco code coverage -->
