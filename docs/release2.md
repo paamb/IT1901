@@ -47,7 +47,7 @@ Vi har benyttet oss en flermodulær arkitektur. Vi har modulene `core` og `ui`. 
 
 Under ligger pakkestrukturen som også ligger i README-filen i pmdb:
 
-![Bildet ble ikke vist](../pmdb/images/packageStructure.png)
+![Bildet ble ikke vist](../pmdb/images/packageStructureRelease2.png)
 
 ---
 
