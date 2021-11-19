@@ -29,7 +29,7 @@ Vi hadde også som nevnt problemer med å lagre `Label`-objektene, fordi vi ikke
 
 ### Implementasjon av API
 
-Vi har benyttet oss av Jersey for bygging og konfigurering av serveren. Videre har vi brukt Jakarta for å definer og håndtere http requests (PUT, GET). API requestene støtter JSON format.
+Vi har benyttet oss av Jersey for bygging og konfigurering av serveren. Videre har vi brukt Jakarta for å definer og håndtere http requests (PUT, GET). API requestene støtter JSON format. Vi valgte å benytte oss av PUT request, og ikke Post, fordi vi ville oppdatere ressursen, og ikke lage en ny for hvert kall.
 
 Vi har tre request metoder for behandling av server. Vi har:
 
