@@ -13,6 +13,7 @@ import core.MovieList;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -107,11 +108,14 @@ public class ReviewListControllerTest extends ApplicationTest {
       MovieStorage storage = new MovieStorage();
       storage.setFilePath(testFile);
       MovieList movieList = storage.loadMovieList();
-      movieList.getMovies().stream().forEach(movie -> {
+      Collection<IMovie> deleteMovies = new ArrayList<IMovie>();
+      for (Iterator<IMovie> movies = movieList.iterator(); movies.hasNext(); ) {
+        IMovie movie = movies.next();
         if (!movie.getTitle().equals("test movie")) {
-          movieList.removeMovie(movie);
+          deleteMovies.add(movie);
         }
-      });
+      }
+      deleteMovies.forEach(m -> movieList.removeMovie(m));
       IMovie movie = movieList.getMovie("test movie");
       movie.setReviews(new ArrayList<IReview>());
       storage.saveMovieList(movieList);

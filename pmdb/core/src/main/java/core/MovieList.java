@@ -43,8 +43,16 @@ public class MovieList implements Iterable<IMovie> {
     movieList.remove(movie);
   }
 
+  public Iterator<IMovie> movieIterator() {
+    return movieList.iterator();
+  }
+
+  public int getMovieCount() {
+    return movieList.size();
+  }
+
   public Collection<IMovie> getMovies() {
-    return new ArrayList<>(movieList);
+    return Collections.unmodifiableCollection(movieList);
   }
 
   public void clearMovieList() {

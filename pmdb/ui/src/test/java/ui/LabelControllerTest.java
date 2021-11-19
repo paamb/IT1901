@@ -5,9 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import core.ILabel;
+import core.IMovie;
 import core.MovieList;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import javafx.fxml.FXMLLoader;
@@ -112,13 +114,17 @@ public class LabelControllerTest extends ApplicationTest {
       MovieStorage storage = new MovieStorage();
       storage.setFilePath(testFile);
       MovieList movieList = storage.loadMovieList();
-      movieList.getMovies().stream().forEach(movie -> {
+      Collection<IMovie> deleteMovies = new ArrayList<IMovie>();
+      for (Iterator<IMovie> movies = movieList.iterator(); movies.hasNext(); ) {
+        IMovie movie = movies.next();
         if (!movie.getTitle().equals("test movie")) {
-          movieList.removeMovie(movie);
+          deleteMovies.add(movie);
         }
-      });
+      }
+      deleteMovies.forEach(m -> movieList.removeMovie(m));
       storage.saveMovieList(movieList);
     } catch (Exception e) {
+      e.printStackTrace();
       fail(e);
     }
   }
