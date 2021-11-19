@@ -17,9 +17,6 @@ component jersey{
 component jakarta {
 
 }
-component glassfish{
-
-}
 component rest{
     package pmdb.restapi{
 
@@ -32,7 +29,6 @@ pmdb.restapi ..> pmdb.restserver
 rest..> pmdb.core
 rest ..> jakarta
 rest ..> jersey
-rest ..> glassfish
 rest ..> pmdb.json
 
 component ui {
