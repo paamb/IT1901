@@ -88,21 +88,21 @@ public class MovieTest {
   @Test
   public void testAddReview_addingDuplicateReview() {
     movie.addReview(review1);
-    assertEquals(1, movie.getReviews().size(), "This movie should have 1 review");
+    assertEquals(1, movie.getReviewCount(), "This movie should have 1 review");
 
     assertThrows(IllegalStateException.class, () -> movie.addReview(review1),
         "Failed to throw exception on adding duplicate review");
-    assertEquals(1, movie.getReviews().size(), "This movie should have 1 review");
+    assertEquals(1, movie.getReviewCount(), "This movie should have 1 review");
   }
 
   @Test
   public void testAddReview_addingNull() {
     movie.addReview(review1);
-    assertEquals(1, movie.getReviews().size(), "This movie should have 1 review");
+    assertEquals(1, movie.getReviewCount(), "This movie should have 1 review");
 
     assertThrows(IllegalArgumentException.class, () -> movie.addReview(null),
         "Failed to throw exception on adding null");
-    assertEquals(1, movie.getReviews().size(), "This movie should have 1 review");
+    assertEquals(1, movie.getReviewCount(), "This movie should have 1 review");
   }
 
   @Test
@@ -120,7 +120,7 @@ public class MovieTest {
     assertThrows(IllegalStateException.class, () -> movie.addLabel(labelOne),
         "Failed to throw exception on adding duplicate label");
 
-    assertEquals(1, movie.getLabels().size(),
+    assertEquals(1, movie.getLabelCount(),
         "Labels should have size 1, because the illegal value was not added");
   }
 
@@ -129,7 +129,7 @@ public class MovieTest {
     assertThrows(IllegalArgumentException.class, () -> movie.addLabel(null),
         "Failed to throw exception on adding null as a label");
 
-    assertEquals(0, movie.getLabels().size(),
+    assertEquals(0, movie.getLabelCount(),
         "Labels should have size 0, because we have only added an illegal value");
   }
 
@@ -141,7 +141,7 @@ public class MovieTest {
         () -> movie.setLabels(Arrays.asList(labelOne, labelOne)),
         "Failed to throw exception on setting duplicate labels");
 
-    assertEquals(0, movie.getLabels().size(),
+    assertEquals(0, movie.getLabelCount(),
         "Labels should have size 0, because we have only added an illegal value");
   }
 }

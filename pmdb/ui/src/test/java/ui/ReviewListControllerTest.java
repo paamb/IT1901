@@ -12,7 +12,9 @@ import core.MovieList;
 
 import java.io.File;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -67,7 +69,7 @@ public class ReviewListControllerTest extends ApplicationTest {
   private int reviewListSize() {
     int counter = 0;
     for (IMovie movie : movieListController.getMovies()) {
-      counter += movie.getReviews().size();
+      counter += movie.getReviewCount();
     }
     return counter;
   }
@@ -106,15 +108,16 @@ public class ReviewListControllerTest extends ApplicationTest {
       MovieStorage storage = new MovieStorage();
       storage.setFilePath(testFile);
       MovieList movieList = storage.loadMovieList();
-      movieList.getMovies().stream().forEach(movie -> {
+      Collection<IMovie> deleteMovies = new ArrayList<IMovie>();
+      for (Iterator<IMovie> movies = movieList.iterator(); movies.hasNext(); ) {
+        IMovie movie = movies.next();
         if (!movie.getTitle().equals("test movie")) {
-          movieList.removeMovie(movie);
+          deleteMovies.add(movie);
         }
-      });
+      }
+      deleteMovies.forEach(m -> movieList.removeMovie(m));
       IMovie movie = movieList.getMovie("test movie");
-      movie.getReviews().stream().forEach(review -> {
-        movie.removeReview(review);
-      });
+      movie.setReviews(new ArrayList<IReview>());
       storage.saveMovieList(movieList);
     } catch (Exception e) {
       fail(e);
@@ -168,9 +171,14 @@ public class ReviewListControllerTest extends ApplicationTest {
     WaitForAsyncUtils.waitForFxEvents();
 
     assertEquals(1, reviewListSize(), "wrong number of reviews");
-    IReview review = movieListController.getMovieList().getMovie("test movie").getReviews().stream()
-        .findFirst().get();
-    assertEquals(newComment, review.getComment(), "wrong comment saved");
+
+    Iterator<IReview> reviewIterator = movieListController.getMovieList()
+        .getMovie("test movie").reviewIterator();
+    if (reviewIterator.hasNext()) {
+      assertEquals(newComment, reviewIterator.next().getComment(), "wrong comment saved");
+    } else {
+      fail();
+    }
   }
 
   @Test

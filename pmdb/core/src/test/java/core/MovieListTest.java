@@ -32,14 +32,14 @@ public class MovieListTest {
 
   @Test
   public void testConstructor() {
-    assertTrue(movieList.getMovies().isEmpty(), "The movies-list should be empty.");
+    assertEquals(0, movieList.getMovieCount(), "The movies-list should be empty.");
   }
 
   @Test
   public void testAddMovieValid() {
     movieList.addMovie(movie1);
     movieList.addMovie(movie3);
-    assertEquals(2, movieList.getMovies().size(), "List should contain 2 movies");
+    assertEquals(2, movieList.getMovieCount(), "List should contain 2 movies");
 
     assertSame(movie1, movieList.getMovie(movie1.getTitle()),
         "The movies should have same reference.");
@@ -53,7 +53,7 @@ public class MovieListTest {
     assertThrows(IllegalStateException.class, () -> movieList.addMovie(movie2),
         "The movies have the same title.");
     movieList.addMovie(movie3);
-    assertEquals(2, movieList.getMovies().size(), "The length of the list should be 2.");
+    assertEquals(2, movieList.getMovieCount(), "The length of the list should be 2.");
   }
 
   @Test
@@ -62,7 +62,7 @@ public class MovieListTest {
     movieList.addMovie(movie3);
 
     movieList.removeMovie(movie3);
-    assertEquals(1, movieList.getMovies().size(), "The length of the list should be 2.");
+    assertEquals(1, movieList.getMovieCount(), "The length of the list should be 2.");
     assertSame(null, movieList.getMovie(movie3.getTitle()), "The movie with title "
         + movie3.getTitle() + " should not be in the list because it should be removed.");
   }
@@ -72,9 +72,9 @@ public class MovieListTest {
     movieList.addMovie(movie1);
     movieList.addMovie(movie3);
 
-    assertEquals(2, movieList.getMovies().size(), "The length of the list should be 3.");
+    assertEquals(2, movieList.getMovieCount(), "The length of the list should be 3.");
     movieList.clearMovieList();
-    assertEquals(0, movieList.getMovies().size(), "The length of the list should be 0.");
+    assertEquals(0, movieList.getMovieCount(), "The length of the list should be 0.");
   }
 
   @Test
