@@ -9,7 +9,6 @@
         <groupId>it1901</groupId>
         <artifactId>pmdb</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>..</relativePath>
     </parent>
 
     <packaging>war</packaging>
@@ -26,7 +25,7 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-        <dependency>
+         <dependency>
             <groupId>it1901</groupId>
             <artifactId>pmdb-ui</artifactId>
             <version>0.0.1-SNAPSHOT</version>
@@ -72,6 +71,24 @@
             <scope>runtime</scope>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>headless</id>
+            <properties>
+                <headlessTests>true</headlessTests>
+            </properties>
+            <dependencies>
+                <!-- https://mvnrepository.com/artifact/org.testfx/openjfx-monocle -->
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>openjfx-monocle</artifactId>
+                    <version>jdk-12.0.1+2</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
@@ -142,8 +159,9 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <!-- System.getProperty("pmdb.port") gir riktig port -->
+                            <skipTests>${skipUiTests}</skipTests>
                             <systemPropertyVariables>
+                                <headless>${headlessTests}</headless>
                                 <pmdb.port>${jetty.port}</pmdb.port>
                             </systemPropertyVariables>
                         </configuration>
