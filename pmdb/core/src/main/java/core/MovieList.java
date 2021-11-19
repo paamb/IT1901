@@ -75,15 +75,12 @@ public class MovieList implements Iterable<IMovie> {
    * @return all labels in movieList.
    */
   public Collection<ILabel> getAllLabels() {
-    Collection<ILabel> allLabels = new ArrayList<ILabel>();
-    for (IMovie movie : movieList) {
-      for (Iterator<ILabel> labels = movie.labelIterator(); labels.hasNext(); ) {
-        ILabel label = labels.next();
-        if (!allLabels.contains(label)) {
-          allLabels.add(label);
-        }
+    Collection<ILabel> allLabels = new ArrayList<>();
+    movieList.stream().forEach(m -> m.labelIterator().forEachRemaining(l -> {
+      if (!allLabels.contains(l)) {
+        allLabels.add(l);
       }
-    }
+    }));
     return allLabels;
   }
 
