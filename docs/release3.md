@@ -1,10 +1,8 @@
 # Release 3
 Dokumentasjon for release 3:
 - [Implementasjon av labels](#implementasjon-av-labels)
-- [Implementasjon av API](#implementasjo-av-api)
-- [Arkitektur](#arkitektur)
-- [Arbeidsvaner](#arbeidsvaner)
-- [Tester](#tester)
+- [Implementasjon av API](#implementasjon-av-api)
+- [Innkapsling: Getter som lager iterator, istedenfor kopi av liste](#innkapsling:-getter-som-lager-iterator,-istedenfor-kopi-av-liste)
 
 ### Implementasjon av labels
 I release 2 hadde vi planer om å implementere emneknagger til en film, men gikk bort fra det da vi fant ut at vi hadde nok implementasjon fra før av. Vi bestemte oss dermed å implementere emneknagger i denne releasen, da vi allerede hadde en konseptuell modell for hvordan det ville se ut, og at vi allerede hadde implementert en del av logikken i release 2.
@@ -27,7 +25,7 @@ Vi hadde også som nevnt problemer med å lagre `Label`-objektene, fordi vi ikke
 
 ### Implementasjon av API
 
-Vi har benyttet oss av Jersey for bygging og konfigurering av serveren. Videre har vi brukt Jakarta for å definer og håndtere http requests (PUT, GET).
+Vi har benyttet oss av Jersey for bygging og konfigurering av serveren. Videre har vi brukt Jakarta for å definer og håndtere http requests (PUT, GET). API requestene støtter JSON format.
 
 Vi har tre request metoder for behandling av server. Vi har:
 
@@ -42,11 +40,11 @@ Vi har tre request metoder for behandling av server. Vi har:
 #### Ugunstig lagring til server
 
 `putMovieList` - metoden lagrer hele `movieList`-objektet mellom hver gang det skjer en endring i objektet. Dette er kostbart, men nødvendig når vi bruker JSON. Dette ville vært unngått om vi hadde benyttet oss av en database, og ikke en JSON-fil.
- 
 
 
+### Innkapsling: Getter som lager iterator, istedenfor kopi av liste
 
+I release 2 returnerte vi en ny kopi av listene reviews og labels da metodene `getReviews()` og `getLabels` ble kalt på i `Movie`-klassen. Det å lage en ny liste for hver gang man kaller på disse funksjonene er kostbart, og kan være veldig kostbart hvis vi hadde hatt mange `Review`-objekter og `Label`-objekter i disse listene. For å gjøre det mindre kostbart returnerte vi istendenfor en iterator av listene. Å returnere en iterator tar ikke noe mer plass i minner, og gjør det dermed mindre kostbart enn å lage en kopi for hver gang man skal gjøre et kall på funksjonen.
 
-### Lage kopi av movies
-
+Vi gjorde den samme endringen for funksjonen `getMovies` i `MovieList`-klassen, med samme argumentasjon.
 
