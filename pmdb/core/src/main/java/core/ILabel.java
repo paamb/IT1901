@@ -1,5 +1,7 @@
 package core;
 
+import java.util.Iterator;
+
 /**
  * Interface for Label.
  * 
@@ -35,7 +37,12 @@ public interface ILabel {
    * @return Returns true if title matches a label titel in movie.
    */
   public static boolean isLabelInMovie(IMovie movie, String title) {
-    return movie.getLabels().stream().anyMatch(label -> label.getTitle().equals(title));
+    for (Iterator<ILabel> labels = movie.labelIterator(); labels.hasNext(); ) {
+      if (labels.next().getTitle().equals(title)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**

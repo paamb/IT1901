@@ -12,6 +12,10 @@ import core.MovieList;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -112,11 +116,14 @@ public class MovieListControllerTest extends ApplicationTest {
       MovieStorage storage = new MovieStorage();
       storage.setFilePath(testFile);
       MovieList movieList = storage.loadMovieList();
-      movieList.getMovies().stream().forEach(movie -> {
+      Collection<IMovie> deleteMovies = new ArrayList<IMovie>();
+      for (Iterator<IMovie> movies = movieList.iterator(); movies.hasNext(); ) {
+        IMovie movie = movies.next();
         if (!movie.getTitle().equals("test movie")) {
-          movieList.removeMovie(movie);
+          deleteMovies.add(movie);
         }
-      });
+      }
+      deleteMovies.forEach(m -> movieList.removeMovie(m));
       storage.saveMovieList(movieList);
     } catch (Exception e) {
       fail(e);
@@ -161,7 +168,7 @@ public class MovieListControllerTest extends ApplicationTest {
     clickOn(waitForNode("#submitMovie"));
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertEquals(2, movieListController.getMovieList().getMovies().size(),
+    assertEquals(2, movieListController.getMovieList().getMovieCount(),
         "wrong number of movies");
     assertEquals(false, movieListController.editMovieWindow.isVisible(),
         "editMovieWindow should not be visible");
