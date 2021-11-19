@@ -96,7 +96,7 @@ public class RemoteMovieListAccessTest {
     assertTrue(movieList.getMovie("Up").isWatched());
     assertTrue(!movieList.getMovie("Batman").isWatched());
     assertEquals(1, movieList.getMovie("Up").getDuration());
-    assertEquals(3, movieList.getMovie("Batman").getLabels().size());
+    assertEquals(3, movieList.getMovie("Batman").getLabelCount());
   }
 
   @Test
