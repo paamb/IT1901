@@ -301,17 +301,11 @@ public class EditMovieController {
           labelDisplay.getChildren().remove(labelNode);
         }
       }
-
-      // if (!editingMovie.getLabels().stream()
-      //     .anyMatch(l -> l.getTitle().equals(labelNode.getId()))) {
-      //   labelDisplay.getChildren().remove(labelNode);
-      // }
     }
     currentLabels = new ArrayList<ILabel>();
     for (Iterator<ILabel> labels = editingMovie.labelIterator(); labels.hasNext(); ) {
       displayLabel(labels.next());
     }
-    //editingMovie.getLabels().stream().forEach(l -> displayLabel(l));
   }
 
   private boolean thisTitleIsAvailable(String title) {
