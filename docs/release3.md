@@ -22,27 +22,27 @@ Vi tenkte først at vi måtte ha en hovedliste i `MovieList`, som holdt styr på
 
 Løsning 2:
 
-Vi beholdt idéen om at et `Movie`-objekt skulle holde på sine `Label`-objekter. Så lagde vi en metode i `MovieList` kalt `getAllLabels`, som går gjennom alle `Movie`-objektene og finner alle `Label`-objektene. Da slapp vi å lagre `Label`-objektene både i `MovieList` og i `Movie`.
+Vi beholdt idéen om at et `Movie`-objekt skulle holde på sine `Label`-objekter. Så lagde vi en metode i `MovieList` kalt `getAllLabels`, som går gjennom alle `Movie`-objektene og finner alle `Label`-objektene. Da slapp vi å lagre `Label`-objektene både i `MovieList` og i `Movie`. Denne løsningen gikk vi for.
 
 Lagring av Labels:
 
-Vi hadde også som nevnt problemer med å lagre `Label`-objektene, fordi vi ikke ville lagre samme objekt flere ganger. Derfor bestemte vi oss for å lagre `Label`-objektene først, og så lagre en liste men navnene på `Label`-objektene for hver `Movie`-objekt. Når vi da skal deserialisere et `Movie`-objekt matcher vi bare navnet med navnet på objektet som allerede er deseralisert, og legge det til i `Movie`-objekte hvis det matcher.
+Vi hadde også som nevnt problemer med å lagre `Label`-objektene til fil, fordi vi ikke ville lagre samme objekt flere ganger. Derfor bestemte vi oss for å lagre `Label`-objektene først, og så lagre en liste men navnene på `Label`-objektene for hver `Movie`-objekt. Når vi da skal deserialisere et `Movie`-objekt matcher vi bare navnet med navnet på objektet som allerede er deseralisert, og legge det til i `Movie`-objekte hvis det matcher.
 
 ### Implementasjon av API
 
-Vi har benyttet oss av Jersey for bygging og konfigurering av serveren. Videre har vi brukt Jakarta for å definer og håndtere http requests (PUT, GET). API requestene støtter JSON format. Vi valgte å benytte oss av PUT request, og ikke Post, fordi vi ville oppdatere ressursen, og ikke lage en ny for hvert kall.
+Vi har benyttet oss av Jersey for bygging og konfigurering av serveren. Videre har vi brukt Jakarta for å definere og håndtere http requests (PUT, GET). API requestene støtter JSON format. Vi valgte å benytte oss av PUT request, og ikke POST, fordi vi ville oppdatere ressursen, og ikke lage en ny for hvert kall.
 
 Vi har tre request metoder for behandling av server. Vi har:
 
-`getMovieList()` - Dette er en get-metode som tar inn serveren i JSON format, og oppretter et `MovieList`-objekt ved hjelp av våre definerte deserialiserere. Den eneste gangen denne metoden blir kalt er under oppstart. Dette gjør vi, fordi appen trenger hele `MovieList`-objektet ved oppstart, fordi vi vil vise alle filmene lagret på serveren ved oppstart. Objektet blir lagret som et felt i `MovieListController`, når en endring skjer på `MovieList`-objektet vil metoden `putMovieList` bli kalt og JSON filen på serveren oppdatert.
+`GET /movielist` - Dette er en get-metode som tar inn serveren i JSON format, og oppretter et `MovieList`-objekt ved hjelp av våre definerte deserialiserere. Den eneste gangen denne metoden blir kalt er under oppstart. Dette gjør vi, fordi appen trenger hele `MovieList`-objektet ved oppstart, fordi vi vil vise alle filmene lagret på serveren ved oppstart. Objektet blir lagret som et felt i `MovieListController`, når en endring skjer på `MovieList`-objektet vil metoden `putMovieList` bli kalt og JSON filen på serveren oppdatert.
 
-`getMovieByTitle` - Dette er en get-metode som henter ut en film ved hjelp av tittel. Denne benyttes ikke i appen, men var grei å ha under testing i Postman.
+`GET /movielist/{movieTitle}` - Dette er en get-metode som henter ut en film ved hjelp av tittel. Denne benyttes ikke i appen, men var grei å ha under testing i Postman.
 
-`putMovieList` - Denne metoden oppdaterer JSON formatet på server med tilhørende `MovieList` som blir sendt inn som parameter.
+`PUT /movielist` - Denne metoden oppdaterer JSON formatet på server med tilhørende `MovieList` som blir sendt inn som parameter.
 
-#### PUT /movielist
+### PUT /movielist
 
-#### Request eksempel
+#### Request-body eksempel:
 
 ```json
 {
@@ -83,7 +83,7 @@ Vi har tre request metoder for behandling av server. Vi har:
 }
 ```
 
-### Response eksempel
+#### Response-body eksempel
 
 Dersom vellyket
 
@@ -99,7 +99,7 @@ false
 
 ### GET /movielist
 
-### Response eksempel
+#### Response-body eksempel:
 
 ```json
 {
@@ -153,7 +153,7 @@ Vi gjorde den samme endringen for funksjonen `getMovies` i `MovieList`-klassen, 
 
 ### run-with-server script
 
-Dette scriptet brukes for å starte serveren APIet kjører på og selve appen med samme kommando. Vi har laget dette for å forenkle kjøring av appen med remoteaccess. Ettersom serveren og appen starter samtidig må man koble til ved hjelp av knappen oppe i høyre hjørne for å få tilgang til data fra APIet. Det er viktig å huske på at man at man må stoppe serveren etter at man har brukt den, for kommandoen kan ikke brukes om serveren allerede er på. Dette man kan stoppe serveren ved å utføre kommandoen `CTRL + C` i git bash winduet som kommer opp.
+Dette scriptet brukes for å starte serveren APIet kjører på og selve appen med samme kommando. Vi har laget dette for å forenkle kjøring av appen med remoteaccess. Ettersom serveren og appen starter samtidig må man koble til ved hjelp av knappen oppe i høyre hjørne for å få tilgang til data fra APIet. Det er viktig å huske på at man må stoppe serveren etter at man har brukt den, for kommandoen kan ikke brukes om serveren allerede er på. Dette man kan stoppe serveren ved å utføre kommandoen `CTRL + C` i git bash-vinduet som kommer opp.
 
 
 ## Integrationtesting 
@@ -186,10 +186,10 @@ Med pre-integration-test kallet, så startes serveren opp først, som gjør det 
 
 Ved hjelp av maven så slipper vi å måtte skrive kommandoer for å starte og stoppe server og det skjer automatisk. 
 
-En slik test er det vi kan kalle for *System test* fordi den tar for seg et helt system som vi har rigget opp. Men den er ikke en Deployment test fordi den tester ikke hvordan serveren kommer til å bli brukt som en skytjeneste. 
+En slik test er det vi kan kaller for *System test* fordi den tar for seg et helt system som vi har rigget opp. Men den er ikke en *Deployment test* fordi den tester ikke hvordan serveren kommer til å bli brukt som en skytjeneste. 
 
 ### Headless
-I tillegg ser man at i pom.xml har vi blant annet valgt å bruke `headless`-profil. Denne profilen sørger for at vi kan kjøre testen uten å måtte få opp et vindu på skjermen. Hvis man kjører mvn verify -Pheadless` vil man se at testen kjøres uten at et vindu dukker opp på skjermen. 
+I tillegg har vi lagt til en profil i pom-filen til integrationtests som legger til rette for å kunne kjøre AppIT `headless`. Denne profilen sørger for at vi kan kjøre testen uten å måtte få opp et vindu på skjermen. Hvis man kjører kommandoen `mvn verify -Pheadless` i `pmdb/integrationtests` vil man se at testen kjøres uten at et vindu dukker opp på skjermen. 
 
 Dette forutsetter at man har en statisk `supportHeadless()`-metode som kalles igjen i AppIT.java for å sette opp headless i testen vår: 
  
