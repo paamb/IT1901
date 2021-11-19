@@ -6,6 +6,7 @@ Dokumentasjon for release 3:
 - [Implementasjon av API](#implementasjon-av-api)
 - [Getter som returnerer iterator istedenfor kopi av liste](#getter-som-returnerer-iterator-istedenfor-kopi-av-liste)
 - [run-with-server script](#run-with-server-script)
+- [Integrationtesting](#Integrationtesting)
 
 ### Implementasjon av labels
 
@@ -155,3 +156,46 @@ Vi gjorde den samme endringen for funksjonen `getMovies` i `MovieList`-klassen, 
 Dette scriptet brukes for å starte serveren APIet kjører på og selve appen med samme kommando. Vi har laget dette for å forenkle kjøring av appen med remoteaccess. Ettersom serveren og appen starter samtidig må man koble til ved hjelp av knappen oppe i høyre hjørne for å få tilgang til data fra APIet. Det er viktig å huske på at man at man må stoppe serveren etter at man har brukt den, for kommandoen kan ikke brukes om serveren allerede er på. Dette man kan stoppe serveren ved å utføre kommandoen `CTRL + C` i git bash winduet som kommer opp.
 
 
+## Integrationtesting 
+I integrationtests-mappen finner man blant annet *AppIT.java* (AppIntegrationTest). Integrasjonstesten starter opp en applikasjon og en server og kobler applikasjonen til serveren. Videre sjekker den at riggingen av en slik kombinasjon funker, uten å måtte teste noe særlig oppførsel i appen eller serveren. 
+
+### Starting og stopping av server i integrationtests
+Du ser for eksempel at denne kodesnutten som ligger i pom.xml i integrationtests: 
+
+```
+<execution>
+	<id>reserve-port</id>
+	<phase>pre-integration-test</phase>
+	<goals>
+		<goal>reserve-network-port</goal>
+	</goals>
+</execution>
+```
+
+Med pre-integration-test kallet, så startes serveren opp først, som gjør det mulig å starte appen gjennom AppIT som skal kobles til denne serveren. Og etter at testen er blitt gjennomført, må vi få stoppet serveren vi startet tidligere. Dett gjøres med post-integration-test kallet som man igjen finner i pom.xml slik: 
+
+```
+<execution>
+	<id>stop-jetty</id>
+	<phase>post-integration-test</phase>
+	<goals>
+		<goal>stop</goal>
+	</goals>
+</execution>
+```
+
+Ved hjelp av maven så slipper vi å måtte skrive kommandoer for å starte og stoppe server og det skjer automatisk. 
+
+En slik test er det vi kan kalle for *System test* fordi den tar for seg et helt system som vi har rigget opp. Men den er ikke en Deployment test fordi den tester ikke hvordan serveren kommer til å bli brukt som en skytjeneste. 
+
+### Headless
+I tillegg ser man at i pom.xml har vi blant annet valgt å bruke `headless`-profil. Denne profilen sørger for at vi kan kjøre testen uten å måtte få opp et vindu på skjermen. Hvis man kjører mvn verify -Pheadless` vil man se at testen kjøres uten at et vindu dukker opp på skjermen. 
+
+Dette forutsetter at man har en statisk `supportHeadless()`-metode som kalles igjen i AppIT.java for å sette opp headless i testen vår: 
+ 
+```
+@BeforeAll
+public static void setupHeadless() {
+	App.supportHeadless();
+}
+```
