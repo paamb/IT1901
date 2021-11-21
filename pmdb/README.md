@@ -46,18 +46,13 @@ Hvis man vil starte serveren og applikasjonen samtidig, kan man utføre kommando
 ```
 .\scripts\run-with-server.sh
 ```
-<<<<<<< HEAD
 Kommandoen må utføres fra `pmdb`-mappen.
 
 Da kan det hende at appen ikke har koblet seg til serveren enda. Trykk på "Koble til server" for å koble til serveren.
-=======
-
-Da kan det hende at appen ikke har koblet seg til serveren enda. Trykk på "synkroniser" for å koble til serveren.
->>>>>>> main
 
 Lukking av appen:
 
-Ved lukking av appen er det viktig at man også skrur av serveren. Dette kan gjøres ved å utføre kommandoen `CTRL + C` i git bash vinduet ved kjøring av scriptet.
+Ved lukking av appen er det viktig at man også skrur av serveren. Dette kan gjøres ved å utføre kommandoen `CTRL + C` i terminalen der serveren kjøres.
 
 ### Eksportere prosjektet til exe (Shippable product)
 
@@ -89,7 +84,7 @@ mvn test
 
 ### Bygging av prosjekt i GitPod
 
-GitPod har problemer ved kjøring av programvare i parallelle tråder. Dette har innvirkning ved kjøring av ui-testene, da GUI-et og testene kjører i forskjellige tråder. Det er implementert metoder i i testene for å minimalisere denne effetkten, men det er fremdeles muligheter for at det oppstår problemer. Dersom det blir et problem ved bygging av prosjektet kan det være lurt å gå inn i pmdb\ui\pom.xml og sette variabelen skipTests til true:
+GitPod har problemer ved kjøring av programvare i parallelle tråder. Dette har innvirkning ved kjøring av ui-testene, da GUI-et og testene kjører i forskjellige tråder. Det er implementert metoder i testene for å minimalisere denne effetkten, men det er fremdeles muligheter for at det oppstår problemer. Dersom det blir et problem ved bygging av prosjektet kan det være lurt å gå inn i pmdb\ui\pom.xml og sette variabelen skipTests til true:
 
 ```
 <properties>
@@ -142,12 +137,12 @@ Bilde 3 viser hvordan siden for _Anmeldelser_ ser ut. Her har man muligheten til
 
 Når man anmelder en film må man fylle ut feltene:
 
-- Film (en checkbox av filmobjekter man kan anmelde)
+- Film (en ComboBox av filmobjekter man kan anmelde)
 - Når filmen er sett
 - Din rangering av filmen
 - En kommentar til filmen.
 
-Man har mulighet for å _endre_ og _slette_ en anmeldelse slik som man har med en film.
+Man har mulighet for å _endre_ og _slette_ en anmeldelse slik som man har med en film, men anmeldelsen vil da være låst til den valgte filmen.
 
 ### Arkitektur:
 
