@@ -222,11 +222,18 @@ Sekvensdiagram viser flyten når en bruker vil legge til et nytt `Movie`-objekt 
 
 ![Bildet ville ikke vises](../pmdb/images/sequence.png)
 
-## Remote- og DirectAccess klasser
+## Remote- og LocalAccess-klasser
+`MovieListAccess.java` er et interface som implementeres av klassene som brukes til å lagre og hente MovieList-en som brukes i appen. Interfacet har to metoder, getMovieList() og putMovieList(MovieList).
+
+`RemoteMovieListAccess.java` er implementasjonen av interfacet som bruker API-et til å hente og lagre MovieList. Denne implementasjonen er den som initielt prøves å instansieres og brukes i MovieListController. Dersom objektet ikke får kontakt med serveren, blir i stedet `LocalMovieListAccess.java` instansiert og brukt i MovieListController. Dette skjer i praksis når serveren ikke kjører, og en får også beskjed om det i UI-et. Det er også en knapp i UI-et som når trykket på prøver å koble til serveren på nytt. Dersom det går blir igjen `RemoteMovieListAccess.java` brukt i MovieListController.
+
+`LocalMovieListAccess.java` er altså en implementasjon av `MovieListAccess.java` som bruker en lokal fil for lagring og har ingen knytning til filen som lagres på når RemoteAccess-klassen brukes.
+
+Grunnen til at vi har valgt å implementere to forskjellige Access-klasser er slik at det skal være mulig å kjøre og bruke appen selv om serveren ikke kjører. Dette er nyttig spesielt i testing av appen, men gjør det også mulig for brukeren å ikke være avhengig av at serveren kjører.
 
 ### Testing av RemoteMovieListAccess.java
 
-I testen, **RemoteMovieListAccessTest.java**, er det serveren som blir mocket (er "ikke-ekte"), i motsetning til rest-testen, der klienten er mocket.
+I testen, `RemoteMovieListAccessTest.java`, er det serveren som blir mocket (er "ikke-ekte"), i motsetning til rest-testen, der klienten er mocket.
 
 Som man kan se på `@BeforeEach`-metoden, blir det startet en mockserver og er vi velger hvordan den skal svare på forespørsler:
 
@@ -244,9 +251,9 @@ public void teardown() {
 }
 ```
 
-For å teste RemoteMovieListAccess-klassens `getMovieList()`, sender vi en reell forespørsel, men den går til mockserveren. Videre kan vi teste MovieList-en vi har lagt til inneholder riktig informasjon (se `public void testGetMovieList()`).
+For å teste RemoteMovieListAccess-klassens `getMovieList()`, sender vi en reell forespørsel, men den går til mockserveren. Videre tester vi at MovieList-en vi får tilbake inneholder riktig informasjon (se `public void testGetMovieList()`).
 
-Når det gjelder `public void testPutMovieList()`, som skal teste `putMovieList()`-metoden fra RemoteMovieListAccess.java. Først tenkte vi å teste den ved å først ha en set etter en get, men det vil ikke funke siden testen baserer seg på en mockserver.
+`public void testPutMovieList()` skal teste `putMovieList()`-metoden fra RemoteMovieListAccess.java. Først tenkte vi å teste den ved å først ha en PUT etter en GET, men det vil ikke funke siden testen baserer seg på en mockserver.
 
 Dermed endte vi opp med å teste om responsen håndteres riktig, og at det sendes en forespørsel på det formatet vi ønsker. Altså slik:
 
