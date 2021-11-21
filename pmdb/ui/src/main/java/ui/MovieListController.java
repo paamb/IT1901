@@ -182,20 +182,19 @@ public class MovieListController {
       for (IMovie movie : movies) {
         Pane moviePane = findMoviePane(movie);
         if (moviePane == null) {
-          FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
+          FXMLLoader fxmlLoader = 
+              new FXMLLoader(this.getClass().getResource("MovieDisplayTemplate.fxml"));
           moviePane = fxmlLoader.load();
-
-          MovieDisplayTemplateController movieDisplayTemplateController = fxmlLoader.getController();
+          MovieDisplayTemplateController movieDisplayTemplateController =
+              fxmlLoader.getController();
           movieDisplayTemplateController.injectMovieListController(this);
           movieDisplayTemplateController.setMovie(movie);
           movieDisplayTemplateController.setContent();
           movieDisplay.getChildren().add(moviePane);
         }
-
         if (offsetY < 0.0) {
           offsetY = moviePane.getPrefHeight();
         }
-
         int counterCalc = (int) counter / 2;
         moviePane.setLayoutX(offsetX * (counter % 2));
         moviePane.setLayoutY(offsetY * counterCalc);
@@ -204,7 +203,6 @@ public class MovieListController {
       }
       int counterCalc = (int) counter / 2;
       movieDisplay.setLayoutY(counterCalc);
-
       reviewListController.displayReviewList();
     } catch (Exception e) {
       System.out.println(e);
