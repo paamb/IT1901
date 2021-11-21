@@ -13,11 +13,11 @@
 
 ## Innledning
 
-I release 3 har vi opprettet et REST-API og laget støtte for dette i Appen. Vi utvidet logikken ved å immplementere emne knagger for filmene. Videre har vi gjort endringer utifra tilbakemeldingen vi har fått, og generelt gjort koden mer ryddig.
+I release 3 har vi opprettet et REST-API og laget støtte for dette i Appen. Vi utvidet logikken ved å immplementere emneknagger for filmene. Videre har vi gjort endringer utifra tilbakemeldingen vi har fått, og generelt gjort koden mer ryddig.
 
 ## Implementasjon av labels
 
-I release 2 hadde vi planer om å implementere emneknagger til en film, men gikk bort fra det da vi fant ut at vi hadde nok implementasjon fra før av. Vi bestemte oss dermed å implementere emneknagger i denne releasen, da vi allerede hadde en konseptuell modell for hvordan det ville se ut, og at vi allerede hadde implementert en del av logikken i release 2.
+I release 2 hadde vi planer om å implementere emneknagger til en film, men gikk bort fra det, da vi fant ut at vi hadde nok implementasjon fra før av. Vi bestemte oss dermed å implementere emneknagger i denne releasen, da vi allerede hadde en konseptuell modell for hvordan det ville se ut, og at vi allerede hadde implementert en del av logikken i release 2.
 
 ### Problemer ved implementasjon av labels
 
@@ -159,7 +159,7 @@ Vi gjorde den samme endringen for funksjonen `getMovies` i `MovieList`-klassen, 
 
 ## run-with-server script
 
-Dette scriptet brukes for å starte serveren APIet kjører på og selve appen med samme kommando. Vi har laget dette for å forenkle kjøring av appen med remoteaccess. Ettersom serveren og appen starter samtidig må man koble til ved hjelp av knappen oppe i høyre hjørne for å få tilgang til data fra APIet. Det er viktig å huske på at man må stoppe serveren etter at man har brukt den, for kommandoen kan ikke brukes om serveren allerede er på. Dette man kan stoppe serveren ved å utføre kommandoen `CTRL + C` i git bash-vinduet som kommer opp.
+Dette scriptet brukes for å starte serveren APIet kjører på og selve appen med samme kommando. Vi har laget dette for å forenkle kjøring av appen med remoteaccess. Ettersom serveren og appen starter samtidig må man koble til ved hjelp av knappen oppe i høyre hjørne for å få tilgang til data fra APIet. Det er viktig å huske på at man må stoppe serveren etter at man har brukt den, for kommandoen kan ikke brukes om serveren allerede er på. Man kan stoppe serveren ved å utføre kommandoen `CTRL + C` i git bash-vinduet som kommer opp.
 
 ## Integrationtesting
 
