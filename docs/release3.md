@@ -1,6 +1,7 @@
 # Release 3
 
 ## Dokumentasjon for release 3:
+
 - [Innledning](#innledning)
 - [Implementasjon av labels](#implementasjon-av-labels)
 - [Implementasjon av API](#implementasjon-av-api)
@@ -150,7 +151,6 @@ false
 
 `putMovieList` - metoden lagrer hele `movieList`-objektet mellom hver gang det skjer en endring i objektet. Dette er kostbart, men nødvendig når vi bruker JSON. Dette ville vært unngått om vi hadde benyttet oss av en database, og ikke en JSON-fil.
 
-
 ## Getter som returnerer iterator istedenfor kopi av liste
 
 I release 2 returnerte vi en ny kopi av listene reviews og labels da metodene `getReviews()` og `getLabels` ble kalt på i `Movie`-klassen. Det å lage en ny liste for hver gang man kaller på disse funksjonene er kostbart, og kan være veldig kostbart hvis vi hadde hatt mange `Review`-objekter og `Label`-objekter i disse listene. For å gjøre det mindre kostbart returnerte vi istendenfor en iterator av listene. Å returnere en iterator tar ikke noe mer plass i minner, og gjør det dermed mindre kostbart enn å lage en kopi for hver gang man skal gjøre et kall på funksjonen.
@@ -161,12 +161,13 @@ Vi gjorde den samme endringen for funksjonen `getMovies` i `MovieList`-klassen, 
 
 Dette scriptet brukes for å starte serveren APIet kjører på og selve appen med samme kommando. Vi har laget dette for å forenkle kjøring av appen med remoteaccess. Ettersom serveren og appen starter samtidig må man koble til ved hjelp av knappen oppe i høyre hjørne for å få tilgang til data fra APIet. Det er viktig å huske på at man må stoppe serveren etter at man har brukt den, for kommandoen kan ikke brukes om serveren allerede er på. Dette man kan stoppe serveren ved å utføre kommandoen `CTRL + C` i git bash-vinduet som kommer opp.
 
+## Integrationtesting
 
-## Integrationtesting 
-I integrationtests-mappen finner man blant annet *AppIT.java* (AppIntegrationTest). Integrasjonstesten starter opp en applikasjon og en server og kobler applikasjonen til serveren. Videre sjekker den at riggingen av en slik kombinasjon funker, uten å måtte teste noe særlig oppførsel i appen eller serveren. 
+I integrationtests-mappen finner man blant annet _AppIT.java_ (AppIntegrationTest). Integrasjonstesten starter opp en applikasjon og en server og kobler applikasjonen til serveren. Videre sjekker den at riggingen av en slik kombinasjon funker, uten å måtte teste noe særlig oppførsel i appen eller serveren.
 
 ### Starting og stopping av server i integrationtests
-Du ser for eksempel at denne kodesnutten som ligger i pom.xml i integrationtests: 
+
+Du ser for eksempel at denne kodesnutten som ligger i pom.xml i integrationtests:
 
 ```
 <execution>
@@ -178,7 +179,7 @@ Du ser for eksempel at denne kodesnutten som ligger i pom.xml i integrationtests
 </execution>
 ```
 
-Med pre-integration-test kallet, så startes serveren opp først, som gjør det mulig å starte appen gjennom AppIT som skal kobles til denne serveren. Og etter at testen er blitt gjennomført, må vi få stoppet serveren vi startet tidligere. Dett gjøres med post-integration-test kallet som man igjen finner i pom.xml slik: 
+Med pre-integration-test kallet, så startes serveren opp først, som gjør det mulig å starte appen gjennom AppIT som skal kobles til denne serveren. Og etter at testen er blitt gjennomført, må vi få stoppet serveren vi startet tidligere. Dett gjøres med post-integration-test kallet som man igjen finner i pom.xml slik:
 
 ```
 <execution>
@@ -190,15 +191,16 @@ Med pre-integration-test kallet, så startes serveren opp først, som gjør det 
 </execution>
 ```
 
-Ved hjelp av maven så slipper vi å måtte skrive kommandoer for å starte og stoppe server og det skjer automatisk. 
+Ved hjelp av maven så slipper vi å måtte skrive kommandoer for å starte og stoppe server og det skjer automatisk.
 
-En slik test er det vi kan kaller for *System test* fordi den tar for seg et helt system som vi har rigget opp. Men den er ikke en *Deployment test* fordi den tester ikke hvordan serveren kommer til å bli brukt som en skytjeneste. 
+En slik test er det vi kan kaller for _System test_ fordi den tar for seg et helt system som vi har rigget opp. Men den er ikke en _Deployment test_ fordi den tester ikke hvordan serveren kommer til å bli brukt som en skytjeneste.
 
 ### Headless
-I tillegg har vi lagt til en profil i pom-filen til integrationtests som legger til rette for å kunne kjøre AppIT `headless`. Denne profilen sørger for at vi kan kjøre testen uten å måtte få opp et vindu på skjermen. Hvis man kjører kommandoen `mvn verify -Pheadless` i `pmdb/integrationtests` vil man se at testen kjøres uten at et vindu dukker opp på skjermen. 
 
-Dette forutsetter at man har en statisk `supportHeadless()`-metode som kalles igjen i AppIT.java for å sette opp headless i testen vår: 
- 
+I tillegg har vi lagt til en profil i pom-filen til integrationtests som legger til rette for å kunne kjøre AppIT `headless`. Denne profilen sørger for at vi kan kjøre testen uten å måtte få opp et vindu på skjermen. Hvis man kjører kommandoen `mvn verify -Pheadless` i `pmdb/integrationtests` vil man se at testen kjøres uten at et vindu dukker opp på skjermen.
+
+Dette forutsetter at man har en statisk `supportHeadless()`-metode som kalles igjen i AppIT.java for å sette opp headless i testen vår:
+
 ```
 @BeforeAll
 public static void setupHeadless() {
@@ -208,7 +210,7 @@ public static void setupHeadless() {
 
 ## Klassediagram
 
-Klassediagrammet viser en litt mer utfyllende  sammenhengen mellom de tre klassene `MovieList`, `Review` og `Label`. Diagrammet viser de ulike feltene i hver av klassene, og de viktigste metodene utenom gettere og settere. 
+Klassediagrammet viser en litt mer utfyllende sammenhengen mellom de tre klassene `MovieList`, `Review` og `Label`. Diagrammet viser de ulike feltene i hver av klassene, og de viktigste metodene utenom gettere og settere.
 
 ![Bildet ville ikke vises](../pmdb/images/class.png)
 
@@ -220,3 +222,41 @@ Sekvensdiagram viser flyten når en bruker vil legge til et nytt `Movie`-objekt 
 
 ![Bildet ville ikke vises](../pmdb/images/sequence.png)
 
+## Remote- og DirectAccess klasser
+
+### Testing av RemoteMovieListAccess.java
+
+I testen, **RemoteMovieListAccessTest.java**, er det serveren som blir mocket (er "ikke-ekte"), i motsetning til rest-testen, der klienten er mocket.
+
+Som man kan se på `@BeforeEach`-metoden, blir det startet en mockserver og er vi velger hvordan den skal svare på forespørsler:
+
+```
+URI uri = new URI("http://localhost:" + wireMockServer.port() + "/movielist");
+remoteMovieListAccess = new RemoteMovieListAccess(uri);
+```
+
+I tillegg er det viktig å stoppe mockserveren etter enhver test i en `@AfterEach`-metode som vi har kalt `teardown()`.
+
+```
+@AfterEach
+public void teardown() {
+	wireMockServer.stop();
+}
+```
+
+For å teste RemoteMovieListAccess-klassens `getMovieList()`, sender vi en reell forespørsel, men den går til mockserveren. Videre kan vi teste MovieList-en vi har lagt til inneholder riktig informasjon (se `public void testGetMovieList()`).
+
+Når det gjelder `public void testPutMovieList()`, som skal teste `putMovieList()`-metoden fra RemoteMovieListAccess.java. Først tenkte vi å teste den ved å først ha en set etter en get, men det vil ikke funke siden testen baserer seg på en mockserver.
+
+Dermed endte vi opp med å teste om responsen håndteres riktig, og at det sendes en forespørsel på det formatet vi ønsker. Altså slik:
+
+```
+@Test
+public  void  testPutMovieList()  {
+	stubFor(put(urlEqualTo("/movielist")).withHeader("Accept", eq
+ualTo("application/json"))
+			.willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody("true")));
+
+assertTrue(remoteMovieListAccess.putMovieList(new  MovieList()));
+}
+```
