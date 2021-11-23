@@ -10,10 +10,11 @@
 - [Integrationtesting](#integrationtesting)
 - [Klassediagram](#klassediagram)
 - [Sekvensdiagram](#sekvensdiagram)
+- [Accessklasser](#accessklasser)
 
 ## Innledning
 
-I release 3 har vi opprettet et REST-API og laget støtte for dette i Appen. Vi utvidet logikken ved å immplementere emneknagger for filmene. Videre har vi gjort endringer utifra tilbakemeldingen vi har fått, og generelt gjort koden mer ryddig.
+I release 3 har vi opprettet et REST-API, og laget støtte for dette i Appen. Vi utvidet logikken ved å implementere emneknagger for filmene. Videre har vi gjort endringer utifra tilbakemeldingen vi har fått, og generelt gjort koden mer ryddig. De tingene som vi ikke har nevnt i denne releasen er uendret og skrevet om i release 2.
 
 ## Implementasjon av labels
 
@@ -210,7 +211,7 @@ public static void setupHeadless() {
 
 ## Klassediagram
 
-Klassediagrammet viser en litt mer utfyllende sammenhengen mellom de tre klassene `MovieList`, `Review` og `Label`. Diagrammet viser de ulike feltene i hver av klassene, og de viktigste metodene utenom gettere og settere.
+Klassediagrammet viser en litt mer utfyllende sammenhengen mellom de tre klassene `MovieList`, `Review` og `Label`. Diagrammet viser de ulike feltene i hver av klassene, og de viktigste metodene utenom gettere og settere. Alle feltene som er vist i klasse diagrammet er mulig å hentes ut ved hjelp av getter, og noen av de er mulig å settes også. Vi valgte å ikke ha med gettere og settere, for å gjøre diagrammet mindre rotete, og bare vise hovedlogikken og feltene. Vi valgte også å ikke ha med interfacene av samme grunn.
 
 ![Bildet ville ikke vises](../pmdb/images/class.png)
 
@@ -222,7 +223,7 @@ Sekvensdiagram viser flyten når en bruker vil legge til et nytt `Movie`-objekt 
 
 ![Bildet ville ikke vises](../pmdb/images/sequence.png)
 
-## Remote- og LocalAccess-klasser
+## Accessklasser
 `MovieListAccess.java` er et interface som implementeres av klassene som brukes til å lagre og hente MovieList-en som brukes i appen. Interfacet har to metoder, getMovieList() og putMovieList(MovieList).
 
 `RemoteMovieListAccess.java` er implementasjonen av interfacet som bruker API-et til å hente og lagre MovieList. Denne implementasjonen er den som initielt prøves å instansieres og brukes i MovieListController. Dersom objektet ikke får kontakt med serveren, blir i stedet `LocalMovieListAccess.java` instansiert og brukt i MovieListController. Dette skjer i praksis når serveren ikke kjører, og en får også beskjed om det i UI-et. Det er også en knapp i UI-et som når trykket på prøver å koble til serveren på nytt. Dersom det går blir igjen `RemoteMovieListAccess.java` brukt i MovieListController.
