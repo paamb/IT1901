@@ -13,7 +13,7 @@
 
 ## Innledning
 
-I release 3 har vi opprettet et REST-API og laget støtte for dette i Appen. Vi utvidet logikken ved å immplementere emneknagger for filmene. Videre har vi gjort endringer utifra tilbakemeldingen vi har fått, og generelt gjort koden mer ryddig.
+I release 3 har vi opprettet et REST-API, og laget støtte for dette i Appen. Vi utvidet logikken ved å implementere emneknagger for filmene. Videre har vi gjort endringer utifra tilbakemeldingen vi har fått, og generelt gjort koden mer ryddig. De tingene som vi ikke har nevnt i denne releasen er uendret og skrevet om i release 2.
 
 ## Implementasjon av labels
 
@@ -210,7 +210,7 @@ public static void setupHeadless() {
 
 ## Klassediagram
 
-Klassediagrammet viser en litt mer utfyllende sammenhengen mellom de tre klassene `MovieList`, `Review` og `Label`. Diagrammet viser de ulike feltene i hver av klassene, og de viktigste metodene utenom gettere og settere.
+Klassediagrammet viser en litt mer utfyllende sammenhengen mellom de tre klassene `MovieList`, `Review` og `Label`. Diagrammet viser de ulike feltene i hver av klassene, og de viktigste metodene utenom gettere og settere. Alle feltene som er vist i klasse diagrammet er mulig å hentes ut ved hjelp av getter, og noen av de er mulig å settes også. Vi valgte å ikke ha med gettere og settere, for å gjøre diagrammet mindre rotete, og bare vise hovedlogikken og feltene. Vi valgte også å ikke ha med interfacene av samme grunn.
 
 ![Bildet ville ikke vises](../pmdb/images/class.png)
 
