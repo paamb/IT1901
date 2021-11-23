@@ -12,13 +12,17 @@ class Movie{
   - int duration
   - boolean watched
   + void addReview(IReview review)
-  + Collection<IMovie> getReviews()
+  + Iterator<IReview> reviewIterator()
+  + void addLabel(ILabel label)
+  + Iterator<ILabel> labelIterator()
 }
+
 class Review{
   - String comment
   - int rating
   - LocalDate whenWatched
 }
+
 class Label{
   - String title
   - String color
@@ -28,4 +32,5 @@ class Label{
 MovieList --> "*" Movie : movies
 Movie --> "*" Review : reviews
 Movie --> "*" Label : labels
+
 @enduml
