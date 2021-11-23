@@ -150,4 +150,6 @@ false
 
 Dette scriptet brukes for å starte serveren APIet kjører på og selve appen med samme kommando. Vi har laget dette for å forenkle kjøring av appen med remoteaccess. Ettersom serveren og appen starter samtidig må man koble til ved hjelp av knappen oppe i høyre hjørne for å få tilgang til data fra APIet.
 
-###
+### Shippable product
+
+For å kunne eksportere appen som et 'shippable product' har vi brukt jlink og jpackage. Disse pakkene genererer en installasjonsfil som brukes til å installere appen lokalt på systemet.
