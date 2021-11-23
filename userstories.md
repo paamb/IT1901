@@ -43,16 +43,16 @@ Brukeren har behov for å kunne anmelde filmer, legge til en kommentar på filme
 
 ## Labels (us-3)
 
-Som bruker ønsker jeg å kunne legge til merkelapper, for å enklere kunne kategorisere og sortere filmene mine.
+Som bruker ønsker jeg å kunne legge til emneknagger, for å enklere kunne kategorisere filmene mine.
 
-Brukeren har behov for å kunne legge til egendefinerte merkelapper på filmene. Dette vil gi brukeren mer kontroll over sin egen filmdatabase og gir hen mulighet til å tilpasse sin egen brukeropplevelse i større grad.
+Brukeren har behov for å kunne legge til egendefinerte emneknagger på filmene. Dette vil gi brukeren mer kontroll over sin egen filmdatabase og gir hen mulighet til å tilpasse sin egen brukeropplevelse i større grad.
 
 ### Viktig å kunne se
 
- - Hvilke merkelapper en film har tilknyttet seg
- - Merkelappens farge slik at en enkelt kan se hvilke filmer som har samme merkelapper på seg
+ - Hvilke emneknagger en film har tilknyttet seg
+ - Emneknaggens farge slik at en enkelt kan se hvilke filmer som har samme emneknagger på seg
 
 ### Viktig å kunne gjøre
 
- - Legge til nye merkelapper
- - Gjenbruke allerede lagde merkelapper
+ - Legge til nye emneknagger
+ - Gjenbruke eksisterende emneknagger

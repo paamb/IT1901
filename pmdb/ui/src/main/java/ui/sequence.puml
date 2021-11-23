@@ -20,4 +20,5 @@ EditMovieController -> MovieListController : movieListIsEdited
 MovieListController -> MovieListController : displayMovieList
 MovieListController -> RemoteMovieListAccess : putMovieList
 RemoteMovieListAccess -> Rest : putMovieList
+Rest -> Storage : saveMovieList
 @enduml

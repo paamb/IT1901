@@ -17,9 +17,6 @@ component jersey{
 component jakarta {
 
 }
-component glassfish{
-
-}
 component rest{
     package pmdb.restapi{
 
@@ -32,12 +29,13 @@ pmdb.restapi ..> pmdb.restserver
 rest..> pmdb.core
 rest ..> jakarta
 rest ..> jersey
-rest ..> glassfish
 rest ..> pmdb.json
 
 component ui {
+    package pmdb.ui{
 
     }
+}
 component javafx{
     component fxml{
 
@@ -45,7 +43,8 @@ component javafx{
     }
 ui ..> javafx
 ui ..> fxml
-ui..> moviepersistance
 ui..> pmdb.core
 ui..> rest
+pmdb.ui ..> pmdb.core
+pmdb.ui ..> pmdb.json
 @enduml
