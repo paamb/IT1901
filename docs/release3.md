@@ -11,6 +11,7 @@
 - [Klassediagram](#klassediagram)
 - [Sekvensdiagram](#sekvensdiagram)
 - [Accessklasser](#accessklasser)
+- [Shippable product](#shippable-product)
 
 ## Innledning
 
@@ -270,6 +271,6 @@ assertTrue(remoteMovieListAccess.putMovieList(new  MovieList()));
 }
 ```
 
-### Shippable product
+## Shippable product
 
 For å kunne eksportere appen som et 'shippable product' har vi brukt jlink og jpackage. Disse pakkene genererer en installasjonsfil som brukes til å installere appen lokalt på systemet.
