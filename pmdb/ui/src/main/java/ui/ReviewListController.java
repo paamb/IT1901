@@ -5,6 +5,7 @@ import core.IReview;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -68,7 +69,7 @@ public class ReviewListController {
   }
 
   protected Collection<IMovie> getMovies() {
-    return new ArrayList<IMovie>(movieListController.getMovieList().getMovies());
+    return movieListController.getMovieList().getMovies();
   }
 
   protected void injectMovieListController(MovieListController movieListController) {
@@ -94,7 +95,8 @@ public class ReviewListController {
         double offsetY = -1.0;
         Collection<IMovie> movies = getMovies();
         for (IMovie movie : movies) {
-          for (IReview review : movie.getReviews()) {
+          for (Iterator<IReview> reviews = movie.reviewIterator(); reviews.hasNext(); ) {
+            IReview review = reviews.next(); 
             Pane reviewPane = findReviewPane(review);
             if (reviewPane == null) {
               FXMLLoader fxmlLoader =
@@ -165,8 +167,8 @@ public class ReviewListController {
   private Collection<IReview> getAllReviews() {
     Collection<IReview> allReviews = new ArrayList<IReview>();
     for (IMovie movie : getMovies()) {
-      for (IReview review : movie.getReviews()) {
-        allReviews.add(review);
+      for (Iterator<IReview> reviews = movie.reviewIterator(); reviews.hasNext(); ) {
+        allReviews.add(reviews.next());
       }
     }
     return allReviews;

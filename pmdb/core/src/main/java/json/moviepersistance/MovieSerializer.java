@@ -7,6 +7,7 @@ import core.ILabel;
 import core.IMovie;
 import core.IReview;
 import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * MovieSerializer class.
@@ -27,20 +28,18 @@ public class MovieSerializer extends JsonSerializer<IMovie> {
 
     gen.writeArrayFieldStart("labels");
 
-    if (movie.getLabels() != null) {
-      for (ILabel label : movie.getLabels()) {
-        gen.writeString(label.getTitle());
-      }
+    for (Iterator<ILabel> labels = movie.labelIterator(); labels.hasNext(); ) {
+      gen.writeString(labels.next().getTitle());
     }
+    
     gen.writeEndArray();
 
     gen.writeArrayFieldStart("reviews");
 
-    if (movie.getReviews() != null) {
-      for (IReview review : movie.getReviews()) {
-        gen.writeObject(review);
-      }
+    for (Iterator<IReview> reviews = movie.reviewIterator(); reviews.hasNext();) {
+      gen.writeObject(reviews.next());
     }
+    
     gen.writeEndArray();
     gen.writeEndObject();
   }

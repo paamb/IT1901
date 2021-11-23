@@ -39,3 +39,20 @@ Brukeren har behov for å kunne anmelde filmer, legge til en kommentar på filme
 - Kunne legge til rangering på filmen, mellom 1 og 10
 - Kunne endre på når du så filmen
 - Kunne slette en anmeldelse
+
+
+## Labels (us-3)
+
+Som bruker ønsker jeg å kunne legge til merkelapper, for å enklere kunne kategorisere og sortere filmene mine.
+
+Brukeren har behov for å kunne legge til egendefinerte merkelapper på filmene. Dette vil gi brukeren mer kontroll over sin egen filmdatabase og gir hen mulighet til å tilpasse sin egen brukeropplevelse i større grad.
+
+### Viktig å kunne se
+
+ - Hvilke merkelapper en film har tilknyttet seg
+ - Merkelappens farge slik at en enkelt kan se hvilke filmer som har samme merkelapper på seg
+
+### Viktig å kunne gjøre
+
+ - Legge til nye merkelapper
+ - Gjenbruke allerede lagde merkelapper
