@@ -1,0 +1,36 @@
+@startuml
+allow_mixing
+class MovieList{
+  +{static} sortOnSeenComparator
+  +{static} sortOnTitleComparator
+  + void addMovie(IMovie movie)
+  + Collection<IMovie> getMovies()
+}
+class Movie{
+  - String title
+  - String description
+  - int duration
+  - boolean watched
+  + void addReview(IReview review)
+  + Iterator<IReview> reviewIterator()
+  + void addLabel(ILabel label)
+  + Iterator<ILabel> labelIterator()
+}
+
+class Review{
+  - String comment
+  - int rating
+  - LocalDate whenWatched
+}
+
+class Label{
+  - String title
+  - String color
+}
+
+
+MovieList --> "*" Movie : movies
+Movie --> "*" Review : reviews
+Movie --> "*" Label : labels
+
+@enduml

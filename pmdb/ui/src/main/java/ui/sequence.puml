@@ -1,0 +1,24 @@
+@startuml
+actor User
+participant " #newMovieButton:Button" as Button1
+participant MovieListController
+participant EditMovieWindow
+participant " #submitButtonOnEditMovieWindow : Button" as Button2
+participant EditMovieController
+participant MovieList
+participant Storage
+participant "MovieListService:REST-API" as Rest
+User -> Button1 : click
+Button1 -> MovieListController : editNewMovie
+MovieListController -> MovieListController : editMovie
+MovieListController -> EditMovieWindow : setVisible
+User -> Button2 : click
+Button2 -> EditMovieController : submit
+EditMovieController -> MovieListController : addMovie
+MovieListController -> MovieList : addMovie
+EditMovieController -> MovieListController : movieListIsEdited
+MovieListController -> MovieListController : displayMovieList
+MovieListController -> RemoteMovieListAccess : putMovieList
+RemoteMovieListAccess -> Rest : putMovieList
+Rest -> Storage : saveMovieList
+@enduml
