@@ -11,6 +11,7 @@
 - [Klassediagram](#klassediagram)
 - [Sekvensdiagram](#sekvensdiagram)
 - [Accessklasser](#accessklasser)
+- [Shippable product](#shippable-product)
 
 ## Innledning
 
@@ -224,6 +225,7 @@ Sekvensdiagram viser flyten når en bruker vil legge til et nytt `Movie`-objekt 
 ![Bildet ville ikke vises](../pmdb/images/sequence.png)
 
 ## Accessklasser
+
 `MovieListAccess.java` er et interface som implementeres av klassene som brukes til å lagre og hente MovieList-en som brukes i appen. Interfacet har to metoder, getMovieList() og putMovieList(MovieList).
 
 `RemoteMovieListAccess.java` er implementasjonen av interfacet som bruker API-et til å hente og lagre MovieList. Denne implementasjonen er den som initielt prøves å instansieres og brukes i MovieListController. Dersom objektet ikke får kontakt med serveren, blir i stedet `LocalMovieListAccess.java` instansiert og brukt i MovieListController. Dette skjer i praksis når serveren ikke kjører, og en får også beskjed om det i UI-et. Det er også en knapp i UI-et som når trykket på prøver å koble til serveren på nytt. Dersom det går blir igjen `RemoteMovieListAccess.java` brukt i MovieListController.
@@ -268,3 +270,7 @@ ualTo("application/json"))
 assertTrue(remoteMovieListAccess.putMovieList(new  MovieList()));
 }
 ```
+
+## Shippable product
+
+For å kunne eksportere appen som et 'shippable product' har vi brukt jlink og jpackage. Disse pakkene genererer en installasjonsfil som brukes til å installere appen lokalt på systemet.
