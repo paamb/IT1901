@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * MovieList class.
@@ -44,8 +43,16 @@ public class MovieList implements Iterable<IMovie> {
     movieList.remove(movie);
   }
 
+  public Iterator<IMovie> movieIterator() {
+    return movieList.iterator();
+  }
+
+  public int getMovieCount() {
+    return movieList.size();
+  }
+
   public Collection<IMovie> getMovies() {
-    return new ArrayList<>(movieList);
+    return Collections.unmodifiableCollection(movieList);
   }
 
   public void clearMovieList() {
@@ -62,9 +69,19 @@ public class MovieList implements Iterable<IMovie> {
     return movieList.stream().filter(m -> m.getTitle().equals(title)).findFirst().orElse(null);
   }
 
+  /**
+   * Loops through movies and finds all labels.
+   * 
+   * @return all labels in movieList.
+   */
   public Collection<ILabel> getAllLabels() {
-    return movieList.stream().map(IMovie::getLabels).flatMap(Collection::stream).distinct()
-        .collect(Collectors.toList());
+    Collection<ILabel> allLabels = new ArrayList<>();
+    movieList.stream().forEach(m -> m.labelIterator().forEachRemaining(l -> {
+      if (!allLabels.contains(l)) {
+        allLabels.add(l);
+      }
+    }));
+    return allLabels;
   }
 
   /**
