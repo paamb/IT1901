@@ -274,3 +274,7 @@ assertTrue(remoteMovieListAccess.putMovieList(new  MovieList()));
 ## Shippable product
 
 For å kunne eksportere appen som et 'shippable product' har vi brukt jlink og jpackage. Disse pakkene genererer en installasjonsfil som brukes til å installere appen lokalt på systemet.
+
+## Gitignore og .vscode
+
+I .vscode ligger det en fil som styrer hvordan VSCode vil formatere prosjekt-filene. Denne mappen kunne vært i gitignore-filen, siden den ikke har noe funksjonalitet for selve prosjektet, men heller hvordan kode vil formateres hos den enkelte utvikleren. Vi har likevel valgt å ikke ha denne mappen i gitignore, slik at all kode formateres likt uavhengig av hvem som har skrevet den. Siden vi benytter oss av Checkstyle er dette også nyttig.
