@@ -6,8 +6,6 @@ import java.util.Iterator;
 
 /**
  * Movie class.
- * 
- * 
  */
 public class Movie implements IMovie {
 

@@ -49,8 +49,7 @@ public interface IReview {
   /**
    * Sets this reviews comment.
    * 
-   * @param comment
-   * 
+   * @param comment comment to be set.
    * @throws IllegalArgumentException when comment is too long
    */
   public void setComment(String comment) throws IllegalArgumentException;
