@@ -12,6 +12,8 @@
 - [Sekvensdiagram](#sekvensdiagram)
 - [Accessklasser](#accessklasser)
 - [Shippable product](#shippable-product)
+- [Gitignore og .vscode](#gitignore-og-vscode)
+- [Pipeline](#pipeline)
 
 ## Innledning
 
