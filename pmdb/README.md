@@ -1,6 +1,6 @@
 # Personal Movie Database (PMDB)
 
-Personal movie database er et prosjekt i faget IT1901. Appen gir brukeren mulighet for lagre filmer og vurdere filmer brukeren har sett. Dette gjør at brukeren har mulighet for å få finne filmer som personen har planlagt å se, og finne tilbake til filmer som brukeren synes var gode.
+Personal movie database er et prosjekt i faget IT1901. Appen gir brukeren mulighet for lagre filmer og anmelde filmer brukeren har sett. Dette gjør at brukeren har mulighet for å finne filmer som personen har planlagt å se, og finne tilbake til filmer som brukeren synes var gode.
 
 Appen har dermed to hovedfunksjonaliteter:
 
@@ -25,7 +25,8 @@ For å sette opp prosjektet, kjør:
 mvn clean install
 ```
 
-Hvis man vil starte serveren, kan man utføre kommandoen: 
+Hvis man vil starte serveren, kan man utføre kommandoen:
+
 ```
 mvn -pl integrationtests jetty:run -D "jetty.port=8999"
 ```
@@ -36,16 +37,17 @@ For å kjøre prosjektet, kjør:
 cd ui
 mvn javafx:run
 ```
+
 Denne kommandoen må kjøres i en ny terminal hvis man har startet serveren. Man kan også kjøre appen uten å ha startet serveren.
 
-Det er lurt å starte serveren, før man starter applikasjonen, men det er ikke nødvendig, da vi har lagt til støtte for å koble til serveren i appen. 
-
+Det er lurt å starte serveren, før man starter applikasjonen, men det er ikke nødvendig, da vi har lagt til støtte for å koble til serveren i appen.
 
 Hvis man vil starte serveren og applikasjonen samtidig, kan man utføre kommandoen:
 
 ```
 .\scripts\run-with-server.sh
 ```
+
 Kommandoen må utføres fra `pmdb`-mappen.
 
 Da kan det hende at appen ikke har koblet seg til serveren enda. Trykk på "Koble til server" for å koble til serveren.
